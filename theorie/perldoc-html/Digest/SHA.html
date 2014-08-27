@@ -1,0 +1,462 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>Digest::SHA - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 1;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../close_purple.gif';" onmouseout="leftCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../index-overview.html">Overview</a></li>
+        <li><a href="../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../index-faq.html">FAQs</a></li>
+        <li><a href="../index-history.html">History / Changes</a></li>
+        <li><a href="../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../index-language.html">Language</a></li>
+        <li><a href="../index-functions.html">Functions</a></li>
+        <li><a href="../perlop.html">Operators</a></li>
+        <li><a href="../perlvar.html">Special variables</a></li>
+        <li><a href="../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../index-modules-A.html">Core modules</a></li>
+        <li><a href="../index-utilities.html">Utilities</a></li>
+        <li><a href="../index-internals.html">Internals</a></li>
+        <li><a href="../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../index.html">Home</a> &gt; <a href="../index-modules-A.html">Core modules</a> &gt; <a href="../index-modules-D.html">D</a> &gt; Digest::SHA</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">Digest::SHA</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#SYNOPSIS-(HMAC-SHA)">SYNOPSIS (HMAC-SHA)</a><li><a href="#ABSTRACT">ABSTRACT</a><li><a href="#DESCRIPTION">DESCRIPTION</a><li><a href="#NIST-STATEMENT-ON-SHA-1">NIST STATEMENT ON SHA-1</a><li><a href="#PADDING-OF-BASE64-DIGESTS">PADDING OF BASE64 DIGESTS</a><li><a href="#EXPORT">EXPORT</a><li><a href="#EXPORTABLE-FUNCTIONS">EXPORTABLE FUNCTIONS</a><li><a href="#SEE-ALSO">SEE ALSO</a><li><a href="#AUTHOR">AUTHOR</a><li><a href="#ACKNOWLEDGMENTS">ACKNOWLEDGMENTS</a><li><a href="#COPYRIGHT-AND-LICENSE">COPYRIGHT AND LICENSE</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>Digest::SHA - Perl extension for SHA-1/224/256/384/512</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<p>In programs:</p>
+<pre class="verbatim">		<span class="c"># Functional interface</span></pre>
+<pre class="verbatim">	<a class="l_k" href="../functions/use.html">use</a> <span class="w">Digest::SHA</span> <span class="q">qw(sha1 sha1_hex sha1_base64 ...)</span><span class="sc">;</span></pre>
+<pre class="verbatim">	<span class="i">$digest</span> = <span class="i">sha1</span><span class="s">(</span><span class="i">$data</span><span class="s">)</span><span class="sc">;</span>
+	<span class="i">$digest</span> = <span class="i">sha1_hex</span><span class="s">(</span><span class="i">$data</span><span class="s">)</span><span class="sc">;</span>
+	<span class="i">$digest</span> = <span class="i">sha1_base64</span><span class="s">(</span><span class="i">$data</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">	<span class="i">$digest</span> = <span class="i">sha256</span><span class="s">(</span><span class="i">$data</span><span class="s">)</span><span class="sc">;</span>
+	<span class="i">$digest</span> = <span class="i">sha384_hex</span><span class="s">(</span><span class="i">$data</span><span class="s">)</span><span class="sc">;</span>
+	<span class="i">$digest</span> = <span class="i">sha512_base64</span><span class="s">(</span><span class="i">$data</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">		<span class="c"># Object-oriented</span></pre>
+<pre class="verbatim">	<a class="l_k" href="../functions/use.html">use</a> <span class="w">Digest::SHA</span><span class="sc">;</span></pre>
+<pre class="verbatim">	<span class="i">$sha</span> = <span class="w">Digest::SHA</span><span class="w">-&gt;new</span><span class="s">(</span><span class="i">$alg</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">	<span class="i">$sha</span><span class="i">-&gt;add</span><span class="s">(</span><span class="i">$data</span><span class="s">)</span><span class="sc">;</span>		<span class="c"># feed data into stream</span></pre>
+<pre class="verbatim">	<span class="i">$sha</span><span class="i">-&gt;addfile</span><span class="s">(</span><span class="i">*F</span><span class="s">)</span><span class="sc">;</span>
+	<span class="i">$sha</span><span class="i">-&gt;addfile</span><span class="s">(</span><span class="i">$filename</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">	<span class="i">$sha</span><span class="i">-&gt;add_bits</span><span class="s">(</span><span class="i">$bits</span><span class="s">)</span><span class="sc">;</span>
+	<span class="i">$sha</span><span class="i">-&gt;add_bits</span><span class="s">(</span><span class="i">$data</span><span class="cm">,</span> <span class="i">$nbits</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">	<span class="i">$sha_copy</span> = <span class="i">$sha</span><span class="i">-&gt;clone</span><span class="sc">;</span>	<span class="c"># if needed, make copy of</span>
+	<span class="i">$sha</span><span class="i">-&gt;dump</span><span class="s">(</span><span class="i">$file</span><span class="s">)</span><span class="sc">;</span>		<span class="c">#	current digest state,</span>
+	<span class="i">$sha</span><span class="i">-&gt;load</span><span class="s">(</span><span class="i">$file</span><span class="s">)</span><span class="sc">;</span>		<span class="c">#	or save it on disk</span></pre>
+<pre class="verbatim">	<span class="i">$digest</span> = <span class="i">$sha</span><span class="i">-&gt;digest</span><span class="sc">;</span>		<span class="c"># compute digest</span>
+	<span class="i">$digest</span> = <span class="i">$sha</span><span class="i">-&gt;hexdigest</span><span class="sc">;</span>
+	<span class="i">$digest</span> = <span class="i">$sha</span><span class="i">-&gt;b64digest</span><span class="sc">;</span></pre>
+<p>From the command line:</p>
+<pre class="verbatim">	$ shasum files</pre><pre class="verbatim">	$ shasum --help</pre><a name="SYNOPSIS-(HMAC-SHA)"></a><h1>SYNOPSIS (HMAC-SHA)</h1>
+<pre class="verbatim">		<span class="c"># Functional interface only</span></pre>
+<pre class="verbatim">	<a class="l_k" href="../functions/use.html">use</a> <span class="w">Digest::SHA</span> <span class="q">qw(hmac_sha1 hmac_sha1_hex ...)</span><span class="sc">;</span></pre>
+<pre class="verbatim">	<span class="i">$digest</span> = <span class="i">hmac_sha1</span><span class="s">(</span><span class="i">$data</span><span class="cm">,</span> <span class="i">$key</span><span class="s">)</span><span class="sc">;</span>
+	<span class="i">$digest</span> = <span class="i">hmac_sha224_hex</span><span class="s">(</span><span class="i">$data</span><span class="cm">,</span> <span class="i">$key</span><span class="s">)</span><span class="sc">;</span>
+	<span class="i">$digest</span> = <span class="i">hmac_sha256_base64</span><span class="s">(</span><span class="i">$data</span><span class="cm">,</span> <span class="i">$key</span><span class="s">)</span><span class="sc">;</span></pre>
+<a name="ABSTRACT"></a><h1>ABSTRACT</h1>
+<p>Digest::SHA is a complete implementation of the NIST Secure Hash
+Standard.  It gives Perl programmers a convenient way to calculate
+SHA-1, SHA-224, SHA-256, SHA-384, and SHA-512 message digests.
+The module can handle all types of input, including partial-byte
+data.</p>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p>Digest::SHA is written in C for speed.  If your platform lacks a
+C compiler, you can install the functionally equivalent (but much
+slower) <a href="http://search.cpan.org/perldoc/Digest::SHA::PurePerl">Digest::SHA::PurePerl</a> module.</p>
+<p>The programming interface is easy to use: it's the same one found
+in CPAN's <a href="../Digest.html">Digest</a> module.  So, if your applications currently
+use <a href="../Digest/MD5.html">Digest::MD5</a> and you'd prefer the stronger security of SHA,
+it's a simple matter to convert them.</p>
+<p>The interface provides two ways to calculate digests:  all-at-once,
+or in stages.  To illustrate, the following short program computes
+the SHA-256 digest of "hello world" using each approach:</p>
+<pre class="verbatim">	<a class="l_k" href="../functions/use.html">use</a> <span class="w">Digest::SHA</span> <span class="q">qw(sha256_hex)</span><span class="sc">;</span></pre>
+<pre class="verbatim">	<span class="i">$data</span> = <span class="q">&quot;hello world&quot;</span><span class="sc">;</span>
+	<span class="i">@frags</span> = <a class="l_k" href="../functions/split.html">split</a><span class="s">(</span><span class="q">//</span><span class="cm">,</span> <span class="i">$data</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">	<span class="c"># all-at-once (Functional style)</span>
+	<span class="i">$digest1</span> = <span class="i">sha256_hex</span><span class="s">(</span><span class="i">$data</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">	<span class="c"># in-stages (OOP style)</span>
+	<span class="i">$state</span> = <span class="w">Digest::SHA</span><span class="w">-&gt;new</span><span class="s">(</span><span class="n">256</span><span class="s">)</span><span class="sc">;</span>
+	for <span class="s">(</span><span class="i">@frags</span><span class="s">)</span> <span class="s">{</span> <span class="i">$state</span><span class="i">-&gt;add</span><span class="s">(</span><span class="i">$_</span><span class="s">)</span> <span class="s">}</span>
+	<span class="i">$digest2</span> = <span class="i">$state</span><span class="i">-&gt;hexdigest</span><span class="sc">;</span></pre>
+<pre class="verbatim">	<a class="l_k" href="../functions/print.html">print</a> <span class="i">$digest1</span> eq <span class="i">$digest2</span> ?
+		<span class="q">&quot;whew!\n&quot;</span> <span class="co">:</span> <span class="q">&quot;oops!\n&quot;</span><span class="sc">;</span></pre>
+<p>To calculate the digest of an n-bit message where <i>n</i> is not a
+multiple of 8, use the <i>add_bits()</i> method.  For example, consider
+the 446-bit message consisting of the bit-string "110" repeated
+148 times, followed by "11".  Here's how to display its SHA-1
+digest:</p>
+<pre class="verbatim">	<a class="l_k" href="../functions/use.html">use</a> <span class="w">Digest::SHA</span><span class="sc">;</span>
+	<span class="i">$bits</span> = <span class="q">&quot;110&quot;</span> x <span class="n">148</span> . <span class="q">&quot;11&quot;</span><span class="sc">;</span>
+	<span class="i">$sha</span> = <span class="w">Digest::SHA</span><span class="w">-&gt;new</span><span class="s">(</span><span class="n">1</span><span class="s">)</span><span class="i">-&gt;add_bits</span><span class="s">(</span><span class="i">$bits</span><span class="s">)</span><span class="sc">;</span>
+	<a class="l_k" href="../functions/print.html">print</a> <span class="i">$sha</span><span class="i">-&gt;hexdigest</span><span class="cm">,</span> <span class="q">&quot;\n&quot;</span><span class="sc">;</span></pre>
+<p>Note that for larger bit-strings, it's more efficient to use the
+two-argument version <i>add_bits($data, $nbits)</i>, where <i>$data</i> is
+in the customary packed binary format used for Perl strings.</p>
+<p>The module also lets you save intermediate SHA states to disk, or
+display them on standard output.  The <i>dump()</i> method generates
+portable, human-readable text describing the current state of
+computation.  You can subsequently retrieve the file with <i>load()</i>
+to resume where the calculation left off.</p>
+<p>To see what a state description looks like, just run the following:</p>
+<pre class="verbatim">	<a class="l_k" href="../functions/use.html">use</a> <span class="w">Digest::SHA</span><span class="sc">;</span>
+	<span class="w">Digest::SHA</span><span class="w">-&gt;new</span><span class="w">-&gt;add</span><span class="s">(</span><span class="q">&quot;Shaw&quot;</span> x <span class="n">1962</span><span class="s">)</span><span class="i">-&gt;dump</span><span class="sc">;</span></pre>
+<p>As an added convenience, the Digest::SHA module offers routines to
+calculate keyed hashes using the HMAC-SHA-1/224/256/384/512
+algorithms.  These services exist in functional form only, and
+mimic the style and behavior of the <i>sha()</i>, <i>sha_hex()</i>, and
+<i>sha_base64()</i> functions.</p>
+<pre class="verbatim">	<span class="c"># Test vector from draft-ietf-ipsec-ciph-sha-256-01.txt</span></pre>
+<pre class="verbatim">	<a class="l_k" href="../functions/use.html">use</a> <span class="w">Digest::SHA</span> <span class="q">qw(hmac_sha256_hex)</span><span class="sc">;</span>
+	<a class="l_k" href="../functions/print.html">print</a> <span class="i">hmac_sha256_hex</span><span class="s">(</span><span class="q">&quot;Hi There&quot;</span><span class="cm">,</span> <a class="l_k" href="../functions/chr.html">chr</a><span class="s">(</span><span class="n">0x0b</span><span class="s">)</span> x <span class="n">32</span><span class="s">)</span><span class="cm">,</span> <span class="q">&quot;\n&quot;</span><span class="sc">;</span></pre>
+<a name="NIST-STATEMENT-ON-SHA-1"></a><h1>NIST STATEMENT ON SHA-1</h1>
+<p><i>NIST was recently informed that researchers had discovered a way
+to "break" the current Federal Information Processing Standard SHA-1
+algorithm, which has been in effect since 1994. The researchers
+have not yet published their complete results, so NIST has not
+confirmed these findings. However, the researchers are a reputable
+research team with expertise in this area.</i></p>
+<p><i>Due to advances in computing power, NIST already planned to phase
+out SHA-1 in favor of the larger and stronger hash functions (SHA-224,
+SHA-256, SHA-384 and SHA-512) by 2010. New developments should use
+the larger and stronger hash functions.</i></p>
+<p>ref. <a href="http://www.csrc.nist.gov/pki/HashWorkshop/NIST%20Statement/Burr_Mar2005.html">http://www.csrc.nist.gov/pki/HashWorkshop/NIST%20Statement/Burr_Mar2005.html</a></p>
+<a name="PADDING-OF-BASE64-DIGESTS"></a><h1>PADDING OF BASE64 DIGESTS</h1>
+<p>By convention, CPAN Digest modules do <b>not</b> pad their Base64 output.
+Problems can occur when feeding such digests to other software that
+expects properly padded Base64 encodings.</p>
+<p>For the time being, any necessary padding must be done by the user.
+Fortunately, this is a simple operation: if the length of a Base64-encoded
+digest isn't a multiple of 4, simply append "=" characters to the end
+of the digest until it is:</p>
+<pre class="verbatim">	while <span class="s">(</span><a class="l_k" href="../functions/length.html">length</a><span class="s">(</span><span class="i">$b64_digest</span><span class="s">)</span> % <span class="n">4</span><span class="s">)</span> <span class="s">{</span>
+		<span class="i">$b64_digest</span> .= <span class="q">'='</span><span class="sc">;</span>
+	<span class="s">}</span></pre>
+<p>To illustrate, <i>sha256_base64("abc")</i> is computed to be</p>
+<pre class="verbatim">	<span class="w">ungWv48Bz</span>+<span class="w">pBQUDeXa4iI7ADYaOWF3qctBD</span>/<span class="w">YfIAFa0</span></pre>
+<p>which has a length of 43.  So, the properly padded version is</p>
+<pre class="verbatim">	<span class="w">ungWv48Bz</span>+<span class="w">pBQUDeXa4iI7ADYaOWF3qctBD</span>/<span class="w">YfIAFa0</span>=</pre>
+<a name="EXPORT"></a><h1>EXPORT</h1>
+<p>None by default.</p>
+<a name="EXPORTABLE-FUNCTIONS"></a><h1>EXPORTABLE FUNCTIONS</h1>
+<p>Provided your C compiler supports a 64-bit type (e.g. the <i>long
+long</i> of C99, or <i>__int64</i> used by Microsoft C/C++), all of these
+functions will be available for use.  Otherwise, you won't be able
+to perform the SHA-384 and SHA-512 transforms, both of which require
+64-bit operations.</p>
+<p><i>Functional style</i></p>
+<ul>
+<li><a name="*sha1(0x24data0x2c-...)*"></a><b><b>sha1($data, ...)</b></b>
+</li>
+<li><a name="*sha224(0x24data0x2c-...)*"></a><b><b>sha224($data, ...)</b></b>
+</li>
+<li><a name="*sha256(0x24data0x2c-...)*"></a><b><b>sha256($data, ...)</b></b>
+</li>
+<li><a name="*sha384(0x24data0x2c-...)*"></a><b><b>sha384($data, ...)</b></b>
+</li>
+<li><a name="*sha512(0x24data0x2c-...)*"></a><b><b>sha512($data, ...)</b></b>
+<p>Logically joins the arguments into a single string, and returns
+its SHA-1/224/256/384/512 digest encoded as a binary string.</p>
+</li>
+<li><a name="*sha1_hex(0x24data0x2c-...)*"></a><b><b>sha1_hex($data, ...)</b></b>
+</li>
+<li><a name="*sha224_hex(0x24data0x2c-...)*"></a><b><b>sha224_hex($data, ...)</b></b>
+</li>
+<li><a name="*sha256_hex(0x24data0x2c-...)*"></a><b><b>sha256_hex($data, ...)</b></b>
+</li>
+<li><a name="*sha384_hex(0x24data0x2c-...)*"></a><b><b>sha384_hex($data, ...)</b></b>
+</li>
+<li><a name="*sha512_hex(0x24data0x2c-...)*"></a><b><b>sha512_hex($data, ...)</b></b>
+<p>Logically joins the arguments into a single string, and returns
+its SHA-1/224/256/384/512 digest encoded as a hexadecimal string.</p>
+</li>
+<li><a name="*sha1_base64(0x24data0x2c-...)*"></a><b><b>sha1_base64($data, ...)</b></b>
+</li>
+<li><a name="*sha224_base64(0x24data0x2c-...)*"></a><b><b>sha224_base64($data, ...)</b></b>
+</li>
+<li><a name="*sha256_base64(0x24data0x2c-...)*"></a><b><b>sha256_base64($data, ...)</b></b>
+</li>
+<li><a name="*sha384_base64(0x24data0x2c-...)*"></a><b><b>sha384_base64($data, ...)</b></b>
+</li>
+<li><a name="*sha512_base64(0x24data0x2c-...)*"></a><b><b>sha512_base64($data, ...)</b></b>
+<p>Logically joins the arguments into a single string, and returns
+its SHA-1/224/256/384/512 digest encoded as a Base64 string.</p>
+<p>It's important to note that the resulting string does <b>not</b> contain
+the padding characters typical of Base64 encodings.  This omission is
+deliberate, and is done to maintain compatibility with the family of
+CPAN Digest modules.  See <a href="#PADDING-OF-BASE64-DIGESTS">"PADDING OF BASE64 DIGESTS"</a> for details.</p>
+</li>
+</ul>
+<p><i>OOP style</i></p>
+<ul>
+<li><a name="*new(0x24alg)*"></a><b><b>new($alg)</b></b>
+<p>Returns a new Digest::SHA object.  Allowed values for <i>$alg</i> are
+1, 224, 256, 384, or 512.  It's also possible to use common string
+representations of the algorithm (e.g. "sha256", "SHA-384").  If
+the argument is missing, SHA-1 will be used by default.</p>
+<p>Invoking <i>new</i> as an instance method will not create a new object;
+instead, it will simply reset the object to the initial state
+associated with <i>$alg</i>.  If the argument is missing, the object
+will continue using the same algorithm that was selected at creation.</p>
+</li>
+<li><a name="*reset(0x24alg)*"></a><b><b>reset($alg)</b></b>
+<p>This method has exactly the same effect as <i>new($alg)</i>.  In fact,
+<i>reset</i> is just an alias for <i>new</i>.</p>
+</li>
+<li><a name="*hashsize*"></a><b><b>hashsize</b></b>
+<p>Returns the number of digest bits for this object.  The values are
+160, 224, 256, 384, and 512 for SHA-1, SHA-224, SHA-256, SHA-384,
+and SHA-512, respectively.</p>
+</li>
+<li><a name="*algorithm*"></a><b><b>algorithm</b></b>
+<p>Returns the digest algorithm for this object.  The values are 1,
+224, 256, 384, and 512 for SHA-1, SHA-224, SHA-256, SHA-384, and
+SHA-512, respectively.</p>
+</li>
+<li><a name="*clone*"></a><b><b>clone</b></b>
+<p>Returns a duplicate copy of the object.</p>
+</li>
+<li><a name="*add(0x24data0x2c-...)*"></a><b><b>add($data, ...)</b></b>
+<p>Logically joins the arguments into a single string, and uses it to
+update the current digest state.  In other words, the following
+statements have the same effect:</p>
+<pre class="verbatim">	<span class="i">$sha</span><span class="i">-&gt;add</span><span class="s">(</span><span class="q">&quot;a&quot;</span><span class="s">)</span><span class="sc">;</span> <span class="i">$sha</span><span class="i">-&gt;add</span><span class="s">(</span><span class="q">&quot;b&quot;</span><span class="s">)</span><span class="sc">;</span> <span class="i">$sha</span><span class="i">-&gt;add</span><span class="s">(</span><span class="q">&quot;c&quot;</span><span class="s">)</span><span class="sc">;</span>
+	<span class="i">$sha</span><span class="i">-&gt;add</span><span class="s">(</span><span class="q">&quot;a&quot;</span><span class="s">)</span><span class="i">-&gt;add</span><span class="s">(</span><span class="q">&quot;b&quot;</span><span class="s">)</span><span class="i">-&gt;add</span><span class="s">(</span><span class="q">&quot;c&quot;</span><span class="s">)</span><span class="sc">;</span>
+	<span class="i">$sha</span><span class="i">-&gt;add</span><span class="s">(</span><span class="q">&quot;a&quot;</span><span class="cm">,</span> <span class="q">&quot;b&quot;</span><span class="cm">,</span> <span class="q">&quot;c&quot;</span><span class="s">)</span><span class="sc">;</span>
+	<span class="i">$sha</span><span class="i">-&gt;add</span><span class="s">(</span><span class="q">&quot;abc&quot;</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>The return value is the updated object itself.</p>
+</li>
+<li><a name="*add_bits(0x24data0x2c-0x24nbits)*"></a><b><b>add_bits($data, $nbits)</b></b>
+</li>
+<li><a name="*add_bits(0x24bits)*"></a><b><b>add_bits($bits)</b></b>
+<p>Updates the current digest state by appending bits to it.  The
+return value is the updated object itself.</p>
+<p>The first form causes the most-significant <i>$nbits</i> of <i>$data</i>
+to be appended to the stream.  The <i>$data</i> argument is in the
+customary binary format used for Perl strings.</p>
+<p>The second form takes an ASCII string of "0" and "1" characters as
+its argument.  It's equivalent to</p>
+<pre class="verbatim">	<span class="i">$sha</span><span class="i">-&gt;add_bits</span><span class="s">(</span><a class="l_k" href="../functions/pack.html">pack</a><span class="s">(</span><span class="q">&quot;B*&quot;</span><span class="cm">,</span> <span class="i">$bits</span><span class="s">)</span><span class="cm">,</span> <a class="l_k" href="../functions/length.html">length</a><span class="s">(</span><span class="i">$bits</span><span class="s">)</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>So, the following two statements do the same thing:</p>
+<pre class="verbatim">	<span class="i">$sha</span><span class="i">-&gt;add_bits</span><span class="s">(</span><span class="q">&quot;111100001010&quot;</span><span class="s">)</span><span class="sc">;</span>
+	<span class="i">$sha</span><span class="i">-&gt;add_bits</span><span class="s">(</span><span class="q">&quot;\xF0\xA0&quot;</span><span class="cm">,</span> <span class="n">12</span><span class="s">)</span><span class="sc">;</span></pre>
+</li>
+<li><a name="*addfile(*FILE)*"></a><b><b>addfile(*FILE)</b></b>
+<p>Reads from <i>FILE</i> until EOF, and appends that data to the current
+state.  The return value is the updated object itself.</p>
+</li>
+<li><a name="*addfile(0x24filename-0x5b0x2c-0x24mode0x5d)*"></a><b><b>addfile($filename [, $mode])</b></b>
+<p>Reads the contents of <i>$filename</i>, and appends that data to the current
+state.  The return value is the updated object itself.</p>
+<p>By default, <i>$filename</i> is simply opened and read; no special modes
+or I/O disciplines are used.  To change this, set the optional <i>$mode</i>
+argument to one of the following values:</p>
+<pre class="verbatim">	<span class="q">&quot;b&quot;</span>	<a class="l_k" href="../functions/read.html">read</a> <span class="w">file</span> <span class="w">in</span> <span class="w">binary</span> <span class="w">mode</span></pre>
+<pre class="verbatim">	"p"	use portable mode</pre><p>The "p" mode is handy since it ensures that the digest value of
+<i>$filename</i> will be the same when computed on different operating
+systems.  It accomplishes this by internally translating all newlines
+in text files to UNIX format before calculating the digest; on the other
+hand, binary files are read in raw mode with no translation whatsoever.</p>
+<p>For a fuller discussion of newline formats, refer to CPAN module
+<a href="http://search.cpan.org/perldoc/File::LocalizeNewlines">File::LocalizeNewlines</a>.  Its "universal line separator" regex forms
+the basis of <i>addfile</i>'s portable mode processing.</p>
+</li>
+<li><a name="*dump(0x24filename)*"></a><b><b>dump($filename)</b></b>
+<p>Provides persistent storage of intermediate SHA states by writing
+a portable, human-readable representation of the current state to
+<i>$filename</i>.  If the argument is missing, or equal to the empty
+string, the state information will be written to STDOUT.</p>
+</li>
+<li><a name="*load(0x24filename)*"></a><b><b>load($filename)</b></b>
+<p>Returns a Digest::SHA object representing the intermediate SHA
+state that was previously dumped to <i>$filename</i>.  If called as a
+class method, a new object is created; if called as an instance
+method, the object is reset to the state contained in <i>$filename</i>.
+If the argument is missing, or equal to the empty string, the state
+information will be read from STDIN.</p>
+</li>
+<li><a name="*digest*"></a><b><b>digest</b></b>
+<p>Returns the digest encoded as a binary string.</p>
+<p>Note that the <i>digest</i> method is a read-once operation. Once it
+has been performed, the Digest::SHA object is automatically reset
+in preparation for calculating another digest value.  Call
+<i>$sha-&gt;clone-&gt;digest</i> if it's necessary to preserve the
+original digest state.</p>
+</li>
+<li><a name="*hexdigest*"></a><b><b>hexdigest</b></b>
+<p>Returns the digest encoded as a hexadecimal string.</p>
+<p>Like <i>digest</i>, this method is a read-once operation.  Call
+<i>$sha-&gt;clone-&gt;hexdigest</i> if it's necessary to preserve
+the original digest state.</p>
+<p>This method is inherited if <a href="../Digest/base.html">Digest::base</a> is installed on your
+system.  Otherwise, a functionally equivalent substitute is used.</p>
+</li>
+<li><a name="*b64digest*"></a><b><b>b64digest</b></b>
+<p>Returns the digest encoded as a Base64 string.</p>
+<p>Like <i>digest</i>, this method is a read-once operation.  Call
+<i>$sha-&gt;clone-&gt;b64digest</i> if it's necessary to preserve
+the original digest state.</p>
+<p>This method is inherited if <a href="../Digest/base.html">Digest::base</a> is installed on your
+system.  Otherwise, a functionally equivalent substitute is used.</p>
+<p>It's important to note that the resulting string does <b>not</b> contain
+the padding characters typical of Base64 encodings.  This omission is
+deliberate, and is done to maintain compatibility with the family of
+CPAN Digest modules.  See <a href="#PADDING-OF-BASE64-DIGESTS">"PADDING OF BASE64 DIGESTS"</a> for details.</p>
+</li>
+</ul>
+<p><i>HMAC-SHA-1/224/256/384/512</i></p>
+<ul>
+<li><a name="*hmac_sha1(0x24data0x2c-0x24key)*"></a><b><b>hmac_sha1($data, $key)</b></b>
+</li>
+<li><a name="*hmac_sha224(0x24data0x2c-0x24key)*"></a><b><b>hmac_sha224($data, $key)</b></b>
+</li>
+<li><a name="*hmac_sha256(0x24data0x2c-0x24key)*"></a><b><b>hmac_sha256($data, $key)</b></b>
+</li>
+<li><a name="*hmac_sha384(0x24data0x2c-0x24key)*"></a><b><b>hmac_sha384($data, $key)</b></b>
+</li>
+<li><a name="*hmac_sha512(0x24data0x2c-0x24key)*"></a><b><b>hmac_sha512($data, $key)</b></b>
+<p>Returns the HMAC-SHA-1/224/256/384/512 digest of <i>$data</i>/<i>$key</i>,
+with the result encoded as a binary string.  Multiple <i>$data</i>
+arguments are allowed, provided that <i>$key</i> is the last argument
+in the list.</p>
+</li>
+<li><a name="*hmac_sha1_hex(0x24data0x2c-0x24key)*"></a><b><b>hmac_sha1_hex($data, $key)</b></b>
+</li>
+<li><a name="*hmac_sha224_hex(0x24data0x2c-0x24key)*"></a><b><b>hmac_sha224_hex($data, $key)</b></b>
+</li>
+<li><a name="*hmac_sha256_hex(0x24data0x2c-0x24key)*"></a><b><b>hmac_sha256_hex($data, $key)</b></b>
+</li>
+<li><a name="*hmac_sha384_hex(0x24data0x2c-0x24key)*"></a><b><b>hmac_sha384_hex($data, $key)</b></b>
+</li>
+<li><a name="*hmac_sha512_hex(0x24data0x2c-0x24key)*"></a><b><b>hmac_sha512_hex($data, $key)</b></b>
+<p>Returns the HMAC-SHA-1/224/256/384/512 digest of <i>$data</i>/<i>$key</i>,
+with the result encoded as a hexadecimal string.  Multiple <i>$data</i>
+arguments are allowed, provided that <i>$key</i> is the last argument
+in the list.</p>
+</li>
+<li><a name="*hmac_sha1_base64(0x24data0x2c-0x24key)*"></a><b><b>hmac_sha1_base64($data, $key)</b></b>
+</li>
+<li><a name="*hmac_sha224_base64(0x24data0x2c-0x24key)*"></a><b><b>hmac_sha224_base64($data, $key)</b></b>
+</li>
+<li><a name="*hmac_sha256_base64(0x24data0x2c-0x24key)*"></a><b><b>hmac_sha256_base64($data, $key)</b></b>
+</li>
+<li><a name="*hmac_sha384_base64(0x24data0x2c-0x24key)*"></a><b><b>hmac_sha384_base64($data, $key)</b></b>
+</li>
+<li><a name="*hmac_sha512_base64(0x24data0x2c-0x24key)*"></a><b><b>hmac_sha512_base64($data, $key)</b></b>
+<p>Returns the HMAC-SHA-1/224/256/384/512 digest of <i>$data</i>/<i>$key</i>,
+with the result encoded as a Base64 string.  Multiple <i>$data</i>
+arguments are allowed, provided that <i>$key</i> is the last argument
+in the list.</p>
+<p>It's important to note that the resulting string does <b>not</b> contain
+the padding characters typical of Base64 encodings.  This omission is
+deliberate, and is done to maintain compatibility with the family of
+CPAN Digest modules.  See <a href="#PADDING-OF-BASE64-DIGESTS">"PADDING OF BASE64 DIGESTS"</a> for details.</p>
+</li>
+</ul>
+<a name="SEE-ALSO"></a><h1>SEE ALSO</h1>
+<p><a href="../Digest.html">Digest</a>, <a href="http://search.cpan.org/perldoc/Digest::SHA::PurePerl">Digest::SHA::PurePerl</a></p>
+<p>The Secure Hash Standard (FIPS PUB 180-2) can be found at:</p>
+<p><a href="http://csrc.nist.gov/publications/fips/fips180-2/fips180-2withchangenotice.pdf">http://csrc.nist.gov/publications/fips/fips180-2/fips180-2withchangenotice.pdf</a></p>
+<p>The Keyed-Hash Message Authentication Code (HMAC):</p>
+<p><a href="http://csrc.nist.gov/publications/fips/fips198/fips-198a.pdf">http://csrc.nist.gov/publications/fips/fips198/fips-198a.pdf</a></p>
+<a name="AUTHOR"></a><h1>AUTHOR</h1>
+<pre class="verbatim">	<span class="w">Mark</span> <span class="w">Shelor</span>	<span class="q">&lt;mshelor@cpan.org&gt;</span></pre>
+<a name="ACKNOWLEDGMENTS"></a><h1>ACKNOWLEDGMENTS</h1>
+<p>The author is particularly grateful to</p>
+<pre class="verbatim">	<span class="w">Gisle</span> <span class="w">Aas</span>
+	<span class="w">Chris</span> <span class="w">Carey</span>
+	<span class="w">Jim</span> <span class="w">Doble</span>
+	<span class="w">Julius</span> <span class="w">Duque</span>
+	<span class="w">Jeffrey</span> <span class="w">Friedl</span>
+	<span class="w">Robert</span> <span class="w">Gilmour</span>
+	<span class="w">Brian</span> <span class="w">Gladman</span>
+	<span class="w">Adam</span> <span class="w">Kennedy</span>
+	<span class="w">Andy</span> <span class="w">Lester</span>
+	<span class="w">Alex</span> <span class="w">Muntada</span>
+	<span class="w">Steve</span> <span class="w">Peters</span>
+	<span class="w">Chris</span> <span class="w">Skiscim</span>
+	<span class="w">Martin</span> <span class="w">Thurn</span>
+	<span class="w">Gunnar</span> <span class="w">Wolf</span>
+	<span class="w">Adam</span> <span class="w">Woodbury</span></pre>
+<p>for their valuable comments and suggestions.</p>
+<a name="COPYRIGHT-AND-LICENSE"></a><h1>COPYRIGHT AND LICENSE</h1>
+<p>Copyright (C) 2003-2007 Mark Shelor</p>
+<p>This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.</p>
+<p><a href="../perlartistic.html">perlartistic</a></p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../close_purple.gif';" onmouseout="rightCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('Digest::SHA','Digest/SHA.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

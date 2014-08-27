@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>B::Showlex - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 1;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../close_purple.gif';" onmouseout="leftCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../index-overview.html">Overview</a></li>
+        <li><a href="../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../index-faq.html">FAQs</a></li>
+        <li><a href="../index-history.html">History / Changes</a></li>
+        <li><a href="../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../index-language.html">Language</a></li>
+        <li><a href="../index-functions.html">Functions</a></li>
+        <li><a href="../perlop.html">Operators</a></li>
+        <li><a href="../perlvar.html">Special variables</a></li>
+        <li><a href="../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../index-modules-A.html">Core modules</a></li>
+        <li><a href="../index-utilities.html">Utilities</a></li>
+        <li><a href="../index-internals.html">Internals</a></li>
+        <li><a href="../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../index.html">Home</a> &gt; <a href="../index-modules-A.html">Core modules</a> &gt; <a href="../index-modules-B.html">B</a> &gt; B::Showlex</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">B::Showlex</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><li><a href="#EXAMPLES">EXAMPLES</a><ul><li><a href="#OPTIONS">OPTIONS</a></ul><li><a href="#SEE-ALSO">SEE ALSO</a><li><a href="#TODO">TODO</a><li><a href="#AUTHOR">AUTHOR</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>B::Showlex - Show lexical variables used in functions or files</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">	<span class="w">perl</span> -<span class="w">MO</span>=<span class="w">Showlex</span><span class="s">[</span><span class="cm">,</span>-<span class="w">OPTIONS</span><span class="s">]</span><span class="s">[</span><span class="cm">,</span><span class="w">SUBROUTINE</span><span class="s">]</span> <span class="w">foo</span>.<span class="w">pl</span></pre>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p>When a comma-separated list of subroutine names is given as options, Showlex
+prints the lexical variables used in those subroutines.  Otherwise, it prints
+the file-scope lexicals in the file.</p>
+<a name="EXAMPLES"></a><h1>EXAMPLES</h1>
+<p>Traditional form:</p>
+<pre class="verbatim"> $ perl -MO=Showlex -e 'my ($i,$j,$k)=(1,"foo")'
+ Pad of lexical names for comppadlist has 4 entries
+ 0: SPECIAL #1 &amp;PL_sv_undef
+ 1: PVNV (0x9db0fb0) $i
+ 2: PVNV (0x9db0f38) $j
+ 3: PVNV (0x9db0f50) $k
+ Pad of lexical values for comppadlist has 5 entries
+ 0: SPECIAL #1 &amp;PL_sv_undef
+ 1: NULL (0x9da4234)
+ 2: NULL (0x9db0f2c)
+ 3: NULL (0x9db0f44)
+ 4: NULL (0x9da4264)
+ -e syntax OK</pre><p>New-style form:</p>
+<pre class="verbatim"> $ perl -MO=Showlex,-newlex -e 'my ($i,$j,$k)=(1,"foo")'
+ main Pad has 4 entries
+ 0: SPECIAL #1 &amp;PL_sv_undef
+ 1: PVNV (0xa0c4fb8) "$i" = NULL (0xa0b8234)
+ 2: PVNV (0xa0c4f40) "$j" = NULL (0xa0c4f34)
+ 3: PVNV (0xa0c4f58) "$k" = NULL (0xa0c4f4c)
+ -e syntax OK</pre><p>New form, no specials, outside O framework:</p>
+<pre class="verbatim"> $ perl -MB::Showlex -e \
+    'my ($i,$j,$k)=(1,"foo"); B::Showlex::compile(-newlex,-nosp)-&gt;()'
+ main Pad has 4 entries
+ 1: PVNV (0x998ffb0) "$i" = IV (0x9983234) 1
+ 2: PVNV (0x998ff68) "$j" = PV (0x998ff5c) "foo"
+ 3: PVNV (0x998ff80) "$k" = NULL (0x998ff74)</pre><p>Note that this example shows the values of the lexicals, whereas the other
+examples did not (as they're compile-time only).</p>
+<a name="OPTIONS"></a><h2>OPTIONS</h2>
+<p>The <code class="inline">-<span class="w">newlex</span></code>
+ option produces a more readable <code class="inline"><span class="w">name</span> <span class="cm">=&gt;</span> <span class="w">value</span></code>
+ format,
+and is shown in the second example above.</p>
+<p>The <code class="inline">-<span class="w">nosp</span></code>
+ option eliminates reporting of SPECIALs, such as <code class="inline">0: SPECIAL
+#1 &amp;PL_sv_undef</code> above.  Reporting of SPECIALs can sometimes overwhelm
+your declared lexicals.</p>
+<a name="SEE-ALSO"></a><h1>SEE ALSO</h1>
+<p><code class="inline"><span class="w">B::Showlex</span></code>
+ can also be used outside of the O framework, as in the third
+example.  See <code class="inline"><span class="w">B::Concise</span></code>
+ for a fuller explanation of reasons.</p>
+<a name="TODO"></a><h1>TODO</h1>
+<p>Some of the reported info, such as hex addresses, is not particularly
+valuable.  Other information would be more useful for the typical
+programmer, such as line-numbers, pad-slot reuses, etc..  Given this,
+-newlex isnt a particularly good flag-name.</p>
+<a name="AUTHOR"></a><h1>AUTHOR</h1>
+<p>Malcolm Beattie, <code class="inline"><span class="w">mbeattie</span><span class="i">@sable</span>.<span class="w">ox</span>.<span class="w">ac</span>.<span class="w">uk</span></code>
+</p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../close_purple.gif';" onmouseout="rightCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('B::Showlex','B/Showlex.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

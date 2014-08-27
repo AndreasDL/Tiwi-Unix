@@ -1,0 +1,192 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>Class::ISA - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 1;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../close_purple.gif';" onmouseout="leftCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../index-overview.html">Overview</a></li>
+        <li><a href="../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../index-faq.html">FAQs</a></li>
+        <li><a href="../index-history.html">History / Changes</a></li>
+        <li><a href="../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../index-language.html">Language</a></li>
+        <li><a href="../index-functions.html">Functions</a></li>
+        <li><a href="../perlop.html">Operators</a></li>
+        <li><a href="../perlvar.html">Special variables</a></li>
+        <li><a href="../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../index-modules-A.html">Core modules</a></li>
+        <li><a href="../index-utilities.html">Utilities</a></li>
+        <li><a href="../index-internals.html">Internals</a></li>
+        <li><a href="../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../index.html">Home</a> &gt; <a href="../index-modules-A.html">Core modules</a> &gt; <a href="../index-modules-C.html">C</a> &gt; Class::ISA</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">Class::ISA</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><li><a href="#FUNCTIONS">FUNCTIONS</a><li><a href="#CAUTIONARY-NOTES">CAUTIONARY NOTES</a><li><a href="#COPYRIGHT">COPYRIGHT</a><li><a href="#AUTHOR">AUTHOR</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>Class::ISA -- report the search path for a class's ISA tree</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">  <span class="c"># Suppose you go: use Food::Fishstick, and that uses and</span>
+  <span class="c"># inherits from other things, which in turn use and inherit</span>
+  <span class="c"># from other things.  And suppose, for sake of brevity of</span>
+  <span class="c"># example, that their ISA tree is the same as:</span></pre>
+<pre class="verbatim">  <span class="i">@Food::Fishstick::ISA</span> = <span class="q">qw(Food::Fish  Life::Fungus  Chemicals)</span><span class="sc">;</span>
+  <span class="i">@Food::Fish::ISA</span> = <span class="q">qw(Food)</span><span class="sc">;</span>
+  <span class="i">@Food::ISA</span> = <span class="q">qw(Matter)</span><span class="sc">;</span>
+  <span class="i">@Life::Fungus::ISA</span> = <span class="q">qw(Life)</span><span class="sc">;</span>
+  <span class="i">@Chemicals::ISA</span> = <span class="q">qw(Matter)</span><span class="sc">;</span>
+  <span class="i">@Life::ISA</span> = <span class="q">qw(Matter)</span><span class="sc">;</span>
+  <span class="i">@Matter::ISA</span> = <span class="q">qw()</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <a class="l_k" href="../functions/use.html">use</a> <span class="w">Class::ISA</span><span class="sc">;</span>
+  <a class="l_k" href="../functions/print.html">print</a> <span class="q">&quot;Food::Fishstick path is:\n &quot;</span><span class="cm">,</span>
+        <a class="l_k" href="../functions/join.html">join</a><span class="s">(</span><span class="q">&quot;, &quot;</span><span class="cm">,</span> <span class="i">Class::ISA::super_path</span><span class="s">(</span><span class="q">&#39;Food::Fishstick&#39;</span><span class="s">)</span><span class="s">)</span><span class="cm">,</span>
+        <span class="q">&quot;\n&quot;</span><span class="sc">;</span></pre>
+<p>That prints:</p>
+<pre class="verbatim">  Food::Fishstick path is:
+   Food::Fish, Food, Matter, Life::Fungus, Life, Chemicals</pre><a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p>Suppose you have a class (like Food::Fish::Fishstick) that is derived,
+via its @ISA, from one or more superclasses (as Food::Fish::Fishstick
+is from Food::Fish, Life::Fungus, and Chemicals), and some of those
+superclasses may themselves each be derived, via its @ISA, from one or
+more superclasses (as above).</p>
+<p>When, then, you call a method in that class ($fishstick-&gt;calories),
+Perl first searches there for that method, but if it's not there, it
+goes searching in its superclasses, and so on, in a depth-first (or
+maybe "height-first" is the word) search.  In the above example, it'd
+first look in Food::Fish, then Food, then Matter, then Life::Fungus,
+then Life, then Chemicals.</p>
+<p>This library, Class::ISA, provides functions that return that list --
+the list (in order) of names of classes Perl would search to find a
+method, with no duplicates.</p>
+<a name="FUNCTIONS"></a><h1>FUNCTIONS</h1>
+<ul>
+<li><a name="the-function-Class0x3a0x3aISA0x3a0x3asuper_path(0x24CLASS)"></a><b>the function Class::ISA::super_path($CLASS)</b>
+<p>This returns the ordered list of names of classes that Perl would
+search thru in order to find a method, with no duplicates in the list.
+$CLASS is not included in the list.  UNIVERSAL is not included -- if
+you need to consider it, add it to the end.</p>
+</li>
+<li><a name="the-function-Class0x3a0x3aISA0x3a0x3aself_and_super_path(0x24CLASS)"></a><b>the function Class::ISA::self_and_super_path($CLASS)</b>
+<p>Just like <code class="inline"><span class="w">super_path</span></code>
+, except that $CLASS is included as the first
+element.</p>
+</li>
+<li><a name="the-function-Class0x3a0x3aISA0x3a0x3aself_and_super_versions(0x24CLASS)"></a><b>the function Class::ISA::self_and_super_versions($CLASS)</b>
+<p>This returns a hash whose keys are $CLASS and its
+(super-)superclasses, and whose values are the contents of each
+class's $VERSION (or undef, for classes with no $VERSION).</p>
+<p>The code for self_and_super_versions is meant to serve as an example
+for precisely the kind of tasks I anticipate that self_and_super_path
+and super_path will be used for.  You are strongly advised to read the
+source for self_and_super_versions, and the comments there.</p>
+</li>
+</ul>
+<a name="CAUTIONARY-NOTES"></a><h1>CAUTIONARY NOTES</h1>
+<p>* Class::ISA doesn't export anything.  You have to address the
+functions with a "Class::ISA::" on the front.</p>
+<p>* Contrary to its name, Class::ISA isn't a class; it's just a package.
+Strange, isn't it?</p>
+<p>* Say you have a loop in the ISA tree of the class you're calling one
+of the Class::ISA functions on: say that Food inherits from Matter,
+but Matter inherits from Food (for sake of argument).  If Perl, while
+searching for a method, actually discovers this cyclicity, it will
+throw a fatal error.  The functions in Class::ISA effectively ignore
+this cyclicity; the Class::ISA algorithm is "never go down the same
+path twice", and cyclicities are just a special case of that.</p>
+<p>* The Class::ISA functions just look at @ISAs.  But theoretically, I
+suppose, AUTOLOADs could bypass Perl's ISA-based search mechanism and
+do whatever they please.  That would be bad behavior, tho; and I try
+not to think about that.</p>
+<p>* If Perl can't find a method anywhere in the ISA tree, it then looks
+in the magical class UNIVERSAL.  This is rarely relevant to the tasks
+that I expect Class::ISA functions to be put to, but if it matters to
+you, then instead of this:</p>
+<pre class="verbatim">  <span class="i">@supers</span> = <span class="i">Class::Tree::super_path</span><span class="s">(</span><span class="i">$class</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>do this:</p>
+<pre class="verbatim">  <span class="i">@supers</span> = <span class="s">(</span><span class="i">Class::Tree::super_path</span><span class="s">(</span><span class="i">$class</span><span class="s">)</span><span class="cm">,</span> <span class="q">&#39;UNIVERSAL&#39;</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>And don't say no-one ever told ya!</p>
+<p>* When you call them, the Class::ISA functions look at @ISAs anew --
+that is, there is no memoization, and so if ISAs change during
+runtime, you get the current ISA tree's path, not anything memoized.
+However, changing ISAs at runtime is probably a sign that you're out
+of your mind!</p>
+<a name="COPYRIGHT"></a><h1>COPYRIGHT</h1>
+<p>Copyright (c) 1999, 2000 Sean M. Burke. All rights reserved.</p>
+<p>This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.</p>
+<a name="AUTHOR"></a><h1>AUTHOR</h1>
+<p>Sean M. Burke <code class="inline"><span class="w">sburke</span><span class="i">@cpan</span>.<span class="w">org</span></code>
+</p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../close_purple.gif';" onmouseout="rightCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('Class::ISA','Class/ISA.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

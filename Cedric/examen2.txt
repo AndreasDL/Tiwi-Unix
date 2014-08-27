@@ -1,0 +1,19 @@
+[ $# = 2 ] || [ $# = 3 ] || { echo Usage: examen2 naam telefoonboek [nummer] ; exit 1 ; }
+naam=$1
+shift 1
+telefoonboek=$1
+shift 1
+nr=1
+[ $# = 1 ] && nr=$1
+
+IFS=${IFS}:
+
+while read name adres info tel1 tel2 tel3
+do
+	case $nr in 
+	1) echo $tel1 ;;
+	2) echo $tel2 ;;
+	3) echo $tel3 ;;
+	esac
+done < $telefoonboek
+grep -E "$naam:" $telefoonboek | wc -l

@@ -1,0 +1,225 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>perlpragma - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 0;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='close_purple.gif';" onmouseout="leftCloseIcon.src='close_blue.gif';"><img src="close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="index-overview.html">Overview</a></li>
+        <li><a href="index-tutorials.html">Tutorials</a></li>
+        <li><a href="index-faq.html">FAQs</a></li>
+        <li><a href="index-history.html">History / Changes</a></li>
+        <li><a href="index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="index-language.html">Language</a></li>
+        <li><a href="index-functions.html">Functions</a></li>
+        <li><a href="perlop.html">Operators</a></li>
+        <li><a href="perlvar.html">Special variables</a></li>
+        <li><a href="index-pragmas.html">Pragmas</a></li>
+        <li><a href="index-modules-A.html">Core modules</a></li>
+        <li><a href="index-utilities.html">Utilities</a></li>
+        <li><a href="index-internals.html">Internals</a></li>
+        <li><a href="index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="index.html">Home</a> &gt; <a href="index-tutorials.html">Tutorials</a> &gt; perlpragma</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">perlpragma</div><ul><li><a href="#NAME">NAME</a><li><a href="#DESCRIPTION">DESCRIPTION</a><li><a href="#A-basic-example">A basic example</a><li><a href="#Implementation-details">Implementation details</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>perlpragma - how to write a user pragma</p>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p>A pragma is a module which influences some aspect of the compile time or run
+time behaviour of Perl, such as <code class="inline"><span class="w">strict</span></code>
+ or <code class="inline"><span class="w">warnings</span></code>
+. With Perl 5.10 you
+are no longer limited to the built in pragmata; you can now create user
+pragmata that modify the behaviour of user functions within a lexical scope.</p>
+<a name="A-basic-example"></a><h1>A basic example</h1>
+<p>For example, say you need to create a class implementing overloaded
+mathematical operators, and would like to provide your own pragma that
+functions much like <code class="inline"><a class="l_k" href="functions/use.html">use</a> <span class="w">integer</span><span class="sc">;</span></code>
+ You'd like this code</p>
+<pre class="verbatim">    <a class="l_k" href="functions/use.html">use</a> <span class="w">MyMaths</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <a class="l_k" href="functions/my.html">my</a> <span class="i">$l</span> = <span class="w">MyMaths</span><span class="w">-&gt;new</span><span class="s">(</span><span class="n">1.2</span><span class="s">)</span><span class="sc">;</span>
+    <a class="l_k" href="functions/my.html">my</a> <span class="i">$r</span> = <span class="w">MyMaths</span><span class="w">-&gt;new</span><span class="s">(</span><span class="n">3.4</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <a class="l_k" href="functions/print.html">print</a> <span class="q">&quot;A: &quot;</span><span class="cm">,</span> <span class="i">$l</span> + <span class="i">$r</span><span class="cm">,</span> <span class="q">&quot;\n&quot;</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <a class="l_k" href="functions/use.html">use</a> <span class="w">myint</span><span class="sc">;</span>
+    <a class="l_k" href="functions/print.html">print</a> <span class="q">&quot;B: &quot;</span><span class="cm">,</span> <span class="i">$l</span> + <span class="i">$r</span><span class="cm">,</span> <span class="q">&quot;\n&quot;</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="s">{</span>
+        <a class="l_k" href="functions/no.html">no</a> <span class="w">myint</span><span class="sc">;</span>
+        <a class="l_k" href="functions/print.html">print</a> <span class="q">&quot;C: &quot;</span><span class="cm">,</span> <span class="i">$l</span> + <span class="i">$r</span><span class="cm">,</span> <span class="q">&quot;\n&quot;</span><span class="sc">;</span>
+    <span class="s">}</span></pre>
+<pre class="verbatim">    <a class="l_k" href="functions/print.html">print</a> <span class="q">&quot;D: &quot;</span><span class="cm">,</span> <span class="i">$l</span> + <span class="i">$r</span><span class="cm">,</span> <span class="q">&quot;\n&quot;</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <a class="l_k" href="functions/no.html">no</a> <span class="w">myint</span><span class="sc">;</span>
+    <a class="l_k" href="functions/print.html">print</a> <span class="q">&quot;E: &quot;</span><span class="cm">,</span> <span class="i">$l</span> + <span class="i">$r</span><span class="cm">,</span> <span class="q">&quot;\n&quot;</span><span class="sc">;</span></pre>
+<p>to give the output</p>
+<pre class="verbatim">    A: 4.6
+    B: 4
+    C: 4.6
+    D: 4
+    E: 4.6</pre><p><i>i.e.</i>, where <code class="inline"><a class="l_k" href="functions/use.html">use</a> <span class="w">myint</span><span class="sc">;</span></code>
+ is in effect, addition operations are forced
+to integer, whereas by default they are not, with the default behaviour being
+restored via <code class="inline"><a class="l_k" href="functions/no.html">no</a> <span class="w">myint</span><span class="sc">;</span></code>
+</p>
+<p>The minimal implementation of the package <code class="inline"><span class="w">MyMaths</span></code>
+ would be something like
+this:</p>
+<pre class="verbatim"><a name="package-MyMaths"></a>    package <span class="i">MyMaths</span><span class="sc">;</span>
+    <a class="l_k" href="functions/use.html">use</a> <span class="w">warnings</span><span class="sc">;</span>
+    <a class="l_k" href="functions/use.html">use</a> <span class="w">strict</span><span class="sc">;</span>
+    <a class="l_k" href="functions/use.html">use</a> <span class="i">myint</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span>
+    <a class="l_k" href="functions/use.html">use</a> <span class="w">overload</span> <span class="q">'+'</span> <span class="cm">=&gt;</span> <a class="l_k" href="functions/sub.html">sub</a> <span class="s">{</span>
+        <a class="l_k" href="functions/my.html">my</a> <span class="s">(</span><span class="i">$l</span><span class="cm">,</span> <span class="i">$r</span><span class="s">)</span> = <span class="i">@_</span><span class="sc">;</span>
+	<span class="c"># Pass 1 to check up one call level from here</span>
+        if <span class="s">(</span><span class="i">myint::in_effect</span><span class="s">(</span><span class="n">1</span><span class="s">)</span><span class="s">)</span> <span class="s">{</span>
+            <a class="l_k" href="functions/int.html">int</a><span class="s">(</span><span class="i">$$l</span><span class="s">)</span> + <a class="l_k" href="functions/int.html">int</a><span class="s">(</span><span class="i">$$r</span><span class="s">)</span><span class="sc">;</span>
+        <span class="s">}</span> else <span class="s">{</span>
+            <span class="i">$$l</span> + <span class="i">$$r</span><span class="sc">;</span>
+        <span class="s">}</span>
+    <span class="s">}</span><span class="sc">;</span></pre>
+<pre class="verbatim"><a name="new"></a>    sub <span class="m">new</span> <span class="s">{</span>
+        <a class="l_k" href="functions/my.html">my</a> <span class="s">(</span><span class="i">$class</span><span class="cm">,</span> <span class="i">$value</span><span class="s">)</span> = <span class="i">@_</span><span class="sc">;</span>
+        <a class="l_k" href="functions/bless.html">bless</a> \<span class="i">$value</span><span class="cm">,</span> <span class="i">$class</span><span class="sc">;</span>
+    <span class="s">}</span></pre>
+<pre class="verbatim">    <span class="n">1</span><span class="sc">;</span></pre>
+<p>Note how we load the user pragma <code class="inline"><span class="w">myint</span></code>
+ with an empty list <code class="inline"><span class="s">(</span><span class="s">)</span></code>
+ to
+prevent its <code class="inline"><a class="l_k" href="functions/import.html">import</a></code> being called.</p>
+<p>The interaction with the Perl compilation happens inside package <code class="inline"><span class="w">myint</span></code>
+:</p>
+<pre class="verbatim"><a name="package-myint"></a>    package <span class="i">myint</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <a class="l_k" href="functions/use.html">use</a> <span class="w">strict</span><span class="sc">;</span>
+    <a class="l_k" href="functions/use.html">use</a> <span class="w">warnings</span><span class="sc">;</span></pre>
+<pre class="verbatim"><a name="import"></a>    sub <span class="m">import</span> <span class="s">{</span>
+        <span class="i">$^H</span>{<span class="w">myint</span>} = <span class="n">1</span><span class="sc">;</span>
+    <span class="s">}</span></pre>
+<pre class="verbatim"><a name="unimport"></a>    sub <span class="m">unimport</span> <span class="s">{</span>
+        <span class="i">$^H</span>{<span class="w">myint</span>} = <span class="n">0</span><span class="sc">;</span>
+    <span class="s">}</span></pre>
+<pre class="verbatim"><a name="in_effect"></a>    sub <span class="m">in_effect</span> <span class="s">{</span>
+        <a class="l_k" href="functions/my.html">my</a> <span class="i">$level</span> = <a class="l_k" href="functions/shift.html">shift</a> // <span class="n">0</span><span class="sc">;</span>
+        <a class="l_k" href="functions/my.html">my</a> <span class="i">$hinthash</span> = <span class="s">(</span><a class="l_k" href="functions/caller.html">caller</a><span class="s">(</span><span class="i">$level</span><span class="s">)</span><span class="s">)</span>[<span class="n">10</span>]<span class="sc">;</span>
+        <a class="l_k" href="functions/return.html">return</a> <span class="i">$hinthash</span>-&gt;{<span class="w">myint</span>}<span class="sc">;</span>
+    <span class="s">}</span></pre>
+<pre class="verbatim">    <span class="n">1</span><span class="sc">;</span></pre>
+<p>As pragmata are implemented as modules, like any other module, <code class="inline"><a class="l_k" href="functions/use.html">use</a> <span class="w">myint</span><span class="sc">;</span></code>
+
+becomes</p>
+<pre class="verbatim">    BEGIN <span class="s">{</span>
+        <a class="l_k" href="functions/require.html">require</a> <span class="w">myint</span><span class="sc">;</span>
+        <span class="w">myint</span><span class="w">-&gt;import</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span>
+    <span class="s">}</span></pre>
+<p>and <code class="inline"><a class="l_k" href="functions/no.html">no</a> <span class="w">myint</span><span class="sc">;</span></code>
+ is</p>
+<pre class="verbatim">    BEGIN <span class="s">{</span>
+        <a class="l_k" href="functions/require.html">require</a> <span class="w">myint</span><span class="sc">;</span>
+        <span class="w">myint</span><span class="w">-&gt;unimport</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span>
+    <span class="s">}</span></pre>
+<p>Hence the <code class="inline"><a class="l_k" href="functions/import.html">import</a></code> and <code class="inline"><span class="w">unimport</span></code>
+ routines are called at <b>compile time</b>
+for the user's code.</p>
+<p>User pragmata store their state by writing to the magical hash <code class="inline"><span class="i">%^H</span></code>
+,
+hence these two routines manipulate it. The state information in <code class="inline"><span class="i">%^H</span></code>
+ is
+stored in the optree, and can be retrieved at runtime with <code class="inline"><a class="l_k" href="functions/caller.html">caller()</a></code>, at
+index 10 of the list of returned results. In the example pragma, retrieval
+is encapsulated into the routine <code class="inline"><span class="i">in_effect</span><span class="s">(</span><span class="s">)</span></code>
+, which takes as parameter
+the number of call frames to go up to find the value of the pragma in the
+user's script. This uses <code class="inline"><a class="l_k" href="functions/caller.html">caller()</a></code> to determine the value of
+<code class="inline"><span class="i">$^H</span>{<span class="w">myint</span>}</code>
+ when each line of the user's script was called, and
+therefore provide the correct semantics in the subroutine implementing the
+overloaded addition.</p>
+<a name="Implementation-details"></a><h1>Implementation details</h1>
+<p>The optree is shared between threads.  This means there is a possibility that
+the optree will outlive the particular thread (and therefore the interpreter
+instance) that created it, so true Perl scalars cannot be stored in the
+optree.  Instead a compact form is used, which can only store values that are
+integers (signed and unsigned), strings or <code class="inline"><a class="l_k" href="functions/undef.html">undef</a></code> - references and
+floating point values are stringified.  If you need to store multiple values
+or complex structures, you should serialise them, for example with <code class="inline"><a class="l_k" href="functions/pack.html">pack</a></code>.
+The deletion of a hash key from <code class="inline"><span class="i">%^H</span></code>
+ is recorded, and as ever can be
+distinguished from the existence of a key with value <code class="inline"><a class="l_k" href="functions/undef.html">undef</a></code> with
+<code class="inline"><a class="l_k" href="functions/exists.html">exists</a></code>.</p>
+<p><b>Don't</b> attempt to store references to data structures as integers which
+are retrieved via <code class="inline"><a class="l_k" href="functions/caller.html">caller</a></code> and converted back, as this will not be threadsafe.
+Accesses would be to the structure without locking (which is not safe for
+Perl's scalars), and either the structure has to leak, or it has to be
+freed when its creating thread terminates, which may be before the optree
+referencing it is deleted, if other threads outlive it.</p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='close_purple.gif';" onmouseout="rightCloseIcon.src='close_blue.gif';"><img src="close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('perlpragma','perlpragma.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

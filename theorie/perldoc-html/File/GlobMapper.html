@@ -1,0 +1,327 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>File::GlobMapper - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 1;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../close_purple.gif';" onmouseout="leftCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../index-overview.html">Overview</a></li>
+        <li><a href="../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../index-faq.html">FAQs</a></li>
+        <li><a href="../index-history.html">History / Changes</a></li>
+        <li><a href="../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../index-language.html">Language</a></li>
+        <li><a href="../index-functions.html">Functions</a></li>
+        <li><a href="../perlop.html">Operators</a></li>
+        <li><a href="../perlvar.html">Special variables</a></li>
+        <li><a href="../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../index-modules-A.html">Core modules</a></li>
+        <li><a href="../index-utilities.html">Utilities</a></li>
+        <li><a href="../index-internals.html">Internals</a></li>
+        <li><a href="../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../index.html">Home</a> &gt; <a href="../index-modules-A.html">Core modules</a> &gt; <a href="../index-modules-F.html">F</a> &gt; File::GlobMapper</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">File::GlobMapper</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><ul><li><a href="#Behind-The-Scenes">Behind The Scenes</a><li><a href="#Limitations">Limitations</a><li><a href="#Input-File-Glob">Input File Glob</a><li><a href="#Output-File-Glob">Output File Glob</a><li><a href="#Returned-Data">Returned Data</a></ul><li><a href="#EXAMPLES">EXAMPLES</a><ul><li><a href="#A-Rename-script">A Rename script</a><li><a href="#A-few-example-globmaps">A few example globmaps</a></ul><li><a href="#SEE-ALSO">SEE ALSO</a><li><a href="#AUTHOR">AUTHOR</a><li><a href="#COPYRIGHT-AND-LICENSE">COPYRIGHT AND LICENSE</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>File::GlobMapper - Extend File Glob to Allow Input and Output Files</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">    <a class="l_k" href="../functions/use.html">use</a> <span class="w">File::GlobMapper</span> <span class="q">qw( globmap )</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <a class="l_k" href="../functions/my.html">my</a> <span class="i">$aref</span> = <span class="w">globmap</span> <span class="i">$input</span> <span class="cm">=&gt;</span> <span class="i">$output</span>
+        or <a class="l_k" href="../functions/die.html">die</a> <span class="i">$File::GlobMapper::Error</span> <span class="sc">;</span></pre>
+<pre class="verbatim">    <a class="l_k" href="../functions/my.html">my</a> <span class="i">$gm</span> = <span class="w">new</span> <span class="w">File::GlobMapper</span> <span class="i">$input</span> <span class="cm">=&gt;</span> <span class="i">$output</span>
+        or <a class="l_k" href="../functions/die.html">die</a> <span class="i">$File::GlobMapper::Error</span> <span class="sc">;</span></pre>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p><b>WARNING Alpha Release Alert!</b></p>
+<ul>
+<li><a name="*-This-code-is-a-work-in-progress."></a><b>This code is a work in progress.</b>
+</li>
+<li><a name="*-There-are-known-bugs."></a><b>There are known bugs.</b>
+</li>
+<li><a name="*-The-interface-defined-here-is-tentative."></a><b>The interface defined here is tentative.</b>
+</li>
+<li><a name="*-There-are-portability-issues."></a><b>There are portability issues.</b>
+</li>
+<li><a name="*-Do-not-use-in-production-code."></a><b>Do not use in production code.</b>
+</li>
+<li><a name="*-Consider-yourself-warned!"></a><b>Consider yourself warned!</b>
+</li>
+</ul>
+<p>This module needs Perl5.005 or better.</p>
+<p>This module takes the existing <code class="inline"><span class="w">File::Glob</span></code>
+ module as a starting point and
+extends it to allow new filenames to be derived from the files matched by
+<code class="inline"><span class="w">File::Glob</span></code>
+.</p>
+<p>This can be useful when carrying out batch operations on multiple files that
+have both an input filename and output filename and the output file can be
+derived from the input filename. Examples of operations where this can be
+useful include, file renaming, file copying and file compression.</p>
+<a name="Behind-The-Scenes"></a><h2>Behind The Scenes</h2>
+<p>To help explain what <code class="inline"><span class="w">File::GlobMapper</span></code>
+ does, consider what code you
+would write if you wanted to rename all files in the current directory
+that ended in <code class="inline">.tar.gz</code> to <code class="inline">.tgz</code>. So say these files are in the
+current directory</p>
+<pre class="verbatim">    <span class="w">alpha</span>.<span class="w">tar</span>.<span class="w">gz</span>
+    <span class="w">beta</span>.<span class="w">tar</span>.<span class="w">gz</span>
+    <span class="w">gamma</span>.<span class="w">tar</span>.<span class="w">gz</span></pre>
+<p>and they need renamed to this</p>
+<pre class="verbatim">    <span class="w">alpha</span>.<span class="w">tgz</span>
+    <span class="w">beta</span>.<span class="w">tgz</span>
+    <span class="w">gamma</span>.<span class="w">tgz</span></pre>
+<p>Below is a possible implementation of a script to carry out the rename
+(error cases have been omitted)</p>
+<pre class="verbatim">    foreach my $old ( glob "*.tar.gz" )
+    {
+        my $new = $old;
+        $new =~ s#(.*)\.tar\.gz$#$1.tgz# ;</pre><pre class="verbatim">        rename $old =&gt; $new 
+            or die "Cannot rename '$old' to '$new': $!\n;
+    }</pre><p>Notice that a file glob pattern <code class="inline">*.tar.gz</code> was used to match the
+<code class="inline">.tar.gz</code> files, then a fairly similar regular expression was used in
+the substitute to allow the new filename to be created.</p>
+<p>Given that the file glob is just a cut-down regular expression and that it
+has already done a lot of the hard work in pattern matching the filenames,
+wouldn't it be handy to be able to use the patterns in the fileglob to
+drive the new filename?</p>
+<p>Well, that's <i>exactly</i> what <code class="inline"><span class="w">File::GlobMapper</span></code>
+ does.</p>
+<p>Here is same snippet of code rewritten using <code class="inline"><span class="w">globmap</span></code>
+</p>
+<pre class="verbatim">    for my $pair (globmap '&lt;*.tar.gz&gt;' =&gt; '&lt;#1.tgz&gt;' )
+    {
+        my ($from, $to) = @$pair;
+        rename $from =&gt; $to 
+            or die "Cannot rename '$old' to '$new': $!\n;
+    }</pre><p>So how does it work?</p>
+<p>Behind the scenes the <code class="inline"><span class="w">globmap</span></code>
+ function does a combination of a
+file glob to match existing filenames followed by a substitute
+to create the new filenames.</p>
+<p>Notice how both parameters to <code class="inline"><span class="w">globmap</span></code>
+ are strings that are delimited by &lt;&gt;.
+This is done to make them look more like file globs - it is just syntactic
+sugar, but it can be handy when you want the strings to be visually
+distinctive. The enclosing &lt;&gt; are optional, so you don't have to use them - in
+fact the first thing globmap will do is remove these delimiters if they are
+present.</p>
+<p>The first parameter to <code class="inline"><span class="w">globmap</span></code>
+, <code class="inline">*.tar.gz</code>, is an <i>Input File Glob</i>. 
+Once the enclosing "&lt; ... &gt;" is removed, this is passed (more or
+less) unchanged to <code class="inline"><span class="w">File::Glob</span></code>
+ to carry out a file match.</p>
+<p>Next the fileglob <code class="inline">*.tar.gz</code> is transformed behind the scenes into a
+full Perl regular expression, with the additional step of wrapping each
+transformed wildcard metacharacter sequence in parenthesis.</p>
+<p>In this case the input fileglob <code class="inline">*.tar.gz</code> will be transformed into
+this Perl regular expression</p>
+<pre class="verbatim">    ([^/]*)\.tar\.gz</pre><p>Wrapping with parenthesis allows the wildcard parts of the Input File
+Glob to be referenced by the second parameter to <code class="inline"><span class="w">globmap</span></code>
+, <code class="inline"><span class="c">#1.tgz</span></code>
+,
+the <i>Output File Glob</i>. This parameter operates just like the replacement
+part of a substitute command. The difference is that the <code class="inline"><span class="c">#1</span></code>
+ syntax
+is used to reference sub-patterns matched in the input fileglob, rather
+than the <code class="inline"><span class="i">$1</span></code>
+ syntax that is used with perl regular expressions. In
+this case <code class="inline"><span class="c">#1</span></code>
+ is used to refer to the text matched by the <code class="inline"><span class="i">*</span></code>
+ in the
+Input File Glob. This makes it easier to use this module where the
+parameters to <code class="inline"><span class="w">globmap</span></code>
+ are typed at the command line.</p>
+<p>The final step involves passing each filename matched by the <code class="inline">*.tar.gz</code>
+file glob through the derived Perl regular expression in turn and
+expanding the output fileglob using it.</p>
+<p>The end result of all this is a list of pairs of filenames. By default
+that is what is returned by <code class="inline"><span class="w">globmap</span></code>
+. In this example the data structure
+returned will look like this</p>
+<pre class="verbatim">     <span class="s">(</span> <span class="s">[</span><span class="q">'alpha.tar.gz'</span> <span class="cm">=&gt;</span> <span class="q">'alpha.tgz'</span><span class="s">]</span><span class="cm">,</span>
+       <span class="s">[</span><span class="q">'beta.tar.gz'</span>  <span class="cm">=&gt;</span> <span class="q">'beta.tgz'</span> <span class="s">]</span><span class="cm">,</span>
+       <span class="s">[</span><span class="q">'gamma.tar.gz'</span> <span class="cm">=&gt;</span> <span class="q">'gamma.tgz'</span><span class="s">]</span>
+     <span class="s">)</span></pre>
+<p>Each pair is an array reference with two elements - namely the <i>from</i>
+filename, that <code class="inline"><span class="w">File::Glob</span></code>
+ has matched, and a <i>to</i> filename that is
+derived from the <i>from</i> filename.</p>
+<a name="Limitations"></a><h2>Limitations</h2>
+<p><code class="inline"><span class="w">File::GlobMapper</span></code>
+ has been kept simple deliberately, so it isn't intended to
+solve all filename mapping operations. Under the hood <code class="inline"><span class="w">File::Glob</span></code>
+ (or for
+older versions of Perl, <code class="inline"><span class="w">File::BSDGlob</span></code>
+) is used to match the files, so you
+will never have the flexibility of full Perl regular expression.</p>
+<a name="Input-File-Glob"></a><h2>Input File Glob</h2>
+<p>The syntax for an Input FileGlob is identical to <code class="inline"><span class="w">File::Glob</span></code>
+, except
+for the following</p>
+<ol>
+<li>
+<p>No nested {}</p>
+</li>
+<li>
+<p>Whitespace does not delimit fileglobs.</p>
+</li>
+<li>
+<p>The use of parenthesis can be used to capture parts of the input filename.</p>
+</li>
+<li>
+<p>If an Input glob matches the same file more than once, only the first
+will be used.</p>
+</li>
+</ol>
+<p>The syntax</p>
+<ul>
+<li><a name="*~*"></a><b><b>~</b></b>
+</li>
+<li><a name="*~user*"></a><b><b>~user</b></b>
+</li>
+<li><a name="*.*"></a><b><b>.</b></b>
+<p>Matches a literal '.'.
+Equivalent to the Perl regular expression</p>
+<pre class="verbatim">    \.</pre></li>
+<li><a name="***"></a><b><b>*</b></b>
+<p>Matches zero or more characters, except '/'. Equivalent to the Perl
+regular expression</p>
+<pre class="verbatim">    [^/]*</pre></li>
+<li><a name="*0x3f*"></a><b><b>?</b></b>
+<p>Matches zero or one character, except '/'. Equivalent to the Perl
+regular expression</p>
+<pre class="verbatim">    [^/]?</pre></li>
+<li><a name="*0x5c*"></a><b><b>\</b></b>
+<p>Backslash is used, as usual, to escape the next character.</p>
+</li>
+<li><a name="*0x5b0x5d*"></a><b><b>[]</b></b>
+<p>Character class.</p>
+</li>
+<li><a name="*0x7b0x2c0x7d*"></a><b><b>{,}</b></b>
+<p>Alternation</p>
+</li>
+<li><a name="*()*"></a><b><b>()</b></b>
+<p>Capturing parenthesis that work just like perl</p>
+</li>
+</ul>
+<p>Any other character it taken literally.</p>
+<a name="Output-File-Glob"></a><h2>Output File Glob</h2>
+<p>The Output File Glob is a normal string, with 2 glob-like features.</p>
+<p>The first is the '*' metacharacter. This will be replaced by the complete
+filename matched by the input file glob. So</p>
+<pre class="verbatim">    *.c *.Z</pre><p>The second is</p>
+<p>Output FileGlobs take the</p>
+<ul>
+<li><a name="0x22*0x22"></a><b>"*"</b>
+<p>The "*" character will be replaced with the complete input filename.</p>
+</li>
+<li><a name="0x231"></a><b>#1</b>
+<p>Patterns of the form /#\d/ will be replaced with the</p>
+</li>
+</ul>
+<a name="Returned-Data"></a><h2>Returned Data</h2>
+<a name="EXAMPLES"></a><h1>EXAMPLES</h1>
+<a name="A-Rename-script"></a><h2>A Rename script</h2>
+<p>Below is a simple "rename" script that uses <code class="inline"><span class="w">globmap</span></code>
+ to determine the
+source and destination filenames.</p>
+<pre class="verbatim">    <a class="l_k" href="../functions/use.html">use</a> <span class="w">File::GlobMapper</span> <span class="q">qw(globmap)</span> <span class="sc">;</span>
+    <a class="l_k" href="../functions/use.html">use</a> <span class="w">File::Copy</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <a class="l_k" href="../functions/die.html">die</a> <span class="q">&quot;rename: Usage rename 'from' 'to'\n&quot;</span>
+        unless <span class="i">@ARGV</span> == <span class="n">2</span> <span class="sc">;</span></pre>
+<pre class="verbatim">    <a class="l_k" href="../functions/my.html">my</a> <span class="i">$fromGlob</span> = <a class="l_k" href="../functions/shift.html">shift</a> <span class="i">@ARGV</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/my.html">my</a> <span class="i">$toGlob</span>   = <a class="l_k" href="../functions/shift.html">shift</a> <span class="i">@ARGV</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <a class="l_k" href="../functions/my.html">my</a> <span class="i">$pairs</span> = <span class="i">globmap</span><span class="s">(</span><span class="i">$fromGlob</span><span class="cm">,</span> <span class="i">$toGlob</span><span class="s">)</span>
+        or <a class="l_k" href="../functions/die.html">die</a> <span class="i">$File::GlobMapper::Error</span><span class="sc">;</span></pre>
+<pre class="verbatim">    for <a class="l_k" href="../functions/my.html">my</a> <span class="i">$pair</span> <span class="s">(</span><span class="i">@$pairs</span><span class="s">)</span>
+    <span class="s">{</span>
+        <a class="l_k" href="../functions/my.html">my</a> <span class="s">(</span><span class="i">$from</span><span class="cm">,</span> <span class="i">$to</span><span class="s">)</span> = <span class="i">@$pair</span><span class="sc">;</span>
+        <span class="w">move</span> <span class="i">$from</span> <span class="cm">=&gt;</span> <span class="i">$to</span> <span class="sc">;</span>
+    <span class="s">}</span></pre>
+<p>Here is an example that renames all c files to cpp.</p>
+<pre class="verbatim">    $ rename '*.c' '#1.cpp'</pre><a name="A-few-example-globmaps"></a><h2>A few example globmaps</h2>
+<p>Below are a few examples of globmaps</p>
+<p>To copy all your .c file to a backup directory</p>
+<pre class="verbatim">    '&lt;/my/home/*.c&gt;'    '&lt;/my/backup/#1.c&gt;'</pre><p>If you want to compress all</p>
+<pre class="verbatim">    '&lt;/my/home/*.[ch]&gt;'    '&lt;*.gz&gt;'</pre><p>To uncompress</p>
+<pre class="verbatim">    '&lt;/my/home/*.[ch].gz&gt;'    '&lt;/my/home/#1.#2&gt;'</pre><a name="SEE-ALSO"></a><h1>SEE ALSO</h1>
+<p><a href="../File/Glob.html">File::Glob</a></p>
+<a name="AUTHOR"></a><h1>AUTHOR</h1>
+<p>The <i>File::GlobMapper</i> module was written by Paul Marquess, <i>pmqs@cpan.org</i>.</p>
+<a name="COPYRIGHT-AND-LICENSE"></a><h1>COPYRIGHT AND LICENSE</h1>
+<p>Copyright (c) 2005 Paul Marquess. All rights reserved.
+This program is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.</p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../close_purple.gif';" onmouseout="rightCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('File::GlobMapper','File/GlobMapper.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

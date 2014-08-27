@@ -1,0 +1,323 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>ExtUtils::Manifest - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 1;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../close_purple.gif';" onmouseout="leftCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../index-overview.html">Overview</a></li>
+        <li><a href="../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../index-faq.html">FAQs</a></li>
+        <li><a href="../index-history.html">History / Changes</a></li>
+        <li><a href="../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../index-language.html">Language</a></li>
+        <li><a href="../index-functions.html">Functions</a></li>
+        <li><a href="../perlop.html">Operators</a></li>
+        <li><a href="../perlvar.html">Special variables</a></li>
+        <li><a href="../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../index-modules-A.html">Core modules</a></li>
+        <li><a href="../index-utilities.html">Utilities</a></li>
+        <li><a href="../index-internals.html">Internals</a></li>
+        <li><a href="../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../index.html">Home</a> &gt; <a href="../index-modules-A.html">Core modules</a> &gt; <a href="../index-modules-E.html">E</a> &gt; ExtUtils::Manifest</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">ExtUtils::Manifest</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><ul><li><a href="#Functions">Functions</a><li><a href="#MANIFEST">MANIFEST</a><li><a href="#MANIFEST.SKIP">MANIFEST.SKIP</a><li><a href="#EXPORT_OK">EXPORT_OK</a><li><a href="#GLOBAL-VARIABLES">GLOBAL VARIABLES</a></ul><li><a href="#DIAGNOSTICS">DIAGNOSTICS</a><li><a href="#ENVIRONMENT">ENVIRONMENT</a><li><a href="#SEE-ALSO">SEE ALSO</a><li><a href="#AUTHOR">AUTHOR</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>ExtUtils::Manifest - utilities to write and check a MANIFEST file</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">    <a class="l_k" href="../functions/use.html">use</a> <span class="w">ExtUtils::Manifest</span> <span class="q">qw(...funcs to import...)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="i">mkmanifest</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <a class="l_k" href="../functions/my.html">my</a> <span class="i">@missing_files</span>    = <span class="w">manicheck</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/my.html">my</a> <span class="i">@skipped</span>          = <span class="w">skipcheck</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/my.html">my</a> <span class="i">@extra_files</span>      = <span class="w">filecheck</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/my.html">my</a><span class="s">(</span><span class="i">$missing</span><span class="cm">,</span> <span class="i">$extra</span><span class="s">)</span> = <span class="w">fullcheck</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <a class="l_k" href="../functions/my.html">my</a> <span class="i">$found</span>    = <span class="i">manifind</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <a class="l_k" href="../functions/my.html">my</a> <span class="i">$manifest</span> = <span class="i">maniread</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="i">manicopy</span><span class="s">(</span><span class="i">$read</span><span class="cm">,</span><span class="i">$target</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="i">maniadd</span><span class="s">(</span><span class="s">{</span><span class="i">$file</span> <span class="cm">=&gt;</span> <span class="i">$comment</span><span class="cm">,</span> ...<span class="s">}</span><span class="s">)</span><span class="sc">;</span></pre>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<a name="Functions"></a><h2>Functions</h2>
+<p>ExtUtils::Manifest exports no functions by default.  The following are
+exported on request</p>
+<ul>
+<li><a name="mkmanifest"></a><b>mkmanifest</b>
+<pre class="verbatim">    <span class="i">mkmanifest</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Writes all files in and below the current directory to your <i>MANIFEST</i>.
+It works similar to</p>
+<pre class="verbatim">    find . &gt; MANIFEST</pre><p>All files that match any regular expression in a file <i>MANIFEST.SKIP</i>
+(if it exists) are ignored.</p>
+<p>Any existing <i>MANIFEST</i> file will be saved as <i>MANIFEST.bak</i>.  Lines
+from the old <i>MANIFEST</i> file is preserved, including any comments
+that are found in the existing <i>MANIFEST</i> file in the new one.</p>
+</li>
+<li><a name="manifind"></a><b>manifind</b>
+<pre class="verbatim">    <a class="l_k" href="../functions/my.html">my</a> <span class="i">$found</span> = <span class="i">manifind</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>returns a hash reference. The keys of the hash are the files found
+below the current directory.</p>
+</li>
+<li><a name="manicheck"></a><b>manicheck</b>
+<pre class="verbatim">    <a class="l_k" href="../functions/my.html">my</a> <span class="i">@missing_files</span> = <span class="i">manicheck</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>checks if all the files within a <code class="inline"><span class="w">MANIFEST</span></code>
+ in the current directory
+really do exist. If <code class="inline"><span class="w">MANIFEST</span></code>
+ and the tree below the current
+directory are in sync it silently returns an empty list.
+Otherwise it returns a list of files which are listed in the
+<code class="inline"><span class="w">MANIFEST</span></code>
+ but missing from the directory, and by default also
+outputs these names to STDERR.</p>
+</li>
+<li><a name="filecheck"></a><b>filecheck</b>
+<pre class="verbatim">    <a class="l_k" href="../functions/my.html">my</a> <span class="i">@extra_files</span> = <span class="i">filecheck</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>finds files below the current directory that are not mentioned in the
+<code class="inline"><span class="w">MANIFEST</span></code>
+ file. An optional file <code class="inline"><span class="w">MANIFEST</span>.<span class="w">SKIP</span></code>
+ will be
+consulted. Any file matching a regular expression in such a file will
+not be reported as missing in the <code class="inline"><span class="w">MANIFEST</span></code>
+ file. The list of any
+extraneous files found is returned, and by default also reported to
+STDERR.</p>
+</li>
+<li><a name="fullcheck"></a><b>fullcheck</b>
+<pre class="verbatim">    <a class="l_k" href="../functions/my.html">my</a><span class="s">(</span><span class="i">$missing</span><span class="cm">,</span> <span class="i">$extra</span><span class="s">)</span> = <span class="i">fullcheck</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>does both a manicheck() and a filecheck(), returning then as two array
+refs.</p>
+</li>
+<li><a name="skipcheck"></a><b>skipcheck</b>
+<pre class="verbatim">    <a class="l_k" href="../functions/my.html">my</a> <span class="i">@skipped</span> = <span class="i">skipcheck</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>lists all the files that are skipped due to your <code class="inline"><span class="w">MANIFEST</span>.<span class="w">SKIP</span></code>
+
+file.</p>
+</li>
+<li><a name="maniread"></a><b>maniread</b>
+<pre class="verbatim">    <a class="l_k" href="../functions/my.html">my</a> <span class="i">$manifest</span> = <span class="i">maniread</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/my.html">my</a> <span class="i">$manifest</span> = <span class="i">maniread</span><span class="s">(</span><span class="i">$manifest_file</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>reads a named <code class="inline"><span class="w">MANIFEST</span></code>
+ file (defaults to <code class="inline"><span class="w">MANIFEST</span></code>
+ in the current
+directory) and returns a HASH reference with files being the keys and
+comments being the values of the HASH.  Blank lines and lines which
+start with <code class="inline"><span class="c">#</span></code>
+ in the <code class="inline"><span class="w">MANIFEST</span></code>
+ file are discarded.</p>
+</li>
+<li><a name="manicopy"></a><b>manicopy</b>
+<pre class="verbatim">    <span class="i">manicopy</span><span class="s">(</span>\<span class="i">%src</span><span class="cm">,</span> <span class="i">$dest_dir</span><span class="s">)</span><span class="sc">;</span>
+    <span class="i">manicopy</span><span class="s">(</span>\<span class="i">%src</span><span class="cm">,</span> <span class="i">$dest_dir</span><span class="cm">,</span> <span class="i">$how</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Copies the files that are the keys in %src to the $dest_dir.  %src is
+typically returned by the maniread() function.</p>
+<pre class="verbatim">    <span class="i">manicopy</span><span class="s">(</span> <span class="i">maniread</span><span class="s">(</span><span class="s">)</span><span class="cm">,</span> <span class="i">$dest_dir</span> <span class="s">)</span><span class="sc">;</span></pre>
+<p>This function is useful for producing a directory tree identical to the 
+intended distribution tree.</p>
+<p>$how can be used to specify a different methods of "copying".  Valid
+values are <code class="inline"><span class="w">cp</span></code>
+, which actually copies the files, <code class="inline"><span class="w">ln</span></code>
+ which creates
+hard links, and <code class="inline"><span class="w">best</span></code>
+ which mostly links the files but copies any
+symbolic link to make a tree without any symbolic link.  <code class="inline"><span class="w">cp</span></code>
+ is the 
+default.</p>
+</li>
+<li><a name="maniadd"></a><b>maniadd</b>
+<pre class="verbatim">  <span class="i">maniadd</span><span class="s">(</span><span class="s">{</span> <span class="i">$file</span> <span class="cm">=&gt;</span> <span class="i">$comment</span><span class="cm">,</span> ...<span class="s">}</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Adds an entry to an existing <i>MANIFEST</i> unless its already there.</p>
+<p>$file will be normalized (ie. Unixified).  <b>UNIMPLEMENTED</b></p>
+</li>
+</ul>
+<a name="MANIFEST"></a><h2>MANIFEST</h2>
+<p>A list of files in the distribution, one file per line.  The MANIFEST
+always uses Unix filepath conventions even if you're not on Unix.  This
+means <i>foo/bar</i> style not <i>foo\bar</i>.</p>
+<p>Anything between white space and an end of line within a <code class="inline"><span class="w">MANIFEST</span></code>
+
+file is considered to be a comment.  Any line beginning with # is also
+a comment.</p>
+<pre class="verbatim">    <span class="c"># this a comment</span>
+    <span class="w">some</span>/<span class="w">file</span>
+    <span class="w">some</span>/<span class="w">other</span>/<span class="w">file</span>            <span class="w">comment</span> <span class="w">about</span> <span class="w">some</span>/<span class="w">file</span></pre>
+<a name="MANIFEST.SKIP"></a><h2>MANIFEST.SKIP</h2>
+<p>The file MANIFEST.SKIP may contain regular expressions of files that
+should be ignored by mkmanifest() and filecheck(). The regular
+expressions should appear one on each line. Blank lines and lines
+which start with <code class="inline"><span class="c">#</span></code>
+ are skipped.  Use <code class="inline">\<span class="c">#</span></code>
+ if you need a regular
+expression to start with a <code class="inline"><span class="c">#</span></code>
+.</p>
+<p>For example:</p>
+<pre class="verbatim">    # Version control files and dirs.
+    \bRCS\b
+    \bCVS\b
+    ,v$
+    \B\.svn\b</pre><pre class="verbatim">    # Makemaker generated files and dirs.
+    ^MANIFEST\.
+    ^Makefile$
+    ^blib/
+    ^MakeMaker-\d</pre><pre class="verbatim">    # Temp, old and emacs backup files.
+    ~$
+    \.old$
+    ^#.*#$
+    ^\.#</pre><p>If no MANIFEST.SKIP file is found, a default set of skips will be
+used, similar to the example above.  If you want nothing skipped,
+simply make an empty MANIFEST.SKIP file.</p>
+<p>In one's own MANIFEST.SKIP file, certain directives
+can be used to include the contents of other MANIFEST.SKIP
+files. At present two such directives are recognized.</p>
+<ul>
+<li><a name="0x23!include_default"></a><b>#!include_default</b>
+<p>This inserts the contents of the default MANIFEST.SKIP file</p>
+</li>
+<li><a name="0x23!include-0x2fPath0x2fto0x2fanother0x2fmanifest.skip"></a><b>#!include /Path/to/another/manifest.skip</b>
+<p>This inserts the contents of the specified external file</p>
+</li>
+</ul>
+<p>The included contents will be inserted into the MANIFEST.SKIP
+file in between <i>#!start included /path/to/manifest.skip</i>
+and <i>#!end included /path/to/manifest.skip</i> markers.
+The original MANIFEST.SKIP is saved as MANIFEST.SKIP.bak.</p>
+<a name="EXPORT_OK"></a><h2>EXPORT_OK</h2>
+<p><code class="inline"><span class="i">&amp;mkmanifest</span></code>
+, <code class="inline"><span class="i">&amp;manicheck</span></code>
+, <code class="inline"><span class="i">&amp;filecheck</span></code>
+, <code class="inline"><span class="i">&amp;fullcheck</span></code>
+,
+<code class="inline"><span class="i">&amp;maniread</span></code>
+, and <code class="inline"><span class="i">&amp;manicopy</span></code>
+ are exportable.</p>
+<a name="GLOBAL-VARIABLES"></a><h2>GLOBAL VARIABLES</h2>
+<p><code class="inline"><span class="i">$ExtUtils::Manifest::MANIFEST</span></code>
+ defaults to <code class="inline"><span class="w">MANIFEST</span></code>
+. Changing it
+results in both a different <code class="inline"><span class="w">MANIFEST</span></code>
+ and a different
+<code class="inline"><span class="w">MANIFEST</span>.<span class="w">SKIP</span></code>
+ file. This is useful if you want to maintain
+different distributions for different audiences (say a user version
+and a developer version including RCS).</p>
+<p><code class="inline"><span class="i">$ExtUtils::Manifest::Quiet</span></code>
+ defaults to 0. If set to a true value,
+all functions act silently.</p>
+<p><code class="inline"><span class="i">$ExtUtils::Manifest::Debug</span></code>
+ defaults to 0.  If set to a true value,
+or if PERL_MM_MANIFEST_DEBUG is true, debugging output will be
+produced.</p>
+<a name="DIAGNOSTICS"></a><h1>DIAGNOSTICS</h1>
+<p>All diagnostic output is sent to <code class="inline"><span class="w">STDERR</span></code>
+.</p>
+<ul>
+<li><a name="'Not-in-MANIFEST0x3a'-_file_"></a><b><code class="inline">Not in MANIFEST:</code> <i>file</i></b>
+<p>is reported if a file is found which is not in <code class="inline"><span class="w">MANIFEST</span></code>
+.</p>
+</li>
+<li><a name="'Skipping'-_file_"></a><b><code class="inline"><span class="w">Skipping</span></code>
+ <i>file</i></b>
+<p>is reported if a file is skipped due to an entry in <code class="inline"><span class="w">MANIFEST</span>.<span class="w">SKIP</span></code>
+.</p>
+</li>
+<li><a name="'No-such-file0x3a'-_file_"></a><b><code class="inline">No such file:</code> <i>file</i></b>
+<p>is reported if a file mentioned in a <code class="inline"><span class="w">MANIFEST</span></code>
+ file does not
+exist.</p>
+</li>
+<li><a name="'MANIFEST0x3a'-_0x24!_"></a><b><code class="inline"><span class="j">MANIFEST:</span></code>
+ <i>$!</i></b>
+<p>is reported if <code class="inline"><span class="w">MANIFEST</span></code>
+ could not be opened.</p>
+</li>
+<li><a name="'Added-to-MANIFEST0x3a'-_file_"></a><b><code class="inline">Added to MANIFEST:</code> <i>file</i></b>
+<p>is reported by mkmanifest() if $Verbose is set and a file is added
+to MANIFEST. $Verbose is set to 1 by default.</p>
+</li>
+</ul>
+<a name="ENVIRONMENT"></a><h1>ENVIRONMENT</h1>
+<ul>
+<li><a name="*PERL_MM_MANIFEST_DEBUG*"></a><b><b>PERL_MM_MANIFEST_DEBUG</b></b>
+<p>Turns on debugging</p>
+</li>
+</ul>
+<a name="SEE-ALSO"></a><h1>SEE ALSO</h1>
+<p><a href="../ExtUtils/MakeMaker.html">ExtUtils::MakeMaker</a> which has handy targets for most of the functionality.</p>
+<a name="AUTHOR"></a><h1>AUTHOR</h1>
+<p>Andreas Koenig <code class="inline"><span class="w">andreas</span>.<span class="w">koenig</span><span class="i">@anima</span>.<span class="w">de</span></code>
+</p>
+<p>Maintained by Michael G Schwern <code class="inline"><span class="w">schwern</span><span class="i">@pobox</span>.<span class="w">com</span></code>
+ within the
+ExtUtils-MakeMaker package and, as a separate CPAN package, by
+Randy Kobes <code class="inline"><span class="w">r</span>.<span class="w">kobes</span><span class="i">@uwinnipeg</span>.<span class="w">ca</span></code>
+.</p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../close_purple.gif';" onmouseout="rightCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('ExtUtils::Manifest','ExtUtils/Manifest.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

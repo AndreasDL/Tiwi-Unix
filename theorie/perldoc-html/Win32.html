@@ -1,0 +1,529 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>Win32 - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 0;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='close_purple.gif';" onmouseout="leftCloseIcon.src='close_blue.gif';"><img src="close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="index-overview.html">Overview</a></li>
+        <li><a href="index-tutorials.html">Tutorials</a></li>
+        <li><a href="index-faq.html">FAQs</a></li>
+        <li><a href="index-history.html">History / Changes</a></li>
+        <li><a href="index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="index-language.html">Language</a></li>
+        <li><a href="index-functions.html">Functions</a></li>
+        <li><a href="perlop.html">Operators</a></li>
+        <li><a href="perlvar.html">Special variables</a></li>
+        <li><a href="index-pragmas.html">Pragmas</a></li>
+        <li><a href="index-modules-A.html">Core modules</a></li>
+        <li><a href="index-utilities.html">Utilities</a></li>
+        <li><a href="index-internals.html">Internals</a></li>
+        <li><a href="index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="index.html">Home</a> &gt; <a href="index-modules-A.html">Core modules</a> &gt; <a href="index-modules-W.html">W</a> &gt; Win32</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">Win32</div><ul><li><a href="#NAME">NAME</a><li><a href="#DESCRIPTION">DESCRIPTION</a><ul><li><a href="#Alphabetical-Listing-of-Win32-Functions">Alphabetical Listing of Win32 Functions</a></ul></ul><a name="NAME"></a><h1>NAME</h1>
+<p>Win32 - Interfaces to some Win32 API Functions</p>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p>The Win32 module contains functions to access Win32 APIs.</p>
+<a name="Alphabetical-Listing-of-Win32-Functions"></a><h2>Alphabetical Listing of Win32 Functions</h2>
+<p>It is recommended to <code class="inline"><a class="l_k" href="functions/use.html">use</a> <span class="w">Win32</span><span class="sc">;</span></code>
+ before any of these functions;
+however, for backwards compatibility, those marked as [CORE] will
+automatically do this for you.</p>
+<p>In the function descriptions below the term <i>Unicode string</i> is used
+to indicate that the string may contain characters outside the system
+codepage.  The caveat <i>If supported by the core Perl version</i>
+generally means Perl 5.8.9 and later, though some Unicode pathname
+functionality may work on earlier versions.</p>
+<ul>
+<li><a name="Win320x3a0x3aAbortSystemShutdown(MACHINE)"></a><b>Win32::AbortSystemShutdown(MACHINE)</b>
+<p>Aborts a system shutdown (started by the
+InitiateSystemShutdown function) on the specified MACHINE.</p>
+</li>
+<li><a name="Win320x3a0x3aBuildNumber()"></a><b>Win32::BuildNumber()</b>
+<p>[CORE] Returns the ActivePerl build number.  This function is
+only available in the ActivePerl binary distribution.</p>
+</li>
+<li><a name="Win320x3a0x3aCopyFile(FROM0x2c-TO0x2c-OVERWRITE)"></a><b>Win32::CopyFile(FROM, TO, OVERWRITE)</b>
+<p>[CORE] The Win32::CopyFile() function copies an existing file to a new
+file.  All file information like creation time and file attributes will
+be copied to the new file.  However it will <b>not</b> copy the security
+information.  If the destination file already exists it will only be
+overwritten when the OVERWRITE parameter is true.  But even this will
+not overwrite a read-only file; you have to unlink() it first
+yourself.</p>
+</li>
+<li><a name="Win320x3a0x3aCreateDirectory(DIRECTORY)"></a><b>Win32::CreateDirectory(DIRECTORY)</b>
+<p>Creates the DIRECTORY and returns a true value on success.  Check $^E
+on failure for extended error information.</p>
+<p>DIRECTORY may contain Unicode characters outside the system codepage.
+Once the directory has been created you can use
+Win32::GetANSIPathName() to get a name that can be passed to system
+calls and external programs.</p>
+</li>
+<li><a name="Win320x3a0x3aCreateFile(FILE)"></a><b>Win32::CreateFile(FILE)</b>
+<p>Creates the FILE and returns a true value on success.  Check $^E on
+failure for extended error information.</p>
+<p>FILE may contain Unicode characters outside the system codepage.  Once
+the file has been created you can use Win32::GetANSIPathName() to get
+a name that can be passed to system calls and external programs.</p>
+</li>
+<li><a name="Win320x3a0x3aDomainName()"></a><b>Win32::DomainName()</b>
+<p>[CORE] Returns the name of the Microsoft Network domain or workgroup
+that the owner of the current perl process is logged into.  The
+"Workstation" service must be running to determine this
+information.  This function does <b>not</b> work on Windows 9x.</p>
+</li>
+<li><a name="Win320x3a0x3aExpandEnvironmentStrings(STRING)"></a><b>Win32::ExpandEnvironmentStrings(STRING)</b>
+<p>Takes STRING and replaces all referenced environment variable
+names with their defined values.  References to environment variables
+take the form <code class="inline"><span class="i">%VariableName</span>%</code>
+.  Case is ignored when looking up the
+VariableName in the environment.  If the variable is not found then the
+original <code class="inline"><span class="i">%VariableName</span>%</code>
+ text is retained.  Has the same effect
+as the following:</p>
+<pre class="verbatim">	<span class="i">$string</span> =~ <span class="q">s/%([^%]*)%/$ENV{$1} || &quot;%$1%&quot;/eg</span></pre>
+<p>However, this function may return a Unicode string if the environment
+variable being expanded hasn't been assigned to via %ENV.  Access
+to %ENV is currently always using byte semantics.</p>
+</li>
+<li><a name="Win320x3a0x3aFormatMessage(ERRORCODE)"></a><b>Win32::FormatMessage(ERRORCODE)</b>
+<p>[CORE] Converts the supplied Win32 error number (e.g. returned by
+Win32::GetLastError()) to a descriptive string.  Analogous to the
+perror() standard-C library function.  Note that <code class="inline"><span class="i">$^E</span></code>
+ used
+in a string context has much the same effect.</p>
+<pre class="verbatim">	C:\&gt; perl -e "$^E = 26; print $^E;"
+	The specified disk or diskette cannot be accessed</pre></li>
+<li><a name="Win320x3a0x3aFsType()"></a><b>Win32::FsType()</b>
+<p>[CORE] Returns the name of the filesystem of the currently active
+drive (like 'FAT' or 'NTFS').  In list context it returns three values:
+(FSTYPE, FLAGS, MAXCOMPLEN).  FSTYPE is the filesystem type as
+before.  FLAGS is a combination of values of the following table:</p>
+<pre class="verbatim">	0x00000001  supports case-sensitive filenames
+	0x00000002  preserves the case of filenames
+	0x00000004  supports Unicode in filenames
+	0x00000008  preserves and enforces ACLs
+	0x00000010  supports file-based compression
+	0x00000020  supports disk quotas
+	0x00000040  supports sparse files
+	0x00000080  supports reparse points
+	0x00000100  supports remote storage
+	0x00008000  is a compressed volume (e.g. DoubleSpace)
+	0x00010000  supports object identifiers
+	0x00020000  supports the Encrypted File System (EFS)</pre><p>MAXCOMPLEN is the maximum length of a filename component (the part
+between two backslashes) on this file system.</p>
+</li>
+<li><a name="Win320x3a0x3aFreeLibrary(HANDLE)"></a><b>Win32::FreeLibrary(HANDLE)</b>
+<p>Unloads a previously loaded dynamic-link library.  The HANDLE is
+no longer valid after this call.  See <i>LoadLibrary</i>
+for information on dynamically loading a library.</p>
+</li>
+<li><a name="Win320x3a0x3aGetANSIPathName(FILENAME)"></a><b>Win32::GetANSIPathName(FILENAME)</b>
+<p>Returns an ANSI version of FILENAME.  This may be the short name
+if the long name cannot be represented in the system codepage.</p>
+<p>While not currently implemented, it is possible that in the future
+this function will convert only parts of the path to FILENAME to a
+short form.</p>
+<p>If FILENAME doesn't exist on the filesystem, or if the filesystem
+doesn't support short ANSI filenames, then this function will
+translate the Unicode name into the system codepage using replacement
+characters.</p>
+</li>
+<li><a name="Win320x3a0x3aGetArchName()"></a><b>Win32::GetArchName()</b>
+<p>Use of this function is deprecated.  It is equivalent with
+$ENV{PROCESSOR_ARCHITECTURE}.  This might not work on Win9X.</p>
+</li>
+<li><a name="Win320x3a0x3aGetChipName()"></a><b>Win32::GetChipName()</b>
+<p>Returns the processor type: 386, 486 or 586 for Intel processors,
+21064 for the Alpha chip.</p>
+</li>
+<li><a name="Win320x3a0x3aGetCwd()"></a><b>Win32::GetCwd()</b>
+<p>[CORE] Returns the current active drive and directory.  This function
+does not return a UNC path, since the functionality required for such
+a feature is not available under Windows 95.</p>
+<p>If supported by the core Perl version, this function will return an
+ANSI path name for the current directory if the long pathname cannot
+be represented in the system codepage.</p>
+</li>
+<li><a name="Win320x3a0x3aGetCurrentThreadId()"></a><b>Win32::GetCurrentThreadId()</b>
+<p>Returns the thread identifier of the calling thread.  Until the thread
+terminates, the thread identifier uniquely identifies the thread
+throughout the system.</p>
+<p>Note: the current process identifier is available via the predefined
+$$ variable.</p>
+</li>
+<li><a name="Win320x3a0x3aGetFileVersion(FILENAME)"></a><b>Win32::GetFileVersion(FILENAME)</b>
+<p>Returns the file version number from the VERSIONINFO resource of
+the executable file or DLL.  This is a tuple of four 16 bit numbers.
+In list context these four numbers will be returned.  In scalar context
+they are concatenated into a string, separated by dots.</p>
+</li>
+<li><a name="Win320x3a0x3aGetFolderPath(FOLDER-0x5b0x2c-CREATE0x5d)"></a><b>Win32::GetFolderPath(FOLDER [, CREATE])</b>
+<p>Returns the full pathname of one of the Windows special folders.
+The folder will be created if it doesn't exist and the optional CREATE
+argument is true.  The following FOLDER constants are defined by the
+Win32 module, but only exported on demand:</p>
+<pre class="verbatim">        <span class="w">CSIDL_ADMINTOOLS</span>
+        <span class="w">CSIDL_APPDATA</span>
+        <span class="w">CSIDL_CDBURN_AREA</span>
+        <span class="w">CSIDL_COMMON_ADMINTOOLS</span>
+        <span class="w">CSIDL_COMMON_APPDATA</span>
+        <span class="w">CSIDL_COMMON_DESKTOPDIRECTORY</span>
+        <span class="w">CSIDL_COMMON_DOCUMENTS</span>
+        <span class="w">CSIDL_COMMON_FAVORITES</span>
+        <span class="w">CSIDL_COMMON_MUSIC</span>
+        <span class="w">CSIDL_COMMON_PICTURES</span>
+        <span class="w">CSIDL_COMMON_PROGRAMS</span>
+        <span class="w">CSIDL_COMMON_STARTMENU</span>
+        <span class="w">CSIDL_COMMON_STARTUP</span>
+        <span class="w">CSIDL_COMMON_TEMPLATES</span>
+        <span class="w">CSIDL_COMMON_VIDEO</span>
+        <span class="w">CSIDL_COOKIES</span>
+        <span class="w">CSIDL_DESKTOP</span>
+        <span class="w">CSIDL_DESKTOPDIRECTORY</span>
+        <span class="w">CSIDL_FAVORITES</span>
+        <span class="w">CSIDL_FONTS</span>
+        <span class="w">CSIDL_HISTORY</span>
+        <span class="w">CSIDL_INTERNET_CACHE</span>
+        <span class="w">CSIDL_LOCAL_APPDATA</span>
+        <span class="w">CSIDL_MYMUSIC</span>
+        <span class="w">CSIDL_MYPICTURES</span>
+        <span class="w">CSIDL_MYVIDEO</span>
+        <span class="w">CSIDL_NETHOOD</span>
+        <span class="w">CSIDL_PERSONAL</span>
+        <span class="w">CSIDL_PRINTHOOD</span>
+        <span class="w">CSIDL_PROFILE</span>
+        <span class="w">CSIDL_PROGRAMS</span>
+        <span class="w">CSIDL_PROGRAM_FILES</span>
+        <span class="w">CSIDL_PROGRAM_FILES_COMMON</span>
+        <span class="w">CSIDL_RECENT</span>
+        <span class="w">CSIDL_RESOURCES</span>
+        <span class="w">CSIDL_RESOURCES_LOCALIZED</span>
+        <span class="w">CSIDL_SENDTO</span>
+        <span class="w">CSIDL_STARTMENU</span>
+        <span class="w">CSIDL_STARTUP</span>
+        <span class="w">CSIDL_SYSTEM</span>
+        <span class="w">CSIDL_TEMPLATES</span>
+        <span class="w">CSIDL_WINDOWS</span></pre>
+<p>Note that not all folders are defined on all versions of Windows.</p>
+<p>Please refer to the MSDN documentation of the CSIDL constants,
+currently available at:</p>
+<p><a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/shellcc/platform/shell/reference/enums/csidl.asp">http://msdn.microsoft.com/library/default.asp?url=/library/en-us/shellcc/platform/shell/reference/enums/csidl.asp</a></p>
+<p>This function will return an ANSI folder path if the long name cannot
+be represented in the system codepage.  Use Win32::GetLongPathName()
+on the result of Win32::GetFolderPath() if you want the Unicode
+version of the folder name.</p>
+</li>
+<li><a name="Win320x3a0x3aGetFullPathName(FILENAME)"></a><b>Win32::GetFullPathName(FILENAME)</b>
+<p>[CORE] GetFullPathName combines the FILENAME with the current drive
+and directory name and returns a fully qualified (aka, absolute)
+path name.  In list context it returns two elements: (PATH, FILE) where
+PATH is the complete pathname component (including trailing backslash)
+and FILE is just the filename part.  Note that no attempt is made to
+convert 8.3 components in the supplied FILENAME to longnames or
+vice-versa.  Compare with Win32::GetShortPathName() and
+Win32::GetLongPathName().</p>
+<p>If supported by the core Perl version, this function will return an
+ANSI path name if the full pathname cannot be represented in the
+system codepage.</p>
+</li>
+<li><a name="Win320x3a0x3aGetLastError()"></a><b>Win32::GetLastError()</b>
+<p>[CORE] Returns the last error value generated by a call to a Win32 API
+function.  Note that <code class="inline"><span class="i">$^E</span></code>
+ used in a numeric context amounts to the
+same value.</p>
+</li>
+<li><a name="Win320x3a0x3aGetLongPathName(PATHNAME)"></a><b>Win32::GetLongPathName(PATHNAME)</b>
+<p>[CORE] Returns a representation of PATHNAME composed of longname
+components (if any).  The result may not necessarily be longer
+than PATHNAME.  No attempt is made to convert PATHNAME to the
+absolute path.  Compare with Win32::GetShortPathName() and
+Win32::GetFullPathName().</p>
+<p>This function may return the pathname in Unicode if it cannot be
+represented in the system codepage.  Use Win32::GetANSIPathName()
+before passing the path to a system call or another program.</p>
+</li>
+<li><a name="Win320x3a0x3aGetNextAvailDrive()"></a><b>Win32::GetNextAvailDrive()</b>
+<p>[CORE] Returns a string in the form of "&lt;d&gt;:" where &lt;d&gt; is the first
+available drive letter.</p>
+</li>
+<li><a name="Win320x3a0x3aGetOSVersion()"></a><b>Win32::GetOSVersion()</b>
+<p>[CORE] Returns the list (STRING, MAJOR, MINOR, BUILD, ID), where the
+elements are, respectively: An arbitrary descriptive string, the major
+version number of the operating system, the minor version number, the
+build number, and a digit indicating the actual operating system.
+For the ID, the values are 0 for Win32s, 1 for Windows 9X/Me and 2 for
+Windows NT/2000/XP/2003/Vista.  In scalar context it returns just the ID.</p>
+<p>Currently known values for ID MAJOR and MINOR are as follows:</p>
+<pre class="verbatim">    OS                    ID    MAJOR   MINOR
+    Win32s                 0      -       -
+    Windows 95             1      4       0
+    Windows 98             1      4      10
+    Windows Me             1      4      90
+    Windows NT 3.51        2      3      51
+    Windows NT 4           2      4       0
+    Windows 2000           2      5       0
+    Windows XP             2      5       1
+    Windows Server 2003    2      5       2
+    Windows Vista          2      6       0</pre><p>On Windows NT 4 SP6 and later this function returns the following
+additional values: SPMAJOR, SPMINOR, SUITEMASK, PRODUCTTYPE.</p>
+<p>SPMAJOR and SPMINOR are are the version numbers of the latest
+installed service pack.</p>
+<p>SUITEMASK is a bitfield identifying the product suites available on
+the system.  Known bits are:</p>
+<pre class="verbatim">    VER_SUITE_SMALLBUSINESS             0x00000001
+    VER_SUITE_ENTERPRISE                0x00000002
+    VER_SUITE_BACKOFFICE                0x00000004
+    VER_SUITE_COMMUNICATIONS            0x00000008
+    VER_SUITE_TERMINAL                  0x00000010
+    VER_SUITE_SMALLBUSINESS_RESTRICTED  0x00000020
+    VER_SUITE_EMBEDDEDNT                0x00000040
+    VER_SUITE_DATACENTER                0x00000080
+    VER_SUITE_SINGLEUSERTS              0x00000100
+    VER_SUITE_PERSONAL                  0x00000200
+    VER_SUITE_BLADE                     0x00000400
+    VER_SUITE_EMBEDDED_RESTRICTED       0x00000800
+    VER_SUITE_SECURITY_APPLIANCE        0x00001000</pre><p>The VER_SUITE_xxx names are listed here to crossreference the Microsoft
+documentation.  The Win32 module does not provide symbolic names for these
+constants.</p>
+<p>PRODUCTTYPE provides additional information about the system.  It should
+be one of the following integer values:</p>
+<pre class="verbatim">    1 - Workstation (NT 4, 2000 Pro, XP Home, XP Pro, Vista)
+    2 - Domaincontroller
+    3 - Server</pre></li>
+<li><a name="Win320x3a0x3aGetOSName()"></a><b>Win32::GetOSName()</b>
+<p>In scalar context returns the name of the Win32 operating system
+being used.  In list context returns a two element list of the OS name
+and whatever edition information is known about the particular build
+(for Win9X boxes) and whatever service packs have been installed.
+The latter is roughly equivalent to the first item returned by
+GetOSVersion() in list context.</p>
+<p>Currently the possible values for the OS name are</p>
+<pre class="verbatim"> Win32s Win95 Win98 WinMe WinNT3.51 WinNT4 Win2000 WinXP/.Net Win2003 WinVista</pre><p>This routine is just a simple interface into GetOSVersion().  More
+specific or demanding situations should use that instead.  Another
+option would be to use POSIX::uname(), however the latter appears to
+report only the OS family name and not the specific OS.  In scalar
+context it returns just the ID.</p>
+<p>The name "WinXP/.Net" is used for historical reasons only, to maintain
+backwards compatibility of the Win32 module.  Windows .NET Server has
+been renamed as Windows 2003 Server before final release and uses a
+different major/minor version number than Windows XP.</p>
+</li>
+<li><a name="Win320x3a0x3aGetShortPathName(PATHNAME)"></a><b>Win32::GetShortPathName(PATHNAME)</b>
+<p>[CORE] Returns a representation of PATHNAME that is composed of short
+(8.3) path components where available.  For path components where the
+file system has not generated the short form the returned path will
+use the long form, so this function might still for instance return a
+path containing spaces.  Returns <code class="inline"><a class="l_k" href="functions/undef.html">undef</a></code> when the PATHNAME does not
+exist. Compare with Win32::GetFullPathName() and
+Win32::GetLongPathName().</p>
+</li>
+<li><a name="Win320x3a0x3aGetProcAddress(INSTANCE0x2c-PROCNAME)"></a><b>Win32::GetProcAddress(INSTANCE, PROCNAME)</b>
+<p>Returns the address of a function inside a loaded library.  The
+information about what you can do with this address has been lost in
+the mist of time.  Use the Win32::API module instead of this deprecated
+function.</p>
+</li>
+<li><a name="Win320x3a0x3aGetTickCount()"></a><b>Win32::GetTickCount()</b>
+<p>[CORE] Returns the number of milliseconds elapsed since the last
+system boot.  Resolution is limited to system timer ticks (about 10ms
+on WinNT and 55ms on Win9X).</p>
+</li>
+<li><a name="Win320x3a0x3aGuidGen()"></a><b>Win32::GuidGen()</b>
+<p>Creates a globally unique 128 bit integer that can be used as a
+persistent identifier in a distributed setting. To a very high degree
+of certainty this function returns a unique value. No other
+invocation, on the same or any other system (networked or not), should
+return the same value.</p>
+<p>The return value is formatted according to OLE conventions, as groups
+of hex digits with surrounding braces.  For example:</p>
+<pre class="verbatim">    {09531CF1-D0C7-4860-840C-1C8C8735E2AD}</pre></li>
+<li><a name="Win320x3a0x3aInitiateSystemShutdown"></a><b>Win32::InitiateSystemShutdown</b>
+<p>(MACHINE, MESSAGE, TIMEOUT, FORCECLOSE, REBOOT)</p>
+<p>Shutsdown the specified MACHINE, notifying users with the
+supplied MESSAGE, within the specified TIMEOUT interval.  Forces
+closing of all documents without prompting the user if FORCECLOSE is
+true, and reboots the machine if REBOOT is true.  This function works
+only on WinNT.</p>
+</li>
+<li><a name="Win320x3a0x3aIsAdminUser()"></a><b>Win32::IsAdminUser()</b>
+<p>Returns non zero if the account in whose security context the
+current process/thread is running belongs to the local group of
+Administrators in the built-in system domain; returns 0 if not.
+On Windows Vista it will only return non-zero if the process is
+actually running with elevated privileges.  Returns <code class="inline"><a class="l_k" href="functions/undef.html">undef</a></code>
+and prints a warning if an error occurred.  This function always
+returns 1 on Win9X.</p>
+</li>
+<li><a name="Win320x3a0x3aIsWinNT()"></a><b>Win32::IsWinNT()</b>
+<p>[CORE] Returns non zero if the Win32 subsystem is Windows NT.</p>
+</li>
+<li><a name="Win320x3a0x3aIsWin95()"></a><b>Win32::IsWin95()</b>
+<p>[CORE] Returns non zero if the Win32 subsystem is Windows 95.</p>
+</li>
+<li><a name="Win320x3a0x3aLoadLibrary(LIBNAME)"></a><b>Win32::LoadLibrary(LIBNAME)</b>
+<p>Loads a dynamic link library into memory and returns its module
+handle.  This handle can be used with Win32::GetProcAddress() and
+Win32::FreeLibrary().  This function is deprecated.  Use the Win32::API
+module instead.</p>
+</li>
+<li><a name="Win320x3a0x3aLoginName()"></a><b>Win32::LoginName()</b>
+<p>[CORE] Returns the username of the owner of the current perl process.
+The return value may be a Unicode string.</p>
+</li>
+<li><a name="Win320x3a0x3aLookupAccountName(SYSTEM0x2c-ACCOUNT0x2c-DOMAIN0x2c-SID0x2c-SIDTYPE)"></a><b>Win32::LookupAccountName(SYSTEM, ACCOUNT, DOMAIN, SID, SIDTYPE)</b>
+<p>Looks up ACCOUNT on SYSTEM and returns the domain name the SID and
+the SID type.</p>
+</li>
+<li><a name="Win320x3a0x3aLookupAccountSID(SYSTEM0x2c-SID0x2c-ACCOUNT0x2c-DOMAIN0x2c-SIDTYPE)"></a><b>Win32::LookupAccountSID(SYSTEM, SID, ACCOUNT, DOMAIN, SIDTYPE)</b>
+<p>Looks up SID on SYSTEM and returns the account name, domain name,
+and the SID type.</p>
+</li>
+<li><a name="Win320x3a0x3aMsgBox(MESSAGE-0x5b0x2c-FLAGS-0x5b0x2c-TITLE0x5d0x5d)"></a><b>Win32::MsgBox(MESSAGE [, FLAGS [, TITLE]])</b>
+<p>Create a dialogbox containing MESSAGE.  FLAGS specifies the
+required icon and buttons according to the following table:</p>
+<pre class="verbatim">	<span class="n">0</span> = <span class="w">OK</span>
+	<span class="n">1</span> = <span class="w">OK</span> and <span class="w">Cancel</span>
+	<span class="n">2</span> = <span class="w">Abort</span><span class="cm">,</span> <span class="w">Retry</span><span class="cm">,</span> and <span class="w">Ignore</span>
+	<span class="n">3</span> = <span class="w">Yes</span><span class="cm">,</span> <span class="w">No</span> and <span class="w">Cancel</span>
+	<span class="n">4</span> = <span class="w">Yes</span> and <span class="w">No</span>
+	<span class="n">5</span> = <span class="w">Retry</span> and <span class="w">Cancel</span></pre>
+<pre class="verbatim">	MB_ICONSTOP          "X" in a red circle
+	MB_ICONQUESTION      question mark in a bubble
+	MB_ICONEXCLAMATION   exclamation mark in a yellow triangle
+	MB_ICONINFORMATION   "i" in a bubble</pre><p>TITLE specifies an optional window title.  The default is "Perl".</p>
+<p>The function returns the menu id of the selected push button:</p>
+<pre class="verbatim">	0  Error</pre><pre class="verbatim">	1  OK
+	2  Cancel
+	3  Abort
+	4  Retry
+	5  Ignore
+	6  Yes
+	7  No</pre></li>
+<li><a name="Win320x3a0x3aNodeName()"></a><b>Win32::NodeName()</b>
+<p>[CORE] Returns the Microsoft Network node-name of the current machine.</p>
+</li>
+<li><a name="Win320x3a0x3aOutputDebugString(STRING)"></a><b>Win32::OutputDebugString(STRING)</b>
+<p>Sends a string to the application or system debugger for display.
+The function does nothing if there is no active debugger.</p>
+<p>Alternatively one can use the <i>Debug Viewer</i> application to
+watch the OutputDebugString() output:</p>
+<p><a href="http://www.microsoft.com/technet/sysinternals/utilities/debugview.mspx">http://www.microsoft.com/technet/sysinternals/utilities/debugview.mspx</a></p>
+</li>
+<li><a name="Win320x3a0x3aRegisterServer(LIBRARYNAME)"></a><b>Win32::RegisterServer(LIBRARYNAME)</b>
+<p>Loads the DLL LIBRARYNAME and calls the function DllRegisterServer.</p>
+</li>
+<li><a name="Win320x3a0x3aSetChildShowWindow(SHOWWINDOW)"></a><b>Win32::SetChildShowWindow(SHOWWINDOW)</b>
+<p>[CORE] Sets the <i>ShowMode</i> of child processes started by system().
+By default system() will create a new console window for child
+processes if Perl itself is not running from a console.  Calling
+SetChildShowWindow(0) will make these new console windows invisible.
+Calling SetChildShowWindow() without arguments reverts system() to the
+default behavior.  The return value of SetChildShowWindow() is the
+previous setting or <code class="inline"><a class="l_k" href="functions/undef.html">undef</a></code>.</p>
+<p>The following symbolic constants for SHOWWINDOW are available
+(but not exported) from the Win32 module: SW_HIDE, SW_SHOWNORMAL,
+SW_SHOWMINIMIZED, SW_SHOWMAXIMIZED and SW_SHOWNOACTIVATE.</p>
+</li>
+<li><a name="Win320x3a0x3aSetCwd(NEWDIRECTORY)"></a><b>Win32::SetCwd(NEWDIRECTORY)</b>
+<p>[CORE] Sets the current active drive and directory.  This function does not
+work with UNC paths, since the functionality required to required for
+such a feature is not available under Windows 95.</p>
+</li>
+<li><a name="Win320x3a0x3aSetLastError(ERROR)"></a><b>Win32::SetLastError(ERROR)</b>
+<p>[CORE] Sets the value of the last error encountered to ERROR.  This is
+that value that will be returned by the Win32::GetLastError()
+function.</p>
+</li>
+<li><a name="Win320x3a0x3aSleep(TIME)"></a><b>Win32::Sleep(TIME)</b>
+<p>[CORE] Pauses for TIME milliseconds.  The timeslices are made available
+to other processes and threads.</p>
+</li>
+<li><a name="Win320x3a0x3aSpawn(COMMAND0x2c-ARGS0x2c-PID)"></a><b>Win32::Spawn(COMMAND, ARGS, PID)</b>
+<p>[CORE] Spawns a new process using the supplied COMMAND, passing in
+arguments in the string ARGS.  The pid of the new process is stored in
+PID.  This function is deprecated.  Please use the Win32::Process module
+instead.</p>
+</li>
+<li><a name="Win320x3a0x3aUnregisterServer(LIBRARYNAME)"></a><b>Win32::UnregisterServer(LIBRARYNAME)</b>
+<p>Loads the DLL LIBRARYNAME and calls the function
+DllUnregisterServer.</p>
+</li>
+</ul>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='close_purple.gif';" onmouseout="rightCloseIcon.src='close_blue.gif';"><img src="close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('Win32','Win32.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

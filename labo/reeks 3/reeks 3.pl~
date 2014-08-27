@@ -1,0 +1,38 @@
+$datum = "11/10/2012";
+if ($datum=~ /(\d\d)\/(\d\d)\/(\d\d\d\d)/){
+  print "de dag is ",$1," de maand is ",$2," het jaar is ",$3;
+}
+print "stuff done";
+
+$_ = "hallo ik ben andreas de lille";
+while(/(.*)\ /){
+  print join $1, "\n";
+}
+
+$t = "    whitespace moet weg    ";
+$t =~ s/^\s+|\s+$//g;
+print $t , ':';
+
+$n ="123456";
+$g ="-14578";
+$d = "547.256";
+if($n =~ /^\d*$/){
+  print "natuurlijk getal";
+}
+if($g =~ /^[-]?[0-9]*$/){
+ print "geheel getal";
+}
+if($d =~ /^[-]?\d+[.]\d*$/){
+  print "decimaal getal";
+}
+
+$tekst = "andreas de lille is ::";
+$tekst =~ s/([^:]*)[:]{2}/$1geweldig/;
+print $tekst;
+
+$tekst = "dedfdqeafdjqdmflk jqmlkjgmtgibjkgvjqmdkfjvq mdfjmedijfmck abcdefghijklmnopqrstuvwxyz";
+@letters = sort{$a cmp $b} split('',$tekst);
+#letters die meer dan een keer voor komen elimineren => via map
+
+print @letters;
+

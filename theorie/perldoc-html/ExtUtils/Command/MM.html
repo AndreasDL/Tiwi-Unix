@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>ExtUtils::Command::MM - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 2;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../../close_purple.gif';" onmouseout="leftCloseIcon.src='../../close_blue.gif';"><img src="../../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../../index-overview.html">Overview</a></li>
+        <li><a href="../../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../../index-faq.html">FAQs</a></li>
+        <li><a href="../../index-history.html">History / Changes</a></li>
+        <li><a href="../../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../../index-language.html">Language</a></li>
+        <li><a href="../../index-functions.html">Functions</a></li>
+        <li><a href="../../perlop.html">Operators</a></li>
+        <li><a href="../../perlvar.html">Special variables</a></li>
+        <li><a href="../../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../../index-modules-A.html">Core modules</a></li>
+        <li><a href="../../index-utilities.html">Utilities</a></li>
+        <li><a href="../../index-internals.html">Internals</a></li>
+        <li><a href="../../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../../index.html">Home</a> &gt; <a href="../../index-modules-A.html">Core modules</a> &gt; <a href="../../index-modules-E.html">E</a> &gt; ExtUtils::Command::MM</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">ExtUtils::Command::MM</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>ExtUtils::Command::MM - Commands for the MM's to use in Makefiles</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">  perl "-MExtUtils::Command::MM" -e "function" "--" arguments...</pre><a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p><b>FOR INTERNAL USE ONLY!</b>  The interface is not stable.</p>
+<p>ExtUtils::Command::MM encapsulates code which would otherwise have to
+be done with large "one" liners.</p>
+<p>Any $(FOO) used in the examples are make variables, not Perl.</p>
+<ul>
+<li><a name="*test_harness*"></a><b><b>test_harness</b></b>
+<pre class="verbatim">  <span class="i">test_harness</span><span class="s">(</span><span class="i">$verbose</span><span class="cm">,</span> <span class="i">@test_libs</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Runs the tests on @ARGV via Test::Harness passing through the $verbose
+flag.  Any @test_libs will be unshifted onto the test's @INC.</p>
+<p>@test_libs are run in alphabetical order.</p>
+</li>
+<li><a name="*pod2man*"></a><b><b>pod2man</b></b>
+<pre class="verbatim">  <span class="i">pod2man</span><span class="s">(</span> <span class="q">&#39;--option=value&#39;</span><span class="cm">,</span>
+           <span class="i">$podfile1</span> <span class="cm">=&gt;</span> <span class="i">$manpage1</span><span class="cm">,</span>
+           <span class="i">$podfile2</span> <span class="cm">=&gt;</span> <span class="i">$manpage2</span><span class="cm">,</span>
+           ...
+         <span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <span class="c"># or args on @ARGV</span></pre>
+<p>pod2man() is a function performing most of the duties of the pod2man
+program.  Its arguments are exactly the same as pod2man as of 5.8.0
+with the addition of:</p>
+<pre class="verbatim">    --<span class="w">perm_rw</span>   <span class="w">octal</span> <span class="w">permission</span> <span class="w">to</span> <span class="w">set</span> <span class="w">the</span> <span class="w">resulting</span> <span class="w">manpage</span> <span class="w">to</span></pre>
+<p>And the removal of:</p>
+<pre class="verbatim">    --<span class="w">verbose</span><span class="q">/-v</span>
+    <span class="q">    --help/</span>-<span class="w">h</span></pre>
+<p>If no arguments are given to pod2man it will read from @ARGV.</p>
+</li>
+<li><a name="*warn_if_old_packlist*"></a><b><b>warn_if_old_packlist</b></b>
+<pre class="verbatim">  <span class="w">perl</span> <span class="q">&quot;-MExtUtils::Command::MM&quot;</span> -<span class="w">e</span> <span class="w">warn_if_old_packlist</span> <span class="q">&lt;somefile&gt;</span></pre>
+<p>Displays a warning that an old packlist file was found.  Reads the
+filename from @ARGV.</p>
+</li>
+<li><a name="*perllocal_install*"></a><b><b>perllocal_install</b></b>
+<pre class="verbatim">    <span class="w">perl</span> <span class="q">&quot;-MExtUtils::Command::MM&quot;</span> -<span class="w">e</span> <span class="w">perllocal_install</span> 
+        <span class="q">&lt;type&gt;</span> &lt;<span class="w">module</span> <span class="w">name</span>&gt; <span class="q">&lt;key&gt;</span> &lt;<span class="w">value</span>&gt; ...</pre>
+<pre class="verbatim">    <span class="c"># VMS only, key|value pairs come on STDIN</span>
+    <span class="w">perl</span> <span class="q">&quot;-MExtUtils::Command::MM&quot;</span> -<span class="w">e</span> <span class="w">perllocal_install</span>
+        <span class="q">&lt;type&gt;</span> &lt;<span class="w">module</span> <span class="w">name</span>&gt; <span class="q">&lt; &lt;key&gt;</span>|<span class="q">&lt;value&gt;</span> ...</pre>
+<p>Prints a fragment of POD suitable for appending to perllocal.pod.
+Arguments are read from @ARGV.</p>
+<p>'type' is the type of what you're installing.  Usually 'Module'.</p>
+<p>'module name' is simply the name of your module.  (Foo::Bar)</p>
+<p>Key/value pairs are extra information about the module.  Fields include:</p>
+<pre class="verbatim">    <span class="w">installed</span> <span class="w">into</span>      <span class="w">which</span> <span class="w">directory</span> <span class="w">your</span> <span class="w">module</span> <span class="w">was</span> <span class="w">out</span> <span class="w">into</span>
+    <span class="w">LINKTYPE</span>            <span class="w">dynamic</span> or <span class="w">static</span> <span class="w">linking</span>
+    <span class="w">VERSION</span>             <span class="w">module</span> <span class="w">version</span> <span class="w">number</span>
+    <span class="w">EXE_FILES</span>           <span class="w">any</span> <span class="w">executables</span> <span class="w">installed</span> <span class="w">in</span> <span class="w">a</span> <span class="w">space</span> <span class="w">seperated</span> 
+                        <span class="w">list</span></pre>
+</li>
+<li><a name="*uninstall*"></a><b><b>uninstall</b></b>
+<pre class="verbatim">    <span class="w">perl</span> <span class="q">&quot;-MExtUtils::Command::MM&quot;</span> -<span class="w">e</span> <span class="w">uninstall</span> <span class="q">&lt;packlist&gt;</span></pre>
+<p>A wrapper around ExtUtils::Install::uninstall().  Warns that
+uninstallation is deprecated and doesn't actually perform the
+uninstallation.</p>
+</li>
+</ul>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../../close_purple.gif';" onmouseout="rightCloseIcon.src='../../close_blue.gif';"><img src="../../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('ExtUtils::Command::MM','ExtUtils/Command/MM.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

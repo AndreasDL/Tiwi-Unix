@@ -1,0 +1,333 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>File::Fetch - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 1;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../close_purple.gif';" onmouseout="leftCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../index-overview.html">Overview</a></li>
+        <li><a href="../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../index-faq.html">FAQs</a></li>
+        <li><a href="../index-history.html">History / Changes</a></li>
+        <li><a href="../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../index-language.html">Language</a></li>
+        <li><a href="../index-functions.html">Functions</a></li>
+        <li><a href="../perlop.html">Operators</a></li>
+        <li><a href="../perlvar.html">Special variables</a></li>
+        <li><a href="../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../index-modules-A.html">Core modules</a></li>
+        <li><a href="../index-utilities.html">Utilities</a></li>
+        <li><a href="../index-internals.html">Internals</a></li>
+        <li><a href="../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../index.html">Home</a> &gt; <a href="../index-modules-A.html">Core modules</a> &gt; <a href="../index-modules-F.html">F</a> &gt; File::Fetch</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">File::Fetch</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><li><a href="#ACCESSORS">ACCESSORS</a><li><a href="#METHODS">METHODS</a><ul><li><a href="#0x24ff-0x3d-File0x3a0x3aFetch-0x3enew(-uri-0x3d0x3e-'http0x3a0x2f0x2fsome.where.com0x2fdir0x2ffile.txt'-)0x3b">$ff = File::Fetch-&gt;new( uri =&gt; '<a href="http://some.where.com/dir/file.txt">http://some.where.com/dir/file.txt</a>' );</a><li><a href="#0x24ff-0x3efetch(-0x5bto-0x3d0x3e-0x2fmy0x2foutput0x2fdir0x2f0x5d-)">$ff-&gt;fetch( [to =&gt; /my/output/dir/] )</a><li><a href="#0x24ff-0x3eerror(0x5bBOOL0x5d)">$ff-&gt;error([BOOL])</a></ul><li><a href="#HOW-IT-WORKS">HOW IT WORKS</a><li><a href="#GLOBAL-VARIABLES">GLOBAL VARIABLES</a><ul><li><a href="#0x24File0x3a0x3aFetch0x3a0x3aFROM_EMAIL">$File::Fetch::FROM_EMAIL</a><li><a href="#0x24File0x3a0x3aFetch0x3a0x3aUSER_AGENT">$File::Fetch::USER_AGENT</a><li><a href="#0x24File0x3a0x3aFetch0x3a0x3aFTP_PASSIVE">$File::Fetch::FTP_PASSIVE</a><li><a href="#0x24File0x3a0x3aFetch0x3a0x3aTIMEOUT">$File::Fetch::TIMEOUT</a><li><a href="#0x24File0x3a0x3aFetch0x3a0x3aWARN">$File::Fetch::WARN</a><li><a href="#0x24File0x3a0x3aFetch0x3a0x3aDEBUG">$File::Fetch::DEBUG</a><li><a href="#0x24File0x3a0x3aFetch0x3a0x3aBLACKLIST">$File::Fetch::BLACKLIST</a><li><a href="#0x24File0x3a0x3aFetch0x3a0x3aMETHOD_FAIL">$File::Fetch::METHOD_FAIL</a></ul><li><a href="#MAPPING">MAPPING</a><li><a href="#FREQUENTLY-ASKED-QUESTIONS">FREQUENTLY ASKED QUESTIONS</a><ul><li><a href="#So-how-do-I-use-a-proxy-with-File0x3a0x3aFetch0x3f">So how do I use a proxy with File::Fetch?</a><li><a href="#I-used-'lynx'-to-fetch-a-file0x2c-but-its-contents-is-all-wrong!">I used 'lynx' to fetch a file, but its contents is all wrong!</a><li><a href="#Files-I'm-trying-to-fetch-have-reserved-characters-or-non-ASCII-characters-in-them.-What-do-I-do0x3f">Files I'm trying to fetch have reserved characters or non-ASCII characters in them. What do I do?</a></ul><li><a href="#TODO">TODO</a><li><a href="#BUG-REPORTS">BUG REPORTS</a><li><a href="#AUTHOR">AUTHOR</a><li><a href="#COPYRIGHT">COPYRIGHT</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>File::Fetch - A generic file fetching mechanism</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">    <a class="l_k" href="../functions/use.html">use</a> <span class="w">File::Fetch</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="c">### build a File::Fetch object ###</span>
+    <a class="l_k" href="../functions/my.html">my</a> <span class="i">$ff</span> = <span class="w">File::Fetch</span><span class="w">-&gt;new</span><span class="s">(</span><span class="w">uri</span> <span class="cm">=&gt;</span> <span class="q">'<a href="http://some.where.com/dir/a.txt">http://some.where.com/dir/a.txt</a>'</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="c">### fetch the uri to cwd() ###</span>
+    <a class="l_k" href="../functions/my.html">my</a> <span class="i">$where</span> = <span class="i">$ff</span><span class="i">-&gt;fetch</span><span class="s">(</span><span class="s">)</span> or <a class="l_k" href="../functions/die.html">die</a> <span class="i">$ff</span><span class="i">-&gt;error</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="c">### fetch the uri to /tmp ###</span>
+    <a class="l_k" href="../functions/my.html">my</a> <span class="i">$where</span> = <span class="i">$ff</span><span class="i">-&gt;fetch</span><span class="s">(</span> <span class="w">to</span> <span class="cm">=&gt;</span> <span class="q">'/tmp'</span> <span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="c">### parsed bits from the uri ###</span>
+    <span class="i">$ff</span><span class="i">-&gt;uri</span><span class="sc">;</span>
+    <span class="i">$ff</span><span class="i">-&gt;scheme</span><span class="sc">;</span>
+    <span class="i">$ff</span><span class="i">-&gt;host</span><span class="sc">;</span>
+    <span class="i">$ff</span><span class="i">-&gt;path</span><span class="sc">;</span>
+    <span class="i">$ff</span><span class="i">-&gt;file</span><span class="sc">;</span></pre>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p>File::Fetch is a generic file fetching mechanism.</p>
+<p>It allows you to fetch any file pointed to by a <code class="inline"><span class="w">ftp</span></code>
+, <code class="inline"><span class="w">http</span></code>
+,
+<code class="inline"><span class="w">file</span></code>
+, or <code class="inline"><span class="w">rsync</span></code>
+ uri by a number of different means.</p>
+<p>See the <code class="inline"><span class="w">HOW</span> <span class="w">IT</span> <span class="w">WORKS</span></code>
+ section further down for details.</p>
+<a name="ACCESSORS"></a><h1>ACCESSORS</h1>
+<p>A <code class="inline"><span class="w">File::Fetch</span></code>
+ object has the following accessors</p>
+<ul>
+<li><a name="0x24ff-0x3euri"></a><b>$ff-&gt;uri</b>
+<p>The uri you passed to the constructor</p>
+</li>
+<li><a name="0x24ff-0x3escheme"></a><b>$ff-&gt;scheme</b>
+<p>The scheme from the uri (like 'file', 'http', etc)</p>
+</li>
+<li><a name="0x24ff-0x3ehost"></a><b>$ff-&gt;host</b>
+<p>The hostname in the uri.  Will be empty if host was originally 
+'localhost' for a '<a href="file://">file://</a>' url.</p>
+</li>
+<li><a name="0x24ff-0x3evol"></a><b>$ff-&gt;vol</b>
+<p>On operating systems with the concept of a volume the second element
+of a <a href="file://">file://</a> is considered to the be volume specification for the file.
+Thus on Win32 this routine returns the volume, on other operating
+systems this returns nothing.</p>
+<p>On Windows this value may be empty if the uri is to a network share, in 
+which case the 'share' property will be defined. Additionally, volume 
+specifications that use '|' as ':' will be converted on read to use ':'.</p>
+<p>On VMS, which has a volume concept, this field will be empty because VMS
+file specifications are converted to absolute UNIX format and the volume
+information is transparently included.</p>
+</li>
+<li><a name="0x24ff-0x3eshare"></a><b>$ff-&gt;share</b>
+<p>On systems with the concept of a network share (currently only Windows) returns 
+the sharename from a <a href="file:////">file:////</a> url.  On other operating systems returns empty.</p>
+</li>
+<li><a name="0x24ff-0x3epath"></a><b>$ff-&gt;path</b>
+<p>The path from the uri, will be at least a single '/'.</p>
+</li>
+<li><a name="0x24ff-0x3efile"></a><b>$ff-&gt;file</b>
+<p>The name of the remote file. For the local file name, the
+result of $ff-&gt;output_file will be used.</p>
+</li>
+<li><a name="0x24ff-0x3eoutput_file"></a><b>$ff-&gt;output_file</b>
+<p>The name of the output file. This is the same as $ff-&gt;file,
+but any query parameters are stripped off. For example:</p>
+<pre class="verbatim">    http://example.com/index.html?x=y</pre><p>would make the output file be <code class="inline"><a class="l_k" href="../functions/index.html">index.html</a></code> rather than 
+<code class="inline"><a class="l_k" href="../functions/index.html">index.html?x=y</a></code>.</p>
+</li>
+</ul>
+<a name="METHODS"></a><h1>METHODS</h1>
+<a name="0x24ff-0x3d-File0x3a0x3aFetch-0x3enew(-uri-0x3d0x3e-'http0x3a0x2f0x2fsome.where.com0x2fdir0x2ffile.txt'-)0x3b"></a><h2>$ff = File::Fetch-&gt;new( uri =&gt; '<a href="http://some.where.com/dir/file.txt">http://some.where.com/dir/file.txt</a>' );</h2>
+<p>Parses the uri and creates a corresponding File::Fetch::Item object,
+that is ready to be <code class="inline"><span class="w">fetch</span></code>
+ed and returns it.</p>
+<p>Returns false on failure.</p>
+<a name="0x24ff-0x3efetch(-0x5bto-0x3d0x3e-0x2fmy0x2foutput0x2fdir0x2f0x5d-)"></a><h2>$ff-&gt;fetch( [to =&gt; /my/output/dir/] )</h2>
+<p>Fetches the file you requested. By default it writes to <code class="inline"><span class="i">cwd</span><span class="s">(</span><span class="s">)</span></code>
+,
+but you can override that by specifying the <code class="inline"><span class="w">to</span></code>
+ argument.</p>
+<p>Returns the full path to the downloaded file on success, and false
+on failure.</p>
+<a name="0x24ff-0x3eerror(0x5bBOOL0x5d)"></a><h2>$ff-&gt;error([BOOL])</h2>
+<p>Returns the last encountered error as string.
+Pass it a true value to get the <code class="inline"><span class="i">Carp::longmess</span><span class="s">(</span><span class="s">)</span></code>
+ output instead.</p>
+<a name="HOW-IT-WORKS"></a><h1>HOW IT WORKS</h1>
+<p>File::Fetch is able to fetch a variety of uris, by using several
+external programs and modules.</p>
+<p>Below is a mapping of what utilities will be used in what order
+for what schemes, if available:</p>
+<pre class="verbatim">    <span class="w">file</span>    <span class="cm">=&gt;</span> <span class="w">LWP</span><span class="cm">,</span> <span class="w">file</span>
+    <span class="w">http</span>    <span class="cm">=&gt;</span> <span class="w">LWP</span><span class="cm">,</span> <span class="w">wget</span><span class="cm">,</span> <span class="w">curl</span><span class="cm">,</span> <span class="w">lynx</span>
+    <span class="w">ftp</span>     <span class="cm">=&gt;</span> <span class="w">LWP</span><span class="cm">,</span> <span class="w">Net::FTP</span><span class="cm">,</span> <span class="w">wget</span><span class="cm">,</span> <span class="w">curl</span><span class="cm">,</span> <span class="w">ncftp</span><span class="cm">,</span> <span class="w">ftp</span>
+    <span class="w">rsync</span>   <span class="cm">=&gt;</span> <span class="w">rsync</span></pre>
+<p>If you'd like to disable the use of one or more of these utilities
+and/or modules, see the <code class="inline"><span class="i">$BLACKLIST</span></code>
+ variable further down.</p>
+<p>If a utility or module isn't available, it will be marked in a cache
+(see the <code class="inline"><span class="i">$METHOD_FAIL</span></code>
+ variable further down), so it will not be
+tried again. The <code class="inline"><span class="w">fetch</span></code>
+ method will only fail when all options are
+exhausted, and it was not able to retrieve the file.</p>
+<p>A special note about fetching files from an ftp uri:</p>
+<p>By default, all ftp connections are done in passive mode. To change
+that, see the <code class="inline"><span class="i">$FTP_PASSIVE</span></code>
+ variable further down.</p>
+<p>Furthermore, ftp uris only support anonymous connections, so no
+named user/password pair can be passed along.</p>
+<p><code class="inline">/bin/ftp</code> is blacklisted by default; see the <code class="inline"><span class="i">$BLACKLIST</span></code>
+ variable
+further down.</p>
+<a name="GLOBAL-VARIABLES"></a><h1>GLOBAL VARIABLES</h1>
+<p>The behaviour of File::Fetch can be altered by changing the following
+global variables:</p>
+<a name="0x24File0x3a0x3aFetch0x3a0x3aFROM_EMAIL"></a><h2>$File::Fetch::FROM_EMAIL</h2>
+<p>This is the email address that will be sent as your anonymous ftp
+password.</p>
+<p>Default is <code class="inline"><span class="w">File</span>-<span class="w">Fetch</span><span class="i">@example</span>.<span class="w">com</span></code>
+.</p>
+<a name="0x24File0x3a0x3aFetch0x3a0x3aUSER_AGENT"></a><h2>$File::Fetch::USER_AGENT</h2>
+<p>This is the useragent as <code class="inline"><span class="w">LWP</span></code>
+ will report it.</p>
+<p>Default is <code class="inline"><span class="w">File::Fetch</span>/<span class="i">$VERSION</span></code>
+.</p>
+<a name="0x24File0x3a0x3aFetch0x3a0x3aFTP_PASSIVE"></a><h2>$File::Fetch::FTP_PASSIVE</h2>
+<p>This variable controls whether the environment variable <code class="inline"><span class="w">FTP_PASSIVE</span></code>
+
+and any passive switches to commandline tools will be set to true.</p>
+<p>Default value is 1.</p>
+<p>Note: When $FTP_PASSIVE is true, <code class="inline"><span class="w">ncftp</span></code>
+ will not be used to fetch
+files, since passive mode can only be set interactively for this binary</p>
+<a name="0x24File0x3a0x3aFetch0x3a0x3aTIMEOUT"></a><h2>$File::Fetch::TIMEOUT</h2>
+<p>When set, controls the network timeout (counted in seconds).</p>
+<p>Default value is 0.</p>
+<a name="0x24File0x3a0x3aFetch0x3a0x3aWARN"></a><h2>$File::Fetch::WARN</h2>
+<p>This variable controls whether errors encountered internally by
+<code class="inline"><span class="w">File::Fetch</span></code>
+ should be <code class="inline"><span class="w">carp</span></code>
+'d or not.</p>
+<p>Set to false to silence warnings. Inspect the output of the <code class="inline"><span class="i">error</span><span class="s">(</span><span class="s">)</span></code>
+
+method manually to see what went wrong.</p>
+<p>Defaults to <code class="inline"><span class="w">true</span></code>
+.</p>
+<a name="0x24File0x3a0x3aFetch0x3a0x3aDEBUG"></a><h2>$File::Fetch::DEBUG</h2>
+<p>This enables debugging output when calling commandline utilities to
+fetch files.
+This also enables <code class="inline"><span class="w">Carp::longmess</span></code>
+ errors, instead of the regular
+<code class="inline"><span class="w">carp</span></code>
+ errors.</p>
+<p>Good for tracking down why things don't work with your particular
+setup.</p>
+<p>Default is 0.</p>
+<a name="0x24File0x3a0x3aFetch0x3a0x3aBLACKLIST"></a><h2>$File::Fetch::BLACKLIST</h2>
+<p>This is an array ref holding blacklisted modules/utilities for fetching
+files with.</p>
+<p>To disallow the use of, for example, <code class="inline"><span class="w">LWP</span></code>
+ and <code class="inline"><span class="w">Net::FTP</span></code>
+, you could
+set $File::Fetch::BLACKLIST to:</p>
+<pre class="verbatim">    <span class="i">$File::Fetch::BLACKLIST</span> = <span class="s">[</span><span class="q">qw|lwp netftp|</span><span class="s">]</span></pre>
+<p>The default blacklist is [qw|ftp|], as <code class="inline">/bin/ftp</code> is rather unreliable.</p>
+<p>See the note on <code class="inline"><span class="w">MAPPING</span></code>
+ below.</p>
+<a name="0x24File0x3a0x3aFetch0x3a0x3aMETHOD_FAIL"></a><h2>$File::Fetch::METHOD_FAIL</h2>
+<p>This is a hashref registering what modules/utilities were known to fail
+for fetching files (mostly because they weren't installed).</p>
+<p>You can reset this cache by assigning an empty hashref to it, or
+individually remove keys.</p>
+<p>See the note on <code class="inline"><span class="w">MAPPING</span></code>
+ below.</p>
+<a name="MAPPING"></a><h1>MAPPING</h1>
+<p>Here's a quick mapping for the utilities/modules, and their names for
+the $BLACKLIST, $METHOD_FAIL and other internal functions.</p>
+<pre class="verbatim">    <span class="w">LWP</span>         <span class="cm">=&gt;</span> <span class="w">lwp</span>
+    <span class="w">Net::FTP</span>    <span class="cm">=&gt;</span> <span class="w">netftp</span>
+    <span class="w">wget</span>        <span class="cm">=&gt;</span> <span class="w">wget</span>
+    <span class="w">lynx</span>        <span class="cm">=&gt;</span> <span class="w">lynx</span>
+    <span class="w">ncftp</span>       <span class="cm">=&gt;</span> <span class="w">ncftp</span>
+    <span class="w">ftp</span>         <span class="cm">=&gt;</span> <span class="w">ftp</span>
+    <span class="w">curl</span>        <span class="cm">=&gt;</span> <span class="w">curl</span>
+    <span class="w">rsync</span>       <span class="cm">=&gt;</span> <span class="w">rsync</span></pre>
+<a name="FREQUENTLY-ASKED-QUESTIONS"></a><h1>FREQUENTLY ASKED QUESTIONS</h1>
+<a name="So-how-do-I-use-a-proxy-with-File0x3a0x3aFetch0x3f"></a><h2>So how do I use a proxy with File::Fetch?</h2>
+<p><code class="inline"><span class="w">File::Fetch</span></code>
+ currently only supports proxies with LWP::UserAgent.
+You will need to set your environment variables accordingly. For
+example, to use an ftp proxy:</p>
+<pre class="verbatim">    <span class="i">$ENV</span>{<span class="w">ftp_proxy</span>} = <span class="q">'foo.com'</span><span class="sc">;</span></pre>
+<p>Refer to the LWP::UserAgent manpage for more details.</p>
+<a name="I-used-'lynx'-to-fetch-a-file0x2c-but-its-contents-is-all-wrong!"></a><h2>I used 'lynx' to fetch a file, but its contents is all wrong!</h2>
+<p><code class="inline"><span class="w">lynx</span></code>
+ can only fetch remote files by dumping its contents to <code class="inline"><span class="w">STDOUT</span></code>
+,
+which we in turn capture. If that content is a 'custom' error file
+(like, say, a <code class="inline">404 handler</code>), you will get that contents instead.</p>
+<p>Sadly, <code class="inline"><span class="w">lynx</span></code>
+ doesn't support any options to return a different exit
+code on non-<code class="inline">200 OK</code> status, giving us no way to tell the difference
+between a 'successfull' fetch and a custom error page.</p>
+<p>Therefor, we recommend to only use <code class="inline"><span class="w">lynx</span></code>
+ as a last resort. This is 
+why it is at the back of our list of methods to try as well.</p>
+<a name="Files-I'm-trying-to-fetch-have-reserved-characters-or-non-ASCII-characters-in-them.-What-do-I-do0x3f"></a><h2>Files I'm trying to fetch have reserved characters or non-ASCII characters in them. What do I do?</h2>
+<p><code class="inline"><span class="w">File::Fetch</span></code>
+ is relatively smart about things. When trying to write 
+a file to disk, it removes the <code class="inline"><span class="w">query</span> <span class="w">parameters</span></code>
+ (see the 
+<code class="inline"><span class="w">output_file</span></code>
+ method for details) from the file name before creating
+it. In most cases this suffices.</p>
+<p>If you have any other characters you need to escape, please install 
+the <code class="inline"><span class="w">URI::Escape</span></code>
+ module from CPAN, and pre-encode your URI before
+passing it to <code class="inline"><span class="w">File::Fetch</span></code>
+. You can read about the details of URIs 
+and URI encoding here:</p>
+<pre class="verbatim">  http://www.faqs.org/rfcs/rfc2396.html</pre><a name="TODO"></a><h1>TODO</h1>
+<ul>
+<li><a name="Implement-0x24PREFER_BIN"></a><b>Implement $PREFER_BIN</b>
+<p>To indicate to rather use commandline tools than modules</p>
+</li>
+</ul>
+<a name="BUG-REPORTS"></a><h1>BUG REPORTS</h1>
+<p>Please report bugs or other issues to &lt;bug-file-fetch@rt.cpan.org&lt;gt&gt;.</p>
+<a name="AUTHOR"></a><h1>AUTHOR</h1>
+<p>This module by Jos Boumans &lt;kane@cpan.org&gt;.</p>
+<a name="COPYRIGHT"></a><h1>COPYRIGHT</h1>
+<p>This library is free software; you may redistribute and/or modify it 
+under the same terms as Perl itself.</p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../close_purple.gif';" onmouseout="rightCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('File::Fetch','File/Fetch.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,301 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>ExtUtils::Constant::Base - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 2;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../../close_purple.gif';" onmouseout="leftCloseIcon.src='../../close_blue.gif';"><img src="../../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../../index-overview.html">Overview</a></li>
+        <li><a href="../../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../../index-faq.html">FAQs</a></li>
+        <li><a href="../../index-history.html">History / Changes</a></li>
+        <li><a href="../../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../../index-language.html">Language</a></li>
+        <li><a href="../../index-functions.html">Functions</a></li>
+        <li><a href="../../perlop.html">Operators</a></li>
+        <li><a href="../../perlvar.html">Special variables</a></li>
+        <li><a href="../../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../../index-modules-A.html">Core modules</a></li>
+        <li><a href="../../index-utilities.html">Utilities</a></li>
+        <li><a href="../../index-internals.html">Internals</a></li>
+        <li><a href="../../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../../index.html">Home</a> &gt; <a href="../../index-modules-A.html">Core modules</a> &gt; <a href="../../index-modules-E.html">E</a> &gt; ExtUtils::Constant::Base</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">ExtUtils::Constant::Base</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><li><a href="#USAGE">USAGE</a><li><a href="#BUGS">BUGS</a><li><a href="#AUTHOR">AUTHOR</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>ExtUtils::Constant::Base - base class for ExtUtils::Constant objects</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">    <a class="l_k" href="../../functions/require.html">require</a> <span class="w">ExtUtils::Constant::Base</span><span class="sc">;</span>
+    <span class="i">@ISA</span> = <span class="q">&#39;ExtUtils::Constant::Base&#39;</span><span class="sc">;</span></pre>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p>ExtUtils::Constant::Base provides a base implementation of methods to
+generate C code to give fast constant value lookup by named string. Currently
+it's mostly used ExtUtils::Constant::XS, which generates the lookup code
+for the constant() subroutine found in many XS modules.</p>
+<a name="USAGE"></a><h1>USAGE</h1>
+<p>ExtUtils::Constant::Base exports no subroutines. The following methods are
+available</p>
+<ul>
+<li><a name="header"></a><b>header</b>
+<p>A method returning a scalar containing definitions needed, typically for a
+C header file.</p>
+</li>
+<li><a name="memEQ_clause-args_hashref"></a><b>memEQ_clause args_hashref</b>
+<p>A method to return a suitable C <code class="inline">if</code>
+ statement to check whether <i>name</i>
+is equal to the C variable <code class="inline"><span class="w">name</span></code>
+. If <i>checked_at</i> is defined, then it
+is used to avoid <code class="inline"><span class="w">memEQ</span></code>
+ for short names, or to generate a comment to
+highlight the position of the character in the <code class="inline">switch</code>
+ statement.</p>
+<p>If i&lt;checked_at&gt; is a reference to a scalar, then instead it gives
+the characters pre-checked at the beginning, (and the number of chars by
+which the C variable name has been advanced. These need to be chopped from
+the front of <i>name</i>).</p>
+</li>
+<li><a name="dump_names-arg_hashref0x2c-ITEM..."></a><b>dump_names arg_hashref, ITEM...</b>
+<p>An internal function to generate the embedded perl code that will regenerate
+the constant subroutines.  <i>default_type</i>, <i>types</i> and <i>ITEM</i>s are the
+same as for C_constant.  <i>indent</i> is treated as number of spaces to indent
+by.  If <code class="inline"><span class="w">declare_types</span></code>
+ is true a <code class="inline"><span class="i">$types</span></code>
+ is always declared in the perl
+code generated, if defined and false never declared, and if undefined <code class="inline"><span class="i">$types</span></code>
+
+is only declared if the values in <i>types</i> as passed in cannot be inferred from
+<i>default_types</i> and the <i>ITEM</i>s.</p>
+</li>
+<li><a name="assign-arg_hashref0x2c-VALUE..."></a><b>assign arg_hashref, VALUE...</b>
+<p>A method to return a suitable assignment clause. If <i>type</i> is aggregate
+(eg <i>PVN</i> expects both pointer and length) then there should be multiple
+<i>VALUE</i>s for the components. <i>pre</i> and <i>post</i> if defined give snippets
+of C code to proceed and follow the assignment. <i>pre</i> will be at the start
+of a block, so variables may be defined in it.</p>
+</li>
+<li><a name="return_clause-arg_hashref0x2c-ITEM"></a><b>return_clause arg_hashref, ITEM</b>
+<p>A method to return a suitable <code class="inline"><span class="c">#ifdef</span></code>
+ clause. <i>ITEM</i> is a hashref
+(as passed to <code class="inline"><span class="w">C_constant</span></code>
+ and <code class="inline"><span class="w">match_clause</span></code>
+. <i>indent</i> is the number
+of spaces to indent, defaulting to 6.</p>
+</li>
+<li><a name="switch_clause-arg_hashref0x2c-NAMELEN0x2c-ITEMHASH0x2c-ITEM..."></a><b>switch_clause arg_hashref, NAMELEN, ITEMHASH, ITEM...</b>
+<p>An internal method to generate a suitable <code class="inline">switch</code>
+ clause, called by
+<code class="inline"><span class="w">C_constant</span></code>
+ <i>ITEM</i>s are in the hash ref format as given in the description
+of <code class="inline"><span class="w">C_constant</span></code>
+, and must all have the names of the same length, given by
+<i>NAMELEN</i>.  <i>ITEMHASH</i> is a reference to a hash, keyed by name, values being
+the hashrefs in the <i>ITEM</i> list.  (No parameters are modified, and there can
+be keys in the <i>ITEMHASH</i> that are not in the list of <i>ITEM</i>s without
+causing problems - the hash is passed in to save generating it afresh for
+each call).</p>
+</li>
+<li><a name="params-WHAT"></a><b>params WHAT</b>
+<p>An "internal" method, subject to change, currently called to allow an
+overriding class to cache information that will then be passed into all
+the <code class="inline"><span class="i">*param</span>*</code>
+ calls. (Yes, having to read the source to make sense of this is
+considered a known bug). <i>WHAT</i> is be a hashref of types the constant
+function will return. In ExtUtils::Constant::XS this method is used to
+returns a hashref keyed IV NV PV SV to show which combination of pointers will
+be needed in the C argument list generated by
+C_constant_other_params_definition and C_constant_other_params</p>
+</li>
+<li><a name="dogfood-arg_hashref0x2c-ITEM..."></a><b>dogfood arg_hashref, ITEM...</b>
+<p>An internal function to generate the embedded perl code that will regenerate
+the constant subroutines.  Parameters are the same as for C_constant.</p>
+<p>Currently the base class does nothing and returns an empty string.</p>
+</li>
+<li><a name="normalise_items-args0x2c-default_type0x2c-seen_types0x2c-seen_items0x2c-ITEM..."></a><b>normalise_items args, default_type, seen_types, seen_items, ITEM...</b>
+<p>Convert the items to a normalised form. For 8 bit and Unicode values converts
+the item to an array of 1 or 2 items, both 8 bit and UTF-8 encoded.</p>
+</li>
+<li><a name="C_constant-arg_hashref0x2c-ITEM..."></a><b>C_constant arg_hashref, ITEM...</b>
+<p>A function that returns a <b>list</b> of C subroutine definitions that return
+the value and type of constants when passed the name by the XS wrapper.
+<i>ITEM...</i> gives a list of constant names. Each can either be a string,
+which is taken as a C macro name, or a reference to a hash with the following
+keys</p>
+<ul>
+<li><a name="name"></a><b>name</b>
+<p>The name of the constant, as seen by the perl code.</p>
+</li>
+<li><a name="type"></a><b>type</b>
+<p>The type of the constant (<i>IV</i>, <i>NV</i> etc)</p>
+</li>
+<li><a name="value"></a><b>value</b>
+<p>A C expression for the value of the constant, or a list of C expressions if
+the type is aggregate. This defaults to the <i>name</i> if not given.</p>
+</li>
+<li><a name="macro"></a><b>macro</b>
+<p>The C pre-processor macro to use in the <code class="inline"><span class="c">#ifdef</span></code>
+. This defaults to the
+<i>name</i>, and is mainly used if <i>value</i> is an <code class="inline"><span class="w">enum</span></code>
+. If a reference an
+array is passed then the first element is used in place of the <code class="inline"><span class="c">#ifdef</span></code>
+
+line, and the second element in place of the <code class="inline"><span class="c">#endif</span></code>
+. This allows
+pre-processor constructions such as</p>
+<pre class="verbatim">    <span class="c">#if defined (foo)</span>
+    <span class="c">#if !defined (bar)</span>
+    ...
+    <span class="c">#endif</span>
+    <span class="c">#endif</span></pre>
+<p>to be used to determine if a constant is to be defined.</p>
+<p>A "macro" 1 signals that the constant is always defined, so the <code class="inline"><span class="c">#if</span></code>
+/<code class="inline"><span class="c">#endif</span></code>
+
+test is omitted.</p>
+</li>
+<li><a name="default"></a><b>default</b>
+<p>Default value to use (instead of <code class="inline"><span class="w">croak</span></code>
+ing with "your vendor has not
+defined...") to return if the macro isn't defined. Specify a reference to
+an array with type followed by value(s).</p>
+</li>
+<li><a name="pre"></a><b>pre</b>
+<p>C code to use before the assignment of the value of the constant. This allows
+you to use temporary variables to extract a value from part of a <code class="inline"><span class="w">struct</span></code>
+
+and return this as <i>value</i>. This C code is places at the start of a block,
+so you can declare variables in it.</p>
+</li>
+<li><a name="post"></a><b>post</b>
+<p>C code to place between the assignment of value (to a temporary) and the
+return from the function. This allows you to clear up anything in <i>pre</i>.
+Rarely needed.</p>
+</li>
+<li><a name="def_pre"></a><b>def_pre</b>
+</li>
+<li><a name="def_post"></a><b>def_post</b>
+<p>Equivalents of <i>pre</i> and <i>post</i> for the default value.</p>
+</li>
+<li><a name="utf8"></a><b>utf8</b>
+<p>Generated internally. Is zero or undefined if name is 7 bit ASCII,
+"no" if the name is 8 bit (and so should only match if SvUTF8() is false),
+"yes" if the name is utf8 encoded.</p>
+<p>The internals automatically clone any name with characters 128-255 but none
+256+ (ie one that could be either in bytes or utf8) into a second entry
+which is utf8 encoded.</p>
+</li>
+<li><a name="weight"></a><b>weight</b>
+<p>Optional sorting weight for names, to determine the order of
+linear testing when multiple names fall in the same case of a switch clause.
+Higher comes earlier, undefined defaults to zero.</p>
+</li>
+</ul>
+<p>In the argument hashref, <i>package</i> is the name of the package, and is only
+used in comments inside the generated C code. <i>subname</i> defaults to
+<code class="inline"><span class="w">constant</span></code>
+ if undefined.</p>
+<p><i>default_type</i> is the type returned by <code class="inline"><span class="w">ITEM</span></code>
+s that don't specify their
+type. It defaults to the value of <code class="inline"><span class="i">default_type</span><span class="s">(</span><span class="s">)</span></code>
+. <i>types</i> should be given
+either as a comma separated list of types that the C subroutine <i>subname</i>
+will generate or as a reference to a hash. <i>default_type</i> will be added to
+the list if not present, as will any types given in the list of <i>ITEM</i>s. The
+resultant list should be the same list of types that <code class="inline"><span class="w">XS_constant</span></code>
+ is
+given. [Otherwise <code class="inline"><span class="w">XS_constant</span></code>
+ and <code class="inline"><span class="w">C_constant</span></code>
+ may differ in the number of
+parameters to the constant function. <i>indent</i> is currently unused and
+ignored. In future it may be used to pass in information used to change the C
+indentation style used.]  The best way to maintain consistency is to pass in a
+hash reference and let this function update it.</p>
+<p><i>breakout</i> governs when child functions of <i>subname</i> are generated.  If there
+are <i>breakout</i> or more <i>ITEM</i>s with the same length of name, then the code
+to switch between them is placed into a function named <i>subname</i>_<i>len</i>, for
+example <code class="inline"><span class="w">constant_5</span></code>
+ for names 5 characters long.  The default <i>breakout</i> is
+3.  A single <code class="inline"><span class="w">ITEM</span></code>
+ is always inlined.</p>
+</li>
+</ul>
+<a name="BUGS"></a><h1>BUGS</h1>
+<p>Not everything is documented yet.</p>
+<p>Probably others.</p>
+<a name="AUTHOR"></a><h1>AUTHOR</h1>
+<p>Nicholas Clark &lt;nick@ccl4.org&gt; based on the code in <code class="inline"><span class="w">h2xs</span></code>
+ by Larry Wall and
+others</p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../../close_purple.gif';" onmouseout="rightCloseIcon.src='../../close_blue.gif';"><img src="../../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('ExtUtils::Constant::Base','ExtUtils/Constant/Base.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

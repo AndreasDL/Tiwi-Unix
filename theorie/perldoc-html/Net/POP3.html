@@ -1,0 +1,285 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>Net::POP3 - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 1;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../close_purple.gif';" onmouseout="leftCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../index-overview.html">Overview</a></li>
+        <li><a href="../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../index-faq.html">FAQs</a></li>
+        <li><a href="../index-history.html">History / Changes</a></li>
+        <li><a href="../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../index-language.html">Language</a></li>
+        <li><a href="../index-functions.html">Functions</a></li>
+        <li><a href="../perlop.html">Operators</a></li>
+        <li><a href="../perlvar.html">Special variables</a></li>
+        <li><a href="../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../index-modules-A.html">Core modules</a></li>
+        <li><a href="../index-utilities.html">Utilities</a></li>
+        <li><a href="../index-internals.html">Internals</a></li>
+        <li><a href="../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../index.html">Home</a> &gt; <a href="../index-modules-A.html">Core modules</a> &gt; <a href="../index-modules-N.html">N</a> &gt; Net::POP3</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">Net::POP3</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><li><a href="#CONSTRUCTOR">CONSTRUCTOR</a><li><a href="#METHODS">METHODS</a><li><a href="#NOTES">NOTES</a><li><a href="#SEE-ALSO">SEE ALSO</a><li><a href="#AUTHOR">AUTHOR</a><li><a href="#COPYRIGHT">COPYRIGHT</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>Net::POP3 - Post Office Protocol 3 Client class (RFC1939)</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Net::POP3</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="c"># Constructors</span>
+    <span class="i">$pop</span> = <span class="w">Net::POP3</span><span class="w">-&gt;new</span><span class="s">(</span><span class="q">&#39;pop3host&#39;</span><span class="s">)</span><span class="sc">;</span>
+    <span class="i">$pop</span> = <span class="w">Net::POP3</span><span class="w">-&gt;new</span><span class="s">(</span><span class="q">&#39;pop3host&#39;</span><span class="cm">,</span> <span class="w">Timeout</span> <span class="cm">=&gt;</span> <span class="n">60</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    if <span class="s">(</span><span class="i">$pop</span><span class="i">-&gt;login</span><span class="s">(</span><span class="i">$username</span><span class="cm">,</span> <span class="i">$password</span><span class="s">)</span> &gt; <span class="n">0</span><span class="s">)</span> <span class="s">{</span>
+      <a class="l_k" href="../functions/my.html">my</a> <span class="i">$msgnums</span> = <span class="i">$pop</span><span class="i">-&gt;list</span><span class="sc">;</span> <span class="c"># hashref of msgnum =&gt; size</span>
+      foreach <a class="l_k" href="../functions/my.html">my</a> <span class="i">$msgnum</span> <span class="s">(</span><a class="l_k" href="../functions/keys.html">keys</a> <span class="i">%$msgnums</span><span class="s">)</span> <span class="s">{</span>
+        <a class="l_k" href="../functions/my.html">my</a> <span class="i">$msg</span> = <span class="i">$pop</span><span class="i">-&gt;get</span><span class="s">(</span><span class="i">$msgnum</span><span class="s">)</span><span class="sc">;</span>
+        <a class="l_k" href="../functions/print.html">print</a> <span class="i">@$msg</span><span class="sc">;</span>
+        <span class="i">$pop</span><span class="i">-&gt;delete</span><span class="s">(</span><span class="i">$msgnum</span><span class="s">)</span><span class="sc">;</span>
+      <span class="s">}</span>
+    <span class="s">}</span></pre>
+<pre class="verbatim">    <span class="i">$pop</span><span class="i">-&gt;quit</span><span class="sc">;</span></pre>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p>This module implements a client interface to the POP3 protocol, enabling
+a perl5 application to talk to POP3 servers. This documentation assumes
+that you are familiar with the POP3 protocol described in RFC1939.</p>
+<p>A new Net::POP3 object must be created with the <i>new</i> method. Once
+this has been done, all POP3 commands are accessed via method calls
+on the object.</p>
+<a name="CONSTRUCTOR"></a><h1>CONSTRUCTOR</h1>
+<ul>
+<li><a name="new-(-0x5b-HOST-0x5d-0x5b0x2c-OPTIONS-0x5d-0"></a><b>new ( [ HOST ] [, OPTIONS ] 0</b>
+<p>This is the constructor for a new Net::POP3 object. <code class="inline"><span class="w">HOST</span></code>
+ is the
+name of the remote host to which an POP3 connection is required.</p>
+<p><code class="inline"><span class="w">HOST</span></code>
+ is optional. If <code class="inline"><span class="w">HOST</span></code>
+ is not given then it may instead be
+passed as the <code class="inline"><span class="w">Host</span></code>
+ option described below. If neither is given then
+the <code class="inline"><span class="w">POP3_Hosts</span></code>
+ specified in <code class="inline"><span class="w">Net::Config</span></code>
+ will be used.</p>
+<p><code class="inline"><span class="w">OPTIONS</span></code>
+ are passed in a hash like fashion, using key and value pairs.
+Possible options are:</p>
+<p><b>Host</b> - POP3 host to connect to. It may be a single scalar, as defined for
+the <code class="inline"><span class="w">PeerAddr</span></code>
+ option in <a href="../IO/Socket/INET.html">IO::Socket::INET</a>, or a reference to
+an array with hosts to try in turn. The <a href="#host">"host"</a> method will return the value
+which was used to connect to the host.</p>
+<p><b>ResvPort</b> - If given then the socket for the <code class="inline"><span class="w">Net::POP3</span></code>
+ object
+will be bound to the local port given using <code class="inline"><a class="l_k" href="../functions/bind.html">bind</a></code> when the socket is
+created.</p>
+<p><b>Timeout</b> - Maximum time, in seconds, to wait for a response from the
+POP3 server (default: 120)</p>
+<p><b>Debug</b> - Enable debugging information</p>
+</li>
+</ul>
+<a name="METHODS"></a><h1>METHODS</h1>
+<p>Unless otherwise stated all methods return either a <i>true</i> or <i>false</i>
+value, with <i>true</i> meaning that the operation was a success. When a method
+states that it returns a value, failure will be returned as <i>undef</i> or an
+empty list.</p>
+<ul>
+<li><a name="auth-(-USERNAME0x2c-PASSWORD-)"></a><b>auth ( USERNAME, PASSWORD )</b>
+<p>Attempt SASL authentication.</p>
+</li>
+<li><a name="user-(-USER-)"></a><b>user ( USER )</b>
+<p>Send the USER command.</p>
+</li>
+<li><a name="pass-(-PASS-)"></a><b>pass ( PASS )</b>
+<p>Send the PASS command. Returns the number of messages in the mailbox.</p>
+</li>
+<li><a name="login-(-0x5b-USER-0x5b0x2c-PASS-0x5d0x5d-)"></a><b>login ( [ USER [, PASS ]] )</b>
+<p>Send both the USER and PASS commands. If <code class="inline"><span class="w">PASS</span></code>
+ is not given the
+<code class="inline"><span class="w">Net::POP3</span></code>
+ uses <code class="inline"><span class="w">Net::Netrc</span></code>
+ to lookup the password using the host
+and username. If the username is not specified then the current user name
+will be used.</p>
+<p>Returns the number of messages in the mailbox. However if there are no
+messages on the server the string <code class="inline"><span class="q">&quot;0E0&quot;</span></code>
+ will be returned. This is
+will give a true value in a boolean context, but zero in a numeric context.</p>
+<p>If there was an error authenticating the user then <i>undef</i> will be returned.</p>
+</li>
+<li><a name="apop-(-0x5b-USER-0x5b0x2c-PASS-0x5d0x5d-)"></a><b>apop ( [ USER [, PASS ]] )</b>
+<p>Authenticate with the server identifying as <code class="inline"><span class="w">USER</span></code>
+ with password <code class="inline"><span class="w">PASS</span></code>
+.
+Similar to <a href="#login">"login"</a>, but the password is not sent in clear text.</p>
+<p>To use this method you must have the Digest::MD5 or the MD5 module installed,
+otherwise this method will return <i>undef</i>.</p>
+</li>
+<li><a name="banner-()"></a><b>banner ()</b>
+<p>Return the sever's connection banner</p>
+</li>
+<li><a name="capa-()"></a><b>capa ()</b>
+<p>Return a reference to a hash of the capabilities of the server.  APOP
+is added as a pseudo capability.  Note that I've been unable to
+find a list of the standard capability values, and some appear to
+be multi-word and some are not.  We make an attempt at intelligently
+parsing them, but it may not be correct.</p>
+</li>
+<li><a name="capabilities-()"></a><b>capabilities ()</b>
+<p>Just like capa, but only uses a cache from the last time we asked
+the server, so as to avoid asking more than once.</p>
+</li>
+<li><a name="top-(-MSGNUM-0x5b0x2c-NUMLINES-0x5d-)"></a><b>top ( MSGNUM [, NUMLINES ] )</b>
+<p>Get the header and the first <code class="inline"><span class="w">NUMLINES</span></code>
+ of the body for the message
+<code class="inline"><span class="w">MSGNUM</span></code>
+. Returns a reference to an array which contains the lines of text
+read from the server.</p>
+</li>
+<li><a name="list-(-0x5b-MSGNUM-0x5d-)"></a><b>list ( [ MSGNUM ] )</b>
+<p>If called with an argument the <code class="inline"><span class="w">list</span></code>
+ returns the size of the message
+in octets.</p>
+<p>If called without arguments a reference to a hash is returned. The
+keys will be the <code class="inline"><span class="w">MSGNUM</span></code>
+'s of all undeleted messages and the values will
+be their size in octets.</p>
+</li>
+<li><a name="get-(-MSGNUM-0x5b0x2c-FH-0x5d-)"></a><b>get ( MSGNUM [, FH ] )</b>
+<p>Get the message <code class="inline"><span class="w">MSGNUM</span></code>
+ from the remote mailbox. If <code class="inline"><span class="w">FH</span></code>
+ is not given
+then get returns a reference to an array which contains the lines of
+text read from the server. If <code class="inline"><span class="w">FH</span></code>
+ is given then the lines returned
+from the server are printed to the filehandle <code class="inline"><span class="w">FH</span></code>
+.</p>
+</li>
+<li><a name="getfh-(-MSGNUM-)"></a><b>getfh ( MSGNUM )</b>
+<p>As per get(), but returns a tied filehandle.  Reading from this
+filehandle returns the requested message.  The filehandle will return
+EOF at the end of the message and should not be reused.</p>
+</li>
+<li><a name="last-()"></a><b>last ()</b>
+<p>Returns the highest <code class="inline"><span class="w">MSGNUM</span></code>
+ of all the messages accessed.</p>
+</li>
+<li><a name="popstat-()"></a><b>popstat ()</b>
+<p>Returns a list of two elements. These are the number of undeleted
+elements and the size of the mbox in octets.</p>
+</li>
+<li><a name="ping-(-USER-)"></a><b>ping ( USER )</b>
+<p>Returns a list of two elements. These are the number of new messages
+and the total number of messages for <code class="inline"><span class="w">USER</span></code>
+.</p>
+</li>
+<li><a name="uidl-(-0x5b-MSGNUM-0x5d-)"></a><b>uidl ( [ MSGNUM ] )</b>
+<p>Returns a unique identifier for <code class="inline"><span class="w">MSGNUM</span></code>
+ if given. If <code class="inline"><span class="w">MSGNUM</span></code>
+ is not
+given <code class="inline"><span class="w">uidl</span></code>
+ returns a reference to a hash where the keys are the
+message numbers and the values are the unique identifiers.</p>
+</li>
+<li><a name="delete-(-MSGNUM-)"></a><b>delete ( MSGNUM )</b>
+<p>Mark message <code class="inline"><span class="w">MSGNUM</span></code>
+ to be deleted from the remote mailbox. All messages
+that are marked to be deleted will be removed from the remote mailbox
+when the server connection closed.</p>
+</li>
+<li><a name="reset-()"></a><b>reset ()</b>
+<p>Reset the status of the remote POP3 server. This includes resetting the
+status of all messages to not be deleted.</p>
+</li>
+<li><a name="quit-()"></a><b>quit ()</b>
+<p>Quit and close the connection to the remote POP3 server. Any messages marked
+as deleted will be deleted from the remote mailbox.</p>
+</li>
+</ul>
+<a name="NOTES"></a><h1>NOTES</h1>
+<p>If a <code class="inline"><span class="w">Net::POP3</span></code>
+ object goes out of scope before <code class="inline"><span class="w">quit</span></code>
+ method is called
+then the <code class="inline"><a class="l_k" href="../functions/reset.html">reset</a></code> method will called before the connection is closed. This
+means that any messages marked to be deleted will not be.</p>
+<a name="SEE-ALSO"></a><h1>SEE ALSO</h1>
+<p><a href="../Net/Netrc.html">Net::Netrc</a>,
+<a href="../Net/Cmd.html">Net::Cmd</a></p>
+<a name="AUTHOR"></a><h1>AUTHOR</h1>
+<p>Graham Barr &lt;gbarr@pobox.com&gt;</p>
+<a name="COPYRIGHT"></a><h1>COPYRIGHT</h1>
+<p>Copyright (c) 1995-2003 Graham Barr. All rights reserved.
+This program is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.</p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../close_purple.gif';" onmouseout="rightCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('Net::POP3','Net/POP3.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

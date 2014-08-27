@@ -1,0 +1,365 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>Pod::LaTeX - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 1;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../close_purple.gif';" onmouseout="leftCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../index-overview.html">Overview</a></li>
+        <li><a href="../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../index-faq.html">FAQs</a></li>
+        <li><a href="../index-history.html">History / Changes</a></li>
+        <li><a href="../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../index-language.html">Language</a></li>
+        <li><a href="../index-functions.html">Functions</a></li>
+        <li><a href="../perlop.html">Operators</a></li>
+        <li><a href="../perlvar.html">Special variables</a></li>
+        <li><a href="../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../index-modules-A.html">Core modules</a></li>
+        <li><a href="../index-utilities.html">Utilities</a></li>
+        <li><a href="../index-internals.html">Internals</a></li>
+        <li><a href="../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../index.html">Home</a> &gt; <a href="../index-modules-A.html">Core modules</a> &gt; <a href="../index-modules-P.html">P</a> &gt; Pod::LaTeX</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">Pod::LaTeX</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><li><a href="#OBJECT-METHODS">OBJECT METHODS</a><ul><li><a href="#Data-Accessors">Data Accessors</a></ul><li><a href="#NOTES">NOTES</a><li><a href="#SEE-ALSO">SEE ALSO</a><li><a href="#AUTHORS">AUTHORS</a><li><a href="#COPYRIGHT">COPYRIGHT</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>Pod::LaTeX - Convert Pod data to formatted Latex</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">  <a class="l_k" href="../functions/use.html">use</a> <span class="w">Pod::LaTeX</span><span class="sc">;</span>
+  <a class="l_k" href="../functions/my.html">my</a> <span class="i">$parser</span> = <span class="w">Pod::LaTeX</span><span class="w">-&gt;new</span> <span class="s">(</span> <span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <span class="i">$parser</span><span class="i">-&gt;parse_from_filehandle</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <span class="i">$parser</span><span class="i">-&gt;parse_from_file</span> <span class="s">(</span><span class="q">&#39;file.pod&#39;</span><span class="cm">,</span> <span class="q">&#39;file.tex&#39;</span><span class="s">)</span><span class="sc">;</span></pre>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p><code class="inline"><span class="w">Pod::LaTeX</span></code>
+ is a module to convert documentation in the Pod format
+into Latex. The <a href="../pod2latex.html"><b>pod2latex</b></a>  command uses
+this module for translation.</p>
+<p><code class="inline"><span class="w">Pod::LaTeX</span></code>
+ is a derived class from <a href="../Pod/Select.html">Pod::Select</a>.</p>
+<a name="OBJECT-METHODS"></a><h1>OBJECT METHODS</h1>
+<p>The following methods are provided in this module. Methods inherited
+from <code class="inline"><span class="w">Pod::Select</span></code>
+ are not described in the public interface.</p>
+<a name="Data-Accessors"></a><h2>Data Accessors</h2>
+<p>The following methods are provided for accessing instance data. These
+methods should be used for accessing configuration parameters rather
+than assuming the object is a hash.</p>
+<p>Default values can be supplied by using these names as keys to a hash
+of arguments when using the <code class="inline"><span class="i">new</span><span class="s">(</span><span class="s">)</span></code>
+ constructor.</p>
+<ul>
+<li><a name="*AddPreamble*"></a><b><b>AddPreamble</b></b>
+<p>Logical to control whether a <code class="inline"><span class="w">latex</span></code>
+ preamble is to be written.
+If true, a valid <code class="inline"><span class="w">latex</span></code>
+ preamble is written before the pod data is written.
+This is similar to:</p>
+<pre class="verbatim">  \<span class="i">documentclass</span><span class="s">{</span><span class="w">article</span><span class="s">}</span>
+  \<span class="w">usepackage</span><span class="s">[</span><span class="w">T1</span><span class="s">]</span><span class="s">{</span><span class="w">fontenc</span><span class="s">}</span>
+  \<span class="i">usepackage</span><span class="s">{</span><span class="w">textcomp</span><span class="s">}</span>
+  \<span class="i">begin</span><span class="s">{</span><span class="w">document</span><span class="s">}</span></pre>
+<p>but will be more complicated if table of contents and indexing are required.
+Can be used to set or retrieve the current value.</p>
+<pre class="verbatim">  <span class="i">$add</span> = <span class="i">$parser</span><span class="i">-&gt;AddPreamble</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span>
+  <span class="i">$parser</span><span class="i">-&gt;AddPreamble</span><span class="s">(</span><span class="n">1</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>If used in conjunction with <code class="inline"><span class="w">AddPostamble</span></code>
+ a full latex document will
+be written that could be immediately processed by <code class="inline"><span class="w">latex</span></code>
+.</p>
+<p>For some pod escapes it may be necessary to include the amsmath
+package. This is not yet added to the preamble automatically.</p>
+</li>
+<li><a name="*AddPostamble*"></a><b><b>AddPostamble</b></b>
+<p>Logical to control whether a standard <code class="inline"><span class="w">latex</span></code>
+ ending is written to the output
+file after the document has been processed.
+In its simplest form this is simply:</p>
+<pre class="verbatim">  \<span class="i">end</span><span class="s">{</span><span class="w">document</span><span class="s">}</span></pre>
+<p>but can be more complicated if a index is required.
+Can be used to set or retrieve the current value.</p>
+<pre class="verbatim">  <span class="i">$add</span> = <span class="i">$parser</span><span class="i">-&gt;AddPostamble</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span>
+  <span class="i">$parser</span><span class="i">-&gt;AddPostamble</span><span class="s">(</span><span class="n">1</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>If used in conjunction with <code class="inline"><span class="w">AddPreaamble</span></code>
+ a full latex document will
+be written that could be immediately processed by <code class="inline"><span class="w">latex</span></code>
+.</p>
+</li>
+<li><a name="*Head1Level*"></a><b><b>Head1Level</b></b>
+<p>The <code class="inline"><span class="w">latex</span></code>
+ sectioning level that should be used to correspond to
+a pod <code class="inline"><span class="pd">=head1</span></code>
+ directive. This can be used, for example, to turn
+a <code class="inline"><span class="pd">=head1</span></code>
+ into a <code class="inline"><span class="w">latex</span></code>
+ <code class="inline"><span class="w">subsection</span></code>
+. This should hold a number
+corresponding to the required position in an array containing the
+following elements:</p>
+<pre class="verbatim"> <span class="s">[</span><span class="n">0</span><span class="s">]</span> <span class="w">chapter</span>
+ <span class="s">[</span><span class="n">1</span><span class="s">]</span> <span class="w">section</span>
+ <span class="s">[</span><span class="n">2</span><span class="s">]</span> <span class="w">subsection</span>
+ <span class="s">[</span><span class="n">3</span><span class="s">]</span> <span class="w">subsubsection</span>
+ <span class="s">[</span><span class="n">4</span><span class="s">]</span> <span class="w">paragraph</span>
+ <span class="s">[</span><span class="n">5</span><span class="s">]</span> <span class="w">subparagraph</span></pre>
+<p>Can be used to set or retrieve the current value:</p>
+<pre class="verbatim">  <span class="i">$parser</span><span class="i">-&gt;Head1Level</span><span class="s">(</span><span class="n">2</span><span class="s">)</span><span class="sc">;</span>
+  <span class="i">$sect</span> = <span class="i">$parser</span><span class="i">-&gt;Head1Level</span><span class="sc">;</span></pre>
+<p>Setting this number too high can result in sections that may not be reproducible
+in the expected way. For example, setting this to 4 would imply that <code class="inline"><span class="pd">=head3</span></code>
+
+do not have a corresponding <code class="inline"><span class="w">latex</span></code>
+ section (<code class="inline"><span class="pd">=head1</span></code>
+ would correspond to
+a <code class="inline"><span class="w">paragraph</span></code>
+).</p>
+<p>A check is made to ensure that the supplied value is an integer in the
+range 0 to 5.</p>
+<p>Default is for a value of 1 (i.e. a <code class="inline"><span class="w">section</span></code>
+).</p>
+</li>
+<li><a name="*Label*"></a><b><b>Label</b></b>
+<p>This is the label that is prefixed to all <code class="inline"><span class="w">latex</span></code>
+ label and index
+entries to make them unique. In general, pods have similarly titled
+sections (NAME, DESCRIPTION etc) and a <code class="inline"><span class="w">latex</span></code>
+ label will be multiply
+defined if more than one pod document is to be included in a single
+<code class="inline"><span class="w">latex</span></code>
+ file. To overcome this, this label is prefixed to a label
+whenever a label is required (joined with an underscore) or to an
+index entry (joined by an exclamation mark which is the normal index
+separator). For example, <code class="inline">\<span class="i">label</span><span class="s">{</span><span class="w">text</span><span class="s">}</span></code>
+ becomes <code class="inline">\<span class="i">label</span><span class="s">{</span><span class="w">Label_text</span><span class="s">}</span></code>
+.</p>
+<p>Can be used to set or retrieve the current value:</p>
+<pre class="verbatim">  <span class="i">$label</span> = <span class="i">$parser</span><span class="i">-&gt;Label</span><span class="sc">;</span>
+  <span class="i">$parser</span><span class="i">-&gt;Label</span><span class="s">(</span><span class="i">$label</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>This label is only used if <code class="inline"><span class="w">UniqueLabels</span></code>
+ is true.
+Its value is set automatically from the <code class="inline"><span class="w">NAME</span></code>
+ field
+if <code class="inline"><span class="w">ReplaceNAMEwithSection</span></code>
+ is true. If this is not the case
+it must be set manually before starting the parse.</p>
+<p>Default value is <code class="inline"><a class="l_k" href="../functions/undef.html">undef</a></code>.</p>
+</li>
+<li><a name="*LevelNoNum*"></a><b><b>LevelNoNum</b></b>
+<p>Control the point at which <code class="inline"><span class="w">latex</span></code>
+ section numbering is turned off.
+For example, this can be used to make sure that <code class="inline"><span class="w">latex</span></code>
+ sections
+are numbered but subsections are not.</p>
+<p>Can be used to set or retrieve the current value:</p>
+<pre class="verbatim">  <span class="i">$lev</span> = <span class="i">$parser</span><span class="i">-&gt;LevelNoNum</span><span class="sc">;</span>
+  <span class="i">$parser</span><span class="i">-&gt;LevelNoNum</span><span class="s">(</span><span class="n">2</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>The argument must be an integer between 0 and 5 and is the same as the
+number described in <code class="inline"><span class="w">Head1Level</span></code>
+ method description. The number has
+nothing to do with the pod heading number, only the <code class="inline"><span class="w">latex</span></code>
+ sectioning.</p>
+<p>Default is 2. (i.e. <code class="inline"><span class="w">latex</span></code>
+ subsections are written as <code class="inline"><span class="w">subsection</span>*</code>
+
+but sections are numbered).</p>
+</li>
+<li><a name="*MakeIndex*"></a><b><b>MakeIndex</b></b>
+<p>Controls whether <code class="inline"><span class="w">latex</span></code>
+ commands for creating an index are to be inserted
+into the preamble and postamble</p>
+<pre class="verbatim">  <span class="i">$makeindex</span> = <span class="i">$parser</span><span class="i">-&gt;MakeIndex</span><span class="sc">;</span>
+  <span class="i">$parser</span><span class="i">-&gt;MakeIndex</span><span class="s">(</span><span class="n">0</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Irrelevant if both <code class="inline"><span class="w">AddPreamble</span></code>
+ and <code class="inline"><span class="w">AddPostamble</span></code>
+ are false (or equivalently,
+<code class="inline"><span class="w">UserPreamble</span></code>
+ and <code class="inline"><span class="w">UserPostamble</span></code>
+ are set).</p>
+<p>Default is for an index to be created.</p>
+</li>
+<li><a name="*ReplaceNAMEwithSection*"></a><b><b>ReplaceNAMEwithSection</b></b>
+<p>This controls whether the <code class="inline"><span class="w">NAME</span></code>
+ section in the pod is to be translated
+literally or converted to a slightly modified output where the section
+name is the pod name rather than "NAME".</p>
+<p>If true, the pod segment</p>
+<pre class="verbatim">  =<span class="w">head1</span> <span class="w">NAME</span></pre>
+<pre class="verbatim">  <span class="w">pod::name</span> - <span class="w">purpose</span></pre>
+<pre class="verbatim">  =<span class="w">head1</span> <span class="w">SYNOPSIS</span></pre>
+<p>is converted to the <code class="inline"><span class="w">latex</span></code>
+</p>
+<pre class="verbatim">  \<span class="i">section</span><span class="s">{</span><span class="w">pod::name</span>\<span class="i">label</span><span class="s">{</span><span class="w">pod_name</span><span class="s">}</span>\<a class="l_k" href="../functions/index.html">index</a><span class="s">{</span><span class="w">pod::name</span><span class="s">}</span><span class="s">}</span></pre>
+<pre class="verbatim">  <span class="w">Purpose</span></pre>
+<pre class="verbatim">  \<span class="w">subsection</span>*{<span class="w">SYNOPSIS</span>\<span class="i">label</span><span class="s">{</span><span class="w">pod_name_SYNOPSIS</span><span class="s">}</span><span class="i">%</span>
+               \<a class="l_k" href="../functions/index.html">index</a><span class="s">{</span><span class="w">pod::name</span>!<span class="w">SYNOPSIS</span><span class="s">}</span>}</pre>
+<p>(dependent on the value of <code class="inline"><span class="w">Head1Level</span></code>
+ and <code class="inline"><span class="w">LevelNoNum</span></code>
+). Note that
+subsequent <code class="inline"><span class="w">head1</span></code>
+ directives translate to subsections rather than
+sections and that the labels and index now include the pod name (dependent
+on the value of <code class="inline"><span class="w">UniqueLabels</span></code>
+).</p>
+<p>The <code class="inline"><span class="w">Label</span></code>
+ is set from the pod name regardless of any current value
+of <code class="inline"><span class="w">Label</span></code>
+.</p>
+<pre class="verbatim">  <span class="i">$mod</span> = <span class="i">$parser</span><span class="i">-&gt;ReplaceNAMEwithSection</span><span class="sc">;</span>
+  <span class="i">$parser</span><span class="i">-&gt;ReplaceNAMEwithSection</span><span class="s">(</span><span class="n">0</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Default is to translate the pod literally.</p>
+</li>
+<li><a name="*StartWithNewPage*"></a><b><b>StartWithNewPage</b></b>
+<p>If true, each pod translation will begin with a <code class="inline"><span class="w">latex</span></code>
+
+<code class="inline">\<span class="w">clearpage</span></code>
+.</p>
+<pre class="verbatim">  <span class="i">$parser</span><span class="i">-&gt;StartWithNewPage</span><span class="s">(</span><span class="n">1</span><span class="s">)</span><span class="sc">;</span>
+  <span class="i">$newpage</span> = <span class="i">$parser</span><span class="i">-&gt;StartWithNewPage</span><span class="sc">;</span></pre>
+<p>Default is false.</p>
+</li>
+<li><a name="*TableOfContents*"></a><b><b>TableOfContents</b></b>
+<p>If true, a table of contents will be created.
+Irrelevant if <code class="inline"><span class="w">AddPreamble</span></code>
+ is false or <code class="inline"><span class="w">UserPreamble</span></code>
+
+is set.</p>
+<pre class="verbatim">  <span class="i">$toc</span> = <span class="i">$parser</span><span class="i">-&gt;TableOfContents</span><span class="sc">;</span>
+  <span class="i">$parser</span><span class="i">-&gt;TableOfContents</span><span class="s">(</span><span class="n">1</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Default is false.</p>
+</li>
+<li><a name="*UniqueLabels*"></a><b><b>UniqueLabels</b></b>
+<p>If true, the translator will attempt to make sure that
+each <code class="inline"><span class="w">latex</span></code>
+ label or index entry will be uniquely identified
+by prefixing the contents of <code class="inline"><span class="w">Label</span></code>
+. This allows
+multiple documents to be combined without clashing 
+common labels such as <code class="inline"><span class="w">DESCRIPTION</span></code>
+ and <code class="inline"><span class="w">SYNOPSIS</span></code>
+</p>
+<pre class="verbatim">  <span class="i">$parser</span><span class="i">-&gt;UniqueLabels</span><span class="s">(</span><span class="n">1</span><span class="s">)</span><span class="sc">;</span>
+  <span class="i">$unq</span> = <span class="i">$parser</span><span class="i">-&gt;UniqueLabels</span><span class="sc">;</span></pre>
+<p>Default is true.</p>
+</li>
+<li><a name="*UserPreamble*"></a><b><b>UserPreamble</b></b>
+<p>User supplied <code class="inline"><span class="w">latex</span></code>
+ preamble. Added before the pod translation
+data.</p>
+<p>If set, the contents will be prepended to the output file before the translated 
+data regardless of the value of <code class="inline"><span class="w">AddPreamble</span></code>
+.
+<code class="inline"><span class="w">MakeIndex</span></code>
+ and <code class="inline"><span class="w">TableOfContents</span></code>
+ will also be ignored.</p>
+</li>
+<li><a name="*UserPostamble*"></a><b><b>UserPostamble</b></b>
+<p>User supplied <code class="inline"><span class="w">latex</span></code>
+ postamble. Added after the pod translation
+data.</p>
+<p>If set, the contents will be prepended to the output file after the translated 
+data regardless of the value of <code class="inline"><span class="w">AddPostamble</span></code>
+.
+<code class="inline"><span class="w">MakeIndex</span></code>
+ will also be ignored.</p>
+</li>
+</ul>
+<a name="NOTES"></a><h1>NOTES</h1>
+<p>Compatible with <code class="inline"><span class="w">latex2e</span></code>
+ only. Can not be used with <code class="inline"><span class="w">latex</span></code>
+ v2.09
+or earlier.</p>
+<p>A subclass of <code class="inline"><span class="w">Pod::Select</span></code>
+ so that specific pod sections can be
+converted to <code class="inline"><span class="w">latex</span></code>
+ by using the <code class="inline"><a class="l_k" href="../functions/select.html">select</a></code> method.</p>
+<p>Some HTML escapes are missing and many have not been tested.</p>
+<a name="SEE-ALSO"></a><h1>SEE ALSO</h1>
+<p><a href="../Pod/Parser.html">Pod::Parser</a>, <a href="../Pod/Select.html">Pod::Select</a>, <a href="../pod2latex.html">pod2latex</a></p>
+<a name="AUTHORS"></a><h1>AUTHORS</h1>
+<p>Tim Jenness &lt;tjenness@cpan.org&gt;</p>
+<p>Bug fixes and improvements have been received from: Simon Cozens
+&lt;simon@cozens.net&gt;, Mark A. Hershberger
+&lt;mah@everybody.org&gt;, Marcel Grunauer
+&lt;marcel@codewerk.com&gt;, Hugh S Myers
+&lt;hsmyers@sdragons.com&gt;, Peter J Acklam
+&lt;jacklam@math.uio.no&gt;, Sudhi Herle &lt;sudhi@herle.net&gt;,
+Ariel Scolnicov &lt;ariels@compugen.co.il&gt;,
+Adriano Rodrigues Ferreira &lt;ferreira@triang.com.br&gt; and
+R. de Vries &lt;r.de.vries@dutchspace.nl&gt;.</p>
+<a name="COPYRIGHT"></a><h1>COPYRIGHT</h1>
+<p>Copyright (C) 2000-2004 Tim Jenness. All Rights Reserved.</p>
+<p>This program is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.</p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../close_purple.gif';" onmouseout="rightCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('Pod::LaTeX','Pod/LaTeX.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

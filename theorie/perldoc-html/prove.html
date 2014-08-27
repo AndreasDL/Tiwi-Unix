@@ -1,0 +1,237 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>prove - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 0;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='close_purple.gif';" onmouseout="leftCloseIcon.src='close_blue.gif';"><img src="close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="index-overview.html">Overview</a></li>
+        <li><a href="index-tutorials.html">Tutorials</a></li>
+        <li><a href="index-faq.html">FAQs</a></li>
+        <li><a href="index-history.html">History / Changes</a></li>
+        <li><a href="index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="index-language.html">Language</a></li>
+        <li><a href="index-functions.html">Functions</a></li>
+        <li><a href="perlop.html">Operators</a></li>
+        <li><a href="perlvar.html">Special variables</a></li>
+        <li><a href="index-pragmas.html">Pragmas</a></li>
+        <li><a href="index-modules-A.html">Core modules</a></li>
+        <li><a href="index-utilities.html">Utilities</a></li>
+        <li><a href="index-internals.html">Internals</a></li>
+        <li><a href="index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="index.html">Home</a> &gt; <a href="index-utilities.html">Utilities</a> &gt; prove</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">prove</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#OPTIONS">OPTIONS</a><li><a href="#OVERVIEW">OVERVIEW</a><li><a href="#PROVE-VS.-0x22MAKE-TEST0x22">PROVE VS. "MAKE TEST"</a><li><a href="#COMMAND-LINE-OPTIONS">COMMAND LINE OPTIONS</a><ul><li><a href="#-b0x2c---blib">-b, --blib</a><li><a href="#-d0x2c---debug">-d, --debug</a><li><a href="#-D0x2c---dry">-D, --dry</a><li><a href="#-I">-I</a><li><a href="#-l0x2c---lib">-l, --lib</a><li><a href="#--perl">--perl</a><li><a href="#-r0x2c---recurse">-r, --recurse</a><li><a href="#-s0x2c---shuffle">-s, --shuffle</a><li><a href="#--strap">--strap</a><li><a href="#-t">-t</a><li><a href="#-T">-T</a><li><a href="#--timer">--timer</a><li><a href="#-v0x2c---verbose">-v, --verbose</a><li><a href="#-V0x2c---version">-V, --version</a></ul><li><a href="#BUGS">BUGS</a><li><a href="#TODO">TODO</a><li><a href="#AUTHORS">AUTHORS</a><li><a href="#COPYRIGHT">COPYRIGHT</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>prove -- A command-line tool for running tests against Test::Harness</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<p>prove [options] [files/directories]</p>
+<a name="OPTIONS"></a><h1>OPTIONS</h1>
+<pre class="verbatim">    -b, --blib      Adds blib/lib to the path for your tests, a la "use blib"
+    -d, --debug     Includes extra debugging information
+    -D, --dry       Dry run: Show the tests to run, but don't run them
+    -h, --help      Display this help
+    -H, --man       Longer manpage for prove
+    -I              Add libraries to @INC, as Perl's -I
+    -l, --lib       Add lib to the path for your tests
+        --perl      Sets the name of the Perl executable to use
+    -r, --recurse   Recursively descend into directories
+    -s, --shuffle   Run the tests in a random order
+        --strap     Define strap class to use
+    -T              Enable tainting checks
+    -t              Enable tainting warnings
+        --timer     Print elapsed time after each test file
+    -v, --verbose   Display standard output of test scripts while running them
+    -V, --version   Display version info</pre><p>Single-character options may be stacked.  Default options may be set by
+specifying the PROVE_SWITCHES environment variable.</p>
+<a name="OVERVIEW"></a><h1>OVERVIEW</h1>
+<p><i>prove</i> is a command-line interface to the test-running functionality
+of <code class="inline"><span class="w">Test::Harness</span></code>
+.  With no arguments, it will run all tests in the
+current directory.</p>
+<p>Shell metacharacters may be used with command lines options and will be exanded 
+via <code class="inline"><span class="w">File::Glob::bsd_glob</span></code>
+.</p>
+<a name="PROVE-VS.-0x22MAKE-TEST0x22"></a><h1>PROVE VS. "MAKE TEST"</h1>
+<p><i>prove</i> has a number of advantages over <code class="inline"><span class="w">make</span> <span class="w">test</span></code>
+ when doing development.</p>
+<ul>
+<li><a name="*-_prove_-is-designed-as-a-development-tool"></a><b><i>prove</i> is designed as a development tool</b>
+<p>Perl users typically run the test harness through a makefile via
+<code class="inline"><span class="w">make</span> <span class="w">test</span></code>
+.  That's fine for module distributions, but it's
+suboptimal for a test/code/debug development cycle.</p>
+</li>
+<li><a name="*-_prove_-is-granular"></a><b><i>prove</i> is granular</b>
+<p><i>prove</i> lets your run against only the files you want to check.
+Running <code class="inline"><span class="w">prove</span> <span class="w">t</span>/<span class="w">live</span>/ <span class="w">t</span>/<span class="w">master</span>.<span class="w">t</span></code>
+ checks every <i>*.t</i> in <i>t/live</i>,
+plus <i>t/master.t</i>.</p>
+</li>
+<li><a name="*-_prove_-has-an-easy-verbose-mode"></a><b><i>prove</i> has an easy verbose mode</b>
+<p><i>prove</i> has a <code class="inline">-<span class="w">v</span></code>
+ option to see the raw output from the tests.
+To do this with <code class="inline"><span class="w">make</span> <span class="w">test</span></code>
+, you must set <code class="inline"><span class="w">HARNESS_VERBOSE</span>=<span class="n">1</span></code>
+ in
+the environment.</p>
+</li>
+<li><a name="*-_prove_-can-run-under-taint-mode"></a><b><i>prove</i> can run under taint mode</b>
+<p><i>prove</i>'s <code class="inline">-T</code>
+ runs your tests under <code class="inline"><span class="w">perl</span> -T</code>
+, and <code class="inline">-t</code>
+ runs them
+under <code class="inline"><span class="w">perl</span> -t</code>
+.</p>
+</li>
+<li><a name="*-_prove_-can-shuffle-tests"></a><b><i>prove</i> can shuffle tests</b>
+<p>You can use <i>prove</i>'s <code class="inline">--<span class="w">shuffle</span></code>
+ option to try to excite problems
+that don't show up when tests are run in the same order every time.</p>
+</li>
+<li><a name="*-_prove_-doesn't-rely-on-a-make-tool"></a><b><i>prove</i> doesn't rely on a make tool</b>
+<p>Not everyone wants to write a makefile, or use <a href="ExtUtils/MakeMaker.html">ExtUtils::MakeMaker</a>
+to do so.  <i>prove</i> has no external dependencies.</p>
+</li>
+<li><a name="*-Not-everything-is-a-module"></a><b>Not everything is a module</b>
+<p>More and more users are using Perl's testing tools outside the
+context of a module distribution, and may not even use a makefile
+at all.</p>
+</li>
+</ul>
+<a name="COMMAND-LINE-OPTIONS"></a><h1>COMMAND LINE OPTIONS</h1>
+<a name="-b0x2c---blib"></a><h2>-b, --blib</h2>
+<p>Adds blib/lib to the path for your tests, a la "use blib".</p>
+<a name="-d0x2c---debug"></a><h2>-d, --debug</h2>
+<p>Include debug information about how <i>prove</i> is being run.  This
+option doesn't show the output from the test scripts.  That's handled
+by -v,--verbose.</p>
+<a name="-D0x2c---dry"></a><h2>-D, --dry</h2>
+<p>Dry run: Show the tests to run, but don't run them.</p>
+<a name="-I"></a><h2>-I</h2>
+<p>Add libraries to @INC, as Perl's -I.</p>
+<a name="-l0x2c---lib"></a><h2>-l, --lib</h2>
+<p>Add <code class="inline"><span class="w">lib</span></code>
+ to @INC.  Equivalent to <code class="inline">-<span class="w">Ilib</span></code>
+.</p>
+<a name="--perl"></a><h2>--perl</h2>
+<p>Sets the <code class="inline"><span class="w">HARNESS_PERL</span></code>
+ environment variable, which controls what
+Perl executable will run the tests.</p>
+<a name="-r0x2c---recurse"></a><h2>-r, --recurse</h2>
+<p>Descends into subdirectories of any directories specified, looking for tests.</p>
+<a name="-s0x2c---shuffle"></a><h2>-s, --shuffle</h2>
+<p>Sometimes tests are accidentally dependent on tests that have been
+run before.  This switch will shuffle the tests to be run prior to
+running them, thus ensuring that hidden dependencies in the test
+order are likely to be revealed.  The author hopes the run the
+algorithm on the preceding sentence to see if he can produce something
+slightly less awkward.</p>
+<a name="--strap"></a><h2>--strap</h2>
+<p>Sets the HARNESS_STRAP_CLASS variable to set which Test::Harness::Straps
+variable to use in running the tests.</p>
+<a name="-t"></a><h2>-t</h2>
+<p>Runs test programs under perl's -t taint warning mode.</p>
+<a name="-T"></a><h2>-T</h2>
+<p>Runs test programs under perl's -T taint mode.</p>
+<a name="--timer"></a><h2>--timer</h2>
+<p>Print elapsed time after each test file</p>
+<a name="-v0x2c---verbose"></a><h2>-v, --verbose</h2>
+<p>Display standard output of test scripts while running them.  Also sets
+TEST_VERBOSE in case your tests rely on them.</p>
+<a name="-V0x2c---version"></a><h2>-V, --version</h2>
+<p>Display version info.</p>
+<a name="BUGS"></a><h1>BUGS</h1>
+<p>Please use the CPAN bug ticketing system at <a href="http://rt.cpan.org/">http://rt.cpan.org/</a>.
+You can also mail bugs, fixes and enhancements to 
+<code class="inline"><span class="q">&lt;bug-test-harness@rt.cpan.org&gt;</span></code>
+.</p>
+<a name="TODO"></a><h1>TODO</h1>
+<ul>
+<li>
+<p>Shuffled tests must be recreatable</p>
+</li>
+</ul>
+<a name="AUTHORS"></a><h1>AUTHORS</h1>
+<p>Andy Lester <code class="inline"><span class="q">&lt;andy at petdance.com&gt;</span></code>
+</p>
+<a name="COPYRIGHT"></a><h1>COPYRIGHT</h1>
+<p>Copyright 2004-2006 by Andy Lester <code class="inline"><span class="q">&lt;andy at petdance.com&gt;</span></code>
+.</p>
+<p>This program is free software; you can redistribute it and/or 
+modify it under the same terms as Perl itself.</p>
+<p>See <a href="http://www.perl.com/perl/misc/Artistic.html">http://www.perl.com/perl/misc/Artistic.html</a>.</p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='close_purple.gif';" onmouseout="rightCloseIcon.src='close_blue.gif';"><img src="close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('prove','prove.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

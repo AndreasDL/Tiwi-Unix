@@ -1,0 +1,261 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>Module::Pluggable - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 1;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../close_purple.gif';" onmouseout="leftCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../index-overview.html">Overview</a></li>
+        <li><a href="../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../index-faq.html">FAQs</a></li>
+        <li><a href="../index-history.html">History / Changes</a></li>
+        <li><a href="../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../index-language.html">Language</a></li>
+        <li><a href="../index-functions.html">Functions</a></li>
+        <li><a href="../perlop.html">Operators</a></li>
+        <li><a href="../perlvar.html">Special variables</a></li>
+        <li><a href="../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../index-modules-A.html">Core modules</a></li>
+        <li><a href="../index-utilities.html">Utilities</a></li>
+        <li><a href="../index-internals.html">Internals</a></li>
+        <li><a href="../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../index.html">Home</a> &gt; <a href="../index-modules-A.html">Core modules</a> &gt; <a href="../index-modules-M.html">M</a> &gt; Module::Pluggable</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">Module::Pluggable</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#EXAMPLE">EXAMPLE</a><li><a href="#DESCRIPTION">DESCRIPTION</a><li><a href="#ADVANCED-USAGE">ADVANCED USAGE</a><li><a href="#INNER-PACKAGES">INNER PACKAGES</a><li><a href="#OPTIONS">OPTIONS</a><ul><li><a href="#sub_name">sub_name</a><li><a href="#search_path">search_path</a><li><a href="#search_dirs">search_dirs</a><li><a href="#instantiate">instantiate</a><li><a href="#require">require</a><li><a href="#inner">inner</a><li><a href="#only">only</a><li><a href="#except">except</a><li><a href="#package">package</a><li><a href="#file_regex">file_regex</a></ul><li><a href="#METHODs">METHODs</a><ul><li><a href="#search_path">search_path</a></ul><li><a href="#FUTURE-PLANS">FUTURE PLANS</a><li><a href="#AUTHOR">AUTHOR</a><li><a href="#COPYING">COPYING</a><li><a href="#BUGS">BUGS</a><li><a href="#SEE-ALSO">SEE ALSO</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>Module::Pluggable - automatically give your module the ability to have plugins</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<p>Simple use Module::Pluggable -</p>
+<pre class="verbatim"><a name="package-MyClass"></a>    package <span class="i">MyClass</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Module::Pluggable</span><span class="sc">;</span></pre>
+<p>and then later ...</p>
+<pre class="verbatim">    <a class="l_k" href="../functions/use.html">use</a> <span class="w">MyClass</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/my.html">my</a> <span class="i">$mc</span> = <span class="w">MyClass</span><span class="w">-&gt;new</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span>
+    <span class="c"># returns the names of all plugins installed under MyClass::Plugin::*</span>
+    <a class="l_k" href="../functions/my.html">my</a> <span class="i">@plugins</span> = <span class="i">$mc</span><span class="i">-&gt;plugins</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span></pre>
+<a name="EXAMPLE"></a><h1>EXAMPLE</h1>
+<p>Why would you want to do this? Say you have something that wants to pass an
+object to a number of different plugins in turn. For example you may 
+want to extract meta-data from every email you get sent and do something
+with it. Plugins make sense here because then you can keep adding new 
+meta data parsers and all the logic and docs for each one will be 
+self contained and new handlers are easy to add without changing the 
+core code. For that, you might do something like ...</p>
+<pre class="verbatim"><a name="package-Email::Examiner"></a>    package <span class="i">Email::Examiner</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <a class="l_k" href="../functions/use.html">use</a> <span class="w">strict</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Email::Simple</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Module::Pluggable</span> <span class="w">require</span> <span class="cm">=&gt;</span> <span class="n">1</span><span class="sc">;</span></pre>
+<pre class="verbatim">    sub handle_email {
+        my $self  = shift;
+        my $email = shift;</pre><pre class="verbatim">        foreach <a class="l_k" href="../functions/my.html">my</a> <span class="i">$plugin</span> <span class="s">(</span><span class="i">$self</span><span class="i">-&gt;plugins</span><span class="s">)</span> <span class="s">{</span>
+            <span class="i">$plugin</span><span class="i">-&gt;examine</span><span class="s">(</span><span class="i">$email</span><span class="s">)</span><span class="sc">;</span>
+        <span class="s">}</span></pre>
+<pre class="verbatim">        return 1;
+    }</pre><p>.. and all the plugins will get a chance in turn to look at it.</p>
+<p>This can be trivally extended so that plugins could save the email
+somewhere and then no other plugin should try and do that. 
+Simply have it so that the <code class="inline"><span class="w">examine</span></code>
+ method returns <code class="inline"><span class="n">1</span></code>
+ if 
+it has saved the email somewhere. You might also wnat to be paranoid
+and check to see if the plugin has an <code class="inline"><span class="w">examine</span></code>
+ method.</p>
+<pre class="verbatim">        foreach <a class="l_k" href="../functions/my.html">my</a> <span class="i">$plugin</span> <span class="s">(</span><span class="i">$self</span><span class="i">-&gt;plugins</span><span class="s">)</span> <span class="s">{</span>
+            <a class="l_k" href="../functions/next.html">next</a> unless <span class="i">$plugin</span><span class="i">-&gt;can</span><span class="s">(</span><span class="q">'examine'</span><span class="s">)</span><span class="sc">;</span>
+            <a class="l_k" href="../functions/last.html">last</a> if     <span class="i">$plugin</span><span class="i">-&gt;examine</span><span class="s">(</span><span class="i">$email</span><span class="s">)</span><span class="sc">;</span>
+        <span class="s">}</span></pre>
+<p>And so on. The sky's the limit.</p>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p>Provides a simple but, hopefully, extensible way of having 'plugins' for 
+your module. Obviously this isn't going to be the be all and end all of
+solutions but it works for me.</p>
+<p>Essentially all it does is export a method into your namespace that 
+looks through a search path for .pm files and turn those into class names.</p>
+<p>Optionally it instantiates those classes for you.</p>
+<a name="ADVANCED-USAGE"></a><h1>ADVANCED USAGE</h1>
+<p>Alternatively, if you don't want to use 'plugins' as the method ...</p>
+<pre class="verbatim"><a name="package-MyClass"></a>    package <span class="i">MyClass</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Module::Pluggable</span> <span class="w">sub_name</span> <span class="cm">=&gt;</span> <span class="q">'foo'</span><span class="sc">;</span></pre>
+<p>and then later ...</p>
+<pre class="verbatim">    <a class="l_k" href="../functions/my.html">my</a> <span class="i">@plugins</span> = <span class="i">$mc</span><span class="i">-&gt;foo</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Or if you want to look in another namespace</p>
+<pre class="verbatim"><a name="package-MyClass"></a>    package <span class="i">MyClass</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Module::Pluggable</span> <span class="w">search_path</span> <span class="cm">=&gt;</span> <span class="s">[</span><span class="q">'Acme::MyClass::Plugin'</span><span class="cm">,</span> <span class="q">'MyClass::Extend'</span><span class="s">]</span><span class="sc">;</span></pre>
+<p>or directory</p>
+<pre class="verbatim">    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Module::Pluggable</span> <span class="w">search_dirs</span> <span class="cm">=&gt;</span> <span class="s">[</span><span class="q">'mylibs/Foo'</span><span class="s">]</span><span class="sc">;</span></pre>
+<p>Or if you want to instantiate each plugin rather than just return the name</p>
+<pre class="verbatim"><a name="package-MyClass"></a>    package <span class="i">MyClass</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Module::Pluggable</span> <span class="w">instantiate</span> <span class="cm">=&gt;</span> <span class="q">'new'</span><span class="sc">;</span></pre>
+<p>and then</p>
+<pre class="verbatim">    <span class="c"># whatever is passed to 'plugins' will be passed </span>
+    <span class="c"># to 'new' for each plugin </span>
+    <a class="l_k" href="../functions/my.html">my</a> <span class="i">@plugins</span> = <span class="i">$mc</span><span class="i">-&gt;plugins</span><span class="s">(</span><span class="i">@options</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>alternatively you can just require the module without instantiating it</p>
+<pre class="verbatim"><a name="package-MyClass"></a>    package <span class="i">MyClass</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Module::Pluggable</span> <span class="w">require</span> <span class="cm">=&gt;</span> <span class="n">1</span><span class="sc">;</span></pre>
+<p>since requiring automatically searches inner packages, which may not be desirable, you can turn this off</p>
+<pre class="verbatim"><a name="package-MyClass"></a>    package <span class="i">MyClass</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Module::Pluggable</span> <span class="w">require</span> <span class="cm">=&gt;</span> <span class="n">1</span><span class="cm">,</span> <span class="w">inner</span> <span class="cm">=&gt;</span> <span class="n">0</span><span class="sc">;</span></pre>
+<p>You can limit the plugins loaded using the except option, either as a string,
+array ref or regex</p>
+<pre class="verbatim"><a name="package-MyClass"></a>    package <span class="i">MyClass</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Module::Pluggable</span> <span class="w">except</span> <span class="cm">=&gt;</span> <span class="q">'MyClass::Plugin::Foo'</span><span class="sc">;</span></pre>
+<p>or</p>
+<pre class="verbatim"><a name="package-MyClass"></a>    package <span class="i">MyClass</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Module::Pluggable</span> <span class="w">except</span> <span class="cm">=&gt;</span> <span class="s">[</span><span class="q">'MyClass::Plugin::Foo'</span><span class="cm">,</span> <span class="q">'MyClass::Plugin::Bar'</span><span class="s">]</span><span class="sc">;</span></pre>
+<p>or</p>
+<pre class="verbatim"><a name="package-MyClass"></a>    package <span class="i">MyClass</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Module::Pluggable</span> <span class="w">except</span> <span class="cm">=&gt;</span> <span class="q">qr/^MyClass::Plugin::(Foo|Bar)$/</span><span class="sc">;</span></pre>
+<p>and similarly for only which will only load plugins which match.</p>
+<p>Remember you can use the module more than once</p>
+<pre class="verbatim"><a name="package-MyClass"></a>    package <span class="i">MyClass</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Module::Pluggable</span> <span class="w">search_path</span> <span class="cm">=&gt;</span> <span class="q">'MyClass::Filters'</span> <span class="w">sub_name</span> <span class="cm">=&gt;</span> <span class="q">'filters'</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Module::Pluggable</span> <span class="w">search_path</span> <span class="cm">=&gt;</span> <span class="q">'MyClass::Plugins'</span> <span class="w">sub_name</span> <span class="cm">=&gt;</span> <span class="q">'plugins'</span><span class="sc">;</span></pre>
+<p>and then later ...</p>
+<pre class="verbatim">    <a class="l_k" href="../functions/my.html">my</a> <span class="i">@filters</span> = <span class="i">$self</span><span class="i">-&gt;filters</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/my.html">my</a> <span class="i">@plugins</span> = <span class="i">$self</span><span class="i">-&gt;plugins</span><span class="sc">;</span></pre>
+<a name="INNER-PACKAGES"></a><h1>INNER PACKAGES</h1>
+<p>If you have, for example, a file <b>lib/Something/Plugin/Foo.pm</b> that
+contains package definitions for both <code class="inline"><span class="w">Something::Plugin::Foo</span></code>
+ and 
+<code class="inline"><span class="w">Something::Plugin::Bar</span></code>
+ then as long as you either have either 
+the <b>require</b> or <b>instantiate</b> option set then we'll also find 
+<code class="inline"><span class="w">Something::Plugin::Bar</span></code>
+. Nifty!</p>
+<a name="OPTIONS"></a><h1>OPTIONS</h1>
+<p>You can pass a hash of options when importing this module.</p>
+<p>The options can be ...</p>
+<a name="sub_name"></a><h2>sub_name</h2>
+<p>The name of the subroutine to create in your namespace.</p>
+<p>By default this is 'plugins'</p>
+<a name="search_path"></a><h2>search_path</h2>
+<p>An array ref of namespaces to look in.</p>
+<a name="search_dirs"></a><h2>search_dirs</h2>
+<p>An array ref of directorys to look in before @INC.</p>
+<a name="instantiate"></a><h2>instantiate</h2>
+<p>Call this method on the class. In general this will probably be 'new'
+but it can be whatever you want. Whatever arguments are passed to 'plugins' 
+will be passed to the method.</p>
+<p>The default is 'undef' i.e just return the class name.</p>
+<a name="require"></a><h2>require</h2>
+<p>Just require the class, don't instantiate (overrides 'instantiate');</p>
+<a name="inner"></a><h2>inner</h2>
+<p>If set to 0 will <b>not</b> search inner packages. 
+If set to 1 will override <code class="inline"><a class="l_k" href="../functions/require.html">require</a></code>.</p>
+<a name="only"></a><h2>only</h2>
+<p>Takes a string, array ref or regex describing the names of the only plugins to 
+return. Whilst this may seem perverse ... well, it is. But it also 
+makes sense. Trust me.</p>
+<a name="except"></a><h2>except</h2>
+<p>Similar to <code class="inline"><span class="w">only</span></code>
+ it takes a description of plugins to exclude 
+from returning. This is slightly less perverse.</p>
+<a name="package"></a><h2>package</h2>
+<p>This is for use by extension modules which build on <code class="inline"><span class="w">Module::Pluggable</span></code>
+:
+passing a <code class="inline"><a class="l_k" href="../functions/package.html">package</a></code> option allows you to place the plugin method in a
+different package other than your own.</p>
+<a name="file_regex"></a><h2>file_regex</h2>
+<p>By default <code class="inline"><span class="w">Module::Pluggable</span></code>
+ only looks for <i>.pm</i> files.</p>
+<p>By supplying a new <code class="inline"><span class="w">file_regex</span></code>
+ then you can change this behaviour e.g</p>
+<pre class="verbatim">    <span class="w">file_regex</span> <span class="cm">=&gt;</span> <span class="q">qr/\.plugin$/</span></pre>
+<a name="METHODs"></a><h1>METHODs</h1>
+<a name="search_path"></a><h2>search_path</h2>
+<p>The method <code class="inline"><span class="w">search_path</span></code>
+ is exported into you namespace as well. 
+You can call that at any time to change or replace the 
+search_path.</p>
+<pre class="verbatim">    <span class="i">$self</span><span class="i">-&gt;search_path</span><span class="s">(</span> <span class="w">add</span> <span class="cm">=&gt;</span> <span class="q">&quot;New::Path&quot;</span> <span class="s">)</span><span class="sc">;</span> <span class="c"># add</span>
+    <span class="i">$self</span><span class="i">-&gt;search_path</span><span class="s">(</span> <span class="w">new</span> <span class="cm">=&gt;</span> <span class="q">&quot;New::Path&quot;</span> <span class="s">)</span><span class="sc">;</span> <span class="c"># replace</span></pre>
+<a name="FUTURE-PLANS"></a><h1>FUTURE PLANS</h1>
+<p>This does everything I need and I can't really think of any other 
+features I want to add. Famous last words of course</p>
+<p>Recently tried fixed to find inner packages and to make it 
+'just work' with PAR but there are still some issues.</p>
+<p>However suggestions (and patches) are welcome.</p>
+<a name="AUTHOR"></a><h1>AUTHOR</h1>
+<p>Simon Wistow &lt;simon@thegestalt.org&gt;</p>
+<a name="COPYING"></a><h1>COPYING</h1>
+<p>Copyright, 2006 Simon Wistow</p>
+<p>Distributed under the same terms as Perl itself.</p>
+<a name="BUGS"></a><h1>BUGS</h1>
+<p>None known.</p>
+<a name="SEE-ALSO"></a><h1>SEE ALSO</h1>
+<p><a href="../File/Spec.html">File::Spec</a>, <a href="../File/Find.html">File::Find</a>, <a href="../File/Basename.html">File::Basename</a>, <a href="http://search.cpan.org/perldoc/Class::Factory::Util">Class::Factory::Util</a>, <a href="http://search.cpan.org/perldoc/Module::Pluggable::Ordered">Module::Pluggable::Ordered</a></p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../close_purple.gif';" onmouseout="rightCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('Module::Pluggable','Module/Pluggable.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

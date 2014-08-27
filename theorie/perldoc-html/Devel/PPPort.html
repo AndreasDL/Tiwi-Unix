@@ -1,0 +1,1097 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>Devel::PPPort - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 1;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../close_purple.gif';" onmouseout="leftCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../index-overview.html">Overview</a></li>
+        <li><a href="../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../index-faq.html">FAQs</a></li>
+        <li><a href="../index-history.html">History / Changes</a></li>
+        <li><a href="../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../index-language.html">Language</a></li>
+        <li><a href="../index-functions.html">Functions</a></li>
+        <li><a href="../perlop.html">Operators</a></li>
+        <li><a href="../perlvar.html">Special variables</a></li>
+        <li><a href="../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../index-modules-A.html">Core modules</a></li>
+        <li><a href="../index-utilities.html">Utilities</a></li>
+        <li><a href="../index-internals.html">Internals</a></li>
+        <li><a href="../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../index.html">Home</a> &gt; <a href="../index-modules-A.html">Core modules</a> &gt; <a href="../index-modules-D.html">D</a> &gt; Devel::PPPort</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">Devel::PPPort</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><ul><li><a href="#Why-use-ppport.h0x3f">Why use ppport.h?</a><li><a href="#How-to-use-ppport.h">How to use ppport.h</a><li><a href="#Running-ppport.h">Running ppport.h</a></ul><li><a href="#FUNCTIONS">FUNCTIONS</a><ul><li><a href="#WriteFile">WriteFile</a></ul><li><a href="#COMPATIBILITY">COMPATIBILITY</a><ul><li><a href="#Provided-Perl-compatibility-API">Provided Perl compatibility API</a><li><a href="#Perl-API-not-supported-by-ppport.h">Perl API not supported by ppport.h</a></ul><li><a href="#BUGS">BUGS</a><li><a href="#AUTHORS">AUTHORS</a><li><a href="#COPYRIGHT">COPYRIGHT</a><li><a href="#SEE-ALSO">SEE ALSO</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>Devel::PPPort - Perl/Pollution/Portability</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">    <span class="i">Devel::PPPort::WriteFile</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span>   <span class="c"># defaults to ./ppport.h</span>
+    <span class="i">Devel::PPPort::WriteFile</span><span class="s">(</span><span class="q">&#39;someheader.h&#39;</span><span class="s">)</span><span class="sc">;</span></pre>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p>Perl's API has changed over time, gaining new features, new functions,
+increasing its flexibility, and reducing the impact on the C namespace
+environment (reduced pollution). The header file written by this module,
+typically <i>ppport.h</i>, attempts to bring some of the newer Perl API
+features to older versions of Perl, so that you can worry less about
+keeping track of old releases, but users can still reap the benefit.</p>
+<p><code class="inline"><span class="w">Devel::PPPort</span></code>
+ contains a single function, called <code class="inline"><span class="w">WriteFile</span></code>
+. Its
+only purpose is to write the <i>ppport.h</i> C header file. This file
+contains a series of macros and, if explicitly requested, functions that
+allow XS modules to be built using older versions of Perl. Currently,
+Perl versions from 5.003 to 5.10.0 are supported.</p>
+<p>This module is used by <code class="inline"><span class="w">h2xs</span></code>
+ to write the file <i>ppport.h</i>.</p>
+<a name="Why-use-ppport.h0x3f"></a><h2>Why use ppport.h?</h2>
+<p>You should use <i>ppport.h</i> in modern code so that your code will work
+with the widest range of Perl interpreters possible, without significant
+additional work.</p>
+<p>You should attempt older code to fully use <i>ppport.h</i>, because the
+reduced pollution of newer Perl versions is an important thing. It's so
+important that the old polluting ways of original Perl modules will not be
+supported very far into the future, and your module will almost certainly
+break! By adapting to it now, you'll gain compatibility and a sense of
+having done the electronic ecology some good.</p>
+<a name="How-to-use-ppport.h"></a><h2>How to use ppport.h</h2>
+<p>Don't direct the users of your module to download <code class="inline"><span class="w">Devel::PPPort</span></code>
+.
+They are most probably no XS writers. Also, don't make <i>ppport.h</i>
+optional. Rather, just take the most recent copy of <i>ppport.h</i> that
+you can find (e.g. by generating it with the latest <code class="inline"><span class="w">Devel::PPPort</span></code>
+
+release from CPAN), copy it into your project, adjust your project to
+use it, and distribute the header along with your module.</p>
+<a name="Running-ppport.h"></a><h2>Running ppport.h</h2>
+<p>But <i>ppport.h</i> is more than just a C header. It's also a Perl script
+that can check your source code. It will suggest hints and portability
+notes, and can even make suggestions on how to change your code. You
+can run it like any other Perl program:</p>
+<pre class="verbatim">    <span class="w">perl</span> <span class="w">ppport</span>.<span class="w">h</span> <span class="s">[</span><span class="w">options</span><span class="s">]</span> <span class="s">[</span><span class="w">files</span><span class="s">]</span></pre>
+<p>It also has embedded documentation, so you can use</p>
+<pre class="verbatim">    <span class="w">perldoc</span> <span class="w">ppport</span>.<span class="w">h</span></pre>
+<p>to find out more about how to use it.</p>
+<a name="FUNCTIONS"></a><h1>FUNCTIONS</h1>
+<a name="WriteFile"></a><h2>WriteFile</h2>
+<p><code class="inline"><span class="w">WriteFile</span></code>
+ takes one optional argument. When called with one
+argument, it expects to be passed a filename. When called with
+no arguments, it defaults to the filename <i>ppport.h</i>.</p>
+<p>The function returns a true value if the file was written successfully.
+Otherwise it returns a false value.</p>
+<a name="COMPATIBILITY"></a><h1>COMPATIBILITY</h1>
+<p><i>ppport.h</i> supports Perl versions from 5.003 to 5.10.0
+in threaded and non-threaded configurations.</p>
+<a name="Provided-Perl-compatibility-API"></a><h2>Provided Perl compatibility API</h2>
+<p>The header file written by this module, typically <i>ppport.h</i>, provides
+access to the following elements of the Perl API that is not available
+in older Perl releases:</p>
+<pre class="verbatim">    <span class="w">_aMY_CXT</span>
+    <span class="w">_pMY_CXT</span>
+    <span class="w">aMY_CXT</span>
+    <span class="w">aMY_CXT_</span>
+    <span class="w">aTHX</span>
+    <span class="w">aTHX_</span>
+    <span class="w">aTHXR</span>
+    <span class="w">aTHXR_</span>
+    <span class="w">AvFILLp</span>
+    <span class="w">boolSV</span>
+    <span class="w">call_argv</span>
+    <span class="w">call_method</span>
+    <span class="w">call_pv</span>
+    <span class="w">call_sv</span>
+    <span class="w">ckWARN</span>
+    <span class="w">CopFILE</span>
+    <span class="w">CopFILE_set</span>
+    <span class="w">CopFILEAV</span>
+    <span class="w">CopFILEGV</span>
+    <span class="w">CopFILEGV_set</span>
+    <span class="w">CopFILESV</span>
+    <span class="w">CopSTASH</span>
+    <span class="w">CopSTASH_eq</span>
+    <span class="w">CopSTASH_set</span>
+    <span class="w">CopSTASHPV</span>
+    <span class="w">CopSTASHPV_set</span>
+    <span class="w">CopyD</span>
+    <span class="w">dAX</span>
+    <span class="w">dAXMARK</span>
+    <span class="w">DEFSV</span>
+    <span class="w">dITEMS</span>
+    <span class="w">dMY_CXT</span>
+    <span class="w">dMY_CXT_SV</span>
+    <span class="w">dNOOP</span>
+    <span class="w">dTHR</span>
+    <span class="w">dTHX</span>
+    <span class="w">dTHXa</span>
+    <span class="w">dTHXoa</span>
+    <span class="w">dTHXR</span>
+    <span class="w">dUNDERBAR</span>
+    <span class="w">dVAR</span>
+    <span class="w">dXCPT</span>
+    <span class="w">dXSTARG</span>
+    <span class="w">END_EXTERN_C</span>
+    <span class="w">ERRSV</span>
+    <span class="w">eval_pv</span>
+    <span class="w">eval_sv</span>
+    <span class="w">EXTERN_C</span>
+    <span class="w">get_av</span>
+    <span class="w">get_cv</span>
+    <span class="w">get_hv</span>
+    <span class="w">get_sv</span>
+    <span class="w">grok_bin</span>
+    <span class="w">grok_hex</span>
+    <span class="w">grok_number</span>
+    <span class="w">GROK_NUMERIC_RADIX</span>
+    <span class="w">grok_numeric_radix</span>
+    <span class="w">grok_oct</span>
+    <span class="w">gv_stashpvn</span>
+    <span class="w">hv_fetchs</span>
+    <span class="w">hv_stores</span>
+    <span class="w">IN_LOCALE</span>
+    <span class="w">IN_LOCALE_COMPILETIME</span>
+    <span class="w">IN_LOCALE_RUNTIME</span>
+    <span class="w">IN_PERL_COMPILETIME</span>
+    <span class="w">INT2PTR</span>
+    <span class="w">IS_NUMBER_GREATER_THAN_UV_MAX</span>
+    <span class="w">IS_NUMBER_IN_UV</span>
+    <span class="w">IS_NUMBER_INFINITY</span>
+    <span class="w">IS_NUMBER_NAN</span>
+    <span class="w">IS_NUMBER_NEG</span>
+    <span class="w">IS_NUMBER_NOT_INT</span>
+    <span class="w">IVdf</span>
+    <span class="w">IVSIZE</span>
+    <span class="w">IVTYPE</span>
+    <span class="w">load_module</span>
+    <span class="w">memEQ</span>
+    <span class="w">memNE</span>
+    <span class="w">MoveD</span>
+    <span class="w">mPUSHi</span>
+    <span class="w">mPUSHn</span>
+    <span class="w">mPUSHp</span>
+    <span class="w">mPUSHu</span>
+    <span class="w">mXPUSHi</span>
+    <span class="w">mXPUSHn</span>
+    <span class="w">mXPUSHp</span>
+    <span class="w">mXPUSHu</span>
+    <span class="w">MY_CXT</span>
+    <span class="w">MY_CXT_CLONE</span>
+    <span class="w">MY_CXT_INIT</span>
+    <span class="w">my_snprintf</span>
+    <span class="w">my_strlcat</span>
+    <span class="w">my_strlcpy</span>
+    <span class="w">newCONSTSUB</span>
+    <span class="w">newRV_inc</span>
+    <span class="w">newRV_noinc</span>
+    <span class="w">newSVpvn</span>
+    <span class="w">newSVpvn_share</span>
+    <span class="w">newSVpvs</span>
+    <span class="w">newSVuv</span>
+    <span class="w">Newx</span>
+    <span class="w">Newxc</span>
+    <span class="w">Newxz</span>
+    <span class="w">NOOP</span>
+    <span class="w">NUM2PTR</span>
+    <span class="w">NVef</span>
+    <span class="w">NVff</span>
+    <span class="w">NVgf</span>
+    <span class="w">NVTYPE</span>
+    <span class="w">packWARN</span>
+    <span class="w">PERL_ABS</span>
+    <span class="w">PERL_BCDVERSION</span>
+    <span class="w">PERL_GCC_BRACE_GROUPS_FORBIDDEN</span>
+    <span class="w">PERL_HASH</span>
+    <span class="w">PERL_INT_MAX</span>
+    <span class="w">PERL_INT_MIN</span>
+    <span class="w">PERL_LONG_MAX</span>
+    <span class="w">PERL_LONG_MIN</span>
+    <span class="w">PERL_MAGIC_arylen</span>
+    <span class="w">PERL_MAGIC_backref</span>
+    <span class="w">PERL_MAGIC_bm</span>
+    <span class="w">PERL_MAGIC_collxfrm</span>
+    <span class="w">PERL_MAGIC_dbfile</span>
+    <span class="w">PERL_MAGIC_dbline</span>
+    <span class="w">PERL_MAGIC_defelem</span>
+    <span class="w">PERL_MAGIC_env</span>
+    <span class="w">PERL_MAGIC_envelem</span>
+    <span class="w">PERL_MAGIC_ext</span>
+    <span class="w">PERL_MAGIC_fm</span>
+    <span class="w">PERL_MAGIC_glob</span>
+    <span class="w">PERL_MAGIC_isa</span>
+    <span class="w">PERL_MAGIC_isaelem</span>
+    <span class="w">PERL_MAGIC_mutex</span>
+    <span class="w">PERL_MAGIC_nkeys</span>
+    <span class="w">PERL_MAGIC_overload</span>
+    <span class="w">PERL_MAGIC_overload_elem</span>
+    <span class="w">PERL_MAGIC_overload_table</span>
+    <span class="w">PERL_MAGIC_pos</span>
+    <span class="w">PERL_MAGIC_qr</span>
+    <span class="w">PERL_MAGIC_regdata</span>
+    <span class="w">PERL_MAGIC_regdatum</span>
+    <span class="w">PERL_MAGIC_regex_global</span>
+    <span class="w">PERL_MAGIC_shared</span>
+    <span class="w">PERL_MAGIC_shared_scalar</span>
+    <span class="w">PERL_MAGIC_sig</span>
+    <span class="w">PERL_MAGIC_sigelem</span>
+    <span class="w">PERL_MAGIC_substr</span>
+    <span class="w">PERL_MAGIC_sv</span>
+    <span class="w">PERL_MAGIC_taint</span>
+    <span class="w">PERL_MAGIC_tied</span>
+    <span class="w">PERL_MAGIC_tiedelem</span>
+    <span class="w">PERL_MAGIC_tiedscalar</span>
+    <span class="w">PERL_MAGIC_utf8</span>
+    <span class="w">PERL_MAGIC_uvar</span>
+    <span class="w">PERL_MAGIC_uvar_elem</span>
+    <span class="w">PERL_MAGIC_vec</span>
+    <span class="w">PERL_MAGIC_vstring</span>
+    <span class="w">PERL_QUAD_MAX</span>
+    <span class="w">PERL_QUAD_MIN</span>
+    <span class="w">PERL_REVISION</span>
+    <span class="w">PERL_SCAN_ALLOW_UNDERSCORES</span>
+    <span class="w">PERL_SCAN_DISALLOW_PREFIX</span>
+    <span class="w">PERL_SCAN_GREATER_THAN_UV_MAX</span>
+    <span class="w">PERL_SCAN_SILENT_ILLDIGIT</span>
+    <span class="w">PERL_SHORT_MAX</span>
+    <span class="w">PERL_SHORT_MIN</span>
+    <span class="w">PERL_SIGNALS_UNSAFE_FLAG</span>
+    <span class="w">PERL_SUBVERSION</span>
+    <span class="w">PERL_UCHAR_MAX</span>
+    <span class="w">PERL_UCHAR_MIN</span>
+    <span class="w">PERL_UINT_MAX</span>
+    <span class="w">PERL_UINT_MIN</span>
+    <span class="w">PERL_ULONG_MAX</span>
+    <span class="w">PERL_ULONG_MIN</span>
+    <span class="w">PERL_UNUSED_ARG</span>
+    <span class="w">PERL_UNUSED_CONTEXT</span>
+    <span class="w">PERL_UNUSED_DECL</span>
+    <span class="w">PERL_UNUSED_VAR</span>
+    <span class="w">PERL_UQUAD_MAX</span>
+    <span class="w">PERL_UQUAD_MIN</span>
+    <span class="w">PERL_USE_GCC_BRACE_GROUPS</span>
+    <span class="w">PERL_USHORT_MAX</span>
+    <span class="w">PERL_USHORT_MIN</span>
+    <span class="w">PERL_VERSION</span>
+    <span class="w">Perl_warner</span>
+    <span class="w">Perl_warner_nocontext</span>
+    <span class="w">PL_compiling</span>
+    <span class="w">PL_copline</span>
+    <span class="w">PL_curcop</span>
+    <span class="w">PL_curstash</span>
+    <span class="w">PL_DBsignal</span>
+    <span class="w">PL_DBsingle</span>
+    <span class="w">PL_DBsub</span>
+    <span class="w">PL_DBtrace</span>
+    <span class="w">PL_debstash</span>
+    <span class="w">PL_defgv</span>
+    <span class="w">PL_diehook</span>
+    <span class="w">PL_dirty</span>
+    <span class="w">PL_dowarn</span>
+    <span class="w">PL_errgv</span>
+    <span class="w">PL_expect</span>
+    <span class="w">PL_hexdigit</span>
+    <span class="w">PL_hints</span>
+    <span class="w">PL_laststatval</span>
+    <span class="w">PL_na</span>
+    <span class="w">PL_no_modify</span>
+    <span class="w">PL_perl_destruct_level</span>
+    <span class="w">PL_perldb</span>
+    <span class="w">PL_ppaddr</span>
+    <span class="w">PL_rsfp</span>
+    <span class="w">PL_rsfp_filters</span>
+    <span class="w">PL_signals</span>
+    <span class="w">PL_stack_base</span>
+    <span class="w">PL_stack_sp</span>
+    <span class="w">PL_statcache</span>
+    <span class="w">PL_stdingv</span>
+    <span class="w">PL_Sv</span>
+    <span class="w">PL_sv_arenaroot</span>
+    <span class="w">PL_sv_no</span>
+    <span class="w">PL_sv_undef</span>
+    <span class="w">PL_sv_yes</span>
+    <span class="w">PL_tainted</span>
+    <span class="w">PL_tainting</span>
+    <span class="w">pMY_CXT</span>
+    <span class="w">pMY_CXT_</span>
+    <span class="w">Poison</span>
+    <span class="w">PoisonFree</span>
+    <span class="w">PoisonNew</span>
+    <span class="w">PoisonWith</span>
+    <span class="w">pTHX</span>
+    <span class="w">pTHX_</span>
+    <span class="w">PTR2IV</span>
+    <span class="w">PTR2NV</span>
+    <span class="w">PTR2ul</span>
+    <span class="w">PTR2UV</span>
+    <span class="w">PTRV</span>
+    <span class="w">PUSHmortal</span>
+    <span class="w">PUSHu</span>
+    <span class="w">SAVE_DEFSV</span>
+    <span class="w">START_EXTERN_C</span>
+    <span class="w">START_MY_CXT</span>
+    <span class="w">STMT_END</span>
+    <span class="w">STMT_START</span>
+    <span class="w">STR_WITH_LEN</span>
+    <span class="w">sv_2pv_flags</span>
+    <span class="w">sv_2pv_nolen</span>
+    <span class="w">sv_2pvbyte</span>
+    <span class="w">sv_2pvbyte_nolen</span>
+    <span class="w">sv_2uv</span>
+    <span class="w">sv_catpv_mg</span>
+    <span class="w">sv_catpvf_mg</span>
+    <span class="w">sv_catpvf_mg_nocontext</span>
+    <span class="w">sv_catpvn_mg</span>
+    <span class="w">sv_catpvn_nomg</span>
+    <span class="w">sv_catpvs</span>
+    <span class="w">sv_catsv_mg</span>
+    <span class="w">sv_catsv_nomg</span>
+    <span class="w">SV_CONST_RETURN</span>
+    <span class="w">SV_COW_DROP_PV</span>
+    <span class="w">SV_COW_SHARED_HASH_KEYS</span>
+    <span class="w">SV_GMAGIC</span>
+    <span class="w">SV_HAS_TRAILING_NUL</span>
+    <span class="w">SV_IMMEDIATE_UNREF</span>
+    <span class="w">sv_magic_portable</span>
+    <span class="w">SV_MUTABLE_RETURN</span>
+    <span class="w">SV_NOSTEAL</span>
+    <span class="w">sv_pvn_force_flags</span>
+    <span class="w">sv_pvn_nomg</span>
+    <span class="w">sv_setiv_mg</span>
+    <span class="w">sv_setnv_mg</span>
+    <span class="w">sv_setpv_mg</span>
+    <span class="w">sv_setpvf_mg</span>
+    <span class="w">sv_setpvf_mg_nocontext</span>
+    <span class="w">sv_setpvn_mg</span>
+    <span class="w">sv_setpvs</span>
+    <span class="w">sv_setsv_mg</span>
+    <span class="w">sv_setsv_nomg</span>
+    <span class="w">sv_setuv</span>
+    <span class="w">sv_setuv_mg</span>
+    <span class="w">SV_SMAGIC</span>
+    <span class="w">sv_usepvn_mg</span>
+    <span class="w">SV_UTF8_NO_ENCODING</span>
+    <span class="w">sv_uv</span>
+    <span class="w">sv_vcatpvf</span>
+    <span class="w">sv_vcatpvf_mg</span>
+    <span class="w">sv_vsetpvf</span>
+    <span class="w">sv_vsetpvf_mg</span>
+    <span class="w">SVf</span>
+    <span class="w">SvGETMAGIC</span>
+    <span class="w">SvIV_nomg</span>
+    <span class="w">SvMAGIC_set</span>
+    <span class="w">SvPV_const</span>
+    <span class="w">SvPV_flags</span>
+    <span class="w">SvPV_flags_const</span>
+    <span class="w">SvPV_flags_const_nolen</span>
+    <span class="w">SvPV_flags_mutable</span>
+    <span class="w">SvPV_force</span>
+    <span class="w">SvPV_force_flags</span>
+    <span class="w">SvPV_force_flags_mutable</span>
+    <span class="w">SvPV_force_flags_nolen</span>
+    <span class="w">SvPV_force_mutable</span>
+    <span class="w">SvPV_force_nolen</span>
+    <span class="w">SvPV_force_nomg</span>
+    <span class="w">SvPV_force_nomg_nolen</span>
+    <span class="w">SvPV_mutable</span>
+    <span class="w">SvPV_nolen</span>
+    <span class="w">SvPV_nolen_const</span>
+    <span class="w">SvPV_nomg</span>
+    <span class="w">SvPV_nomg_const</span>
+    <span class="w">SvPV_nomg_const_nolen</span>
+    <span class="w">SvPVbyte</span>
+    <span class="w">SvPVX_const</span>
+    <span class="w">SvPVX_mutable</span>
+    <span class="w">SvREFCNT_inc</span>
+    <span class="w">SvREFCNT_inc_NN</span>
+    <span class="w">SvREFCNT_inc_simple</span>
+    <span class="w">SvREFCNT_inc_simple_NN</span>
+    <span class="w">SvREFCNT_inc_simple_void</span>
+    <span class="w">SvREFCNT_inc_simple_void_NN</span>
+    <span class="w">SvREFCNT_inc_void</span>
+    <span class="w">SvREFCNT_inc_void_NN</span>
+    <span class="w">SvRV_set</span>
+    <span class="w">SvSHARED_HASH</span>
+    <span class="w">SvSTASH_set</span>
+    <span class="w">SvUOK</span>
+    <span class="w">SvUV</span>
+    <span class="w">SvUV_nomg</span>
+    <span class="w">SvUV_set</span>
+    <span class="w">SvUVX</span>
+    <span class="w">SvUVx</span>
+    <span class="w">SvUVXx</span>
+    <span class="w">SvVSTRING_mg</span>
+    <span class="w">UNDERBAR</span>
+    <span class="w">UTF8_MAXBYTES</span>
+    <span class="w">UVof</span>
+    <span class="w">UVSIZE</span>
+    <span class="w">UVTYPE</span>
+    <span class="w">UVuf</span>
+    <span class="w">UVXf</span>
+    <span class="w">UVxf</span>
+    <span class="w">vload_module</span>
+    <span class="w">vnewSVpvf</span>
+    <span class="w">WARN_ALL</span>
+    <span class="w">WARN_AMBIGUOUS</span>
+    <span class="w">WARN_ASSERTIONS</span>
+    <span class="w">WARN_BAREWORD</span>
+    <span class="w">WARN_CLOSED</span>
+    <span class="w">WARN_CLOSURE</span>
+    <span class="w">WARN_DEBUGGING</span>
+    <span class="w">WARN_DEPRECATED</span>
+    <span class="w">WARN_DIGIT</span>
+    <span class="w">WARN_EXEC</span>
+    <span class="w">WARN_EXITING</span>
+    <span class="w">WARN_GLOB</span>
+    <span class="w">WARN_INPLACE</span>
+    <span class="w">WARN_INTERNAL</span>
+    <span class="w">WARN_IO</span>
+    <span class="w">WARN_LAYER</span>
+    <span class="w">WARN_MALLOC</span>
+    <span class="w">WARN_MISC</span>
+    <span class="w">WARN_NEWLINE</span>
+    <span class="w">WARN_NUMERIC</span>
+    <span class="w">WARN_ONCE</span>
+    <span class="w">WARN_OVERFLOW</span>
+    <span class="w">WARN_PACK</span>
+    <span class="w">WARN_PARENTHESIS</span>
+    <span class="w">WARN_PIPE</span>
+    <span class="w">WARN_PORTABLE</span>
+    <span class="w">WARN_PRECEDENCE</span>
+    <span class="w">WARN_PRINTF</span>
+    <span class="w">WARN_PROTOTYPE</span>
+    <span class="w">WARN_QW</span>
+    <span class="w">WARN_RECURSION</span>
+    <span class="w">WARN_REDEFINE</span>
+    <span class="w">WARN_REGEXP</span>
+    <span class="w">WARN_RESERVED</span>
+    <span class="w">WARN_SEMICOLON</span>
+    <span class="w">WARN_SEVERE</span>
+    <span class="w">WARN_SIGNAL</span>
+    <span class="w">WARN_SUBSTR</span>
+    <span class="w">WARN_SYNTAX</span>
+    <span class="w">WARN_TAINT</span>
+    <span class="w">WARN_THREADS</span>
+    <span class="w">WARN_UNINITIALIZED</span>
+    <span class="w">WARN_UNOPENED</span>
+    <span class="w">WARN_UNPACK</span>
+    <span class="w">WARN_UNTIE</span>
+    <span class="w">WARN_UTF8</span>
+    <span class="w">WARN_VOID</span>
+    <span class="w">warner</span>
+    <span class="w">XCPT_CATCH</span>
+    <span class="w">XCPT_RETHROW</span>
+    <span class="w">XCPT_TRY_END</span>
+    <span class="w">XCPT_TRY_START</span>
+    <span class="w">XPUSHmortal</span>
+    <span class="w">XPUSHu</span>
+    <span class="w">XSprePUSH</span>
+    <span class="w">XSRETURN</span>
+    <span class="w">XSRETURN_UV</span>
+    <span class="w">XST_mUV</span>
+    <span class="w">ZeroD</span></pre>
+<a name="Perl-API-not-supported-by-ppport.h"></a><h2>Perl API not supported by ppport.h</h2>
+<p>There is still a big part of the API not supported by <i>ppport.h</i>.
+Either because it doesn't make sense to back-port that part of the API,
+or simply because it hasn't been implemented yet. Patches welcome!</p>
+<p>Here's a list of the currently unsupported API, and also the version of
+Perl below which it is unsupported:</p>
+<ul>
+<li><a name="perl-5.9.5"></a><b>perl 5.9.5</b>
+<pre class="verbatim">  <span class="w">MULTICALL</span>
+  <span class="w">POP_MULTICALL</span>
+  <span class="w">PUSH_MULTICALL</span>
+  <span class="w">Perl_signbit</span>
+  <span class="w">SvRX</span>
+  <span class="w">SvRXOK</span>
+  <span class="w">av_create_and_push</span>
+  <span class="w">av_create_and_unshift_one</span>
+  <span class="w">get_cvn_flags</span>
+  <span class="w">gv_fetchfile_flags</span>
+  <span class="w">hv_assert</span>
+  <span class="w">mro_get_linear_isa</span>
+  <span class="w">mro_get_linear_isa_c3</span>
+  <span class="w">mro_get_linear_isa_dfs</span>
+  <span class="w">mro_method_changed_in</span>
+  <span class="w">my_dirfd</span>
+  <span class="w">newSV_type</span>
+  <span class="w">pad_sv</span>
+  <span class="w">pregcomp</span>
+  <span class="w">ptr_table_clear</span>
+  <span class="w">ptr_table_fetch</span>
+  <span class="w">ptr_table_free</span>
+  <span class="w">ptr_table_new</span>
+  <span class="w">ptr_table_split</span>
+  <span class="w">ptr_table_store</span>
+  <span class="w">re_compile</span>
+  <span class="w">re_intuit_start</span>
+  <span class="w">reg_named_buff_all</span>
+  <span class="w">reg_named_buff_exists</span>
+  <span class="w">reg_named_buff_fetch</span>
+  <span class="w">reg_named_buff_firstkey</span>
+  <span class="w">reg_named_buff_nextkey</span>
+  <span class="w">reg_named_buff_scalar</span>
+  <span class="w">reg_stringify</span>
+  <span class="w">regfree_internal</span>
+  <span class="w">savesharedpvn</span>
+  <span class="w">scan_vstring</span>
+  <span class="w">stashpv_hvname_match</span>
+  <span class="w">upg_version</span></pre>
+</li>
+<li><a name="perl-5.9.4"></a><b>perl 5.9.4</b>
+<pre class="verbatim">  <span class="w">PerlIO_context_layers</span>
+  <span class="w">gv_name_set</span>
+  <span class="w">my_vsnprintf</span>
+  <span class="w">newXS_flags</span>
+  <span class="w">pv_escape</span>
+  <span class="w">pv_pretty</span>
+  <span class="w">regclass_swash</span>
+  <span class="w">sv_does</span>
+  <span class="w">sv_usepvn_flags</span></pre>
+</li>
+<li><a name="perl-5.9.3"></a><b>perl 5.9.3</b>
+<pre class="verbatim">  <span class="w">av_arylen_p</span>
+  <span class="w">ckwarn</span>
+  <span class="w">ckwarn_d</span>
+  <span class="w">csighandler</span>
+  <span class="w">dMULTICALL</span>
+  <span class="w">doref</span>
+  <span class="w">gv_const_sv</span>
+  <span class="w">gv_stashpvs</span>
+  <span class="w">hv_eiter_p</span>
+  <span class="w">hv_eiter_set</span>
+  <span class="w">hv_name_set</span>
+  <span class="w">hv_placeholders_get</span>
+  <span class="w">hv_placeholders_p</span>
+  <span class="w">hv_placeholders_set</span>
+  <span class="w">hv_riter_p</span>
+  <span class="w">hv_riter_set</span>
+  <span class="w">is_utf8_string_loclen</span>
+  <span class="w">my_sprintf</span>
+  <span class="w">newGIVENOP</span>
+  <span class="w">newSVhek</span>
+  <span class="w">newSVpvs_share</span>
+  <span class="w">newWHENOP</span>
+  <span class="w">newWHILEOP</span>
+  <a class="l_k" href="../functions/ref.html">ref</a>
+  <span class="w">savepvs</span>
+  <span class="w">sortsv_flags</span>
+  <span class="w">vverify</span></pre>
+</li>
+<li><a name="perl-5.9.2"></a><b>perl 5.9.2</b>
+<pre class="verbatim">  <span class="w">SvPVbyte_force</span>
+  <span class="w">find_rundefsvoffset</span>
+  <span class="w">gv_fetchpvn_flags</span>
+  <span class="w">gv_fetchsv</span>
+  <span class="w">op_refcnt_lock</span>
+  <span class="w">op_refcnt_unlock</span>
+  <span class="w">savesvpv</span>
+  <span class="w">vnormal</span></pre>
+</li>
+<li><a name="perl-5.9.1"></a><b>perl 5.9.1</b>
+<pre class="verbatim">  <span class="w">hv_clear_placeholders</span>
+  <span class="w">hv_scalar</span>
+  <span class="w">scan_version</span>
+  <span class="w">sv_2iv_flags</span>
+  <span class="w">sv_2uv_flags</span></pre>
+</li>
+<li><a name="perl-5.9.0"></a><b>perl 5.9.0</b>
+<pre class="verbatim">  <span class="w">new_version</span>
+  <span class="w">save_set_svflags</span>
+  <span class="w">vcmp</span>
+  <span class="w">vnumify</span>
+  <span class="w">vstringify</span></pre>
+</li>
+<li><a name="perl-5.8.3"></a><b>perl 5.8.3</b>
+<pre class="verbatim">  <span class="w">SvIsCOW</span>
+  <span class="w">SvIsCOW_shared_hash</span></pre>
+</li>
+<li><a name="perl-5.8.1"></a><b>perl 5.8.1</b>
+<pre class="verbatim">  <span class="w">SvVOK</span>
+  <span class="w">doing_taint</span>
+  <span class="w">find_runcv</span>
+  <span class="w">is_utf8_string_loc</span>
+  <span class="w">packlist</span>
+  <span class="w">save_bool</span>
+  <span class="w">savestack_grow_cnt</span>
+  <span class="w">seed</span>
+  <span class="w">sv_cat_decode</span>
+  <span class="w">sv_compile_2op</span>
+  <span class="w">sv_setpviv</span>
+  <span class="w">sv_setpviv_mg</span>
+  <span class="w">unpackstring</span></pre>
+</li>
+<li><a name="perl-5.8.0"></a><b>perl 5.8.0</b>
+<pre class="verbatim">  <span class="w">hv_iternext_flags</span>
+  <span class="w">hv_store_flags</span>
+  <span class="w">is_utf8_idcont</span>
+  <span class="w">nothreadhook</span></pre>
+</li>
+<li><a name="perl-5.7.3"></a><b>perl 5.7.3</b>
+<pre class="verbatim">  <span class="w">PerlIO_clearerr</span>
+  <span class="w">PerlIO_close</span>
+  <span class="w">PerlIO_eof</span>
+  <span class="w">PerlIO_error</span>
+  <span class="w">PerlIO_fileno</span>
+  <span class="w">PerlIO_fill</span>
+  <span class="w">PerlIO_flush</span>
+  <span class="w">PerlIO_get_base</span>
+  <span class="w">PerlIO_get_bufsiz</span>
+  <span class="w">PerlIO_get_cnt</span>
+  <span class="w">PerlIO_get_ptr</span>
+  <span class="w">PerlIO_read</span>
+  <span class="w">PerlIO_seek</span>
+  <span class="w">PerlIO_set_cnt</span>
+  <span class="w">PerlIO_set_ptrcnt</span>
+  <span class="w">PerlIO_setlinebuf</span>
+  <span class="w">PerlIO_stderr</span>
+  <span class="w">PerlIO_stdin</span>
+  <span class="w">PerlIO_stdout</span>
+  <span class="w">PerlIO_tell</span>
+  <span class="w">PerlIO_unread</span>
+  <span class="w">PerlIO_write</span>
+  <span class="w">SvLOCK</span>
+  <span class="w">SvSHARE</span>
+  <span class="w">SvUNLOCK</span>
+  <span class="w">atfork_lock</span>
+  <span class="w">atfork_unlock</span>
+  <span class="w">custom_op_desc</span>
+  <span class="w">custom_op_name</span>
+  <span class="w">deb</span>
+  <span class="w">debstack</span>
+  <span class="w">debstackptrs</span>
+  <span class="w">gv_fetchmeth_autoload</span>
+  <span class="w">ibcmp_utf8</span>
+  <span class="w">my_fork</span>
+  <span class="w">my_socketpair</span>
+  <span class="w">pack_cat</span>
+  <span class="w">perl_destruct</span>
+  <span class="w">pv_uni_display</span>
+  <span class="w">save_shared_pvref</span>
+  <span class="w">savesharedpv</span>
+  <span class="w">sortsv</span>
+  <span class="w">sv_copypv</span>
+  <span class="w">sv_magicext</span>
+  <span class="w">sv_nolocking</span>
+  <span class="w">sv_nosharing</span>
+  <span class="w">sv_recode_to_utf8</span>
+  <span class="w">sv_uni_display</span>
+  <span class="w">to_uni_fold</span>
+  <span class="w">to_uni_lower</span>
+  <span class="w">to_uni_title</span>
+  <span class="w">to_uni_upper</span>
+  <span class="w">to_utf8_case</span>
+  <span class="w">to_utf8_fold</span>
+  <span class="w">to_utf8_lower</span>
+  <span class="w">to_utf8_title</span>
+  <span class="w">to_utf8_upper</span>
+  <span class="w">unpack_str</span>
+  <span class="w">uvchr_to_utf8_flags</span>
+  <span class="w">uvuni_to_utf8_flags</span>
+  <span class="w">vdeb</span></pre>
+</li>
+<li><a name="perl-5.7.2"></a><b>perl 5.7.2</b>
+<pre class="verbatim">  <span class="w">calloc</span>
+  <span class="w">getcwd_sv</span>
+  <span class="w">init_tm</span>
+  <span class="w">malloc</span>
+  <span class="w">mfree</span>
+  <span class="w">mini_mktime</span>
+  <span class="w">my_atof2</span>
+  <span class="w">my_strftime</span>
+  <span class="w">op_null</span>
+  <span class="w">realloc</span>
+  <span class="w">sv_catpvn_flags</span>
+  <span class="w">sv_catsv_flags</span>
+  <span class="w">sv_setsv_flags</span>
+  <span class="w">sv_utf8_upgrade_flags</span>
+  <span class="w">swash_fetch</span></pre>
+</li>
+<li><a name="perl-5.7.1"></a><b>perl 5.7.1</b>
+<pre class="verbatim">  <span class="w">POPpbytex</span>
+  <span class="w">bytes_from_utf8</span>
+  <span class="w">despatch_signals</span>
+  <span class="w">do_openn</span>
+  <span class="w">gv_handler</span>
+  <span class="w">is_lvalue_sub</span>
+  <span class="w">my_popen_list</span>
+  <span class="w">save_mortalizesv</span>
+  <span class="w">save_padsv</span>
+  <span class="w">scan_num</span>
+  <span class="w">sv_force_normal_flags</span>
+  <span class="w">sv_setref_uv</span>
+  <span class="w">sv_unref_flags</span>
+  <span class="w">sv_utf8_upgrade</span>
+  <span class="w">utf8_length</span>
+  <span class="w">utf8_to_uvchr</span>
+  <span class="w">utf8_to_uvuni</span>
+  <span class="w">utf8n_to_uvuni</span>
+  <span class="w">uvuni_to_utf8</span></pre>
+</li>
+<li><a name="perl-5.6.1"></a><b>perl 5.6.1</b>
+<pre class="verbatim">  <span class="w">SvGAMAGIC</span>
+  <span class="w">apply_attrs_string</span>
+  <span class="w">bytes_to_utf8</span>
+  <span class="w">gv_efullname4</span>
+  <span class="w">gv_fullname4</span>
+  <span class="w">is_utf8_string</span>
+  <span class="w">save_generic_pvref</span>
+  <span class="w">utf16_to_utf8</span>
+  <span class="w">utf16_to_utf8_reversed</span>
+  <span class="w">utf8_to_bytes</span></pre>
+</li>
+<li><a name="perl-5.6.0"></a><b>perl 5.6.0</b>
+<pre class="verbatim">  <span class="w">SvIOK_UV</span>
+  <span class="w">SvIOK_notUV</span>
+  <span class="w">SvIOK_only_UV</span>
+  <span class="w">SvPOK_only_UTF8</span>
+  <span class="w">SvPVbyte_nolen</span>
+  <span class="w">SvPVbytex</span>
+  <span class="w">SvPVbytex_force</span>
+  <span class="w">SvPVutf8</span>
+  <span class="w">SvPVutf8_force</span>
+  <span class="w">SvPVutf8_nolen</span>
+  <span class="w">SvPVutf8x</span>
+  <span class="w">SvPVutf8x_force</span>
+  <span class="w">SvUOK</span>
+  <span class="w">SvUTF8</span>
+  <span class="w">SvUTF8_off</span>
+  <span class="w">SvUTF8_on</span>
+  <span class="w">av_delete</span>
+  <span class="w">av_exists</span>
+  <span class="w">call_atexit</span>
+  <span class="w">cast_i32</span>
+  <span class="w">cast_iv</span>
+  <span class="w">cast_ulong</span>
+  <span class="w">cast_uv</span>
+  <span class="w">do_gv_dump</span>
+  <span class="w">do_gvgv_dump</span>
+  <span class="w">do_hv_dump</span>
+  <span class="w">do_magic_dump</span>
+  <span class="w">do_op_dump</span>
+  <span class="w">do_open9</span>
+  <span class="w">do_pmop_dump</span>
+  <span class="w">do_sv_dump</span>
+  <span class="w">dump_all</span>
+  <span class="w">dump_eval</span>
+  <span class="w">dump_form</span>
+  <span class="w">dump_indent</span>
+  <span class="w">dump_packsubs</span>
+  <span class="w">dump_sub</span>
+  <span class="w">dump_vindent</span>
+  <span class="w">get_context</span>
+  <span class="w">get_ppaddr</span>
+  <span class="w">gv_dump</span>
+  <span class="w">init_i18nl10n</span>
+  <span class="w">init_i18nl14n</span>
+  <span class="w">is_uni_alnum</span>
+  <span class="w">is_uni_alnum_lc</span>
+  <span class="w">is_uni_alnumc</span>
+  <span class="w">is_uni_alnumc_lc</span>
+  <span class="w">is_uni_alpha</span>
+  <span class="w">is_uni_alpha_lc</span>
+  <span class="w">is_uni_ascii</span>
+  <span class="w">is_uni_ascii_lc</span>
+  <span class="w">is_uni_cntrl</span>
+  <span class="w">is_uni_cntrl_lc</span>
+  <span class="w">is_uni_digit</span>
+  <span class="w">is_uni_digit_lc</span>
+  <span class="w">is_uni_graph</span>
+  <span class="w">is_uni_graph_lc</span>
+  <span class="w">is_uni_idfirst</span>
+  <span class="w">is_uni_idfirst_lc</span>
+  <span class="w">is_uni_lower</span>
+  <span class="w">is_uni_lower_lc</span>
+  <span class="w">is_uni_print</span>
+  <span class="w">is_uni_print_lc</span>
+  <span class="w">is_uni_punct</span>
+  <span class="w">is_uni_punct_lc</span>
+  <span class="w">is_uni_space</span>
+  <span class="w">is_uni_space_lc</span>
+  <span class="w">is_uni_upper</span>
+  <span class="w">is_uni_upper_lc</span>
+  <span class="w">is_uni_xdigit</span>
+  <span class="w">is_uni_xdigit_lc</span>
+  <span class="w">is_utf8_alnum</span>
+  <span class="w">is_utf8_alnumc</span>
+  <span class="w">is_utf8_alpha</span>
+  <span class="w">is_utf8_ascii</span>
+  <span class="w">is_utf8_char</span>
+  <span class="w">is_utf8_cntrl</span>
+  <span class="w">is_utf8_digit</span>
+  <span class="w">is_utf8_graph</span>
+  <span class="w">is_utf8_idfirst</span>
+  <span class="w">is_utf8_lower</span>
+  <span class="w">is_utf8_mark</span>
+  <span class="w">is_utf8_print</span>
+  <span class="w">is_utf8_punct</span>
+  <span class="w">is_utf8_space</span>
+  <span class="w">is_utf8_upper</span>
+  <span class="w">is_utf8_xdigit</span>
+  <span class="w">magic_dump</span>
+  <span class="w">mess</span>
+  <span class="w">my_atof</span>
+  <span class="w">my_fflush_all</span>
+  <span class="w">newANONATTRSUB</span>
+  <span class="w">newATTRSUB</span>
+  <span class="w">newXS</span>
+  <span class="w">newXSproto</span>
+  <span class="w">new_collate</span>
+  <span class="w">new_ctype</span>
+  <span class="w">new_numeric</span>
+  <span class="w">op_dump</span>
+  <span class="w">perl_parse</span>
+  <span class="w">pmop_dump</span>
+  <span class="w">pv_display</span>
+  <span class="w">re_intuit_string</span>
+  <span class="w">reginitcolors</span>
+  <span class="w">require_pv</span>
+  <span class="w">safesyscalloc</span>
+  <span class="w">safesysfree</span>
+  <span class="w">safesysmalloc</span>
+  <span class="w">safesysrealloc</span>
+  <span class="w">save_I8</span>
+  <span class="w">save_alloc</span>
+  <span class="w">save_destructor</span>
+  <span class="w">save_destructor_x</span>
+  <span class="w">save_re_context</span>
+  <span class="w">save_vptr</span>
+  <span class="w">scan_bin</span>
+  <span class="w">set_context</span>
+  <span class="w">set_numeric_local</span>
+  <span class="w">set_numeric_radix</span>
+  <span class="w">set_numeric_standard</span>
+  <span class="w">str_to_version</span>
+  <span class="w">sv_2pvutf8</span>
+  <span class="w">sv_2pvutf8_nolen</span>
+  <span class="w">sv_force_normal</span>
+  <span class="w">sv_len_utf8</span>
+  <span class="w">sv_pos_b2u</span>
+  <span class="w">sv_pos_u2b</span>
+  <span class="w">sv_pv</span>
+  <span class="w">sv_pvbyte</span>
+  <span class="w">sv_pvbyten</span>
+  <span class="w">sv_pvbyten_force</span>
+  <span class="w">sv_pvutf8</span>
+  <span class="w">sv_pvutf8n</span>
+  <span class="w">sv_pvutf8n_force</span>
+  <span class="w">sv_rvweaken</span>
+  <span class="w">sv_utf8_decode</span>
+  <span class="w">sv_utf8_downgrade</span>
+  <span class="w">sv_utf8_encode</span>
+  <span class="w">swash_init</span>
+  <span class="w">tmps_grow</span>
+  <span class="w">to_uni_lower_lc</span>
+  <span class="w">to_uni_title_lc</span>
+  <span class="w">to_uni_upper_lc</span>
+  <span class="w">utf8_distance</span>
+  <span class="w">utf8_hop</span>
+  <span class="w">vcroak</span>
+  <span class="w">vform</span>
+  <span class="w">vmess</span>
+  <span class="w">vwarn</span>
+  <span class="w">vwarner</span></pre>
+</li>
+<li><a name="perl-5.005_03"></a><b>perl 5.005_03</b>
+<pre class="verbatim">  <span class="w">POPpx</span>
+  <span class="w">get_vtbl</span>
+  <span class="w">save_generic_svref</span></pre>
+</li>
+<li><a name="perl-5.005"></a><b>perl 5.005</b>
+<pre class="verbatim">  <span class="w">PL_modglobal</span>
+  <span class="w">cx_dump</span>
+  <span class="w">debop</span>
+  <span class="w">debprofdump</span>
+  <span class="w">fbm_compile</span>
+  <span class="w">fbm_instr</span>
+  <span class="w">get_op_descs</span>
+  <span class="w">get_op_names</span>
+  <span class="w">init_stacks</span>
+  <span class="w">mg_length</span>
+  <span class="w">mg_size</span>
+  <span class="w">newHVhv</span>
+  <span class="w">new_stackinfo</span>
+  <span class="w">regdump</span>
+  <span class="w">regexec_flags</span>
+  <span class="w">regnext</span>
+  <span class="w">runops_debug</span>
+  <span class="w">runops_standard</span>
+  <span class="w">save_hints</span>
+  <span class="w">save_iv</span>
+  <span class="w">screaminstr</span>
+  <span class="w">sv_iv</span>
+  <span class="w">sv_nv</span>
+  <span class="w">sv_peek</span>
+  <span class="w">sv_true</span></pre>
+</li>
+<li><a name="perl-5.004_05"></a><b>perl 5.004_05</b>
+<pre class="verbatim">  <span class="w">do_binmode</span>
+  <span class="w">save_aelem</span>
+  <span class="w">save_helem</span></pre>
+</li>
+<li><a name="perl-5.004"></a><b>perl 5.004</b>
+<pre class="verbatim">  <span class="w">GIMME_V</span>
+  <span class="w">G_VOID</span>
+  <span class="w">HEf_SVKEY</span>
+  <span class="w">HeHASH</span>
+  <span class="w">HeKEY</span>
+  <span class="w">HeKLEN</span>
+  <span class="w">HePV</span>
+  <span class="w">HeSVKEY</span>
+  <span class="w">HeSVKEY_force</span>
+  <span class="w">HeSVKEY_set</span>
+  <span class="w">HeVAL</span>
+  <span class="w">SvSetMagicSV</span>
+  <span class="w">SvSetMagicSV_nosteal</span>
+  <span class="w">SvSetSV_nosteal</span>
+  <span class="w">SvTAINTED</span>
+  <span class="w">SvTAINTED_off</span>
+  <span class="w">SvTAINTED_on</span>
+  <span class="w">block_gimme</span>
+  <span class="w">call_list</span>
+  <span class="w">cv_const_sv</span>
+  <span class="w">delimcpy</span>
+  <span class="w">do_open</span>
+  <span class="w">form</span>
+  <span class="w">gv_autoload4</span>
+  <span class="w">gv_efullname3</span>
+  <span class="w">gv_fetchmethod_autoload</span>
+  <span class="w">gv_fullname3</span>
+  <span class="w">hv_delayfree_ent</span>
+  <span class="w">hv_delete_ent</span>
+  <span class="w">hv_exists_ent</span>
+  <span class="w">hv_fetch_ent</span>
+  <span class="w">hv_free_ent</span>
+  <span class="w">hv_iterkeysv</span>
+  <span class="w">hv_ksplit</span>
+  <span class="w">hv_store_ent</span>
+  <span class="w">ibcmp_locale</span>
+  <span class="w">my_failure_exit</span>
+  <span class="w">my_memcmp</span>
+  <span class="w">my_pclose</span>
+  <span class="w">my_popen</span>
+  <span class="w">newSVpvf</span>
+  <span class="w">rsignal</span>
+  <span class="w">rsignal_state</span>
+  <span class="w">save_I16</span>
+  <span class="w">save_gp</span>
+  <span class="w">share_hek</span>
+  <span class="w">start_subparse</span>
+  <span class="w">sv_catpvf</span>
+  <span class="w">sv_catpvf_mg</span>
+  <span class="w">sv_cmp_locale</span>
+  <span class="w">sv_derived_from</span>
+  <span class="w">sv_gets</span>
+  <span class="w">sv_magic_portable</span>
+  <span class="w">sv_setpvf</span>
+  <span class="w">sv_setpvf_mg</span>
+  <span class="w">sv_taint</span>
+  <span class="w">sv_tainted</span>
+  <span class="w">sv_untaint</span>
+  <span class="w">sv_vcatpvf</span>
+  <span class="w">sv_vcatpvf_mg</span>
+  <span class="w">sv_vcatpvfn</span>
+  <span class="w">sv_vsetpvf</span>
+  <span class="w">sv_vsetpvf_mg</span>
+  <span class="w">sv_vsetpvfn</span>
+  <span class="w">unsharepvn</span>
+  <span class="w">vnewSVpvf</span>
+  <span class="w">warner</span></pre>
+</li>
+</ul>
+<a name="BUGS"></a><h1>BUGS</h1>
+<p>If you find any bugs, <code class="inline"><span class="w">Devel::PPPort</span></code>
+ doesn't seem to build on your
+system or any of its tests fail, please use the CPAN Request Tracker
+at <a href="http://rt.cpan.org/">http://rt.cpan.org/</a> to create a ticket for the module.</p>
+<a name="AUTHORS"></a><h1>AUTHORS</h1>
+<ul>
+<li>
+<p>Version 1.x of Devel::PPPort was written by Kenneth Albanowski.</p>
+</li>
+<li>
+<p>Version 2.x was ported to the Perl core by Paul Marquess.</p>
+</li>
+<li>
+<p>Version 3.x was ported back to CPAN by Marcus Holland-Moritz.</p>
+</li>
+</ul>
+<a name="COPYRIGHT"></a><h1>COPYRIGHT</h1>
+<p>Version 3.x, Copyright (C) 2004-2007, Marcus Holland-Moritz.</p>
+<p>Version 2.x, Copyright (C) 2001, Paul Marquess.</p>
+<p>Version 1.x, Copyright (C) 1999, Kenneth Albanowski.</p>
+<p>This program is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.</p>
+<a name="SEE-ALSO"></a><h1>SEE ALSO</h1>
+<p>See <a href="../h2xs.html">h2xs</a>, <a href="http://search.cpan.org/perldoc/ppport.h">ppport.h</a>.</p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../close_purple.gif';" onmouseout="rightCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('Devel::PPPort','Devel/PPPort.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

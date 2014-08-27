@@ -1,0 +1,99 @@
+#oef 6
+[[ "date +%w" == 6 || "date +%w" == 0 ]] && echo "weekend" || echo "week"
+[[ "date +%d -d '1 day'" == '01' ]] && echo "laatste dag van de maand" || echo "niets"
+
+#oef 7
+x="ab?c*d+"
+echo $x
+[  $x == "ab?c*d+" ] && echo "voldoet" || echo "niet"
+[[ $x ==  ab?c*d+ ]] && echo "voldoet" || echo "niet"
+[[ $x == "ab?c*d+" ]] && echo "voldoet" || echo "niet"
+[[ $x =~  ab?c*d+ ]] && echo "voldoet" || echo "niet"
+[[ $x =~ "ab?c*d+" ]] && echo "voldoet" || echo "niet"
+
+x="abcd"
+echo $x
+[  $x == "ab?c*d+" ] && echo "voldoet" || echo "niet"
+[[ $x ==  ab?c*d+ ]] && echo "voldoet" || echo "niet"
+[[ $x == "ab?c*d+" ]] && echo "voldoet" || echo "niet"
+[[ $x =~  ab?c*d+ ]] && echo "voldoet" || echo "niet"
+[[ $x =~ "ab?c*d+" ]] && echo "voldoet" || echo "niet"
+
+x="abxcd+"
+echo $x
+[  $x == "ab?c*d+" ] && echo "voldoet" || echo "niet"
+[[ $x ==  ab?c*d+ ]] && echo "voldoet" || echo "niet"
+[[ $x == "ab?c*d+" ]] && echo "voldoet" || echo "niet"
+[[ $x =~  ab?c*d+ ]] && echo "voldoet" || echo "niet"
+[[ $x =~ "ab?c*d+" ]] && echo "voldoet" || echo "niet"
+
+x="abccd+"
+echo $x
+[  $x == "ab?c*d+" ] && echo "voldoet" || echo "niet"
+[[ $x ==  ab?c*d+ ]] && echo "voldoet" || echo "niet"
+[[ $x == "ab?c*d+" ]] && echo "voldoet" || echo "niet"
+[[ $x =~  ab?c*d+ ]] && echo "voldoet" || echo "niet"
+[[ $x =~ "ab?c*d+" ]] && echo "voldoet" || echo "niet"
+
+x="add"
+echo $x
+[  $x == "ab?c*d+" ] && echo "voldoet" || echo "niet"
+[[ $x ==  ab?c*d+ ]] && echo "voldoet" || echo "niet"
+[[ $x == "ab?c*d+" ]] && echo "voldoet" || echo "niet"
+[[ $x =~  ab?c*d+ ]] && echo "voldoet" || echo "niet"
+[[ $x =~ "ab?c*d+" ]] && echo "voldoet" || echo "niet"
+
+#oef 8
+echo abcxyz | grep -E 'cde' && echo "OK!" || echo "niet"
+echo cdexyz | grep -E 'cde' && echo OK! || echo "niet"
+echo abcxyz | grep -E 'c' | grep -E 'cde' && echo OK! || echo "niet"
+echo cdexyz | grep -E 'c' | grep -E 'cde' && echo OK! || echo "niet"
+! echo abcxyz | grep -E 'c' | grep -E 'cde' && echo OK! || echo "niet"
+! echo cdexyz | grep -E 'c' | grep -E 'cde' && echo OK! || echo "niet"
+
+#oef 9
+echo cdexyz | grep -E 'c' | grep -E 'cde' > /dev/null && echo OK! || echo "niet"
+
+#oef 10
+user="root"
+cat /etc/passwd | grep -E $user > /dev/null && echo "bestaat" || echo "bestat niet"
+
+#oef 11
+[[ $# -eq 1 ]] || { echo "Geef 1 parameter mee " 1>&2 ; exit 1; }
+grep -E "^$1:" /etc/passwd 1>/dev/null || { echo "$1 is geen user" 1>&2; exit 1; }
+groepid=$( grep -E "^$1:" /etc/passwd | cut -f4 -d ":" )
+groep=$( grep -E ":$groepid:" /etc/group | cut -f1 -d ":" )
+echo $1 "behoort tot de groep" $groep
+
+#oef 12
+#naam=$1 #beginregel=$2 #eindregel=$3
+
+naam="hoi.txt"
+begin=$((1))
+einde=$((3))
+
+if [[ -f $naam ]]; then
+   aantalregels=$(wc -l < $naam)
+
+   if (( 0 < $begin && $begin <= $einde && $einde <= $aantalregels )); then 
+      aantal=$(($einde-$begin-1))
+      cat "$naam" | head -n "$einde" | tail -n "$aantal"
+   fi
+else
+   echo "bestandsnaam bestaat niet"
+fi
+
+#oef 13
+#naam=$1 #beginregel=$2 #eindregel=$3
+
+naam="hoi.txt"
+begin=$((1))
+einde=$((3))
+
+[[ -f $naam ]] || { echo "bestandsnaam bestaat niet"; exit 1;}
+&& {
+   aantalregels=$(wc -l < $naam)
+   (( 0 < $begin && $begin <= $einde && $einde <= $aantalregels )) && {
+      aantal=$(($einde-$begin-1))
+      cat "$naam" | head -n "$einde" | tail -n "$aantal"
+   }}

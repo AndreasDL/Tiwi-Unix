@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>Net::hostent - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 1;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../close_purple.gif';" onmouseout="leftCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../index-overview.html">Overview</a></li>
+        <li><a href="../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../index-faq.html">FAQs</a></li>
+        <li><a href="../index-history.html">History / Changes</a></li>
+        <li><a href="../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../index-language.html">Language</a></li>
+        <li><a href="../index-functions.html">Functions</a></li>
+        <li><a href="../perlop.html">Operators</a></li>
+        <li><a href="../perlvar.html">Special variables</a></li>
+        <li><a href="../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../index-modules-A.html">Core modules</a></li>
+        <li><a href="../index-utilities.html">Utilities</a></li>
+        <li><a href="../index-internals.html">Internals</a></li>
+        <li><a href="../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../index.html">Home</a> &gt; <a href="../index-modules-A.html">Core modules</a> &gt; <a href="../index-modules-N.html">N</a> &gt; Net::hostent</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">Net::hostent</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><li><a href="#EXAMPLES">EXAMPLES</a><li><a href="#NOTE">NOTE</a><li><a href="#AUTHOR">AUTHOR</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>Net::hostent - by-name interface to Perl's built-in gethost*() functions</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim"> <a class="l_k" href="../functions/use.html">use</a> <span class="w">Net::hostent</span><span class="sc">;</span></pre>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p>This module's default exports override the core gethostbyname() and
+gethostbyaddr() functions, replacing them with versions that return
+"Net::hostent" objects.  This object has methods that return the similarly
+named structure field name from the C's hostent structure from <i>netdb.h</i>;
+namely name, aliases, addrtype, length, and addr_list.  The aliases and
+addr_list methods return array reference, the rest scalars.  The addr
+method is equivalent to the zeroth element in the addr_list array
+reference.</p>
+<p>You may also import all the structure fields directly into your namespace
+as regular variables using the :FIELDS import tag.  (Note that this still
+overrides your core functions.)  Access these fields as variables named
+with a preceding <code class="inline"><span class="w">h_</span></code>
+.  Thus, <code class="inline"><span class="i">$host_obj</span><span class="i">-&gt;name</span><span class="s">(</span><span class="s">)</span></code>
+ corresponds to
+$h_name if you import the fields.  Array references are available as
+regular array variables, so for example <code class="inline"><span class="i">@</span>{ <span class="i">$host_obj</span><span class="i">-&gt;aliases</span><span class="s">(</span><span class="s">)</span>
+}</code>
+ would be simply @h_aliases.</p>
+<p>The gethost() function is a simple front-end that forwards a numeric
+argument to gethostbyaddr() by way of Socket::inet_aton, and the rest
+to gethostbyname().</p>
+<p>To access this functionality without the core overrides,
+pass the <code class="inline"><a class="l_k" href="../functions/use.html">use</a></code> an empty import list, and then access
+function functions with their full qualified names.
+On the other hand, the built-ins are still available
+via the <code class="inline"><span class="w">CORE::</span></code>
+ pseudo-package.</p>
+<a name="EXAMPLES"></a><h1>EXAMPLES</h1>
+<pre class="verbatim"> <a class="l_k" href="../functions/use.html">use</a> <span class="w">Net::hostent</span><span class="sc">;</span>
+ <a class="l_k" href="../functions/use.html">use</a> <span class="w">Socket</span><span class="sc">;</span></pre>
+<pre class="verbatim"> <span class="i">@ARGV</span> = <span class="s">(</span><span class="q">&#39;netscape.com&#39;</span><span class="s">)</span> unless <span class="i">@ARGV</span><span class="sc">;</span></pre>
+<pre class="verbatim"> for $host ( @ARGV ) {</pre><pre class="verbatim">    unless <span class="s">(</span><span class="i">$h</span> = <span class="i">gethost</span><span class="s">(</span><span class="i">$host</span><span class="s">)</span><span class="s">)</span> <span class="s">{</span>
+	<a class="l_k" href="../functions/warn.html">warn</a> <span class="q">&quot;$0: no such host: $host\n&quot;</span><span class="sc">;</span>
+	<a class="l_k" href="../functions/next.html">next</a><span class="sc">;</span>
+    <span class="s">}</span></pre>
+<pre class="verbatim">    <a class="l_k" href="../functions/printf.html">printf</a> <span class="q">&quot;\n%s is %s%s\n&quot;</span><span class="cm">,</span> 
+	    <span class="i">$host</span><span class="cm">,</span> 
+	    <a class="l_k" href="../functions/lc.html">lc</a><span class="s">(</span><span class="i">$h</span><span class="i">-&gt;name</span><span class="s">)</span> eq <a class="l_k" href="../functions/lc.html">lc</a><span class="s">(</span><span class="i">$host</span><span class="s">)</span> ? <span class="q">&quot;&quot;</span> <span class="co">:</span> <span class="q">&quot;*really* &quot;</span><span class="cm">,</span>
+	    <span class="i">$h</span><span class="i">-&gt;name</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <a class="l_k" href="../functions/print.html">print</a> <span class="q">&quot;\taliases are &quot;</span><span class="cm">,</span> <a class="l_k" href="../functions/join.html">join</a><span class="s">(</span><span class="q">&quot;, &quot;</span><span class="cm">,</span> <span class="i">@</span>{<span class="i">$h</span><span class="i">-&gt;aliases</span>}<span class="s">)</span><span class="cm">,</span> <span class="q">&quot;\n&quot;</span>
+		if <span class="i">@</span>{<span class="i">$h</span><span class="i">-&gt;aliases</span>}<span class="sc">;</span></pre>
+<pre class="verbatim">    if <span class="s">(</span> <span class="i">@</span>{<span class="i">$h</span><span class="i">-&gt;addr_list</span>} &gt; <span class="n">1</span> <span class="s">)</span> <span class="s">{</span> 
+	<a class="l_k" href="../functions/my.html">my</a> <span class="i">$i</span><span class="sc">;</span>
+	for <span class="i">$addr</span> <span class="s">(</span> <span class="i">@</span>{<span class="i">$h</span><span class="i">-&gt;addr_list</span>} <span class="s">)</span> <span class="s">{</span>
+	    <a class="l_k" href="../functions/printf.html">printf</a> <span class="q">&quot;\taddr #%d is [%s]\n&quot;</span><span class="cm">,</span> <span class="i">$i</span>++<span class="cm">,</span> <span class="i">inet_ntoa</span><span class="s">(</span><span class="i">$addr</span><span class="s">)</span><span class="sc">;</span>
+	<span class="s">}</span> 
+    <span class="s">}</span> else <span class="s">{</span>
+	<a class="l_k" href="../functions/printf.html">printf</a> <span class="q">&quot;\taddress is [%s]\n&quot;</span><span class="cm">,</span> <span class="i">inet_ntoa</span><span class="s">(</span><span class="i">$h</span><span class="i">-&gt;addr</span><span class="s">)</span><span class="sc">;</span>
+    <span class="s">}</span></pre>
+<pre class="verbatim">    if ($h = gethostbyaddr($h-&gt;addr)) {
+	if (lc($h-&gt;name) ne lc($host)) {
+	    printf "\tThat addr reverses to host %s!\n", $h-&gt;name;
+	    $host = $h-&gt;name;
+	    redo;
+	} 
+    }
+ }</pre><a name="NOTE"></a><h1>NOTE</h1>
+<p>While this class is currently implemented using the Class::Struct
+module to build a struct-like class, you shouldn't rely upon this.</p>
+<a name="AUTHOR"></a><h1>AUTHOR</h1>
+<p>Tom Christiansen</p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../close_purple.gif';" onmouseout="rightCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('Net::hostent','Net/hostent.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>CPANPLUS::Shell::Default - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 2;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../../close_purple.gif';" onmouseout="leftCloseIcon.src='../../close_blue.gif';"><img src="../../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../../index-overview.html">Overview</a></li>
+        <li><a href="../../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../../index-faq.html">FAQs</a></li>
+        <li><a href="../../index-history.html">History / Changes</a></li>
+        <li><a href="../../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../../index-language.html">Language</a></li>
+        <li><a href="../../index-functions.html">Functions</a></li>
+        <li><a href="../../perlop.html">Operators</a></li>
+        <li><a href="../../perlvar.html">Special variables</a></li>
+        <li><a href="../../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../../index-modules-A.html">Core modules</a></li>
+        <li><a href="../../index-utilities.html">Utilities</a></li>
+        <li><a href="../../index-internals.html">Internals</a></li>
+        <li><a href="../../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../../index.html">Home</a> &gt; <a href="../../index-modules-A.html">Core modules</a> &gt; <a href="../../index-modules-C.html">C</a> &gt; CPANPLUS::Shell::Default</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">CPANPLUS::Shell::Default</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><li><a href="#BUG-REPORTS">BUG REPORTS</a><li><a href="#AUTHOR">AUTHOR</a><li><a href="#COPYRIGHT">COPYRIGHT</a><li><a href="#SEE-ALSO">SEE ALSO</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>CPANPLUS::Shell::Default</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">    ### loading the shell:
+    $ cpanp                     # run 'cpanp' from the command line
+    $ perl -MCPANPLUS -eshell   # load the shell from the command line</pre><pre class="verbatim">    <a class="l_k" href="../../functions/use.html">use</a> <span class="w">CPANPLUS::Shell</span> <span class="q">qw[Default]</span><span class="sc">;</span>        <span class="c"># load this shell via the API</span>
+                                            <span class="c"># always done via CPANPLUS::Shell</span></pre>
+<pre class="verbatim">    <a class="l_k" href="../../functions/my.html">my</a> <span class="i">$ui</span> = <span class="w">CPANPLUS::Shell</span><span class="w">-&gt;new</span><span class="sc">;</span>
+    <span class="i">$ui</span><span class="i">-&gt;shell</span><span class="sc">;</span>                             <span class="c"># run the shell</span>
+    <span class="i">$ui</span><span class="i">-&gt;dispatch_on_input</span><span class="s">(</span> <span class="w">input</span> <span class="cm">=&gt;</span> <span class="q">'x'</span><span class="s">)</span><span class="sc">;</span>  <span class="c"># update the source using the</span>
+                                            <span class="c"># dispatch method</span></pre>
+<pre class="verbatim">    ### when in the shell:
+    ### Note that all commands can also take options.
+    ### Look at their underlying CPANPLUS::Backend methods to see
+    ### what options those are.
+    cpanp&gt; h                 # show help messages
+    cpanp&gt; ?                 # show help messages</pre><pre class="verbatim">    cpanp&gt; m Acme            # find acme modules, allows regexes
+    cpanp&gt; a KANE            # find modules by kane, allows regexes
+    cpanp&gt; f Acme::Foo       # get a list of all releases of Acme::Foo</pre><pre class="verbatim">    cpanp&gt; i Acme::Foo       # install Acme::Foo
+    cpanp&gt; i Acme-Foo-1.3    # install version 1.3 of Acme::Foo
+    cpanp&gt; i &lt;URI&gt;           # install from URI, like ftp://foo.com/X.tgz
+    cpanp&gt; i 1 3..5          # install search results 1, 3, 4 and 5
+    cpanp&gt; i *               # install all search results
+    cpanp&gt; a KANE; i *;      # find modules by kane, install all results
+    cpanp&gt; t Acme::Foo       # test Acme::Foo, without installing it
+    cpanp&gt; u Acme::Foo       # uninstall Acme::Foo
+    cpanp&gt; d Acme::Foo       # download Acme::Foo
+    cpanp&gt; z Acme::Foo       # download &amp; extract Acme::Foo, then open a
+                             # shell in the extraction directory</pre><pre class="verbatim">    <span class="w">cpanp</span>&gt; <span class="w">c</span> <span class="w">Acme::Foo</span>       <span class="c"># get a list of test results for Acme::Foo</span>
+    <span class="w">cpanp</span>&gt; <span class="w">l</span> <span class="w">Acme::Foo</span>       <span class="c"># view details about the Acme::Foo package</span>
+    <span class="w">cpanp</span>&gt; <span class="w">r</span> <span class="w">Acme::Foo</span>       <span class="c"># view Acme::Foo's README file</span>
+    <span class="w">cpanp</span>&gt; <span class="w">o</span>                 <span class="c"># get a list of all installed modules that</span>
+                             <span class="c"># are out of date</span>
+    <span class="w">cpanp</span>&gt; <span class="w">o</span> <span class="n">1</span>..<span class="n">3</span>            <span class="c"># list uptodateness from a previous search</span></pre>
+<pre class="verbatim">    cpanp&gt; s conf            # show config settings
+    cpanp&gt; s conf md5 1      # enable md5 checks
+    cpanp&gt; s program         # show program settings
+    cpanp&gt; s edit            # edit config file
+    cpanp&gt; s reconfigure     # go through initial configuration again
+    cpanp&gt; s selfupdate      # update your CPANPLUS install
+    cpanp&gt; s save            # save config to disk
+    cpanp&gt; s mirrors         # show currently selected mirrors</pre><pre class="verbatim">    <span class="w">cpanp</span>&gt; ! <span class="s">[</span><span class="w">PERL</span> <span class="w">CODE</span><span class="s">]</span>     <span class="c"># execute the following perl code</span></pre>
+<pre class="verbatim">    cpanp&gt; b                 # create an autobundle for this computers
+                             # perl installation
+    cpanp&gt; x                 # reload index files (purges cache)
+    cpanp&gt; x --update_source # reload index files, get fresh source files
+    cpanp&gt; p [FILE]          # print error stack (to a file)
+    cpanp&gt; v                 # show the banner
+    cpanp&gt; w                 # show last search results again</pre><pre class="verbatim">    cpanp&gt; q                 # quit the shell</pre><pre class="verbatim">    cpanp&gt; /plugins          # list avialable plugins
+    cpanp&gt; /? PLUGIN         # list help test of &lt;PLUGIN&gt;</pre><pre class="verbatim">    <span class="c">### common options:</span>
+    <span class="w">cpanp</span>&gt; <span class="w">i</span> ... --<span class="w">skiptest</span> <span class="c"># skip tests</span>
+    <span class="w">cpanp</span>&gt; <span class="w">i</span> ... --<span class="w">force</span>    <span class="c"># force all operations</span>
+    <span class="w">cpanp</span>&gt; <span class="w">i</span> ... --<span class="w">verbose</span>  <span class="c"># run in verbose mode</span></pre>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p>This module provides the default user interface to <code class="inline"><span class="w">CPANPLUS</span></code>
+. You
+can start it via the <code class="inline"><span class="w">cpanp</span></code>
+ binary, or as detailed in the <a href="http://search.cpan.org/perldoc/SYNOPSIS">SYNOPSIS</a>.</p>
+<a name="BUG-REPORTS"></a><h1>BUG REPORTS</h1>
+<p>Please report bugs or other issues to &lt;bug-cpanplus@rt.cpan.org&lt;gt&gt;.</p>
+<a name="AUTHOR"></a><h1>AUTHOR</h1>
+<p>This module by Jos Boumans &lt;kane@cpan.org&gt;.</p>
+<a name="COPYRIGHT"></a><h1>COPYRIGHT</h1>
+<p>The CPAN++ interface (of which this module is a part of) is copyright (c) 
+2001 - 2007, Jos Boumans &lt;kane@cpan.org&gt;. All rights reserved.</p>
+<p>This library is free software; you may redistribute and/or modify it 
+under the same terms as Perl itself.</p>
+<a name="SEE-ALSO"></a><h1>SEE ALSO</h1>
+<p><a href="../../CPANPLUS/Shell/Classic.html">CPANPLUS::Shell::Classic</a>, <a href="../../CPANPLUS/Shell.html">CPANPLUS::Shell</a>, <a href="../../cpanp.html">cpanp</a></p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../../close_purple.gif';" onmouseout="rightCloseIcon.src='../../close_blue.gif';"><img src="../../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('CPANPLUS::Shell::Default','CPANPLUS/Shell/Default.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,859 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>IO::Compress::Zip - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 2;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../../close_purple.gif';" onmouseout="leftCloseIcon.src='../../close_blue.gif';"><img src="../../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../../index-overview.html">Overview</a></li>
+        <li><a href="../../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../../index-faq.html">FAQs</a></li>
+        <li><a href="../../index-history.html">History / Changes</a></li>
+        <li><a href="../../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../../index-language.html">Language</a></li>
+        <li><a href="../../index-functions.html">Functions</a></li>
+        <li><a href="../../perlop.html">Operators</a></li>
+        <li><a href="../../perlvar.html">Special variables</a></li>
+        <li><a href="../../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../../index-modules-A.html">Core modules</a></li>
+        <li><a href="../../index-utilities.html">Utilities</a></li>
+        <li><a href="../../index-internals.html">Internals</a></li>
+        <li><a href="../../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../../index.html">Home</a> &gt; <a href="../../index-modules-A.html">Core modules</a> &gt; <a href="../../index-modules-I.html">I</a> &gt; IO::Compress::Zip</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">IO::Compress::Zip</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><li><a href="#Functional-Interface">Functional Interface</a><ul><li><a href="#zip-0x24input-0x3d0x3e-0x24output-0x5b0x2c-OPTS0x5d">zip $input =&gt; $output [, OPTS]</a><li><a href="#Notes">Notes</a><li><a href="#Optional-Parameters">Optional Parameters</a><li><a href="#Examples">Examples</a></ul><li><a href="#OO-Interface">OO Interface</a><ul><li><a href="#Constructor">Constructor</a><li><a href="#Constructor-Options">Constructor Options</a><li><a href="#Examples">Examples</a></ul><li><a href="#Methods">Methods</a><ul><li><a href="#print">print</a><li><a href="#printf">printf</a><li><a href="#syswrite">syswrite</a><li><a href="#write">write</a><li><a href="#flush">flush</a><li><a href="#tell">tell</a><li><a href="#eof">eof</a><li><a href="#seek">seek</a><li><a href="#binmode">binmode</a><li><a href="#opened">opened</a><li><a href="#autoflush">autoflush</a><li><a href="#input_line_number">input_line_number</a><li><a href="#fileno">fileno</a><li><a href="#close">close</a><li><a href="#newStream(0x5bOPTS0x5d)">newStream([OPTS])</a><li><a href="#deflateParams">deflateParams</a></ul><li><a href="#Importing">Importing</a><li><a href="#EXAMPLES">EXAMPLES</a><li><a href="#SEE-ALSO">SEE ALSO</a><li><a href="#AUTHOR">AUTHOR</a><li><a href="#MODIFICATION-HISTORY">MODIFICATION HISTORY</a><li><a href="#COPYRIGHT-AND-LICENSE">COPYRIGHT AND LICENSE</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>IO::Compress::Zip - Write zip files/buffers</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">    <a class="l_k" href="../../functions/use.html">use</a> <span class="w">IO::Compress::Zip</span> <span class="q">qw(zip $ZipError)</span> <span class="sc">;</span></pre>
+<pre class="verbatim">    <a class="l_k" href="../../functions/my.html">my</a> <span class="i">$status</span> = <span class="w">zip</span> <span class="i">$input</span> <span class="cm">=&gt;</span> <span class="i">$output</span> [<span class="cm">,</span><span class="w">OPTS</span>] 
+        or <a class="l_k" href="../../functions/die.html">die</a> <span class="q">&quot;zip failed: $ZipError\n&quot;</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <a class="l_k" href="../../functions/my.html">my</a> <span class="i">$z</span> = <span class="w">new</span> <span class="w">IO::Compress::Zip</span> <span class="i">$output</span> [<span class="cm">,</span><span class="w">OPTS</span>]
+        or <a class="l_k" href="../../functions/die.html">die</a> <span class="q">&quot;zip failed: $ZipError\n&quot;</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="i">$z</span><span class="i">-&gt;print</span><span class="s">(</span><span class="i">$string</span><span class="s">)</span><span class="sc">;</span>
+    <span class="i">$z</span><span class="i">-&gt;printf</span><span class="s">(</span><span class="i">$format</span><span class="cm">,</span> <span class="i">$string</span><span class="s">)</span><span class="sc">;</span>
+    <span class="i">$z</span><span class="i">-&gt;write</span><span class="s">(</span><span class="i">$string</span><span class="s">)</span><span class="sc">;</span>
+    <span class="i">$z</span><span class="i">-&gt;syswrite</span><span class="s">(</span><span class="i">$string</span> [<span class="cm">,</span> <span class="i">$length</span><span class="cm">,</span> <span class="i">$offset</span>]<span class="s">)</span><span class="sc">;</span>
+    <span class="i">$z</span><span class="i">-&gt;flush</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span>
+    <span class="i">$z</span><span class="i">-&gt;tell</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span>
+    <span class="i">$z</span><span class="i">-&gt;eof</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span>
+    <span class="i">$z</span><span class="i">-&gt;seek</span><span class="s">(</span><span class="i">$position</span><span class="cm">,</span> <span class="i">$whence</span><span class="s">)</span><span class="sc">;</span>
+    <span class="i">$z</span><span class="i">-&gt;binmode</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span>
+    <span class="i">$z</span><span class="i">-&gt;fileno</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span>
+    <span class="i">$z</span><span class="i">-&gt;opened</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span>
+    <span class="i">$z</span><span class="i">-&gt;autoflush</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span>
+    <span class="i">$z</span><span class="i">-&gt;input_line_number</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span>
+    <span class="i">$z</span><span class="i">-&gt;newStream</span><span class="s">(</span> <span class="s">[</span><span class="w">OPTS</span><span class="s">]</span> <span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="i">$z</span><span class="i">-&gt;deflateParams</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="i">$z</span><span class="i">-&gt;close</span><span class="s">(</span><span class="s">)</span> <span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="i">$ZipError</span> <span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="c"># IO::File mode</span></pre>
+<pre class="verbatim">    <a class="l_k" href="../../functions/print.html">print</a> <span class="i">$z</span> <span class="i">$string</span><span class="sc">;</span>
+    <a class="l_k" href="../../functions/printf.html">printf</a> <span class="i">$z</span> <span class="i">$format</span><span class="cm">,</span> <span class="i">$string</span><span class="sc">;</span>
+    <a class="l_k" href="../../functions/tell.html">tell</a> <span class="i">$z</span>
+    <a class="l_k" href="../../functions/eof.html">eof</a> <span class="i">$z</span>
+    <a class="l_k" href="../../functions/seek.html">seek</a> <span class="i">$z</span><span class="cm">,</span> <span class="i">$position</span><span class="cm">,</span> <span class="i">$whence</span>
+    <a class="l_k" href="../../functions/binmode.html">binmode</a> <span class="i">$z</span>
+    <a class="l_k" href="../../functions/fileno.html">fileno</a> <span class="i">$z</span>
+    <a class="l_k" href="../../functions/close.html">close</a> <span class="i">$z</span> <span class="sc">;</span></pre>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p>This module provides a Perl interface that allows writing zip 
+compressed data to files or buffer.</p>
+<p>The primary purpose of this module is to provide streaming write access to
+zip files and buffers. It is not a general-purpose file archiver. If that
+is what you want, check out <code class="inline"><span class="w">Archive::Zip</span></code>
+.</p>
+<p>At present three compression methods are supported by IO::Compress::Zip,
+namely Store (no compression at all), Deflate and Bzip2.</p>
+<p>Note that to create Bzip2 content, the module <code class="inline"><span class="w">IO::Compress::Bzip2</span></code>
+ must
+be installed.</p>
+<p>For reading zip files/buffers, see the companion module 
+<a href="../../IO/Uncompress/Unzip.html">IO::Uncompress::Unzip</a>.</p>
+<a name="Functional-Interface"></a><h1>Functional Interface</h1>
+<p>A top-level function, <code class="inline"><span class="w">zip</span></code>
+, is provided to carry out
+"one-shot" compression between buffers and/or files. For finer
+control over the compression process, see the <a href="#OO-Interface">"OO Interface"</a>
+section.</p>
+<pre class="verbatim">    <a class="l_k" href="../../functions/use.html">use</a> <span class="w">IO::Compress::Zip</span> <span class="q">qw(zip $ZipError)</span> <span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="w">zip</span> <span class="i">$input</span> <span class="cm">=&gt;</span> <span class="i">$output</span> [<span class="cm">,</span><span class="w">OPTS</span>] 
+        or <a class="l_k" href="../../functions/die.html">die</a> <span class="q">&quot;zip failed: $ZipError\n&quot;</span><span class="sc">;</span></pre>
+<p>The functional interface needs Perl5.005 or better.</p>
+<a name="zip-0x24input-0x3d0x3e-0x24output-0x5b0x2c-OPTS0x5d"></a><h2>zip $input =&gt; $output [, OPTS]</h2>
+<p><code class="inline"><span class="w">zip</span></code>
+ expects at least two parameters, <code class="inline"><span class="i">$input</span></code>
+ and <code class="inline"><span class="i">$output</span></code>
+.</p>
+<h3>The <code class="inline"><span class="i">$input</span></code>
+ parameter</h3>
+<p>The parameter, <code class="inline"><span class="i">$input</span></code>
+, is used to define the source of
+the uncompressed data.</p>
+<p>It can take one of the following forms:</p>
+<ul>
+<li><a name="A-filename"></a><b>A filename</b>
+<p>If the <code class="inline"><span class="i">$input</span></code>
+ parameter is a simple scalar, it is assumed to be a
+filename. This file will be opened for reading and the input data
+will be read from it.</p>
+</li>
+<li><a name="A-filehandle"></a><b>A filehandle</b>
+<p>If the <code class="inline"><span class="i">$input</span></code>
+ parameter is a filehandle, the input data will be
+read from it.
+The string '-' can be used as an alias for standard input.</p>
+</li>
+<li><a name="A-scalar-reference"></a><b>A scalar reference</b>
+<p>If <code class="inline"><span class="i">$input</span></code>
+ is a scalar reference, the input data will be read
+from <code class="inline"><span class="i">$$input</span></code>
+.</p>
+</li>
+<li><a name="An-array-reference"></a><b>An array reference</b>
+<p>If <code class="inline"><span class="i">$input</span></code>
+ is an array reference, each element in the array must be a
+filename.</p>
+<p>The input data will be read from each file in turn.</p>
+<p>The complete array will be walked to ensure that it only
+contains valid filenames before any data is compressed.</p>
+</li>
+<li><a name="An-Input-FileGlob-string"></a><b>An Input FileGlob string</b>
+<p>If <code class="inline"><span class="i">$input</span></code>
+ is a string that is delimited by the characters "&lt;" and "&gt;"
+<code class="inline"><span class="w">zip</span></code>
+ will assume that it is an <i>input fileglob string</i>. The
+input is the list of files that match the fileglob.</p>
+<p>If the fileglob does not match any files ...</p>
+<p>See <a href="../../File/GlobMapper.html">File::GlobMapper</a> for more details.</p>
+</li>
+</ul>
+<p>If the <code class="inline"><span class="i">$input</span></code>
+ parameter is any other type, <code class="inline"><a class="l_k" href="../../functions/undef.html">undef</a></code> will be returned.</p>
+<p>In addition, if <code class="inline"><span class="i">$input</span></code>
+ is a simple filename, the default values for
+the <code class="inline"><span class="w">Name</span></code>
+, <code class="inline"><span class="w">Time</span></code>
+, <code class="inline"><span class="w">ExtAttr</span></code>
+ and <code class="inline"><span class="w">exTime</span></code>
+ options will be sourced from that file.</p>
+<p>If you do not want to use these defaults they can be overridden by
+explicitly setting the <code class="inline"><span class="w">Name</span></code>
+, <code class="inline"><span class="w">Time</span></code>
+, <code class="inline"><span class="w">ExtAttr</span></code>
+ and <code class="inline"><span class="w">exTime</span></code>
+ options or by setting the
+<code class="inline"><span class="w">Minimal</span></code>
+ parameter.</p>
+<h3>The <code class="inline"><span class="i">$output</span></code>
+ parameter</h3>
+<p>The parameter <code class="inline"><span class="i">$output</span></code>
+ is used to control the destination of the
+compressed data. This parameter can take one of these forms.</p>
+<ul>
+<li><a name="A-filename"></a><b>A filename</b>
+<p>If the <code class="inline"><span class="i">$output</span></code>
+ parameter is a simple scalar, it is assumed to be a
+filename.  This file will be opened for writing and the compressed
+data will be written to it.</p>
+</li>
+<li><a name="A-filehandle"></a><b>A filehandle</b>
+<p>If the <code class="inline"><span class="i">$output</span></code>
+ parameter is a filehandle, the compressed data
+will be written to it.
+The string '-' can be used as an alias for standard output.</p>
+</li>
+<li><a name="A-scalar-reference"></a><b>A scalar reference</b>
+<p>If <code class="inline"><span class="i">$output</span></code>
+ is a scalar reference, the compressed data will be
+stored in <code class="inline"><span class="i">$$output</span></code>
+.</p>
+</li>
+<li><a name="An-Array-Reference"></a><b>An Array Reference</b>
+<p>If <code class="inline"><span class="i">$output</span></code>
+ is an array reference, the compressed data will be
+pushed onto the array.</p>
+</li>
+<li><a name="An-Output-FileGlob"></a><b>An Output FileGlob</b>
+<p>If <code class="inline"><span class="i">$output</span></code>
+ is a string that is delimited by the characters "&lt;" and "&gt;"
+<code class="inline"><span class="w">zip</span></code>
+ will assume that it is an <i>output fileglob string</i>. The
+output is the list of files that match the fileglob.</p>
+<p>When <code class="inline"><span class="i">$output</span></code>
+ is an fileglob string, <code class="inline"><span class="i">$input</span></code>
+ must also be a fileglob
+string. Anything else is an error.</p>
+</li>
+</ul>
+<p>If the <code class="inline"><span class="i">$output</span></code>
+ parameter is any other type, <code class="inline"><a class="l_k" href="../../functions/undef.html">undef</a></code> will be returned.</p>
+<a name="Notes"></a><h2>Notes</h2>
+<p>When <code class="inline"><span class="i">$input</span></code>
+ maps to multiple files/buffers and <code class="inline"><span class="i">$output</span></code>
+ is a single
+file/buffer the input files/buffers will each be stored
+in <code class="inline"><span class="i">$output</span></code>
+ as a distinct entry.</p>
+<a name="Optional-Parameters"></a><h2>Optional Parameters</h2>
+<p>Unless specified below, the optional parameters for <code class="inline"><span class="w">zip</span></code>
+,
+<code class="inline"><span class="w">OPTS</span></code>
+, are the same as those used with the OO interface defined in the
+<a href="#Constructor-Options">"Constructor Options"</a> section below.</p>
+<ul>
+<li><a name="'AutoClose-0x3d0x3e-00x7c1'"></a><b><code class="inline"><span class="w">AutoClose</span> <span class="cm">=&gt;</span> <span class="n">0</span>|<span class="n">1</span></code>
+</b>
+<p>This option applies to any input or output data streams to 
+<code class="inline"><span class="w">zip</span></code>
+ that are filehandles.</p>
+<p>If <code class="inline"><span class="w">AutoClose</span></code>
+ is specified, and the value is true, it will result in all
+input and/or output filehandles being closed once <code class="inline"><span class="w">zip</span></code>
+ has
+completed.</p>
+<p>This parameter defaults to 0.</p>
+</li>
+<li><a name="'BinModeIn-0x3d0x3e-00x7c1'"></a><b><code class="inline"><span class="w">BinModeIn</span> <span class="cm">=&gt;</span> <span class="n">0</span>|<span class="n">1</span></code>
+</b>
+<p>When reading from a file or filehandle, set <code class="inline"><a class="l_k" href="../../functions/binmode.html">binmode</a></code> before reading.</p>
+<p>Defaults to 0.</p>
+</li>
+<li><a name="'Append-0x3d0x3e-00x7c1'"></a><b><code class="inline"><span class="w">Append</span> <span class="cm">=&gt;</span> <span class="n">0</span>|<span class="n">1</span></code>
+</b>
+<p>TODO</p>
+</li>
+</ul>
+<a name="Examples"></a><h2>Examples</h2>
+<p>To read the contents of the file <code class="inline"><span class="w">file1</span>.<span class="w">txt</span></code>
+ and write the compressed
+data to the file <code class="inline"><span class="w">file1</span>.<span class="w">txt</span>.<span class="w">zip</span></code>
+.</p>
+<pre class="verbatim">    <a class="l_k" href="../../functions/use.html">use</a> <span class="w">strict</span> <span class="sc">;</span>
+    <a class="l_k" href="../../functions/use.html">use</a> <span class="w">warnings</span> <span class="sc">;</span>
+    <a class="l_k" href="../../functions/use.html">use</a> <span class="w">IO::Compress::Zip</span> <span class="q">qw(zip $ZipError)</span> <span class="sc">;</span></pre>
+<pre class="verbatim">    <a class="l_k" href="../../functions/my.html">my</a> <span class="i">$input</span> = <span class="q">&quot;file1.txt&quot;</span><span class="sc">;</span>
+    <span class="w">zip</span> <span class="i">$input</span> <span class="cm">=&gt;</span> <span class="q">&quot;$input.zip&quot;</span>
+        or <a class="l_k" href="../../functions/die.html">die</a> <span class="q">&quot;zip failed: $ZipError\n&quot;</span><span class="sc">;</span></pre>
+<p>To read from an existing Perl filehandle, <code class="inline"><span class="i">$input</span></code>
+, and write the
+compressed data to a buffer, <code class="inline"><span class="i">$buffer</span></code>
+.</p>
+<pre class="verbatim">    <a class="l_k" href="../../functions/use.html">use</a> <span class="w">strict</span> <span class="sc">;</span>
+    <a class="l_k" href="../../functions/use.html">use</a> <span class="w">warnings</span> <span class="sc">;</span>
+    <a class="l_k" href="../../functions/use.html">use</a> <span class="w">IO::Compress::Zip</span> <span class="q">qw(zip $ZipError)</span> <span class="sc">;</span>
+    <a class="l_k" href="../../functions/use.html">use</a> <span class="w">IO::File</span> <span class="sc">;</span></pre>
+<pre class="verbatim">    <a class="l_k" href="../../functions/my.html">my</a> <span class="i">$input</span> = <span class="w">new</span> <span class="w">IO::File</span> <span class="q">&quot;&lt;file1.txt&quot;</span>
+        or <a class="l_k" href="../../functions/die.html">die</a> <span class="q">&quot;Cannot open 'file1.txt': $!\n&quot;</span> <span class="sc">;</span>
+    <a class="l_k" href="../../functions/my.html">my</a> <span class="i">$buffer</span> <span class="sc">;</span>
+    <span class="w">zip</span> <span class="i">$input</span> <span class="cm">=&gt;</span> \<span class="i">$buffer</span> 
+        or <a class="l_k" href="../../functions/die.html">die</a> <span class="q">&quot;zip failed: $ZipError\n&quot;</span><span class="sc">;</span></pre>
+<p>To compress all files in the directory "/my/home" that match "*.txt"
+and store the compressed data in the same directory</p>
+<pre class="verbatim">    <a class="l_k" href="../../functions/use.html">use</a> <span class="w">strict</span> <span class="sc">;</span>
+    <a class="l_k" href="../../functions/use.html">use</a> <span class="w">warnings</span> <span class="sc">;</span>
+    <a class="l_k" href="../../functions/use.html">use</a> <span class="w">IO::Compress::Zip</span> <span class="q">qw(zip $ZipError)</span> <span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="w">zip</span> <span class="q">'&lt;/my/home/*.txt&gt;'</span> <span class="cm">=&gt;</span> <span class="q">'&lt;*.zip&gt;'</span>
+        or <a class="l_k" href="../../functions/die.html">die</a> <span class="q">&quot;zip failed: $ZipError\n&quot;</span><span class="sc">;</span></pre>
+<p>and if you want to compress each file one at a time, this will do the trick</p>
+<pre class="verbatim">    <a class="l_k" href="../../functions/use.html">use</a> <span class="w">strict</span> <span class="sc">;</span>
+    <a class="l_k" href="../../functions/use.html">use</a> <span class="w">warnings</span> <span class="sc">;</span>
+    <a class="l_k" href="../../functions/use.html">use</a> <span class="w">IO::Compress::Zip</span> <span class="q">qw(zip $ZipError)</span> <span class="sc">;</span></pre>
+<pre class="verbatim">    for <a class="l_k" href="../../functions/my.html">my</a> <span class="i">$input</span> <span class="s">(</span> <a class="l_k" href="../../functions/glob.html">glob</a> <span class="q">&quot;/my/home/*.txt&quot;</span> <span class="s">)</span>
+    <span class="s">{</span>
+        <a class="l_k" href="../../functions/my.html">my</a> <span class="i">$output</span> = <span class="q">&quot;$input.zip&quot;</span> <span class="sc">;</span>
+        <span class="w">zip</span> <span class="i">$input</span> <span class="cm">=&gt;</span> <span class="i">$output</span> 
+            or <a class="l_k" href="../../functions/die.html">die</a> <span class="q">&quot;Error compressing '$input': $ZipError\n&quot;</span><span class="sc">;</span>
+    <span class="s">}</span></pre>
+<a name="OO-Interface"></a><h1>OO Interface</h1>
+<a name="Constructor"></a><h2>Constructor</h2>
+<p>The format of the constructor for <code class="inline"><span class="w">IO::Compress::Zip</span></code>
+ is shown below</p>
+<pre class="verbatim">    <a class="l_k" href="../../functions/my.html">my</a> <span class="i">$z</span> = <span class="w">new</span> <span class="w">IO::Compress::Zip</span> <span class="i">$output</span> [<span class="cm">,</span><span class="w">OPTS</span>]
+        or <a class="l_k" href="../../functions/die.html">die</a> <span class="q">&quot;IO::Compress::Zip failed: $ZipError\n&quot;</span><span class="sc">;</span></pre>
+<p>It returns an <code class="inline"><span class="w">IO::Compress::Zip</span></code>
+ object on success and undef on failure. 
+The variable <code class="inline"><span class="i">$ZipError</span></code>
+ will contain an error message on failure.</p>
+<p>If you are running Perl 5.005 or better the object, <code class="inline"><span class="i">$z</span></code>
+, returned from 
+IO::Compress::Zip can be used exactly like an <a href="../../IO/File.html">IO::File</a> filehandle. 
+This means that all normal output file operations can be carried out 
+with <code class="inline"><span class="i">$z</span></code>
+. 
+For example, to write to a compressed file/buffer you can use either of 
+these forms</p>
+<pre class="verbatim">    <span class="i">$z</span><span class="i">-&gt;print</span><span class="s">(</span><span class="q">&quot;hello world\n&quot;</span><span class="s">)</span><span class="sc">;</span>
+    <a class="l_k" href="../../functions/print.html">print</a> <span class="i">$z</span> <span class="q">&quot;hello world\n&quot;</span><span class="sc">;</span></pre>
+<p>The mandatory parameter <code class="inline"><span class="i">$output</span></code>
+ is used to control the destination
+of the compressed data. This parameter can take one of these forms.</p>
+<ul>
+<li><a name="A-filename"></a><b>A filename</b>
+<p>If the <code class="inline"><span class="i">$output</span></code>
+ parameter is a simple scalar, it is assumed to be a
+filename. This file will be opened for writing and the compressed data
+will be written to it.</p>
+</li>
+<li><a name="A-filehandle"></a><b>A filehandle</b>
+<p>If the <code class="inline"><span class="i">$output</span></code>
+ parameter is a filehandle, the compressed data will be
+written to it.
+The string '-' can be used as an alias for standard output.</p>
+</li>
+<li><a name="A-scalar-reference"></a><b>A scalar reference</b>
+<p>If <code class="inline"><span class="i">$output</span></code>
+ is a scalar reference, the compressed data will be stored
+in <code class="inline"><span class="i">$$output</span></code>
+.</p>
+</li>
+</ul>
+<p>If the <code class="inline"><span class="i">$output</span></code>
+ parameter is any other type, <code class="inline"><span class="w">IO::Compress::Zip</span></code>
+::new will
+return undef.</p>
+<a name="Constructor-Options"></a><h2>Constructor Options</h2>
+<p><code class="inline"><span class="w">OPTS</span></code>
+ is any combination of the following options:</p>
+<ul>
+<li><a name="'AutoClose-0x3d0x3e-00x7c1'"></a><b><code class="inline"><span class="w">AutoClose</span> <span class="cm">=&gt;</span> <span class="n">0</span>|<span class="n">1</span></code>
+</b>
+<p>This option is only valid when the <code class="inline"><span class="i">$output</span></code>
+ parameter is a filehandle. If
+specified, and the value is true, it will result in the <code class="inline"><span class="i">$output</span></code>
+ being
+closed once either the <code class="inline"><a class="l_k" href="../../functions/close.html">close</a></code> method is called or the <code class="inline"><span class="w">IO::Compress::Zip</span></code>
+
+object is destroyed.</p>
+<p>This parameter defaults to 0.</p>
+</li>
+<li><a name="'Append-0x3d0x3e-00x7c1'"></a><b><code class="inline"><span class="w">Append</span> <span class="cm">=&gt;</span> <span class="n">0</span>|<span class="n">1</span></code>
+</b>
+<p>Opens <code class="inline"><span class="i">$output</span></code>
+ in append mode.</p>
+<p>The behaviour of this option is dependent on the type of <code class="inline"><span class="i">$output</span></code>
+.</p>
+<ul>
+<li><a name="*-A-Buffer"></a><b>A Buffer</b>
+<p>If <code class="inline"><span class="i">$output</span></code>
+ is a buffer and <code class="inline"><span class="w">Append</span></code>
+ is enabled, all compressed data
+will be append to the end if <code class="inline"><span class="i">$output</span></code>
+. Otherwise <code class="inline"><span class="i">$output</span></code>
+ will be
+cleared before any data is written to it.</p>
+</li>
+<li><a name="*-A-Filename"></a><b>A Filename</b>
+<p>If <code class="inline"><span class="i">$output</span></code>
+ is a filename and <code class="inline"><span class="w">Append</span></code>
+ is enabled, the file will be
+opened in append mode. Otherwise the contents of the file, if any, will be
+truncated before any compressed data is written to it.</p>
+</li>
+<li><a name="*-A-Filehandle"></a><b>A Filehandle</b>
+<p>If <code class="inline"><span class="i">$output</span></code>
+ is a filehandle, the file pointer will be positioned to the
+end of the file via a call to <code class="inline"><a class="l_k" href="../../functions/seek.html">seek</a></code> before any compressed data is written
+to it.  Otherwise the file pointer will not be moved.</p>
+</li>
+</ul>
+<p>This parameter defaults to 0.</p>
+</li>
+<li><a name="'Name-0x3d0x3e-0x24string'"></a><b><code class="inline"><span class="w">Name</span> <span class="cm">=&gt;</span> <span class="i">$string</span></code>
+</b>
+<p>Stores the contents of <code class="inline"><span class="i">$string</span></code>
+ in the zip filename header field. If
+<code class="inline"><span class="w">Name</span></code>
+ is not specified, no zip filename field will be created.</p>
+</li>
+<li><a name="'Time-0x3d0x3e-0x24number'"></a><b><code class="inline"><span class="w">Time</span> <span class="cm">=&gt;</span> <span class="i">$number</span></code>
+</b>
+<p>Sets the last modified time field in the zip header to $number.</p>
+<p>This field defaults to the time the <code class="inline"><span class="w">IO::Compress::Zip</span></code>
+ object was created
+if this option is not specified.</p>
+</li>
+<li><a name="'ExtAttr-0x3d0x3e-0x24attr'"></a><b><code class="inline"><span class="w">ExtAttr</span> <span class="cm">=&gt;</span> <span class="i">$attr</span></code>
+</b>
+<p>This option controls the "external file attributes" field in the central
+header of the zip file. This is a 4 byte field.</p>
+<p>This option defaults to 0.</p>
+</li>
+<li><a name="'exTime-0x3d0x3e-0x5b0x24atime0x2c-0x24mtime0x2c-0x24ctime0x5d'"></a><b><code class="inline"><span class="w">exTime</span> <span class="cm">=&gt;</span> <span class="s">[</span><span class="i">$atime</span><span class="cm">,</span> <span class="i">$mtime</span><span class="cm">,</span> <span class="i">$ctime</span><span class="s">]</span></code>
+</b>
+<p>This option expects an array reference with exactly three elements:
+<code class="inline"><span class="i">$atime</span></code>
+, <code class="inline"><span class="w">mtime</span></code>
+ and <code class="inline"><span class="i">$ctime</span></code>
+. These correspond to the last access
+time, last modification time and creation time respectively.</p>
+<p>It uses these values to set the extended timestamp field in the local zip
+header to the three values, $atime, $mtime, $ctime and sets the extended
+timestamp field in the central zip header to <code class="inline"><span class="i">$mtime</span></code>
+.</p>
+<p>If any of the three values is <code class="inline"><a class="l_k" href="../../functions/undef.html">undef</a></code> that time value will not be used.
+So, for example, to set only the <code class="inline"><span class="i">$mtime</span></code>
+ you would use this</p>
+<pre class="verbatim">    <span class="w">exTime</span> <span class="cm">=&gt;</span> <span class="s">[</span><a class="l_k" href="../../functions/undef.html">undef</a><span class="cm">,</span> <span class="i">$mtime</span><span class="cm">,</span> <a class="l_k" href="../../functions/undef.html">undef</a><span class="s">]</span></pre>
+<p>If the <code class="inline"><span class="w">Minimal</span></code>
+ option is set to true, this option will be ignored.</p>
+<p>By default no extended time field is created.</p>
+</li>
+<li><a name="'Comment-0x3d0x3e-0x24comment'"></a><b><code class="inline"><span class="w">Comment</span> <span class="cm">=&gt;</span> <span class="i">$comment</span></code>
+</b>
+<p>Stores the contents of <code class="inline"><span class="i">$comment</span></code>
+ in the Central File Header of
+the zip file.</p>
+<p>By default, no comment field is written to the zip file.</p>
+</li>
+<li><a name="'ZipComment-0x3d0x3e-0x24comment'"></a><b><code class="inline"><span class="w">ZipComment</span> <span class="cm">=&gt;</span> <span class="i">$comment</span></code>
+</b>
+<p>Stores the contents of <code class="inline"><span class="i">$comment</span></code>
+ in the End of Central Directory record
+of the zip file.</p>
+<p>By default, no comment field is written to the zip file.</p>
+</li>
+<li><a name="'Method-0x3d0x3e-0x24method'"></a><b><code class="inline"><span class="w">Method</span> <span class="cm">=&gt;</span> <span class="i">$method</span></code>
+</b>
+<p>Controls which compression method is used. At present three compression
+methods are supported, namely Store (no compression at all), Deflate and
+Bzip2.</p>
+<p>The symbols, ZIP_CM_STORE, ZIP_CM_DEFLATE and ZIP_CM_BZIP2 are used to
+select the compression method.</p>
+<p>These constants are not imported by <code class="inline"><span class="w">IO::Compress::Zip</span></code>
+ by default.</p>
+<pre class="verbatim">    <a class="l_k" href="../../functions/use.html">use</a> <span class="w">IO::Compress::Zip</span> <span class="q">qw(:zip_method)</span><span class="sc">;</span>
+    <a class="l_k" href="../../functions/use.html">use</a> <span class="w">IO::Compress::Zip</span> <span class="q">qw(:constants)</span><span class="sc">;</span>
+    <a class="l_k" href="../../functions/use.html">use</a> <span class="w">IO::Compress::Zip</span> <span class="q">qw(:all)</span><span class="sc">;</span></pre>
+<p>Note that to create Bzip2 content, the module <code class="inline"><span class="w">IO::Compress::Bzip2</span></code>
+ must
+be installed. A fatal error will be thrown if you attempt to create Bzip2
+content when <code class="inline"><span class="w">IO::Compress::Bzip2</span></code>
+ is not available.</p>
+<p>The default method is ZIP_CM_DEFLATE.</p>
+</li>
+<li><a name="'Stream-0x3d0x3e-00x7c1'"></a><b><code class="inline"><span class="w">Stream</span> <span class="cm">=&gt;</span> <span class="n">0</span>|<span class="n">1</span></code>
+</b>
+<p>This option controls whether the zip file/buffer output is created in
+streaming mode.</p>
+<p>Note that when outputting to a file with streaming mode disabled (<code class="inline"><span class="w">Stream</span></code>
+
+is 0), the output file must be seekable.</p>
+<p>The default is 1.</p>
+</li>
+<li><a name="'Zip64-0x3d0x3e-00x7c1'"></a><b><code class="inline"><span class="w">Zip64</span> <span class="cm">=&gt;</span> <span class="n">0</span>|<span class="n">1</span></code>
+</b>
+<p>Create a Zip64 zip file/buffer. This option should only be used if you want
+to store files larger than 4 Gig.</p>
+<p>If you intend to manipulate the Zip64 zip files created with this module
+using an external zip/unzip make sure that it supports streaming Zip64.</p>
+<p>In particular, if you are using Info-Zip you need to have zip version 3.x
+or better to update a Zip64 archive and unzip version 6.x to read a zip64
+archive. At the time of writing both are beta status.</p>
+<p>When the <code class="inline"><span class="w">Zip64</span></code>
+ option is enabled, the <code class="inline"><span class="w">Stream</span></code>
+ option <i>must</i> be
+enabled as well.</p>
+<p>The default is 0.</p>
+</li>
+<li><a name="'TextFlag-0x3d0x3e-00x7c1'"></a><b><code class="inline"><span class="w">TextFlag</span> <span class="cm">=&gt;</span> <span class="n">0</span>|<span class="n">1</span></code>
+</b>
+<p>This parameter controls the setting of a bit in the zip central header. It
+is used to signal that the data stored in the zip file/buffer is probably
+text.</p>
+<p>The default is 0.</p>
+</li>
+<li><a name="'ExtraFieldLocal-0x3d0x3e-0x24data'-0x3ditem-'ExtraFieldCentral-0x3d0x3e-0x24data'"></a><b><code class="inline"><span class="w">ExtraFieldLocal</span> <span class="cm">=&gt;</span> <span class="i">$data</span></code>
+
+=item <code class="inline"><span class="w">ExtraFieldCentral</span> <span class="cm">=&gt;</span> <span class="i">$data</span></code>
+</b>
+<p>These options allows additional metadata to be stored in the local and
+central headers in the zip file/buffer.</p>
+<p>An extra field consists of zero or more subfields. Each subfield consists
+of a two byte header followed by the subfield data.</p>
+<p>The list of subfields can be supplied in any of the following formats</p>
+<pre class="verbatim">    <span class="w">ExtraFieldLocal</span> <span class="cm">=&gt;</span> <span class="s">[</span><span class="i">$id1</span><span class="cm">,</span> <span class="i">$data1</span><span class="cm">,</span>
+                        <span class="i">$id2</span><span class="cm">,</span> <span class="i">$data2</span><span class="cm">,</span>
+                         ...
+                       <span class="s">]</span></pre>
+<pre class="verbatim">    <span class="w">ExtraFieldLocal</span> <span class="cm">=&gt;</span> <span class="s">[</span> <span class="s">[</span><span class="i">$id1</span> <span class="cm">=&gt;</span> <span class="i">$data1</span><span class="s">]</span><span class="cm">,</span>
+                         <span class="s">[</span><span class="i">$id2</span> <span class="cm">=&gt;</span> <span class="i">$data2</span><span class="s">]</span><span class="cm">,</span>
+                         ...
+                       <span class="s">]</span></pre>
+<pre class="verbatim">    <span class="w">ExtraFieldLocal</span> <span class="cm">=&gt;</span> <span class="s">{</span> <span class="i">$id1</span> <span class="cm">=&gt;</span> <span class="i">$data1</span><span class="cm">,</span>
+                         <span class="i">$id2</span> <span class="cm">=&gt;</span> <span class="i">$data2</span><span class="cm">,</span>
+                         ...
+                       <span class="s">}</span></pre>
+<p>Where <code class="inline"><span class="i">$id1</span></code>
+, <code class="inline"><span class="i">$id2</span></code>
+ are two byte subfield ID's.</p>
+<p>If you use the hash syntax, you have no control over the order in which
+the ExtraSubFields are stored, plus you cannot have SubFields with
+duplicate ID.</p>
+<p>Alternatively the list of subfields can by supplied as a scalar, thus</p>
+<pre class="verbatim">    <span class="w">ExtraField</span> <span class="cm">=&gt;</span> <span class="i">$rawdata</span></pre>
+<p>The Extended Time field, set using the <code class="inline"><span class="w">exTime</span></code>
+ option, is an example of
+an extended field.</p>
+<p>If the <code class="inline"><span class="w">Minimal</span></code>
+ option is set to true, this option will be ignored.</p>
+<p>The maximum size of an extra field 65535 bytes.</p>
+</li>
+<li><a name="'Minimal-0x3d0x3e-10x7c0'"></a><b><code class="inline"><span class="w">Minimal</span> <span class="cm">=&gt;</span> <span class="n">1</span>|<span class="n">0</span></code>
+</b>
+<p>If specified, this option will disable the creation of all extended fields
+in the zip local and central headers. So the <code class="inline"><span class="w">exTime</span></code>
+, <code class="inline"><span class="w">ExtraFieldLocal</span></code>
+
+and <code class="inline"><span class="w">ExtraFieldCentral</span></code>
+ options will be ignored.</p>
+<p>This parameter defaults to 0.</p>
+</li>
+<li><a name="'BlockSize100K-0x3d0x3e-number'"></a><b><code class="inline"><span class="w">BlockSize100K</span> <span class="cm">=&gt;</span> <span class="w">number</span></code>
+</b>
+<p>Specify the number of 100K blocks bzip2 uses during compression.</p>
+<p>Valid values are from 1 to 9, where 9 is best compression.</p>
+<p>This option is only valid if the <code class="inline"><span class="w">Method</span></code>
+ is ZIP_CM_BZIP2. It is ignored
+otherwise.</p>
+<p>The default is 1.</p>
+</li>
+<li><a name="'WorkFactor-0x3d0x3e-number'"></a><b><code class="inline"><span class="w">WorkFactor</span> <span class="cm">=&gt;</span> <span class="w">number</span></code>
+</b>
+<p>Specifies how much effort bzip2 should take before resorting to a slower
+fallback compression algorithm.</p>
+<p>Valid values range from 0 to 250, where 0 means use the default value 30.</p>
+<p>This option is only valid if the <code class="inline"><span class="w">Method</span></code>
+ is ZIP_CM_BZIP2. It is ignored
+otherwise.</p>
+<p>The default is 0.</p>
+</li>
+<li><a name="-Level"></a><b>-Level</b>
+<p>Defines the compression level used by zlib. The value should either be
+a number between 0 and 9 (0 means no compression and 9 is maximum
+compression), or one of the symbolic constants defined below.</p>
+<pre class="verbatim">   <span class="w">Z_NO_COMPRESSION</span>
+   <span class="w">Z_BEST_SPEED</span>
+   <span class="w">Z_BEST_COMPRESSION</span>
+   <span class="w">Z_DEFAULT_COMPRESSION</span></pre>
+<p>The default is Z_DEFAULT_COMPRESSION.</p>
+<p>Note, these constants are not imported by <code class="inline"><span class="w">IO::Compress::Zip</span></code>
+ by default.</p>
+<pre class="verbatim">    <a class="l_k" href="../../functions/use.html">use</a> <span class="w">IO::Compress::Zip</span> <span class="q">qw(:strategy)</span><span class="sc">;</span>
+    <a class="l_k" href="../../functions/use.html">use</a> <span class="w">IO::Compress::Zip</span> <span class="q">qw(:constants)</span><span class="sc">;</span>
+    <a class="l_k" href="../../functions/use.html">use</a> <span class="w">IO::Compress::Zip</span> <span class="q">qw(:all)</span><span class="sc">;</span></pre>
+</li>
+<li><a name="-Strategy"></a><b>-Strategy</b>
+<p>Defines the strategy used to tune the compression. Use one of the symbolic
+constants defined below.</p>
+<pre class="verbatim">   <span class="w">Z_FILTERED</span>
+   <span class="w">Z_HUFFMAN_ONLY</span>
+   <span class="w">Z_RLE</span>
+   <span class="w">Z_FIXED</span>
+   <span class="w">Z_DEFAULT_STRATEGY</span></pre>
+<p>The default is Z_DEFAULT_STRATEGY.</p>
+</li>
+<li><a name="'Strict-0x3d0x3e-00x7c1'"></a><b><code class="inline"><span class="w">Strict</span> <span class="cm">=&gt;</span> <span class="n">0</span>|<span class="n">1</span></code>
+</b>
+<p>This is a placeholder option.</p>
+</li>
+</ul>
+<a name="Examples"></a><h2>Examples</h2>
+<p>TODO</p>
+<a name="Methods"></a><h1>Methods</h1>
+<a name="print"></a><h2>print</h2>
+<p>Usage is</p>
+<pre class="verbatim">    <span class="i">$z</span><span class="i">-&gt;print</span><span class="s">(</span><span class="i">$data</span><span class="s">)</span>
+    <a class="l_k" href="../../functions/print.html">print</a> <span class="i">$z</span> <span class="i">$data</span></pre>
+<p>Compresses and outputs the contents of the <code class="inline"><span class="i">$data</span></code>
+ parameter. This
+has the same behaviour as the <code class="inline"><a class="l_k" href="../../functions/print.html">print</a></code> built-in.</p>
+<p>Returns true if successful.</p>
+<a name="printf"></a><h2>printf</h2>
+<p>Usage is</p>
+<pre class="verbatim">    <span class="i">$z</span><span class="i">-&gt;printf</span><span class="s">(</span><span class="i">$format</span><span class="cm">,</span> <span class="i">$data</span><span class="s">)</span>
+    <a class="l_k" href="../../functions/printf.html">printf</a> <span class="i">$z</span> <span class="i">$format</span><span class="cm">,</span> <span class="i">$data</span></pre>
+<p>Compresses and outputs the contents of the <code class="inline"><span class="i">$data</span></code>
+ parameter.</p>
+<p>Returns true if successful.</p>
+<a name="syswrite"></a><h2>syswrite</h2>
+<p>Usage is</p>
+<pre class="verbatim">    $z-&gt;syswrite $data
+    $z-&gt;syswrite $data, $length
+    $z-&gt;syswrite $data, $length, $offset</pre><p>Compresses and outputs the contents of the <code class="inline"><span class="i">$data</span></code>
+ parameter.</p>
+<p>Returns the number of uncompressed bytes written, or <code class="inline"><a class="l_k" href="../../functions/undef.html">undef</a></code> if
+unsuccessful.</p>
+<a name="write"></a><h2>write</h2>
+<p>Usage is</p>
+<pre class="verbatim">    $z-&gt;write $data
+    $z-&gt;write $data, $length
+    $z-&gt;write $data, $length, $offset</pre><p>Compresses and outputs the contents of the <code class="inline"><span class="i">$data</span></code>
+ parameter.</p>
+<p>Returns the number of uncompressed bytes written, or <code class="inline"><a class="l_k" href="../../functions/undef.html">undef</a></code> if
+unsuccessful.</p>
+<a name="flush"></a><h2>flush</h2>
+<p>Usage is</p>
+<pre class="verbatim">    <span class="i">$z</span><span class="i">-&gt;flush</span><span class="sc">;</span>
+    <span class="i">$z</span><span class="i">-&gt;flush</span><span class="s">(</span><span class="i">$flush_type</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Flushes any pending compressed data to the output file/buffer.</p>
+<p>This method takes an optional parameter, <code class="inline"><span class="i">$flush_type</span></code>
+, that controls
+how the flushing will be carried out. By default the <code class="inline"><span class="i">$flush_type</span></code>
+
+used is <code class="inline"><span class="w">Z_FINISH</span></code>
+. Other valid values for <code class="inline"><span class="i">$flush_type</span></code>
+ are
+<code class="inline"><span class="w">Z_NO_FLUSH</span></code>
+, <code class="inline"><span class="w">Z_SYNC_FLUSH</span></code>
+, <code class="inline"><span class="w">Z_FULL_FLUSH</span></code>
+ and <code class="inline"><span class="w">Z_BLOCK</span></code>
+. It is
+strongly recommended that you only set the <code class="inline"><span class="w">flush_type</span></code>
+ parameter if
+you fully understand the implications of what it does - overuse of <code class="inline"><span class="w">flush</span></code>
+
+can seriously degrade the level of compression achieved. See the <code class="inline"><span class="w">zlib</span></code>
+
+documentation for details.</p>
+<p>Returns true on success.</p>
+<a name="tell"></a><h2>tell</h2>
+<p>Usage is</p>
+<pre class="verbatim">    <span class="i">$z</span><span class="i">-&gt;tell</span><span class="s">(</span><span class="s">)</span>
+    <a class="l_k" href="../../functions/tell.html">tell</a> <span class="i">$z</span></pre>
+<p>Returns the uncompressed file offset.</p>
+<a name="eof"></a><h2>eof</h2>
+<p>Usage is</p>
+<pre class="verbatim">    <span class="i">$z</span><span class="i">-&gt;eof</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span>
+    <a class="l_k" href="../../functions/eof.html">eof</a><span class="s">(</span><span class="i">$z</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Returns true if the <code class="inline"><a class="l_k" href="../../functions/close.html">close</a></code> method has been called.</p>
+<a name="seek"></a><h2>seek</h2>
+<pre class="verbatim">    <span class="i">$z</span><span class="i">-&gt;seek</span><span class="s">(</span><span class="i">$position</span><span class="cm">,</span> <span class="i">$whence</span><span class="s">)</span><span class="sc">;</span>
+    <a class="l_k" href="../../functions/seek.html">seek</a><span class="s">(</span><span class="i">$z</span><span class="cm">,</span> <span class="i">$position</span><span class="cm">,</span> <span class="i">$whence</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Provides a sub-set of the <code class="inline"><a class="l_k" href="../../functions/seek.html">seek</a></code> functionality, with the restriction
+that it is only legal to seek forward in the output file/buffer.
+It is a fatal error to attempt to seek backward.</p>
+<p>Empty parts of the file/buffer will have NULL (0x00) bytes written to them.</p>
+<p>The <code class="inline"><span class="i">$whence</span></code>
+ parameter takes one the usual values, namely SEEK_SET,
+SEEK_CUR or SEEK_END.</p>
+<p>Returns 1 on success, 0 on failure.</p>
+<a name="binmode"></a><h2>binmode</h2>
+<p>Usage is</p>
+<pre class="verbatim">    <span class="i">$z</span><span class="i">-&gt;binmode</span>
+    <a class="l_k" href="../../functions/binmode.html">binmode</a> <span class="i">$z</span> <span class="sc">;</span></pre>
+<p>This is a noop provided for completeness.</p>
+<a name="opened"></a><h2>opened</h2>
+<pre class="verbatim">    <span class="i">$z</span><span class="i">-&gt;opened</span><span class="s">(</span><span class="s">)</span></pre>
+<p>Returns true if the object currently refers to a opened file/buffer.</p>
+<a name="autoflush"></a><h2>autoflush</h2>
+<pre class="verbatim">    <a class="l_k" href="../../functions/my.html">my</a> <span class="i">$prev</span> = <span class="i">$z</span><span class="i">-&gt;autoflush</span><span class="s">(</span><span class="s">)</span>
+    <a class="l_k" href="../../functions/my.html">my</a> <span class="i">$prev</span> = <span class="i">$z</span><span class="i">-&gt;autoflush</span><span class="s">(</span><span class="w">EXPR</span><span class="s">)</span></pre>
+<p>If the <code class="inline"><span class="i">$z</span></code>
+ object is associated with a file or a filehandle, this method
+returns the current autoflush setting for the underlying filehandle. If
+<code class="inline"><span class="w">EXPR</span></code>
+ is present, and is non-zero, it will enable flushing after every
+write/print operation.</p>
+<p>If <code class="inline"><span class="i">$z</span></code>
+ is associated with a buffer, this method has no effect and always
+returns <code class="inline"><a class="l_k" href="../../functions/undef.html">undef</a></code>.</p>
+<p><b>Note</b> that the special variable <code class="inline"><span class="i">$|</span></code>
+ <b>cannot</b> be used to set or
+retrieve the autoflush setting.</p>
+<a name="input_line_number"></a><h2>input_line_number</h2>
+<pre class="verbatim">    $z-&gt;input_line_number()
+    $z-&gt;input_line_number(EXPR)</pre><p>This method always returns <code class="inline"><a class="l_k" href="../../functions/undef.html">undef</a></code> when compressing.</p>
+<a name="fileno"></a><h2>fileno</h2>
+<pre class="verbatim">    <span class="i">$z</span><span class="i">-&gt;fileno</span><span class="s">(</span><span class="s">)</span>
+    <a class="l_k" href="../../functions/fileno.html">fileno</a><span class="s">(</span><span class="i">$z</span><span class="s">)</span></pre>
+<p>If the <code class="inline"><span class="i">$z</span></code>
+ object is associated with a file or a filehandle, this method
+will return the underlying file descriptor.</p>
+<p>If the <code class="inline"><span class="i">$z</span></code>
+ object is is associated with a buffer, this method will
+return undef.</p>
+<a name="close"></a><h2>close</h2>
+<pre class="verbatim">    <span class="i">$z</span><span class="i">-&gt;close</span><span class="s">(</span><span class="s">)</span> <span class="sc">;</span>
+    <a class="l_k" href="../../functions/close.html">close</a> <span class="i">$z</span> <span class="sc">;</span></pre>
+<p>Flushes any pending compressed data and then closes the output file/buffer.</p>
+<p>For most versions of Perl this method will be automatically invoked if
+the IO::Compress::Zip object is destroyed (either explicitly or by the
+variable with the reference to the object going out of scope). The
+exceptions are Perl versions 5.005 through 5.00504 and 5.8.0. In
+these cases, the <code class="inline"><a class="l_k" href="../../functions/close.html">close</a></code> method will be called automatically, but
+not until global destruction of all live objects when the program is
+terminating.</p>
+<p>Therefore, if you want your scripts to be able to run on all versions
+of Perl, you should call <code class="inline"><a class="l_k" href="../../functions/close.html">close</a></code> explicitly and not rely on automatic
+closing.</p>
+<p>Returns true on success, otherwise 0.</p>
+<p>If the <code class="inline"><span class="w">AutoClose</span></code>
+ option has been enabled when the IO::Compress::Zip
+object was created, and the object is associated with a file, the
+underlying file will also be closed.</p>
+<a name="newStream(0x5bOPTS0x5d)"></a><h2>newStream([OPTS])</h2>
+<p>Usage is</p>
+<pre class="verbatim">    <span class="i">$z</span><span class="i">-&gt;newStream</span><span class="s">(</span> <span class="s">[</span><span class="w">OPTS</span><span class="s">]</span> <span class="s">)</span></pre>
+<p>Closes the current compressed data stream and starts a new one.</p>
+<p>OPTS consists of any of the the options that are available when creating
+the <code class="inline"><span class="i">$z</span></code>
+ object.</p>
+<p>See the <a href="#Constructor-Options">"Constructor Options"</a> section for more details.</p>
+<a name="deflateParams"></a><h2>deflateParams</h2>
+<p>Usage is</p>
+<pre class="verbatim">    <span class="i">$z</span><span class="i">-&gt;deflateParams</span></pre>
+<p>TODO</p>
+<a name="Importing"></a><h1>Importing</h1>
+<p>A number of symbolic constants are required by some methods in 
+<code class="inline"><span class="w">IO::Compress::Zip</span></code>
+. None are imported by default.</p>
+<ul>
+<li><a name="0x3aall"></a><b>:all</b>
+<p>Imports <code class="inline"><span class="w">zip</span></code>
+, <code class="inline"><span class="i">$ZipError</span></code>
+ and all symbolic
+constants that can be used by <code class="inline"><span class="w">IO::Compress::Zip</span></code>
+. Same as doing this</p>
+<pre class="verbatim">    <a class="l_k" href="../../functions/use.html">use</a> <span class="w">IO::Compress::Zip</span> <span class="q">qw(zip $ZipError :constants)</span> <span class="sc">;</span></pre>
+</li>
+<li><a name="0x3aconstants"></a><b>:constants</b>
+<p>Import all symbolic constants. Same as doing this</p>
+<pre class="verbatim">    <a class="l_k" href="../../functions/use.html">use</a> <span class="w">IO::Compress::Zip</span> <span class="q">qw(:flush :level :strategy :zip_method)</span> <span class="sc">;</span></pre>
+</li>
+<li><a name="0x3aflush"></a><b>:flush</b>
+<p>These symbolic constants are used by the <code class="inline"><span class="w">flush</span></code>
+ method.</p>
+<pre class="verbatim">    <span class="w">Z_NO_FLUSH</span>
+    <span class="w">Z_PARTIAL_FLUSH</span>
+    <span class="w">Z_SYNC_FLUSH</span>
+    <span class="w">Z_FULL_FLUSH</span>
+    <span class="w">Z_FINISH</span>
+    <span class="w">Z_BLOCK</span></pre>
+</li>
+<li><a name="0x3alevel"></a><b>:level</b>
+<p>These symbolic constants are used by the <code class="inline"><span class="w">Level</span></code>
+ option in the constructor.</p>
+<pre class="verbatim">    <span class="w">Z_NO_COMPRESSION</span>
+    <span class="w">Z_BEST_SPEED</span>
+    <span class="w">Z_BEST_COMPRESSION</span>
+    <span class="w">Z_DEFAULT_COMPRESSION</span></pre>
+</li>
+<li><a name="0x3astrategy"></a><b>:strategy</b>
+<p>These symbolic constants are used by the <code class="inline"><span class="w">Strategy</span></code>
+ option in the constructor.</p>
+<pre class="verbatim">    <span class="w">Z_FILTERED</span>
+    <span class="w">Z_HUFFMAN_ONLY</span>
+    <span class="w">Z_RLE</span>
+    <span class="w">Z_FIXED</span>
+    <span class="w">Z_DEFAULT_STRATEGY</span></pre>
+</li>
+<li><a name="0x3azip_method"></a><b>:zip_method</b>
+<p>These symbolic constants are used by the <code class="inline"><span class="w">Method</span></code>
+ option in the
+constructor.</p>
+<pre class="verbatim">    <span class="w">ZIP_CM_STORE</span>
+    <span class="w">ZIP_CM_DEFLATE</span>
+    <span class="w">ZIP_CM_BZIP2</span></pre>
+</li>
+</ul>
+<p>For</p>
+<a name="EXAMPLES"></a><h1>EXAMPLES</h1>
+<p>TODO</p>
+<a name="SEE-ALSO"></a><h1>SEE ALSO</h1>
+<p><a href="../../Compress/Zlib.html">Compress::Zlib</a>, <a href="../../IO/Compress/Gzip.html">IO::Compress::Gzip</a>, <a href="../../IO/Uncompress/Gunzip.html">IO::Uncompress::Gunzip</a>, <a href="../../IO/Compress/Deflate.html">IO::Compress::Deflate</a>, <a href="../../IO/Uncompress/Inflate.html">IO::Uncompress::Inflate</a>, <a href="../../IO/Compress/RawDeflate.html">IO::Compress::RawDeflate</a>, <a href="../../IO/Uncompress/RawInflate.html">IO::Uncompress::RawInflate</a>, <a href="http://search.cpan.org/perldoc/IO::Compress::Bzip2">IO::Compress::Bzip2</a>, <a href="http://search.cpan.org/perldoc/IO::Uncompress::Bunzip2">IO::Uncompress::Bunzip2</a>, <a href="http://search.cpan.org/perldoc/IO::Compress::Lzop">IO::Compress::Lzop</a>, <a href="http://search.cpan.org/perldoc/IO::Uncompress::UnLzop">IO::Uncompress::UnLzop</a>, <a href="http://search.cpan.org/perldoc/IO::Compress::Lzf">IO::Compress::Lzf</a>, <a href="http://search.cpan.org/perldoc/IO::Uncompress::UnLzf">IO::Uncompress::UnLzf</a>, <a href="../../IO/Uncompress/AnyInflate.html">IO::Uncompress::AnyInflate</a>, <a href="../../IO/Uncompress/AnyUncompress.html">IO::Uncompress::AnyUncompress</a></p>
+<p><a href="http://search.cpan.org/perldoc/Compress::Zlib::FAQ">Compress::Zlib::FAQ</a></p>
+<p><a href="../../File/GlobMapper.html">File::GlobMapper</a>, <a href="http://search.cpan.org/perldoc/Archive::Zip">Archive::Zip</a>,
+<a href="../../Archive/Tar.html">Archive::Tar</a>,
+<a href="../../IO/Zlib.html">IO::Zlib</a></p>
+<p>For RFC 1950, 1951 and 1952 see 
+<i><a href="http://www.faqs.org/rfcs/rfc1950.html">http://www.faqs.org/rfcs/rfc1950.html</a></i>,
+<i><a href="http://www.faqs.org/rfcs/rfc1951.html">http://www.faqs.org/rfcs/rfc1951.html</a></i> and
+<i><a href="http://www.faqs.org/rfcs/rfc1952.html">http://www.faqs.org/rfcs/rfc1952.html</a></i></p>
+<p>The <i>zlib</i> compression library was written by Jean-loup Gailly
+<i>gzip@prep.ai.mit.edu</i> and Mark Adler <i>madler@alumni.caltech.edu</i>.</p>
+<p>The primary site for the <i>zlib</i> compression library is
+<i><a href="http://www.zlib.org">http://www.zlib.org</a></i>.</p>
+<p>The primary site for gzip is <i><a href="http://www.gzip.org">http://www.gzip.org</a></i>.</p>
+<a name="AUTHOR"></a><h1>AUTHOR</h1>
+<p>This module was written by Paul Marquess, <i>pmqs@cpan.org</i>.</p>
+<a name="MODIFICATION-HISTORY"></a><h1>MODIFICATION HISTORY</h1>
+<p>See the Changes file.</p>
+<a name="COPYRIGHT-AND-LICENSE"></a><h1>COPYRIGHT AND LICENSE</h1>
+<p>Copyright (c) 2005-2007 Paul Marquess. All rights reserved.</p>
+<p>This program is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.</p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../../close_purple.gif';" onmouseout="rightCloseIcon.src='../../close_blue.gif';"><img src="../../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('IO::Compress::Zip','IO/Compress/Zip.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

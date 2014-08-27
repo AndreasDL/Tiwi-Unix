@@ -1,0 +1,170 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>IO::Seekable - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 1;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../close_purple.gif';" onmouseout="leftCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../index-overview.html">Overview</a></li>
+        <li><a href="../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../index-faq.html">FAQs</a></li>
+        <li><a href="../index-history.html">History / Changes</a></li>
+        <li><a href="../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../index-language.html">Language</a></li>
+        <li><a href="../index-functions.html">Functions</a></li>
+        <li><a href="../perlop.html">Operators</a></li>
+        <li><a href="../perlvar.html">Special variables</a></li>
+        <li><a href="../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../index-modules-A.html">Core modules</a></li>
+        <li><a href="../index-utilities.html">Utilities</a></li>
+        <li><a href="../index-internals.html">Internals</a></li>
+        <li><a href="../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../index.html">Home</a> &gt; <a href="../index-modules-A.html">Core modules</a> &gt; <a href="../index-modules-I.html">I</a> &gt; IO::Seekable</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">IO::Seekable</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><li><a href="#SEE-ALSO">SEE ALSO</a><li><a href="#HISTORY">HISTORY</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>IO::Seekable - supply seek based methods for I/O objects</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">    <a class="l_k" href="../functions/use.html">use</a> <span class="w">IO::Seekable</span><span class="sc">;</span>
+<a name="package-IO::Something"></a>    package <span class="i">IO::Something</span><span class="sc">;</span>
+    <span class="i">@ISA</span> = <span class="q">qw(IO::Seekable)</span><span class="sc">;</span></pre>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p><code class="inline"><span class="w">IO::Seekable</span></code>
+ does not have a constructor of its own as it is intended to
+be inherited by other <code class="inline"><span class="w">IO::Handle</span></code>
+ based objects. It provides methods
+which allow seeking of the file descriptors.</p>
+<ul>
+<li><a name="0x24io-0x3egetpos"></a><b>$io-&gt;getpos</b>
+<p>Returns an opaque value that represents the current position of the
+IO::File, or <code class="inline"><a class="l_k" href="../functions/undef.html">undef</a></code> if this is not possible (eg an unseekable stream such
+as a terminal, pipe or socket). If the fgetpos() function is available in
+your C library it is used to implements getpos, else perl emulates getpos
+using C's ftell() function.</p>
+</li>
+<li><a name="0x24io-0x3esetpos"></a><b>$io-&gt;setpos</b>
+<p>Uses the value of a previous getpos call to return to a previously visited
+position. Returns "0 but true" on success, <code class="inline"><a class="l_k" href="../functions/undef.html">undef</a></code> on failure.</p>
+</li>
+</ul>
+<p>See <a href="../perlfunc.html">perlfunc</a> for complete descriptions of each of the following
+supported <code class="inline"><span class="w">IO::Seekable</span></code>
+ methods, which are just front ends for the
+corresponding built-in functions:</p>
+<ul>
+<li><a name="0x24io-0x3eseek-(-POS0x2c-WHENCE-)"></a><b>$io-&gt;seek ( POS, WHENCE )</b>
+<p>Seek the IO::File to position POS, relative to WHENCE:</p>
+<ul>
+<li><a name="WHENCE0x3d0-(SEEK_SET)"></a><b>WHENCE=0 (SEEK_SET)</b>
+<p>POS is absolute position. (Seek relative to the start of the file)</p>
+</li>
+<li><a name="WHENCE0x3d1-(SEEK_CUR)"></a><b>WHENCE=1 (SEEK_CUR)</b>
+<p>POS is an offset from the current position. (Seek relative to current)</p>
+</li>
+<li><a name="WHENCE0x3d2-(SEEK_END)"></a><b>WHENCE=2 (SEEK_END)</b>
+<p>POS is an offset from the end of the file. (Seek relative to end)</p>
+</li>
+</ul>
+<p>The SEEK_* constants can be imported from the <code class="inline"><span class="w">Fcntl</span></code>
+ module if you
+don't wish to use the numbers <code class="inline"><span class="n">0</span></code>
+ <code class="inline"><span class="n">1</span></code>
+ or <code class="inline"><span class="n">2</span></code>
+ in your code.</p>
+<p>Returns <code class="inline"><span class="n">1</span></code>
+ upon success, <code class="inline"><span class="n">0</span></code>
+ otherwise.</p>
+</li>
+<li><a name="0x24io-0x3esysseek(-POS0x2c-WHENCE-)"></a><b>$io-&gt;sysseek( POS, WHENCE )</b>
+<p>Similar to $io-&gt;seek, but sets the IO::File's position using the system
+call lseek(2) directly, so will confuse most perl IO operators except
+sysread and syswrite (see <a href="../perlfunc.html">perlfunc</a> for full details)</p>
+<p>Returns the new position, or <code class="inline"><a class="l_k" href="../functions/undef.html">undef</a></code> on failure.  A position
+of zero is returned as the string <code class="inline"><span class="q">&quot;0 but true&quot;</span></code>
+</p>
+</li>
+<li><a name="0x24io-0x3etell"></a><b>$io-&gt;tell</b>
+<p>Returns the IO::File's current position, or -1 on error.</p>
+</li>
+</ul>
+<a name="SEE-ALSO"></a><h1>SEE ALSO</h1>
+<p><a href="../perlfunc.html">perlfunc</a>, 
+<a href="../perlop.html#I0x2fO-Operators">"I/O Operators" in perlop</a>,
+<a href="../IO/Handle.html">IO::Handle</a>
+<a href="../IO/File.html">IO::File</a></p>
+<a name="HISTORY"></a><h1>HISTORY</h1>
+<p>Derived from FileHandle.pm by Graham Barr &lt;gbarr@pobox.com&gt;</p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../close_purple.gif';" onmouseout="rightCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('IO::Seekable','IO/Seekable.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

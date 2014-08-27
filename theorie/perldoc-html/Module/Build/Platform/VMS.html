@@ -1,0 +1,171 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>Module::Build::Platform::VMS - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../../../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../../../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../../../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 3;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../../../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../../../close_purple.gif';" onmouseout="leftCloseIcon.src='../../../close_blue.gif';"><img src="../../../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../../../index-overview.html">Overview</a></li>
+        <li><a href="../../../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../../../index-faq.html">FAQs</a></li>
+        <li><a href="../../../index-history.html">History / Changes</a></li>
+        <li><a href="../../../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../../../index-language.html">Language</a></li>
+        <li><a href="../../../index-functions.html">Functions</a></li>
+        <li><a href="../../../perlop.html">Operators</a></li>
+        <li><a href="../../../perlvar.html">Special variables</a></li>
+        <li><a href="../../../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../../../index-modules-A.html">Core modules</a></li>
+        <li><a href="../../../index-utilities.html">Utilities</a></li>
+        <li><a href="../../../index-internals.html">Internals</a></li>
+        <li><a href="../../../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../../../index.html">Home</a> &gt; <a href="../../../index-modules-A.html">Core modules</a> &gt; <a href="../../../index-modules-M.html">M</a> &gt; Module::Build::Platform::VMS</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">Module::Build::Platform::VMS</div><ul><li><a href="#NAME">NAME</a><li><a href="#DESCRIPTION">DESCRIPTION</a><ul><li><a href="#Overridden-Methods">Overridden Methods</a></ul><li><a href="#AUTHOR">AUTHOR</a><li><a href="#SEE-ALSO">SEE ALSO</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>Module::Build::Platform::VMS - Builder class for VMS platforms</p>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p>This module inherits from <code class="inline"><span class="w">Module::Build::Base</span></code>
+ and alters a few
+minor details of its functionality.  Please see <a href="../../../Module/Build.html">Module::Build</a> for
+the general docs.</p>
+<a name="Overridden-Methods"></a><h2>Overridden Methods</h2>
+<ul>
+<li><a name="_set_defaults"></a><b>_set_defaults</b>
+<p>Change $self-&gt;{build_script} to 'Build.com' so @Build works.</p>
+</li>
+<li><a name="cull_args"></a><b>cull_args</b>
+<p>'@Build foo' on VMS will not preserve the case of 'foo'.  Rather than forcing
+people to write '@Build "foo"' we'll dispatch case-insensitively.</p>
+</li>
+<li><a name="manpage_separator"></a><b>manpage_separator</b>
+<p>Use '__' instead of '::'.</p>
+</li>
+<li><a name="prefixify"></a><b>prefixify</b>
+<p>Prefixify taking into account VMS' filepath syntax.</p>
+</li>
+<li><a name="_quote_args"></a><b>_quote_args</b>
+<p>Command-line arguments (but not the command itself) must be quoted
+to ensure case preservation.</p>
+</li>
+<li><a name="have_forkpipe"></a><b>have_forkpipe</b>
+<p>There is no native fork(), so some constructs depending on it are not
+available.</p>
+</li>
+<li><a name="_backticks"></a><b>_backticks</b>
+<p>Override to ensure that we quote the arguments but not the command.</p>
+</li>
+<li><a name="do_system"></a><b>do_system</b>
+<p>Override to ensure that we quote the arguments but not the command.</p>
+</li>
+<li><a name="_infer_xs_spec"></a><b>_infer_xs_spec</b>
+<p>Inherit the standard version but tweak the library file name to be 
+something Dynaloader can find.</p>
+</li>
+<li><a name="rscan_dir"></a><b>rscan_dir</b>
+<p>Inherit the standard version but remove dots at end of name.  This may not be 
+necessary if File::Find has been fixed or DECC$FILENAME_UNIX_REPORT is in effect.</p>
+</li>
+<li><a name="dist_dir"></a><b>dist_dir</b>
+<p>Inherit the standard version but replace embedded dots with underscores because 
+a dot is the directory delimiter on VMS.</p>
+</li>
+<li><a name="man3page_name"></a><b>man3page_name</b>
+<p>Inherit the standard version but chop the extra manpage delimiter off the front if 
+there is one.  The VMS version of splitdir('[.foo]') returns '', 'foo'.</p>
+</li>
+<li><a name="expand_test_dir"></a><b>expand_test_dir</b>
+<p>Inherit the standard version but relativize the paths as the native glob() doesn't
+do that for us.</p>
+</li>
+<li><a name="_detildefy"></a><b>_detildefy</b>
+<p>The home-grown glob() does not currently handle tildes, so provide limited support
+here.  Expect only UNIX format file specifications for now.</p>
+</li>
+<li><a name="find_perl_interpreter"></a><b>find_perl_interpreter</b>
+<p>On VMS, $^X returns the fully qualified absolute path including version
+number.  It's logically impossible to improve on it for getting the perl
+we're currently running, and attempting to manipulate it is usually
+lossy.</p>
+</li>
+</ul>
+<a name="AUTHOR"></a><h1>AUTHOR</h1>
+<p>Michael G Schwern &lt;schwern@pobox.com&gt;
+Ken Williams &lt;kwilliams@cpan.org&gt;
+Craig A. Berry &lt;craigberry@mac.com&gt;</p>
+<a name="SEE-ALSO"></a><h1>SEE ALSO</h1>
+<p>perl(1), Module::Build(3), ExtUtils::MakeMaker(3)</p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../../../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../../../close_purple.gif';" onmouseout="rightCloseIcon.src='../../../close_blue.gif';"><img src="../../../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../../../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('Module::Build::Platform::VMS','Module/Build/Platform/VMS.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

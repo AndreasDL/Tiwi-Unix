@@ -1,0 +1,573 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>Time::HiRes - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 1;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../close_purple.gif';" onmouseout="leftCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../index-overview.html">Overview</a></li>
+        <li><a href="../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../index-faq.html">FAQs</a></li>
+        <li><a href="../index-history.html">History / Changes</a></li>
+        <li><a href="../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../index-language.html">Language</a></li>
+        <li><a href="../index-functions.html">Functions</a></li>
+        <li><a href="../perlop.html">Operators</a></li>
+        <li><a href="../perlvar.html">Special variables</a></li>
+        <li><a href="../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../index-modules-A.html">Core modules</a></li>
+        <li><a href="../index-utilities.html">Utilities</a></li>
+        <li><a href="../index-internals.html">Internals</a></li>
+        <li><a href="../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../index.html">Home</a> &gt; <a href="../index-modules-A.html">Core modules</a> &gt; <a href="../index-modules-T.html">T</a> &gt; Time::HiRes</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">Time::HiRes</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><li><a href="#EXAMPLES">EXAMPLES</a><li><a href="#C-API">C API</a><li><a href="#DIAGNOSTICS">DIAGNOSTICS</a><ul><li><a href="#useconds-or-interval-more-than-...">useconds or interval more than ...</a><li><a href="#negative-time-not-invented-yet">negative time not invented yet</a><li><a href="#internal-error0x3a-useconds-0x3c-0-(unsigned-...-signed-...)">internal error: useconds &lt; 0 (unsigned ... signed ...)</a></ul><li><a href="#CAVEATS">CAVEATS</a><li><a href="#SEE-ALSO">SEE ALSO</a><li><a href="#AUTHORS">AUTHORS</a><li><a href="#COPYRIGHT-AND-LICENSE">COPYRIGHT AND LICENSE</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>Time::HiRes - High resolution alarm, sleep, gettimeofday, interval timers</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">  <a class="l_k" href="../functions/use.html">use</a> <span class="w">Time::HiRes</span> <span class="q">qw( usleep ualarm gettimeofday tv_interval nanosleep</span>
+		      <span class="q">clock_gettime clock_getres clock_nanosleep clock</span>
+                      <span class="q">stat )</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <span class="w">usleep</span> <span class="s">(</span><span class="i">$microseconds</span><span class="s">)</span><span class="sc">;</span>
+  <span class="w">nanosleep</span> <span class="s">(</span><span class="i">$nanoseconds</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <span class="w">ualarm</span> <span class="s">(</span><span class="i">$microseconds</span><span class="s">)</span><span class="sc">;</span>
+  <span class="w">ualarm</span> <span class="s">(</span><span class="i">$microseconds</span><span class="cm">,</span> <span class="i">$interval_microseconds</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <span class="i">$t0</span> = <span class="s">[</span><span class="w">gettimeofday</span><span class="s">]</span><span class="sc">;</span>
+  <span class="s">(</span><span class="i">$seconds</span><span class="cm">,</span> <span class="i">$microseconds</span><span class="s">)</span> = <span class="w">gettimeofday</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <span class="i">$elapsed</span> = <span class="w">tv_interval</span> <span class="s">(</span> <span class="i">$t0</span><span class="cm">,</span> <span class="s">[</span><span class="i">$seconds</span><span class="cm">,</span> <span class="i">$microseconds</span><span class="s">]</span><span class="s">)</span><span class="sc">;</span>
+  <span class="i">$elapsed</span> = <span class="w">tv_interval</span> <span class="s">(</span> <span class="i">$t0</span><span class="cm">,</span> <span class="s">[</span><span class="w">gettimeofday</span><span class="s">]</span><span class="s">)</span><span class="sc">;</span>
+  <span class="i">$elapsed</span> = <span class="w">tv_interval</span> <span class="s">(</span> <span class="i">$t0</span> <span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <a class="l_k" href="../functions/use.html">use</a> <span class="w">Time::HiRes</span> <span class="q">qw ( time alarm sleep )</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <span class="i">$now_fractions</span> = <a class="l_k" href="../functions/time.html">time</a><span class="sc">;</span>
+  <a class="l_k" href="../functions/sleep.html">sleep</a> <span class="s">(</span><span class="i">$floating_seconds</span><span class="s">)</span><span class="sc">;</span>
+  <a class="l_k" href="../functions/alarm.html">alarm</a> <span class="s">(</span><span class="i">$floating_seconds</span><span class="s">)</span><span class="sc">;</span>
+  <a class="l_k" href="../functions/alarm.html">alarm</a> <span class="s">(</span><span class="i">$floating_seconds</span><span class="cm">,</span> <span class="i">$floating_interval</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <a class="l_k" href="../functions/use.html">use</a> <span class="w">Time::HiRes</span> <span class="q">qw( setitimer getitimer )</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <span class="w">setitimer</span> <span class="s">(</span><span class="i">$which</span><span class="cm">,</span> <span class="i">$floating_seconds</span><span class="cm">,</span> <span class="i">$floating_interval</span> <span class="s">)</span><span class="sc">;</span>
+  <span class="w">getitimer</span> <span class="s">(</span><span class="i">$which</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <a class="l_k" href="../functions/use.html">use</a> <span class="w">Time::HiRes</span> <span class="q">qw( clock_gettime clock_getres clock_nanosleep</span>
+		      <span class="q">ITIMER_REAL ITIMER_VIRTUAL ITIMER_PROF ITIMER_REALPROF )</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <span class="i">$realtime</span>   = <span class="i">clock_gettime</span><span class="s">(</span><span class="w">CLOCK_REALTIME</span><span class="s">)</span><span class="sc">;</span>
+  <span class="i">$resolution</span> = <span class="i">clock_getres</span><span class="s">(</span><span class="w">CLOCK_REALTIME</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <span class="i">clock_nanosleep</span><span class="s">(</span><span class="w">CLOCK_REALTIME</span><span class="cm">,</span> <span class="n">1.5e9</span><span class="s">)</span><span class="sc">;</span>
+  <span class="i">clock_nanosleep</span><span class="s">(</span><span class="w">CLOCK_REALTIME</span><span class="cm">,</span> <a class="l_k" href="../functions/time.html">time</a><span class="s">(</span><span class="s">)</span>*<span class="n">1e9</span> + <span class="n">10e9</span><span class="cm">,</span> <span class="w">TIMER_ABSTIME</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <a class="l_k" href="../functions/my.html">my</a> <span class="i">$ticktock</span> = <span class="i">clock</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <a class="l_k" href="../functions/use.html">use</a> <span class="w">Time::HiRes</span> <span class="q">qw( stat )</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <a class="l_k" href="../functions/my.html">my</a> <span class="i">@stat</span> = <a class="l_k" href="../functions/stat.html">stat</a><span class="s">(</span><span class="q">&quot;file&quot;</span><span class="s">)</span><span class="sc">;</span>
+  <a class="l_k" href="../functions/my.html">my</a> <span class="i">@stat</span> = <a class="l_k" href="../functions/stat.html">stat</a><span class="s">(</span><span class="w">FH</span><span class="s">)</span><span class="sc">;</span></pre>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p>The <code class="inline"><span class="w">Time::HiRes</span></code>
+ module implements a Perl interface to the
+<code class="inline"><span class="w">usleep</span></code>
+, <code class="inline"><span class="w">nanosleep</span></code>
+, <code class="inline"><span class="w">ualarm</span></code>
+, <code class="inline"><span class="w">gettimeofday</span></code>
+, and
+<code class="inline"><span class="w">setitimer</span></code>
+/<code class="inline"><span class="w">getitimer</span></code>
+ system calls, in other words, high
+resolution time and timers. See the <a href="#EXAMPLES">"EXAMPLES"</a> section below and the
+test scripts for usage; see your system documentation for the
+description of the underlying <code class="inline"><span class="w">nanosleep</span></code>
+ or <code class="inline"><span class="w">usleep</span></code>
+, <code class="inline"><span class="w">ualarm</span></code>
+,
+<code class="inline"><span class="w">gettimeofday</span></code>
+, and <code class="inline"><span class="w">setitimer</span></code>
+/<code class="inline"><span class="w">getitimer</span></code>
+ calls.</p>
+<p>If your system lacks <code class="inline"><span class="i">gettimeofday</span><span class="s">(</span><span class="s">)</span></code>
+ or an emulation of it you don't
+get <code class="inline"><span class="i">gettimeofday</span><span class="s">(</span><span class="s">)</span></code>
+ or the one-argument form of <code class="inline"><span class="i">tv_interval</span><span class="s">(</span><span class="s">)</span></code>
+.
+If your system lacks all of <code class="inline"><span class="i">nanosleep</span><span class="s">(</span><span class="s">)</span></code>
+, <code class="inline"><span class="i">usleep</span><span class="s">(</span><span class="s">)</span></code>
+,
+<code class="inline"><a class="l_k" href="../functions/select.html">select()</a></code>, and <code class="inline"><span class="w">poll</span></code>
+, you don't get <code class="inline"><span class="i">Time::HiRes::usleep</span><span class="s">(</span><span class="s">)</span></code>
+,
+<code class="inline"><span class="i">Time::HiRes::nanosleep</span><span class="s">(</span><span class="s">)</span></code>
+, or <code class="inline"><span class="i">Time::HiRes::sleep</span><span class="s">(</span><span class="s">)</span></code>
+.
+If your system lacks both <code class="inline"><span class="i">ualarm</span><span class="s">(</span><span class="s">)</span></code>
+ and <code class="inline"><span class="i">setitimer</span><span class="s">(</span><span class="s">)</span></code>
+ you don't get
+<code class="inline"><span class="i">Time::HiRes::ualarm</span><span class="s">(</span><span class="s">)</span></code>
+ or <code class="inline"><span class="i">Time::HiRes::alarm</span><span class="s">(</span><span class="s">)</span></code>
+.</p>
+<p>If you try to import an unimplemented function in the <code class="inline"><a class="l_k" href="../functions/use.html">use</a></code> statement
+it will fail at compile time.</p>
+<p>If your subsecond sleeping is implemented with <code class="inline"><span class="i">nanosleep</span><span class="s">(</span><span class="s">)</span></code>
+ instead
+of <code class="inline"><span class="i">usleep</span><span class="s">(</span><span class="s">)</span></code>
+, you can mix subsecond sleeping with signals since
+<code class="inline"><span class="i">nanosleep</span><span class="s">(</span><span class="s">)</span></code>
+ does not use signals.  This, however, is not portable,
+and you should first check for the truth value of
+<code class="inline"><span class="i">&amp;Time::HiRes::d_nanosleep</span></code>
+ to see whether you have nanosleep, and
+then carefully read your <code class="inline"><span class="i">nanosleep</span><span class="s">(</span><span class="s">)</span></code>
+ C API documentation for any
+peculiarities.</p>
+<p>If you are using <code class="inline"><span class="w">nanosleep</span></code>
+ for something else than mixing sleeping
+with signals, give some thought to whether Perl is the tool you should
+be using for work requiring nanosecond accuracies.</p>
+<p>Remember that unless you are working on a <i>hard realtime</i> system,
+any clocks and timers will be imprecise, especially so if you are working
+in a pre-emptive multiuser system.  Understand the difference between
+<i>wallclock time</i> and process time (in UNIX-like systems the sum of
+<i>user</i> and <i>system</i> times).  Any attempt to sleep for X seconds will
+most probably end up sleeping <b>more</b> than that, but don't be surpised
+if you end up sleeping slightly <b>less</b>.</p>
+<p>The following functions can be imported from this module.
+No functions are exported by default.</p>
+<ul>
+<li><a name="gettimeofday-()"></a><b>gettimeofday ()</b>
+<p>In array context returns a two-element array with the seconds and
+microseconds since the epoch.  In scalar context returns floating
+seconds like <code class="inline"><span class="i">Time::HiRes::time</span><span class="s">(</span><span class="s">)</span></code>
+ (see below).</p>
+</li>
+<li><a name="usleep-(-0x24useconds-)"></a><b>usleep ( $useconds )</b>
+<p>Sleeps for the number of microseconds (millionths of a second)
+specified.  Returns the number of microseconds actually slept.
+Can sleep for more than one second, unlike the <code class="inline"><span class="w">usleep</span></code>
+ system call.
+Can also sleep for zero seconds, which often works like a <i>thread yield</i>.
+See also <code class="inline"><span class="i">Time::HiRes::usleep</span><span class="s">(</span><span class="s">)</span></code>
+, <code class="inline"><span class="i">Time::HiRes::sleep</span><span class="s">(</span><span class="s">)</span></code>
+, and
+<code class="inline"><span class="i">Time::HiRes::clock_nanosleep</span><span class="s">(</span><span class="s">)</span></code>
+.</p>
+<p>Do not expect usleep() to be exact down to one microsecond.</p>
+</li>
+<li><a name="nanosleep-(-0x24nanoseconds-)"></a><b>nanosleep ( $nanoseconds )</b>
+<p>Sleeps for the number of nanoseconds (1e9ths of a second) specified.
+Returns the number of nanoseconds actually slept (accurate only to
+microseconds, the nearest thousand of them).  Can sleep for more than
+one second.  Can also sleep for zero seconds, which often works like
+a <i>thread yield</i>.  See also <code class="inline"><span class="i">Time::HiRes::sleep</span><span class="s">(</span><span class="s">)</span></code>
+,
+<code class="inline"><span class="i">Time::HiRes::usleep</span><span class="s">(</span><span class="s">)</span></code>
+, and <code class="inline"><span class="i">Time::HiRes::clock_nanosleep</span><span class="s">(</span><span class="s">)</span></code>
+.</p>
+<p>Do not expect nanosleep() to be exact down to one nanosecond.
+Getting even accuracy of one thousand nanoseconds is good.</p>
+</li>
+<li><a name="ualarm-(-0x24useconds-0x5b0x2c-0x24interval_useconds-0x5d-)"></a><b>ualarm ( $useconds [, $interval_useconds ] )</b>
+<p>Issues a <code class="inline"><span class="w">ualarm</span></code>
+ call; the <code class="inline"><span class="i">$interval_useconds</span></code>
+ is optional and
+will be zero if unspecified, resulting in <code class="inline"><a class="l_k" href="../functions/alarm.html">alarm</a></code>-like behaviour.</p>
+<p>ualarm(0) will cancel an outstanding ualarm().</p>
+<p>Note that the interaction between alarms and sleeps is unspecified.</p>
+</li>
+<li><a name="tv_interval"></a><b>tv_interval</b>
+<p>tv_interval ( $ref_to_gettimeofday [, $ref_to_later_gettimeofday] )</p>
+<p>Returns the floating seconds between the two times, which should have
+been returned by <code class="inline"><span class="i">gettimeofday</span><span class="s">(</span><span class="s">)</span></code>
+. If the second argument is omitted,
+then the current time is used.</p>
+</li>
+<li><a name="time-()"></a><b>time ()</b>
+<p>Returns a floating seconds since the epoch. This function can be
+imported, resulting in a nice drop-in replacement for the <code class="inline"><a class="l_k" href="../functions/time.html">time</a></code>
+provided with core Perl; see the <a href="#EXAMPLES">"EXAMPLES"</a> below.</p>
+<p><b>NOTE 1</b>: This higher resolution timer can return values either less
+or more than the core <code class="inline"><a class="l_k" href="../functions/time.html">time()</a></code>, depending on whether your platform
+rounds the higher resolution timer values up, down, or to the nearest second
+to get the core <code class="inline"><a class="l_k" href="../functions/time.html">time()</a></code>, but naturally the difference should be never
+more than half a second.  See also <a href="#clock_getres">"clock_getres"</a>, if available
+in your system.</p>
+<p><b>NOTE 2</b>: Since Sunday, September 9th, 2001 at 01:46:40 AM GMT, when
+the <code class="inline"><a class="l_k" href="../functions/time.html">time()</a></code> seconds since epoch rolled over to 1_000_000_000, the
+default floating point format of Perl and the seconds since epoch have
+conspired to produce an apparent bug: if you print the value of
+<code class="inline"><span class="i">Time::HiRes::time</span><span class="s">(</span><span class="s">)</span></code>
+ you seem to be getting only five decimals, not
+six as promised (microseconds).  Not to worry, the microseconds are
+there (assuming your platform supports such granularity in the first
+place).  What is going on is that the default floating point format of
+Perl only outputs 15 digits.  In this case that means ten digits
+before the decimal separator and five after.  To see the microseconds
+you can use either <code class="inline"><a class="l_k" href="../functions/printf.html">printf</a></code>/<code class="inline"><a class="l_k" href="../functions/sprintf.html">sprintf</a></code> with <code class="inline"><span class="q">&quot;%.6f&quot;</span></code>
+, or the
+<code class="inline"><span class="i">gettimeofday</span><span class="s">(</span><span class="s">)</span></code>
+ function in list context, which will give you the
+seconds and microseconds as two separate values.</p>
+</li>
+<li><a name="sleep-(-0x24floating_seconds-)"></a><b>sleep ( $floating_seconds )</b>
+<p>Sleeps for the specified amount of seconds.  Returns the number of
+seconds actually slept (a floating point value).  This function can
+be imported, resulting in a nice drop-in replacement for the <code class="inline"><a class="l_k" href="../functions/sleep.html">sleep</a></code>
+provided with perl, see the <a href="#EXAMPLES">"EXAMPLES"</a> below.</p>
+<p>Note that the interaction between alarms and sleeps is unspecified.</p>
+</li>
+<li><a name="alarm-(-0x24floating_seconds-0x5b0x2c-0x24interval_floating_seconds-0x5d-)"></a><b>alarm ( $floating_seconds [, $interval_floating_seconds ] )</b>
+<p>The <code class="inline"><span class="w">SIGALRM</span></code>
+ signal is sent after the specified number of seconds.
+Implemented using <code class="inline"><span class="i">ualarm</span><span class="s">(</span><span class="s">)</span></code>
+.  The <code class="inline"><span class="i">$interval_floating_seconds</span></code>
+ argument
+is optional and will be zero if unspecified, resulting in <code class="inline"><a class="l_k" href="../functions/alarm.html">alarm()</a></code>-like
+behaviour.  This function can be imported, resulting in a nice drop-in
+replacement for the <code class="inline"><a class="l_k" href="../functions/alarm.html">alarm</a></code> provided with perl, see the <a href="#EXAMPLES">"EXAMPLES"</a> below.</p>
+<p><b>NOTE 1</b>: With some combinations of operating systems and Perl
+releases <code class="inline"><span class="w">SIGALRM</span></code>
+ restarts <code class="inline"><a class="l_k" href="../functions/select.html">select()</a></code>, instead of interrupting it.
+This means that an <code class="inline"><a class="l_k" href="../functions/alarm.html">alarm()</a></code> followed by a <code class="inline"><a class="l_k" href="../functions/select.html">select()</a></code> may together
+take the sum of the times specified for the the <code class="inline"><a class="l_k" href="../functions/alarm.html">alarm()</a></code> and the
+<code class="inline"><a class="l_k" href="../functions/select.html">select()</a></code>, not just the time of the <code class="inline"><a class="l_k" href="../functions/alarm.html">alarm()</a></code>.</p>
+<p>Note that the interaction between alarms and sleeps is unspecified.</p>
+</li>
+<li><a name="setitimer-(-0x24which0x2c-0x24floating_seconds-0x5b0x2c-0x24interval_floating_seconds-0x5d-)"></a><b>setitimer ( $which, $floating_seconds [, $interval_floating_seconds ] )</b>
+<p>Start up an interval timer: after a certain time, a signal ($which) arrives,
+and more signals may keep arriving at certain intervals.  To disable
+an "itimer", use <code class="inline"><span class="i">$floating_seconds</span></code>
+ of zero.  If the
+<code class="inline"><span class="i">$interval_floating_seconds</span></code>
+ is set to zero (or unspecified), the
+timer is disabled <b>after</b> the next delivered signal.</p>
+<p>Use of interval timers may interfere with <code class="inline"><a class="l_k" href="../functions/alarm.html">alarm()</a></code>, <code class="inline"><a class="l_k" href="../functions/sleep.html">sleep()</a></code>,
+and <code class="inline"><span class="i">usleep</span><span class="s">(</span><span class="s">)</span></code>
+.  In standard-speak the "interaction is unspecified",
+which means that <i>anything</i> may happen: it may work, it may not.</p>
+<p>In scalar context, the remaining time in the timer is returned.</p>
+<p>In list context, both the remaining time and the interval are returned.</p>
+<p>There are usually three or four interval timers (signals) available: the
+<code class="inline"><span class="i">$which</span></code>
+ can be <code class="inline"><span class="w">ITIMER_REAL</span></code>
+, <code class="inline"><span class="w">ITIMER_VIRTUAL</span></code>
+, <code class="inline"><span class="w">ITIMER_PROF</span></code>
+, or
+<code class="inline"><span class="w">ITIMER_REALPROF</span></code>
+.  Note that which ones are available depends: true
+UNIX platforms usually have the first three, but (for example) Win32
+and Cygwin have only <code class="inline"><span class="w">ITIMER_REAL</span></code>
+, and only Solaris seems to have
+<code class="inline"><span class="w">ITIMER_REALPROF</span></code>
+ (which is used to profile multithreaded programs).</p>
+<p><code class="inline"><span class="w">ITIMER_REAL</span></code>
+ results in <code class="inline"><a class="l_k" href="../functions/alarm.html">alarm()</a></code>-like behaviour.  Time is counted in
+<i>real time</i>; that is, wallclock time.  <code class="inline"><span class="w">SIGALRM</span></code>
+ is delivered when
+the timer expires.</p>
+<p><code class="inline"><span class="w">ITIMER_VIRTUAL</span></code>
+ counts time in (process) <i>virtual time</i>; that is,
+only when the process is running.  In multiprocessor/user/CPU systems
+this may be more or less than real or wallclock time.  (This time is
+also known as the <i>user time</i>.)  <code class="inline"><span class="w">SIGVTALRM</span></code>
+ is delivered when the
+timer expires.</p>
+<p><code class="inline"><span class="w">ITIMER_PROF</span></code>
+ counts time when either the process virtual time or when
+the operating system is running on behalf of the process (such as I/O).
+(This time is also known as the <i>system time</i>.)  (The sum of user
+time and system time is known as the <i>CPU time</i>.)  <code class="inline"><span class="w">SIGPROF</span></code>
+ is
+delivered when the timer expires.  <code class="inline"><span class="w">SIGPROF</span></code>
+ can interrupt system calls.</p>
+<p>The semantics of interval timers for multithreaded programs are
+system-specific, and some systems may support additional interval
+timers.  For example, it is unspecified which thread gets the signals.
+See your <code class="inline"><span class="i">setitimer</span><span class="s">(</span><span class="s">)</span></code>
+ documentation.</p>
+</li>
+<li><a name="getitimer-(-0x24which-)"></a><b>getitimer ( $which )</b>
+<p>Return the remaining time in the interval timer specified by <code class="inline"><span class="i">$which</span></code>
+.</p>
+<p>In scalar context, the remaining time is returned.</p>
+<p>In list context, both the remaining time and the interval are returned.
+The interval is always what you put in using <code class="inline"><span class="i">setitimer</span><span class="s">(</span><span class="s">)</span></code>
+.</p>
+</li>
+<li><a name="clock_gettime-(-0x24which-)"></a><b>clock_gettime ( $which )</b>
+<p>Return as seconds the current value of the POSIX high resolution timer
+specified by <code class="inline"><span class="i">$which</span></code>
+.  All implementations that support POSIX high
+resolution timers are supposed to support at least the <code class="inline"><span class="i">$which</span></code>
+ value
+of <code class="inline"><span class="w">CLOCK_REALTIME</span></code>
+, which is supposed to return results close to the
+results of <code class="inline"><span class="w">gettimeofday</span></code>
+, or the number of seconds since 00:00:00:00
+January 1, 1970 Greenwich Mean Time (GMT).  Do not assume that
+CLOCK_REALTIME is zero, it might be one, or something else.
+Another potentially useful (but not available everywhere) value is
+<code class="inline"><span class="w">CLOCK_MONOTONIC</span></code>
+, which guarantees a monotonically increasing time
+value (unlike time(), which can be adjusted).  See your system
+documentation for other possibly supported values.</p>
+</li>
+<li><a name="clock_getres-(-0x24which-)"></a><b>clock_getres ( $which )</b>
+<p>Return as seconds the resolution of the POSIX high resolution timer
+specified by <code class="inline"><span class="i">$which</span></code>
+.  All implementations that support POSIX high
+resolution timers are supposed to support at least the <code class="inline"><span class="i">$which</span></code>
+ value
+of <code class="inline"><span class="w">CLOCK_REALTIME</span></code>
+, see <a href="#clock_gettime">"clock_gettime"</a>.</p>
+</li>
+<li><a name="clock_nanosleep-(-0x24which0x2c-0x24nanoseconds0x2c-0x24flags-0x3d-0)"></a><b>clock_nanosleep ( $which, $nanoseconds, $flags = 0)</b>
+<p>Sleeps for the number of nanoseconds (1e9ths of a second) specified.
+Returns the number of nanoseconds actually slept.  The $which is the
+"clock id", as with clock_gettime() and clock_getres().  The flags
+default to zero but <code class="inline"><span class="w">TIMER_ABSTIME</span></code>
+ can specified (must be exported
+explicitly) which means that <code class="inline"><span class="i">$nanoseconds</span></code>
+ is not a time interval
+(as is the default) but instead an absolute time.  Can sleep for more
+than one second.  Can also sleep for zero seconds, which often works
+like a <i>thread yield</i>.  See also <code class="inline"><span class="i">Time::HiRes::sleep</span><span class="s">(</span><span class="s">)</span></code>
+,
+<code class="inline"><span class="i">Time::HiRes::usleep</span><span class="s">(</span><span class="s">)</span></code>
+, and <code class="inline"><span class="i">Time::HiRes::nanosleep</span><span class="s">(</span><span class="s">)</span></code>
+.</p>
+<p>Do not expect clock_nanosleep() to be exact down to one nanosecond.
+Getting even accuracy of one thousand nanoseconds is good.</p>
+</li>
+<li><a name="clock()"></a><b>clock()</b>
+<p>Return as seconds the <i>process time</i> (user + system time) spent by
+the process since the first call to clock() (the definition is <b>not</b>
+"since the start of the process", though if you are lucky these times
+may be quite close to each other, depending on the system).  What this
+means is that you probably need to store the result of your first call
+to clock(), and subtract that value from the following results of clock().</p>
+<p>The time returned also includes the process times of the terminated
+child processes for which wait() has been executed.  This value is
+somewhat like the second value returned by the times() of core Perl,
+but not necessarily identical.  Note that due to backward
+compatibility limitations the returned value may wrap around at about
+2147 seconds or at about 36 minutes.</p>
+</li>
+<li><a name="stat"></a><b>stat</b>
+</li>
+<li><a name="stat-FH"></a><b>stat FH</b>
+</li>
+<li><a name="stat-EXPR"></a><b>stat EXPR</b>
+<p>As <a href="../functions/stat.html">stat</a> but with the access/modify/change file timestamps
+in subsecond resolution, if the operating system and the filesystem
+both support such timestamps.  To override the standard stat():</p>
+<pre class="verbatim">    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Time::HiRes</span> <span class="q">qw(stat)</span><span class="sc">;</span></pre>
+<p>Test for the value of &amp;Time::HiRes::d_hires_stat to find out whether
+the operating system supports subsecond file timestamps: a value
+larger than zero means yes. There are unfortunately no easy
+ways to find out whether the filesystem supports such timestamps.
+UNIX filesystems often do; NTFS does; FAT doesn't (FAT timestamp
+granularity is <b>two</b> seconds).</p>
+<p>A zero return value of &amp;Time::HiRes::d_hires_stat means that
+Time::HiRes::stat is a no-op passthrough for CORE::stat(),
+and therefore the timestamps will stay integers.  The same
+thing will happen if the filesystem does not do subsecond timestamps,
+even if the &amp;Time::HiRes::d_hires_stat is non-zero.</p>
+<p>In any case do not expect nanosecond resolution, or even a microsecond
+resolution.  Also note that the modify/access timestamps might have
+different resolutions, and that they need not be synchronized, e.g.
+if the operations are</p>
+<pre class="verbatim">    <a class="l_k" href="../functions/write.html">write</a>
+    <a class="l_k" href="../functions/stat.html">stat</a> <span class="c"># t1</span>
+    <a class="l_k" href="../functions/read.html">read</a>
+    <a class="l_k" href="../functions/stat.html">stat</a> <span class="c"># t2</span></pre>
+<p>the access time stamp from t2 need not be greater-than the modify
+time stamp from t1: it may be equal or <i>less</i>.</p>
+</li>
+</ul>
+<a name="EXAMPLES"></a><h1>EXAMPLES</h1>
+<pre class="verbatim">  <a class="l_k" href="../functions/use.html">use</a> <span class="w">Time::HiRes</span> <span class="q">qw(usleep ualarm gettimeofday tv_interval)</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <span class="i">$microseconds</span> = <span class="n">750_000</span><span class="sc">;</span>
+  <span class="i">usleep</span><span class="s">(</span><span class="i">$microseconds</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <span class="c"># signal alarm in 2.5s &amp; every .1s thereafter</span>
+  <span class="i">ualarm</span><span class="s">(</span><span class="n">2_500_000</span><span class="cm">,</span> <span class="n">100_000</span><span class="s">)</span><span class="sc">;</span>
+  <span class="c"># cancel that ualarm</span>
+  <span class="i">ualarm</span><span class="s">(</span><span class="n">0</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <span class="c"># get seconds and microseconds since the epoch</span>
+  <span class="s">(</span><span class="i">$s</span><span class="cm">,</span> <span class="i">$usec</span><span class="s">)</span> = <span class="i">gettimeofday</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <span class="c"># measure elapsed time </span>
+  <span class="c"># (could also do by subtracting 2 gettimeofday return values)</span>
+  <span class="i">$t0</span> = <span class="s">[</span><span class="w">gettimeofday</span><span class="s">]</span><span class="sc">;</span>
+  <span class="c"># do bunch of stuff here</span>
+  <span class="i">$t1</span> = <span class="s">[</span><span class="w">gettimeofday</span><span class="s">]</span><span class="sc">;</span>
+  <span class="c"># do more stuff here</span>
+  <span class="i">$t0_t1</span> = <span class="w">tv_interval</span> <span class="i">$t0</span><span class="cm">,</span> <span class="i">$t1</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <span class="i">$elapsed</span> = <span class="w">tv_interval</span> <span class="s">(</span><span class="i">$t0</span><span class="cm">,</span> <span class="s">[</span><span class="w">gettimeofday</span><span class="s">]</span><span class="s">)</span><span class="sc">;</span>
+  <span class="i">$elapsed</span> = <span class="w">tv_interval</span> <span class="s">(</span><span class="i">$t0</span><span class="s">)</span><span class="sc">;</span>	<span class="c"># equivalent code</span></pre>
+<pre class="verbatim">  <span class="c">#</span>
+  <span class="c"># replacements for time, alarm and sleep that know about</span>
+  <span class="c"># floating seconds</span>
+  <span class="c">#</span>
+  <a class="l_k" href="../functions/use.html">use</a> <span class="w">Time::HiRes</span><span class="sc">;</span>
+  <span class="i">$now_fractions</span> = <span class="w">Time::HiRes::time</span><span class="sc">;</span>
+  <span class="w">Time::HiRes::sleep</span> <span class="s">(</span><span class="n">2.5</span><span class="s">)</span><span class="sc">;</span>
+  <span class="w">Time::HiRes::alarm</span> <span class="s">(</span><span class="n">10.6666666</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <a class="l_k" href="../functions/use.html">use</a> <span class="w">Time::HiRes</span> <span class="q">qw ( time alarm sleep )</span><span class="sc">;</span>
+  <span class="i">$now_fractions</span> = <a class="l_k" href="../functions/time.html">time</a><span class="sc">;</span>
+  <a class="l_k" href="../functions/sleep.html">sleep</a> <span class="s">(</span><span class="n">2.5</span><span class="s">)</span><span class="sc">;</span>
+  <a class="l_k" href="../functions/alarm.html">alarm</a> <span class="s">(</span><span class="n">10.6666666</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <span class="c"># Arm an interval timer to go off first at 10 seconds and</span>
+  <span class="c"># after that every 2.5 seconds, in process virtual time</span></pre>
+<pre class="verbatim">  <a class="l_k" href="../functions/use.html">use</a> <span class="w">Time::HiRes</span> <span class="q">qw ( setitimer ITIMER_VIRTUAL time )</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <span class="i">$SIG</span>{<span class="w">VTALRM</span>} = <a class="l_k" href="../functions/sub.html">sub</a> <span class="s">{</span> <a class="l_k" href="../functions/print.html">print</a> <a class="l_k" href="../functions/time.html">time</a><span class="cm">,</span> <span class="q">&quot;\n&quot;</span> <span class="s">}</span><span class="sc">;</span>
+  <span class="i">setitimer</span><span class="s">(</span><span class="w">ITIMER_VIRTUAL</span><span class="cm">,</span> <span class="n">10</span><span class="cm">,</span> <span class="n">2.5</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <a class="l_k" href="../functions/use.html">use</a> <span class="w">Time::HiRes</span> <span class="q">qw( clock_gettime clock_getres CLOCK_REALTIME )</span><span class="sc">;</span>
+  <span class="c"># Read the POSIX high resolution timer.</span>
+  <a class="l_k" href="../functions/my.html">my</a> <span class="i">$high</span> = <span class="i">clock_getres</span><span class="s">(</span><span class="w">CLOCK_REALTIME</span><span class="s">)</span><span class="sc">;</span>
+  <span class="c"># But how accurate we can be, really?</span>
+  <a class="l_k" href="../functions/my.html">my</a> <span class="i">$reso</span> = <span class="i">clock_getres</span><span class="s">(</span><span class="w">CLOCK_REALTIME</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <a class="l_k" href="../functions/use.html">use</a> <span class="w">Time::HiRes</span> <span class="q">qw( clock_nanosleep TIMER_ABSTIME )</span><span class="sc">;</span>
+  <span class="i">clock_nanosleep</span><span class="s">(</span><span class="w">CLOCK_REALTIME</span><span class="cm">,</span> <span class="n">1e6</span><span class="s">)</span><span class="sc">;</span>
+  <span class="i">clock_nanosleep</span><span class="s">(</span><span class="w">CLOCK_REALTIME</span><span class="cm">,</span> <span class="n">2e9</span><span class="cm">,</span> <span class="w">TIMER_ABSTIME</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <a class="l_k" href="../functions/use.html">use</a> <span class="w">Time::HiRes</span> <span class="q">qw( clock )</span><span class="sc">;</span>
+  <a class="l_k" href="../functions/my.html">my</a> <span class="i">$clock0</span> = <span class="i">clock</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span>
+  ... <span class="c"># Do something.</span>
+  <a class="l_k" href="../functions/my.html">my</a> <span class="i">$clock1</span> = <span class="i">clock</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span>
+  <a class="l_k" href="../functions/my.html">my</a> <span class="i">$clockd</span> = <span class="i">$clock1</span> - <span class="i">$clock0</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <a class="l_k" href="../functions/use.html">use</a> <span class="w">Time::HiRes</span> <span class="q">qw( stat )</span><span class="sc">;</span>
+  <a class="l_k" href="../functions/my.html">my</a> <span class="s">(</span><span class="i">$atime</span><span class="cm">,</span> <span class="i">$mtime</span><span class="cm">,</span> <span class="i">$ctime</span><span class="s">)</span> = <span class="s">(</span><a class="l_k" href="../functions/stat.html">stat</a><span class="s">(</span><span class="q">&quot;istics&quot;</span><span class="s">)</span><span class="s">)</span>[<span class="n">8</span><span class="cm">,</span> <span class="n">9</span><span class="cm">,</span> <span class="n">10</span>]<span class="sc">;</span></pre>
+<a name="C-API"></a><h1>C API</h1>
+<p>In addition to the perl API described above, a C API is available for
+extension writers.  The following C functions are available in the
+modglobal hash:</p>
+<pre class="verbatim">  name             C prototype
+  ---------------  ----------------------
+  Time::NVtime     double (*)()
+  Time::U2time     void (*)(pTHX_ UV ret[2])</pre><p>Both functions return equivalent information (like <code class="inline"><span class="w">gettimeofday</span></code>
+)
+but with different representations.  The names <code class="inline"><span class="w">NVtime</span></code>
+ and <code class="inline"><span class="w">U2time</span></code>
+
+were selected mainly because they are operating system independent.
+(<code class="inline"><span class="w">gettimeofday</span></code>
+ is Unix-centric, though some platforms like Win32 and
+VMS have emulations for it.)</p>
+<p>Here is an example of using <code class="inline"><span class="w">NVtime</span></code>
+ from C:</p>
+<pre class="verbatim">  double (*myNVtime)(); /* Returns -1 on failure. */
+  SV **svp = hv_fetch(PL_modglobal, "Time::NVtime", 12, 0);
+  if (!svp)         croak("Time::HiRes is required");
+  if (!SvIOK(*svp)) croak("Time::NVtime isn't a function pointer");
+  myNVtime = INT2PTR(double(*)(), SvIV(*svp));
+  printf("The current time is: %f\n", (*myNVtime)());</pre><a name="DIAGNOSTICS"></a><h1>DIAGNOSTICS</h1>
+<a name="useconds-or-interval-more-than-..."></a><h2>useconds or interval more than ...</h2>
+<p>In ualarm() you tried to use number of microseconds or interval (also
+in microseconds) more than 1_000_000 and setitimer() is not available
+in your system to emulate that case.</p>
+<a name="negative-time-not-invented-yet"></a><h2>negative time not invented yet</h2>
+<p>You tried to use a negative time argument.</p>
+<a name="internal-error0x3a-useconds-0x3c-0-(unsigned-...-signed-...)"></a><h2>internal error: useconds &lt; 0 (unsigned ... signed ...)</h2>
+<p>Something went horribly wrong-- the number of microseconds that cannot
+become negative just became negative.  Maybe your compiler is broken?</p>
+<a name="CAVEATS"></a><h1>CAVEATS</h1>
+<p>Notice that the core <code class="inline"><a class="l_k" href="../functions/time.html">time()</a></code> maybe rounding rather than truncating.
+What this means is that the core <code class="inline"><a class="l_k" href="../functions/time.html">time()</a></code> may be reporting the time
+as one second later than <code class="inline"><span class="i">gettimeofday</span><span class="s">(</span><span class="s">)</span></code>
+ and <code class="inline"><span class="i">Time::HiRes::time</span><span class="s">(</span><span class="s">)</span></code>
+.</p>
+<p>Adjusting the system clock (either manually or by services like ntp)
+may cause problems, especially for long running programs that assume
+a monotonously increasing time (note that all platforms do not adjust
+time as gracefully as UNIX ntp does).  For example in Win32 (and derived
+platforms like Cygwin and MinGW) the Time::HiRes::time() may temporarily
+drift off from the system clock (and the original time())  by up to 0.5
+seconds. Time::HiRes will notice this eventually and recalibrate.
+Note that since Time::HiRes 1.77 the clock_gettime(CLOCK_MONOTONIC)
+might help in this (in case your system supports CLOCK_MONOTONIC).</p>
+<a name="SEE-ALSO"></a><h1>SEE ALSO</h1>
+<p>Perl modules <a href="http://search.cpan.org/perldoc/BSD::Resource">BSD::Resource</a>, <a href="http://search.cpan.org/perldoc/Time::TAI64">Time::TAI64</a>.</p>
+<p>Your system documentation for <code class="inline"><span class="w">clock</span></code>
+, <code class="inline"><span class="w">clock_gettime</span></code>
+,
+<code class="inline"><span class="w">clock_getres</span></code>
+, <code class="inline"><span class="w">clock_nanosleep</span></code>
+, <code class="inline"><span class="w">clock_settime</span></code>
+, <code class="inline"><span class="w">getitimer</span></code>
+,
+<code class="inline"><span class="w">gettimeofday</span></code>
+, <code class="inline"><span class="w">setitimer</span></code>
+, <code class="inline"><a class="l_k" href="../functions/sleep.html">sleep</a></code>, <code class="inline"><a class="l_k" href="../functions/stat.html">stat</a></code>, <code class="inline"><span class="w">ualarm</span></code>
+.</p>
+<a name="AUTHORS"></a><h1>AUTHORS</h1>
+<p>D. Wegscheid &lt;wegscd@whirlpool.com&gt;
+R. Schertler &lt;roderick@argon.org&gt;
+J. Hietaniemi &lt;jhi@iki.fi&gt;
+G. Aas &lt;gisle@aas.no&gt;</p>
+<a name="COPYRIGHT-AND-LICENSE"></a><h1>COPYRIGHT AND LICENSE</h1>
+<p>Copyright (c) 1996-2002 Douglas E. Wegscheid.  All rights reserved.</p>
+<p>Copyright (c) 2002, 2003, 2004, 2005, 2006, 2007 Jarkko Hietaniemi.  All rights reserved.</p>
+<p>This program is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.</p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../close_purple.gif';" onmouseout="rightCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('Time::HiRes','Time/HiRes.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

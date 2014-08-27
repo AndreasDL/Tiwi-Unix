@@ -1,0 +1,221 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>Pod::Find - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 1;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../close_purple.gif';" onmouseout="leftCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../index-overview.html">Overview</a></li>
+        <li><a href="../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../index-faq.html">FAQs</a></li>
+        <li><a href="../index-history.html">History / Changes</a></li>
+        <li><a href="../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../index-language.html">Language</a></li>
+        <li><a href="../index-functions.html">Functions</a></li>
+        <li><a href="../perlop.html">Operators</a></li>
+        <li><a href="../perlvar.html">Special variables</a></li>
+        <li><a href="../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../index-modules-A.html">Core modules</a></li>
+        <li><a href="../index-utilities.html">Utilities</a></li>
+        <li><a href="../index-internals.html">Internals</a></li>
+        <li><a href="../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../index.html">Home</a> &gt; <a href="../index-modules-A.html">Core modules</a> &gt; <a href="../index-modules-P.html">P</a> &gt; Pod::Find</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">Pod::Find</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><ul><li><a href="#'pod_find(-0x7b-0x25opts-0x7d-0x2c-0x40directories-)'"><code class="inline"><span class="i">pod_find</span><span class="s">(</span> <span class="s">{</span> <span class="i">%opts</span> <span class="s">}</span> <span class="cm">,</span> <span class="i">@directories</span> <span class="s">)</span></code>
+</a><li><a href="#'simplify_name(-0x24str-)'"><code class="inline"><span class="i">simplify_name</span><span class="s">(</span> <span class="i">$str</span> <span class="s">)</span></code>
+</a><li><a href="#'pod_where(-0x7b-0x25opts-0x7d0x2c-0x24pod-)'"><code class="inline"><span class="i">pod_where</span><span class="s">(</span> <span class="s">{</span> <span class="i">%opts</span> <span class="s">}</span><span class="cm">,</span> <span class="i">$pod</span> <span class="s">)</span></code>
+</a><li><a href="#'contains_pod(-0x24file-0x2c-0x24verbose-)'"><code class="inline"><span class="i">contains_pod</span><span class="s">(</span> <span class="i">$file</span> <span class="cm">,</span> <span class="i">$verbose</span> <span class="s">)</span></code>
+</a></ul><li><a href="#AUTHOR">AUTHOR</a><li><a href="#SEE-ALSO">SEE ALSO</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>Pod::Find - find POD documents in directory trees</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">  <a class="l_k" href="../functions/use.html">use</a> <span class="w">Pod::Find</span> <span class="q">qw(pod_find simplify_name)</span><span class="sc">;</span>
+  <a class="l_k" href="../functions/my.html">my</a> <span class="i">%pods</span> = <span class="i">pod_find</span><span class="s">(</span><span class="s">{</span> -<span class="w">verbose</span> <span class="cm">=&gt;</span> <span class="n">1</span><span class="cm">,</span> -<span class="w">inc</span> <span class="cm">=&gt;</span> <span class="n">1</span> <span class="s">}</span><span class="s">)</span><span class="sc">;</span>
+  foreach<span class="s">(</span><a class="l_k" href="../functions/keys.html">keys</a> <span class="i">%pods</span><span class="s">)</span> <span class="s">{</span>
+     <a class="l_k" href="../functions/print.html">print</a> <span class="q">&quot;found library POD `$pods{$_}&#39; in $_\n&quot;</span><span class="sc">;</span>
+  <span class="s">}</span></pre>
+<pre class="verbatim">  <a class="l_k" href="../functions/print.html">print</a> <span class="q">&quot;podname=&quot;</span><span class="cm">,</span><span class="i">simplify_name</span><span class="s">(</span><span class="q">&#39;a/b/c/mymodule.pod&#39;</span><span class="s">)</span><span class="cm">,</span><span class="q">&quot;\n&quot;</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <span class="i">$location</span> = <span class="i">pod_where</span><span class="s">(</span> <span class="s">{</span> -<span class="w">inc</span> <span class="cm">=&gt;</span> <span class="n">1</span> <span class="s">}</span><span class="cm">,</span> <span class="q">&quot;Pod::Find&quot;</span> <span class="s">)</span><span class="sc">;</span></pre>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p><b>Pod::Find</b> provides a set of functions to locate POD files.  Note that
+no function is exported by default to avoid pollution of your namespace,
+so be sure to specify them in the <b>use</b> statement if you need them:</p>
+<pre class="verbatim">  <a class="l_k" href="../functions/use.html">use</a> <span class="w">Pod::Find</span> <span class="q">qw(pod_find)</span><span class="sc">;</span></pre>
+<p>From this version on the typical SCM (software configuration management)
+files/directories like RCS, CVS, SCCS, .svn are ignored.</p>
+<a name="'pod_find(-0x7b-0x25opts-0x7d-0x2c-0x40directories-)'"></a><h2><code class="inline"><span class="i">pod_find</span><span class="s">(</span> <span class="s">{</span> <span class="i">%opts</span> <span class="s">}</span> <span class="cm">,</span> <span class="i">@directories</span> <span class="s">)</span></code>
+</h2>
+<p>The function <b>pod_find</b> searches for POD documents in a given set of
+files and/or directories. It returns a hash with the file names as keys
+and the POD name as value. The POD name is derived from the file name
+and its position in the directory tree.</p>
+<p>E.g. when searching in <i>$HOME/perl5lib</i>, the file
+<i>$HOME/perl5lib/MyModule.pm</i> would get the POD name <i>MyModule</i>,
+whereas <i>$HOME/perl5lib/Myclass/Subclass.pm</i> would be
+<i>Myclass::Subclass</i>. The name information can be used for POD
+translators.</p>
+<p>Only text files containing at least one valid POD command are found.</p>
+<p>A warning is printed if more than one POD file with the same POD name
+is found, e.g. <i>CPAN.pm</i> in different directories. This usually
+indicates duplicate occurrences of modules in the <i>@INC</i> search path.</p>
+<p><b>OPTIONS</b> The first argument for <b>pod_find</b> may be a hash reference
+with options. The rest are either directories that are searched
+recursively or files.  The POD names of files are the plain basenames
+with any Perl-like extension (.pm, .pl, .pod) stripped.</p>
+<ul>
+<li><a name="'-verbose-0x3d0x3e-1'"></a><b><code class="inline">-<span class="w">verbose</span> <span class="cm">=&gt;</span> <span class="n">1</span></code>
+</b>
+<p>Print progress information while scanning.</p>
+</li>
+<li><a name="'-perl-0x3d0x3e-1'"></a><b><code class="inline">-<span class="w">perl</span> <span class="cm">=&gt;</span> <span class="n">1</span></code>
+</b>
+<p>Apply Perl-specific heuristics to find the correct PODs. This includes
+stripping Perl-like extensions, omitting subdirectories that are numeric
+but do <i>not</i> match the current Perl interpreter's version id, suppressing
+<i>site_perl</i> as a module hierarchy name etc.</p>
+</li>
+<li><a name="'-script-0x3d0x3e-1'"></a><b><code class="inline">-<span class="w">script</span> <span class="cm">=&gt;</span> <span class="n">1</span></code>
+</b>
+<p>Search for PODs in the current Perl interpreter's installation 
+<b>scriptdir</b>. This is taken from the local <a href="../Config.html">Config</a> module.</p>
+</li>
+<li><a name="'-inc-0x3d0x3e-1'"></a><b><code class="inline">-<span class="w">inc</span> <span class="cm">=&gt;</span> <span class="n">1</span></code>
+</b>
+<p>Search for PODs in the current Perl interpreter's <i>@INC</i> paths. This
+automatically considers paths specified in the <code class="inline"><span class="w">PERL5LIB</span></code>
+ environment
+as this is prepended to <i>@INC</i> by the Perl interpreter itself.</p>
+</li>
+</ul>
+<a name="'simplify_name(-0x24str-)'"></a><h2><code class="inline"><span class="i">simplify_name</span><span class="s">(</span> <span class="i">$str</span> <span class="s">)</span></code>
+</h2>
+<p>The function <b>simplify_name</b> is equivalent to <b>basename</b>, but also
+strips Perl-like extensions (.pm, .pl, .pod) and extensions like
+<i>.bat</i>, <i>.cmd</i> on Win32 and OS/2, or <i>.com</i> on VMS, respectively.</p>
+<a name="'pod_where(-0x7b-0x25opts-0x7d0x2c-0x24pod-)'"></a><h2><code class="inline"><span class="i">pod_where</span><span class="s">(</span> <span class="s">{</span> <span class="i">%opts</span> <span class="s">}</span><span class="cm">,</span> <span class="i">$pod</span> <span class="s">)</span></code>
+</h2>
+<p>Returns the location of a pod document given a search directory
+and a module (e.g. <code class="inline"><span class="w">File::Find</span></code>
+) or script (e.g. <code class="inline"><span class="w">perldoc</span></code>
+) name.</p>
+<p>Options:</p>
+<ul>
+<li><a name="'-inc-0x3d0x3e-1'"></a><b><code class="inline">-<span class="w">inc</span> <span class="cm">=&gt;</span> <span class="n">1</span></code>
+</b>
+<p>Search @INC for the pod and also the <code class="inline"><span class="w">scriptdir</span></code>
+ defined in the
+<a href="../Config.html">Config</a> module.</p>
+</li>
+<li><a name="'-dirs-0x3d0x3e-0x5b-0x24dir10x2c-0x24dir20x2c-...-0x5d'"></a><b><code class="inline">-<span class="w">dirs</span> <span class="cm">=&gt;</span> <span class="s">[</span> <span class="i">$dir1</span><span class="cm">,</span> <span class="i">$dir2</span><span class="cm">,</span> ... <span class="s">]</span></code>
+</b>
+<p>Reference to an array of search directories. These are searched in order
+before looking in <code class="inline"><span class="i">@INC</span></code>
+ (if <b>-inc</b>). Current directory is used if
+none are specified.</p>
+</li>
+<li><a name="'-verbose-0x3d0x3e-1'"></a><b><code class="inline">-<span class="w">verbose</span> <span class="cm">=&gt;</span> <span class="n">1</span></code>
+</b>
+<p>List directories as they are searched</p>
+</li>
+</ul>
+<p>Returns the full path of the first occurrence to the file.
+Package names (eg 'A::B') are automatically converted to directory
+names in the selected directory. (eg on unix 'A::B' is converted to
+'A/B'). Additionally, '.pm', '.pl' and '.pod' are appended to the
+search automatically if required.</p>
+<p>A subdirectory <i>pod/</i> is also checked if it exists in any of the given
+search directories. This ensures that e.g. <a href="../perlfunc.html">perlfunc</a> is
+found.</p>
+<p>It is assumed that if a module name is supplied, that that name
+matches the file name. Pods are not opened to check for the 'NAME'
+entry.</p>
+<p>A check is made to make sure that the file that is found does 
+contain some pod documentation.</p>
+<a name="'contains_pod(-0x24file-0x2c-0x24verbose-)'"></a><h2><code class="inline"><span class="i">contains_pod</span><span class="s">(</span> <span class="i">$file</span> <span class="cm">,</span> <span class="i">$verbose</span> <span class="s">)</span></code>
+</h2>
+<p>Returns true if the supplied filename (not POD module) contains some pod
+information.</p>
+<a name="AUTHOR"></a><h1>AUTHOR</h1>
+<p>Please report bugs using <a href="http://rt.cpan.org">http://rt.cpan.org</a>.</p>
+<p>Marek Rouchal &lt;marekr@cpan.org&gt;,
+heavily borrowing code from Nick Ing-Simmons' PodToHtml.</p>
+<p>Tim Jenness &lt;t.jenness@jach.hawaii.edu&gt; provided
+<code class="inline"><span class="w">pod_where</span></code>
+ and <code class="inline"><span class="w">contains_pod</span></code>
+.</p>
+<a name="SEE-ALSO"></a><h1>SEE ALSO</h1>
+<p><a href="../Pod/Parser.html">Pod::Parser</a>, <a href="../Pod/Checker.html">Pod::Checker</a>, <a href="../perldoc.html">perldoc</a></p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../close_purple.gif';" onmouseout="rightCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('Pod::Find','Pod/Find.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

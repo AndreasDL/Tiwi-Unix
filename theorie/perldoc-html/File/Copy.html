@@ -1,0 +1,263 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>File::Copy - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 1;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../close_purple.gif';" onmouseout="leftCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../index-overview.html">Overview</a></li>
+        <li><a href="../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../index-faq.html">FAQs</a></li>
+        <li><a href="../index-history.html">History / Changes</a></li>
+        <li><a href="../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../index-language.html">Language</a></li>
+        <li><a href="../index-functions.html">Functions</a></li>
+        <li><a href="../perlop.html">Operators</a></li>
+        <li><a href="../perlvar.html">Special variables</a></li>
+        <li><a href="../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../index-modules-A.html">Core modules</a></li>
+        <li><a href="../index-utilities.html">Utilities</a></li>
+        <li><a href="../index-internals.html">Internals</a></li>
+        <li><a href="../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../index.html">Home</a> &gt; <a href="../index-modules-A.html">Core modules</a> &gt; <a href="../index-modules-F.html">F</a> &gt; File::Copy</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">File::Copy</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><li><a href="#RETURN">RETURN</a><li><a href="#NOTES">NOTES</a><li><a href="#AUTHOR">AUTHOR</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>File::Copy - Copy files or filehandles</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">	<a class="l_k" href="../functions/use.html">use</a> <span class="w">File::Copy</span><span class="sc">;</span></pre>
+<pre class="verbatim">	<span class="i">copy</span><span class="s">(</span><span class="q">&quot;file1&quot;</span><span class="cm">,</span><span class="q">&quot;file2&quot;</span><span class="s">)</span> or <a class="l_k" href="../functions/die.html">die</a> <span class="q">&quot;Copy failed: $!&quot;</span><span class="sc">;</span>
+	<span class="i">copy</span><span class="s">(</span><span class="q">&quot;Copy.pm&quot;</span><span class="cm">,</span>\<span class="i">*STDOUT</span><span class="s">)</span><span class="sc">;</span>
+	<span class="i">move</span><span class="s">(</span><span class="q">&quot;/dev1/fileA&quot;</span><span class="cm">,</span><span class="q">&quot;/dev2/fileB&quot;</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">	<a class="l_k" href="../functions/use.html">use</a> <span class="w">File::Copy</span> <span class="q">&quot;cp&quot;</span><span class="sc">;</span></pre>
+<pre class="verbatim">	<span class="i">$n</span> = <span class="w">FileHandle</span><span class="w">-&gt;new</span><span class="s">(</span><span class="q">&quot;/a/file&quot;</span><span class="cm">,</span><span class="q">&quot;r&quot;</span><span class="s">)</span><span class="sc">;</span>
+	<span class="i">cp</span><span class="s">(</span><span class="i">$n</span><span class="cm">,</span><span class="q">&quot;x&quot;</span><span class="s">)</span><span class="sc">;</span></pre>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p>The File::Copy module provides two basic functions, <code class="inline"><span class="w">copy</span></code>
+ and
+<code class="inline"><span class="w">move</span></code>
+, which are useful for getting the contents of a file from
+one place to another.</p>
+<ul>
+<li><a name="copy"></a><b>copy
+ </b>
+<p>The <code class="inline"><span class="w">copy</span></code>
+ function takes two
+parameters: a file to copy from and a file to copy to. Either
+argument may be a string, a FileHandle reference or a FileHandle
+glob. Obviously, if the first argument is a filehandle of some
+sort, it will be read from, and if it is a file <i>name</i> it will
+be opened for reading. Likewise, the second argument will be
+written to (and created if need be).  Trying to copy a file on top
+of itself is a fatal error.</p>
+<p><b>Note that passing in
+files as handles instead of names may lead to loss of information
+on some operating systems; it is recommended that you use file
+names whenever possible.</b>  Files are opened in binary mode where
+applicable.  To get a consistent behaviour when copying from a
+filehandle to a file, use <code class="inline"><a class="l_k" href="../functions/binmode.html">binmode</a></code> on the filehandle.</p>
+<p>An optional third parameter can be used to specify the buffer
+size used for copying. This is the number of bytes from the
+first file, that will be held in memory at any given time, before
+being written to the second file. The default buffer size depends
+upon the file, but will generally be the whole file (up to 2MB), or
+1k for filehandles that do not reference files (eg. sockets).</p>
+<p>You may use the syntax <code class="inline"><a class="l_k" href="../functions/use.html">use</a> <span class="w">File::Copy</span> <span class="q">&quot;cp&quot;</span></code>
+ to get at the
+"cp" alias for this function. The syntax is <i>exactly</i> the same.</p>
+</li>
+<li><a name="move"></a><b>move
+  </b>
+<p>The <code class="inline"><span class="w">move</span></code>
+ function also takes two parameters: the current name
+and the intended name of the file to be moved.  If the destination
+already exists and is a directory, and the source is not a
+directory, then the source file will be renamed into the directory
+specified by the destination.</p>
+<p>If possible, move() will simply rename the file.  Otherwise, it copies
+the file to the new location and deletes the original.  If an error occurs
+during this copy-and-delete process, you may be left with a (possibly partial)
+copy of the file under the destination name.</p>
+<p>You may use the "mv" alias for this function in the same way that
+you may use the "cp" alias for <code class="inline"><span class="w">copy</span></code>
+.</p>
+</li>
+<li><a name="syscopy"></a><b>syscopy
+</b>
+<p>File::Copy also provides the <code class="inline"><span class="w">syscopy</span></code>
+ routine, which copies the
+file specified in the first parameter to the file specified in the
+second parameter, preserving OS-specific attributes and file
+structure.  For Unix systems, this is equivalent to the simple
+<code class="inline"><span class="w">copy</span></code>
+ routine, which doesn't preserve OS-specific attributes.  For
+VMS systems, this calls the <code class="inline"><span class="w">rmscopy</span></code>
+ routine (see below).  For OS/2
+systems, this calls the <code class="inline"><span class="w">syscopy</span></code>
+ XSUB directly. For Win32 systems,
+this calls <code class="inline"><span class="w">Win32::CopyFile</span></code>
+.</p>
+<p>On Mac OS (Classic), <code class="inline"><span class="w">syscopy</span></code>
+ calls <code class="inline"><span class="w">Mac::MoreFiles::FSpFileCopy</span></code>
+,
+if available.</p>
+<p><b>Special behaviour if <code class="inline"><span class="w">syscopy</span></code>
+ is defined (OS/2, VMS and Win32)</b>:</p>
+<p>If both arguments to <code class="inline"><span class="w">copy</span></code>
+ are not file handles,
+then <code class="inline"><span class="w">copy</span></code>
+ will perform a "system copy" of
+the input file to a new output file, in order to preserve file
+attributes, indexed file structure, <i>etc.</i>  The buffer size
+parameter is ignored.  If either argument to <code class="inline"><span class="w">copy</span></code>
+ is a
+handle to an opened file, then data is copied using Perl
+operators, and no effort is made to preserve file attributes
+or record structure.</p>
+<p>The system copy routine may also be called directly under VMS and OS/2
+as <code class="inline"><span class="w">File::Copy::syscopy</span></code>
+ (or under VMS as <code class="inline"><span class="w">File::Copy::rmscopy</span></code>
+, which
+is the routine that does the actual work for syscopy).</p>
+</li>
+<li><a name="rmscopy(0x24from0x2c0x24to0x5b0x2c0x24date_flag0x5d)"></a><b>rmscopy($from,$to[,$date_flag])
+</b>
+<p>The first and second arguments may be strings, typeglobs, typeglob
+references, or objects inheriting from IO::Handle;
+they are used in all cases to obtain the
+<i>filespec</i> of the input and output files, respectively.  The
+name and type of the input file are used as defaults for the
+output file, if necessary.</p>
+<p>A new version of the output file is always created, which
+inherits the structure and RMS attributes of the input file,
+except for owner and protections (and possibly timestamps;
+see below).  All data from the input file is copied to the
+output file; if either of the first two parameters to <code class="inline"><span class="w">rmscopy</span></code>
+
+is a file handle, its position is unchanged.  (Note that this
+means a file handle pointing to the output file will be
+associated with an old version of that file after <code class="inline"><span class="w">rmscopy</span></code>
+
+returns, not the newly created version.)</p>
+<p>The third parameter is an integer flag, which tells <code class="inline"><span class="w">rmscopy</span></code>
+
+how to handle timestamps.  If it is &lt; 0, none of the input file's
+timestamps are propagated to the output file.  If it is &gt; 0, then
+it is interpreted as a bitmask: if bit 0 (the LSB) is set, then
+timestamps other than the revision date are propagated; if bit 1
+is set, the revision date is propagated.  If the third parameter
+to <code class="inline"><span class="w">rmscopy</span></code>
+ is 0, then it behaves much like the DCL COPY command:
+if the name or type of the output file was explicitly specified,
+then no timestamps are propagated, but if they were taken implicitly
+from the input filespec, then all timestamps other than the
+revision date are propagated.  If this parameter is not supplied,
+it defaults to 0.</p>
+<p>Like <code class="inline"><span class="w">copy</span></code>
+, <code class="inline"><span class="w">rmscopy</span></code>
+ returns 1 on success.  If an error occurs,
+it sets <code class="inline"><span class="i">$!</span></code>
+, deletes the output file, and returns 0.</p>
+</li>
+</ul>
+<a name="RETURN"></a><h1>RETURN</h1>
+<p>All functions return 1 on success, 0 on failure.
+$! will be set if an error was encountered.</p>
+<a name="NOTES"></a><h1>NOTES</h1>
+<ul>
+<li>
+<p>On Mac OS (Classic), the path separator is ':', not '/', and the 
+current directory is denoted as ':', not '.'. You should be careful 
+about specifying relative pathnames. While a full path always begins 
+with a volume name, a relative pathname should always begin with a 
+':'.  If specifying a volume name only, a trailing ':' is required.</p>
+<p>E.g.</p>
+<pre class="verbatim">  <span class="i">copy</span><span class="s">(</span><span class="q">&quot;file1&quot;</span><span class="cm">,</span> <span class="q">&quot;tmp&quot;</span><span class="s">)</span><span class="sc">;</span>        <span class="c"># creates the file 'tmp' in the current directory</span>
+  <span class="i">copy</span><span class="s">(</span><span class="q">&quot;file1&quot;</span><span class="cm">,</span> <span class="q">&quot;:tmp:&quot;</span><span class="s">)</span><span class="sc">;</span>      <span class="c"># creates :tmp:file1</span>
+  <span class="i">copy</span><span class="s">(</span><span class="q">&quot;file1&quot;</span><span class="cm">,</span> <span class="q">&quot;:tmp&quot;</span><span class="s">)</span><span class="sc">;</span>       <span class="c"># same as above</span>
+  <span class="i">copy</span><span class="s">(</span><span class="q">&quot;file1&quot;</span><span class="cm">,</span> <span class="q">&quot;tmp&quot;</span><span class="s">)</span><span class="sc">;</span>        <span class="c"># same as above, if 'tmp' is a directory (but don't do</span>
+                               <span class="c"># that, since it may cause confusion, see example #1)</span>
+  <span class="i">copy</span><span class="s">(</span><span class="q">&quot;file1&quot;</span><span class="cm">,</span> <span class="q">&quot;tmp:file1&quot;</span><span class="s">)</span><span class="sc">;</span>  <span class="c"># error, since 'tmp:' is not a volume</span>
+  <span class="i">copy</span><span class="s">(</span><span class="q">&quot;file1&quot;</span><span class="cm">,</span> <span class="q">&quot;:tmp:file1&quot;</span><span class="s">)</span><span class="sc">;</span> <span class="c"># ok, partial path</span>
+  <span class="i">copy</span><span class="s">(</span><span class="q">&quot;file1&quot;</span><span class="cm">,</span> <span class="q">&quot;DataHD:&quot;</span><span class="s">)</span><span class="sc">;</span>    <span class="c"># creates DataHD:file1</span></pre>
+<pre class="verbatim">  <span class="i">move</span><span class="s">(</span><span class="q">&quot;MacintoshHD:fileA&quot;</span><span class="cm">,</span> <span class="q">&quot;DataHD:fileB&quot;</span><span class="s">)</span><span class="sc">;</span> <span class="c"># moves (doesn't copy) files from one</span>
+                                             <span class="c"># volume to another</span></pre>
+</li>
+</ul>
+<a name="AUTHOR"></a><h1>AUTHOR</h1>
+<p>File::Copy was written by Aaron Sherman <i>&lt;ajs@ajs.com&gt;</i> in 1995,
+and updated by Charles Bailey <i>&lt;bailey@newman.upenn.edu&gt;</i> in 1996.</p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../close_purple.gif';" onmouseout="rightCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('File::Copy','File/Copy.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,4 @@
+use LWP::Simple;
+my $content = get "http://dutch.wunderground.com/global/stations/06428.html";
+$content=~ s/.*<span id="rapidtemp" class="pwsrt" pwsid="IOOSTVLA5" pwsunit="metric" pwsvariable="tempf" english="&deg;F" metric="&deg;C" value="55.9">.*<span class="nobr">.*<span class="b">([^<]*)<\/span.*/$1/mg;
+print $content;

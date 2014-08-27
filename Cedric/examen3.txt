@@ -1,0 +1,21 @@
+[ $# -lt 2 ] && { echo "Use: script filepatroon dir1 [dir2 dir3 ..]" ; exit 1 ; }
+
+patroon=$1
+shift 1
+failed=0
+while [ $# -gt 0 ]
+do 
+	if [ -d $1 ] 
+	then 
+		echo $1
+		cd $1
+		ls | grep $patroon
+		shift 1
+	else 
+		let failed++
+		echo "dir $1 does not exist!"
+		shift 1
+	fi
+	
+	[ $failed -ge 2 ] && { echo "too many bad dirs" ; exit 1 ; }
+done

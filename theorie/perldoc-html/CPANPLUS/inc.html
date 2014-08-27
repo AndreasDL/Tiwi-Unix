@@ -1,0 +1,236 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>CPANPLUS::inc - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 1;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../close_purple.gif';" onmouseout="leftCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../index-overview.html">Overview</a></li>
+        <li><a href="../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../index-faq.html">FAQs</a></li>
+        <li><a href="../index-history.html">History / Changes</a></li>
+        <li><a href="../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../index-language.html">Language</a></li>
+        <li><a href="../index-functions.html">Functions</a></li>
+        <li><a href="../perlop.html">Operators</a></li>
+        <li><a href="../perlvar.html">Special variables</a></li>
+        <li><a href="../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../index-modules-A.html">Core modules</a></li>
+        <li><a href="../index-utilities.html">Utilities</a></li>
+        <li><a href="../index-internals.html">Internals</a></li>
+        <li><a href="../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../index.html">Home</a> &gt; <a href="../index-modules-A.html">Core modules</a> &gt; <a href="../index-modules-C.html">C</a> &gt; CPANPLUS::inc</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">CPANPLUS::inc</div><ul><li><a href="#NAME">NAME</a><li><a href="#DESCRIPTION">DESCRIPTION</a><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><li><a href="#METHODS">METHODS</a><ul><li><a href="#CPANPLUS0x3a0x3ainc-0x3einc_path()">CPANPLUS::inc-&gt;inc_path()</a><li><a href="#CPANPLUS0x3a0x3ainc-0x3emy_path()">CPANPLUS::inc-&gt;my_path()</a><li><a href="#CPANPLUS0x3a0x3ainc-0x3einstaller_path()">CPANPLUS::inc-&gt;installer_path()</a><li><a href="#CPANPLUS0x3a0x3ainc-0x3eoriginal_perl5lib">CPANPLUS::inc-&gt;original_perl5lib</a><li><a href="#CPANPLUS0x3a0x3ainc-0x3eoriginal_perl5opt">CPANPLUS::inc-&gt;original_perl5opt</a><li><a href="#CPANPLUS0x3a0x3ainc-0x3eoriginal_inc">CPANPLUS::inc-&gt;original_inc</a><li><a href="#CPANPLUS0x3a0x3ainc-0x3elimited_perl5opt(0x40modules)0x3b">CPANPLUS::inc-&gt;limited_perl5opt(@modules);</a><li><a href="#CPANPLUS0x3a0x3ainc-0x3einteresting_modules()">CPANPLUS::inc-&gt;interesting_modules()</a></ul><li><a href="#INTERESTING-MODULES">INTERESTING MODULES</a><li><a href="#DEBUG">DEBUG</a><li><a href="#CAVEATS">CAVEATS</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>CPANPLUS::inc</p>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p>OBSOLETE</p>
+<a name="NAME"></a><h1>NAME</h1>
+<p>CPANPLUS::inc - runtime inclusion of privately bundled modules</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">    <span class="c">### set up CPANPLUS::inc to do it's thing ###</span>
+    BEGIN <span class="s">{</span> <a class="l_k" href="../functions/use.html">use</a> <span class="w">CPANPLUS::inc</span> <span class="s">}</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="c">### enable debugging ###</span>
+    <a class="l_k" href="../functions/use.html">use</a> <span class="w">CPANPLUS::inc</span> <span class="q">qw[DEBUG]</span><span class="sc">;</span></pre>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p>This module enables the use of the bundled modules in the
+<code class="inline"><span class="w">CPANPLUS</span>/<span class="w">inc</span></code>
+ directory of this package. These modules are bundled
+to make sure <code class="inline"><span class="w">CPANPLUS</span></code>
+ is able to bootstrap itself. It will do the
+following things:</p>
+<ul>
+<li><a name="Put-a-coderef-at-the-beginning-of-'0x40INC'"></a><b>Put a coderef at the beginning of <code class="inline"><span class="i">@INC</span></code>
+</b>
+<p>This allows us to decide which module to load, and where to find it.
+For details on what we do, see the <code class="inline"><span class="w">INTERESTING</span> <span class="w">MODULES</span></code>
+ section below.
+Also see the <code class="inline"><span class="w">CAVEATS</span></code>
+ section.</p>
+</li>
+<li><a name="Add-the-full-path-to-the-'CPANPLUS0x2finc'-directory-to-'0x24ENV0x7bPERL5LIB'."></a><b>Add the full path to the <code class="inline"><span class="w">CPANPLUS</span>/<span class="w">inc</span></code>
+ directory to <code class="inline">$ENV{PERL5LIB</code>.</b>
+<p>This allows us to find our bundled modules even if we spawn off a new
+process. Although it's not able to do the selective loading as the
+coderef in <code class="inline"><span class="i">@INC</span></code>
+ could, it's a good fallback.</p>
+</li>
+</ul>
+<a name="METHODS"></a><h1>METHODS</h1>
+<a name="CPANPLUS0x3a0x3ainc-0x3einc_path()"></a><h2>CPANPLUS::inc-&gt;inc_path()</h2>
+<p>Returns the full path to the <code class="inline"><span class="w">CPANPLUS</span>/<span class="w">inc</span></code>
+ directory.</p>
+<a name="CPANPLUS0x3a0x3ainc-0x3emy_path()"></a><h2>CPANPLUS::inc-&gt;my_path()</h2>
+<p>Returns the full path to be added to <code class="inline"><span class="i">@INC</span></code>
+ to load
+<code class="inline"><span class="w">CPANPLUS::inc</span></code>
+ from.</p>
+<a name="CPANPLUS0x3a0x3ainc-0x3einstaller_path()"></a><h2>CPANPLUS::inc-&gt;installer_path()</h2>
+<p>Returns the full path to the <code class="inline">CPANPLUS/inc/installers</code> directory.</p>
+<a name="CPANPLUS0x3a0x3ainc-0x3eoriginal_perl5lib"></a><h2>CPANPLUS::inc-&gt;original_perl5lib</h2>
+<p>Returns the value of $ENV{PERL5LIB} the way it was when <code class="inline"><span class="w">CPANPLUS::inc</span></code>
+
+got loaded.</p>
+<a name="CPANPLUS0x3a0x3ainc-0x3eoriginal_perl5opt"></a><h2>CPANPLUS::inc-&gt;original_perl5opt</h2>
+<p>Returns the value of $ENV{PERL5OPT} the way it was when <code class="inline"><span class="w">CPANPLUS::inc</span></code>
+
+got loaded.</p>
+<a name="CPANPLUS0x3a0x3ainc-0x3eoriginal_inc"></a><h2>CPANPLUS::inc-&gt;original_inc</h2>
+<p>Returns the value of @INC the way it was when <code class="inline"><span class="w">CPANPLUS::inc</span></code>
+ got
+loaded.</p>
+<a name="CPANPLUS0x3a0x3ainc-0x3elimited_perl5opt(0x40modules)0x3b"></a><h2>CPANPLUS::inc-&gt;limited_perl5opt(@modules);</h2>
+<p>Returns a string you can assign to <code class="inline"><span class="i">$ENV</span>{<span class="w">PERL5OPT</span>}</code>
+ to have a limited
+include facility from <code class="inline"><span class="w">CPANPLUS::inc</span></code>
+. It will roughly look like:</p>
+<pre class="verbatim">    -<span class="w">I</span>/<span class="w">path</span>/<span class="w">to</span>/<span class="w">cpanplus</span>/<span class="w">inc</span> -<span class="w">MCPANPLUS::inc</span>=<span class="w">module1</span><span class="cm">,</span><span class="w">module2</span></pre>
+<a name="CPANPLUS0x3a0x3ainc-0x3einteresting_modules()"></a><h2>CPANPLUS::inc-&gt;interesting_modules()</h2>
+<p>Returns a hashref with modules we're interested in, and the minimum
+version we need to find.</p>
+<p>It would looks something like this:</p>
+<pre class="verbatim">    {   File::Fetch             =&gt; 0.06,
+        IPC::Cmd                =&gt; 0.22,
+        ....
+    }</pre><a name="INTERESTING-MODULES"></a><h1>INTERESTING MODULES</h1>
+<p><code class="inline"><span class="w">CPANPLUS::inc</span></code>
+ doesn't even bother to try find and find a module
+it's not interested in. A list of <i>interesting modules</i> can be
+obtained using the <code class="inline"><span class="w">interesting_modules</span></code>
+ method described above.</p>
+<p>Note that all subclassed modules of an <code class="inline"><span class="w">interesting</span> <span class="w">module</span></code>
+ will
+also be attempted to be loaded, but a version will not be checked.</p>
+<p>When it however does encounter a module it is interested in, it will
+do the following things:</p>
+<ul>
+<li><a name="Loop-over-your-0x40INC"></a><b>Loop over your @INC</b>
+<p>And for every directory it finds there (skipping all non directories
+-- see the <code class="inline"><span class="w">CAVEATS</span></code>
+ section), see if the module requested can be
+found there.</p>
+</li>
+<li><a name="Check-the-version-on-every-suitable-module-found-in-0x40INC"></a><b>Check the version on every suitable module found in @INC</b>
+<p>After a list of modules has been gathered, the version of each of them
+is checked to find the one with the highest version, and return that as
+the module to <code class="inline"><a class="l_k" href="../functions/use.html">use</a></code>.</p>
+<p>This enables us to use a recent enough version from our own bundled
+modules, but also to use a <i>newer</i> module found in your path instead,
+if it is present. Thus having access to bugfixed versions as they are
+released.</p>
+<p>If for some reason no satisfactory version could be found, a warning
+will be emitted. See the <code class="inline"><span class="w">DEBUG</span></code>
+ section for more details on how to
+find out exactly what <code class="inline"><span class="w">CPANPLUS::inc</span></code>
+ is doing.</p>
+</li>
+</ul>
+<a name="DEBUG"></a><h1>DEBUG</h1>
+<p>Since this module does <code class="inline"><span class="w">Clever</span> <span class="w">Things</span></code>
+ to your search path, it might
+be nice sometimes to figure out what it's doing, if things don't work
+as expected. You can enable a debug trace by calling the module like
+this:</p>
+<pre class="verbatim">    <a class="l_k" href="../functions/use.html">use</a> <span class="w">CPANPLUS::inc</span> <span class="q">'DEBUG'</span><span class="sc">;</span></pre>
+<p>This will show you what <code class="inline"><span class="w">CPANPLUS::inc</span></code>
+ is doing, which might look
+something like this:</p>
+<pre class="verbatim">    CPANPLUS::inc: Found match for 'Params::Check' in
+    '/opt/lib/perl5/site_perl/5.8.3' with version '0.07'
+    CPANPLUS::inc: Found match for 'Params::Check' in
+    '/my/private/lib/CPANPLUS/inc' with version '0.21'
+    CPANPLUS::inc: Best match for 'Params::Check' is found in
+    '/my/private/lib/CPANPLUS/inc' with version '0.21'</pre><a name="CAVEATS"></a><h1>CAVEATS</h1>
+<p>This module has 2 major caveats, that could lead to unexpected
+behaviour. But currently I don't know how to fix them, Suggestions
+are much welcomed.</p>
+<ul>
+<li><a name="On-multiple-'use-lib'-calls0x2c-our-coderef-may-not-be-the-first-in-0x40INC"></a><b>On multiple <code class="inline"><a class="l_k" href="../functions/use.html">use</a> <span class="w">lib</span></code>
+ calls, our coderef may not be the first in @INC</b>
+<p>If this happens, although unlikely in most situations and not happening
+when calling the shell directly, this could mean that a lower (too low)
+versioned module is loaded, which might cause failures in the
+application.</p>
+</li>
+<li><a name="Non-directories-in-0x40INC"></a><b>Non-directories in @INC</b>
+<p>Non-directories are right now skipped by CPANPLUS::inc. They could of
+course lead us to newer versions of a module, but it's too tricky to
+verify if they would. Therefor they are skipped. In the worst case
+scenario we'll find the sufficing version bundled with CPANPLUS.</p>
+</li>
+</ul>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../close_purple.gif';" onmouseout="rightCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('CPANPLUS::inc','CPANPLUS/inc.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

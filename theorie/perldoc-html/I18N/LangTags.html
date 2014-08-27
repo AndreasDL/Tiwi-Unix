@@ -1,0 +1,430 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>I18N::LangTags - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 1;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../close_purple.gif';" onmouseout="leftCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../index-overview.html">Overview</a></li>
+        <li><a href="../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../index-faq.html">FAQs</a></li>
+        <li><a href="../index-history.html">History / Changes</a></li>
+        <li><a href="../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../index-language.html">Language</a></li>
+        <li><a href="../index-functions.html">Functions</a></li>
+        <li><a href="../perlop.html">Operators</a></li>
+        <li><a href="../perlvar.html">Special variables</a></li>
+        <li><a href="../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../index-modules-A.html">Core modules</a></li>
+        <li><a href="../index-utilities.html">Utilities</a></li>
+        <li><a href="../index-internals.html">Internals</a></li>
+        <li><a href="../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../index.html">Home</a> &gt; <a href="../index-modules-A.html">Core modules</a> &gt; <a href="../index-modules-I.html">I</a> &gt; I18N::LangTags</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">I18N::LangTags</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><li><a href="#ABOUT-LOWERCASING">ABOUT LOWERCASING</a><li><a href="#ABOUT-UNICODE-PLAINTEXT-LANGUAGE-TAGS">ABOUT UNICODE PLAINTEXT LANGUAGE TAGS</a><li><a href="#SEE-ALSO">SEE ALSO</a><li><a href="#COPYRIGHT">COPYRIGHT</a><li><a href="#AUTHOR">AUTHOR</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>I18N::LangTags - functions for dealing with RFC3066-style language tags</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">  <a class="l_k" href="../functions/use.html">use</a> <span class="i">I18N::LangTags</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>...or specify whichever of those functions you want to import, like so:</p>
+<pre class="verbatim">  <a class="l_k" href="../functions/use.html">use</a> <span class="w">I18N::LangTags</span> <span class="q">qw(implicate_supers similarity_language_tag)</span><span class="sc">;</span></pre>
+<p>All the exportable functions are listed below -- you're free to import
+only some, or none at all.  By default, none are imported.  If you
+say:</p>
+<pre class="verbatim">    <a class="l_k" href="../functions/use.html">use</a> <span class="w">I18N::LangTags</span> <span class="q">qw(:ALL)</span></pre>
+<p>...then all are exported.  (This saves you from having to use
+something less obvious like <code class="inline"><a class="l_k" href="../functions/use.html">use</a> <span class="w">I18N::LangTags</span> <span class="q">qw(/./)</span></code>
+.)</p>
+<p>If you don't import any of these functions, assume a <code class="inline"><span class="i">&amp;I18N::LangTags::</span></code>
+
+in front of all the function names in the following examples.</p>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p>Language tags are a formalism, described in RFC 3066 (obsoleting
+1766), for declaring what language form (language and possibly
+dialect) a given chunk of information is in.</p>
+<p>This library provides functions for common tasks involving language
+tags as they are needed in a variety of protocols and applications.</p>
+<p>Please see the "See Also" references for a thorough explanation
+of how to correctly use language tags.</p>
+<ul>
+<li><a name="*-the-function-is_language_tag(0x24lang1)"></a><b>the function is_language_tag($lang1)</b>
+<p>Returns true iff $lang1 is a formally valid language tag.</p>
+<pre class="verbatim">   is_language_tag("fr")            is TRUE
+   is_language_tag("x-jicarilla")   is FALSE
+       (Subtags can be 8 chars long at most -- 'jicarilla' is 9)</pre><pre class="verbatim">   is_language_tag("sgn-US")    is TRUE
+       (That's American Sign Language)</pre><pre class="verbatim">   is_language_tag("i-Klikitat")    is TRUE
+       (True without regard to the fact noone has actually
+        registered Klikitat -- it's a formally valid tag)</pre><pre class="verbatim">   is_language_tag("fr-patois")     is TRUE
+       (Formally valid -- altho descriptively weak!)</pre><pre class="verbatim">   is_language_tag("Spanish")       is FALSE
+   is_language_tag("french-patois") is FALSE
+       (No good -- first subtag has to match
+        /^([xXiI]|[a-zA-Z]{2,3})$/ -- see RFC3066)</pre><pre class="verbatim">   is_language_tag("x-borg-prot2532") is TRUE
+       (Yes, subtags can contain digits, as of RFC3066)</pre></li>
+<li><a name="*-the-function-extract_language_tags(0x24whatever)"></a><b>the function extract_language_tags($whatever)</b>
+<p>Returns a list of whatever looks like formally valid language tags
+in $whatever.  Not very smart, so don't get too creative with
+what you want to feed it.</p>
+<pre class="verbatim">  extract_language_tags("fr, fr-ca, i-mingo")
+    returns:   ('fr', 'fr-ca', 'i-mingo')</pre><pre class="verbatim">  extract_language_tags("It's like this: I'm in fr -- French!")
+    returns:   ('It', 'in', 'fr')
+  (So don't just feed it any old thing.)</pre><p>The output is untainted.  If you don't know what tainting is,
+don't worry about it.</p>
+</li>
+<li><a name="*-the-function-same_language_tag(0x24lang10x2c-0x24lang2)"></a><b>the function same_language_tag($lang1, $lang2)</b>
+<p>Returns true iff $lang1 and $lang2 are acceptable variant tags
+representing the same language-form.</p>
+<pre class="verbatim">   same_language_tag('x-kadara', 'i-kadara')  is TRUE
+      (The x/i- alternation doesn't matter)
+   same_language_tag('X-KADARA', 'i-kadara')  is TRUE
+      (...and neither does case)
+   same_language_tag('en',       'en-US')     is FALSE
+      (all-English is not the SAME as US English)
+   same_language_tag('x-kadara', 'x-kadar')   is FALSE
+      (these are totally unrelated tags)
+   same_language_tag('no-bok',    'nb')       is TRUE
+      (no-bok is a legacy tag for nb (Norwegian Bokmal))</pre><p><code class="inline"><span class="w">same_language_tag</span></code>
+ works by just seeing whether
+<code class="inline"><span class="i">encode_language_tag</span><span class="s">(</span><span class="i">$lang1</span><span class="s">)</span></code>
+ is the same as
+<code class="inline"><span class="i">encode_language_tag</span><span class="s">(</span><span class="i">$lang2</span><span class="s">)</span></code>
+.</p>
+<p>(Yes, I know this function is named a bit oddly.  Call it historic
+reasons.)</p>
+</li>
+<li><a name="*-the-function-similarity_language_tag(0x24lang10x2c-0x24lang2)"></a><b>the function similarity_language_tag($lang1, $lang2)</b>
+<p>Returns an integer representing the degree of similarity between
+tags $lang1 and $lang2 (the order of which does not matter), where
+similarity is the number of common elements on the left,
+without regard to case and to x/i- alternation.</p>
+<pre class="verbatim">   similarity_language_tag('fr', 'fr-ca')           is 1
+      (one element in common)
+   similarity_language_tag('fr-ca', 'fr-FR')        is 1
+      (one element in common)</pre><pre class="verbatim">   similarity_language_tag('fr-CA-joual',
+                           'fr-CA-PEI')             is 2
+   similarity_language_tag('fr-CA-joual', 'fr-CA')  is 2
+      (two elements in common)</pre><pre class="verbatim">   similarity_language_tag('x-kadara', 'i-kadara')  is 1
+      (x/i- doesn't matter)</pre><pre class="verbatim">   similarity_language_tag('en',       'x-kadar')   is 0
+   similarity_language_tag('x-kadara', 'x-kadar')   is 0
+      (unrelated tags -- no similarity)</pre><pre class="verbatim">   similarity_language_tag('i-cree-syllabic',
+                           'i-cherokee-syllabic')   is 0
+      (no B&lt;leftmost&gt; elements in common!)</pre></li>
+<li><a name="*-the-function-is_dialect_of(0x24lang10x2c-0x24lang2)"></a><b>the function is_dialect_of($lang1, $lang2)</b>
+<p>Returns true iff language tag $lang1 represents a subform of
+language tag $lang2.</p>
+<p><b>Get the order right!  It doesn't work the other way around!</b></p>
+<pre class="verbatim">   is_dialect_of('en-US', 'en')            is TRUE
+     (American English IS a dialect of all-English)</pre><pre class="verbatim">   is_dialect_of('fr-CA-joual', 'fr-CA')   is TRUE
+   is_dialect_of('fr-CA-joual', 'fr')      is TRUE
+     (Joual is a dialect of (a dialect of) French)</pre><pre class="verbatim">   is_dialect_of('en', 'en-US')            is FALSE
+     (all-English is a NOT dialect of American English)</pre><pre class="verbatim">   is_dialect_of('fr', 'en-CA')            is FALSE</pre><pre class="verbatim">   is_dialect_of('en',    'en'   )         is TRUE
+   is_dialect_of('en-US', 'en-US')         is TRUE
+     (B&lt;Note:&gt; these are degenerate cases)</pre><pre class="verbatim">   is_dialect_of('i-mingo-tom', 'x-Mingo') is TRUE
+     (the x/i thing doesn't matter, nor does case)</pre><pre class="verbatim">   is_dialect_of('nn', 'no')               is TRUE
+     (because 'nn' (New Norse) is aliased to 'no-nyn',
+      as a special legacy case, and 'no-nyn' is a
+      subform of 'no' (Norwegian))</pre></li>
+<li><a name="*-the-function-super_languages(0x24lang1)"></a><b>the function super_languages($lang1)</b>
+<p>Returns a list of language tags that are superordinate tags to $lang1
+-- it gets this by removing subtags from the end of $lang1 until
+nothing (or just "i" or "x") is left.</p>
+<pre class="verbatim">   super_languages("fr-CA-joual")  is  ("fr-CA", "fr")</pre><pre class="verbatim">   super_languages("en-AU")  is  ("en")</pre><pre class="verbatim">   super_languages("en")  is  empty-list, ()</pre><pre class="verbatim">   super_languages("i-cherokee")  is  empty-list, ()
+    ...not ("i"), which would be illegal as well as pointless.</pre><p>If $lang1 is not a valid language tag, returns empty-list in
+a list context, undef in a scalar context.</p>
+<p>A notable and rather unavoidable problem with this method:
+"x-mingo-tom" has an "x" because the whole tag isn't an
+IANA-registered tag -- but super_languages('x-mingo-tom') is
+('x-mingo') -- which isn't really right, since 'i-mingo' is
+registered.  But this module has no way of knowing that.  (But note
+that same_language_tag('x-mingo', 'i-mingo') is TRUE.)</p>
+<p>More importantly, you assume <i>at your peril</i> that superordinates of
+$lang1 are mutually intelligible with $lang1.  Consider this
+carefully.</p>
+</li>
+<li><a name="*-the-function-locale2language_tag(0x24locale_identifier)"></a><b>the function locale2language_tag($locale_identifier)</b>
+<p>This takes a locale name (like "en", "en_US", or "en_US.ISO8859-1")
+and maps it to a language tag.  If it's not mappable (as with,
+notably, "C" and "POSIX"), this returns empty-list in a list context,
+or undef in a scalar context.</p>
+<pre class="verbatim">   locale2language_tag("en") is "en"</pre><pre class="verbatim">   locale2language_tag("en_US") is "en-US"</pre><pre class="verbatim">   locale2language_tag("en_US.ISO8859-1") is "en-US"</pre><pre class="verbatim">   locale2language_tag("C") is undef or ()</pre><pre class="verbatim">   locale2language_tag("POSIX") is undef or ()</pre><pre class="verbatim">   locale2language_tag("POSIX") is undef or ()</pre><p>I'm not totally sure that locale names map satisfactorily to language
+tags.  Think REAL hard about how you use this.  YOU HAVE BEEN WARNED.</p>
+<p>The output is untainted.  If you don't know what tainting is,
+don't worry about it.</p>
+</li>
+<li><a name="*-the-function-encode_language_tag(0x24lang1)"></a><b>the function encode_language_tag($lang1)</b>
+<p>This function, if given a language tag, returns an encoding of it such
+that:</p>
+<p>* tags representing different languages never get the same encoding.</p>
+<p>* tags representing the same language always get the same encoding.</p>
+<p>* an encoding of a formally valid language tag always is a string
+value that is defined, has length, and is true if considered as a
+boolean.</p>
+<p>Note that the encoding itself is <b>not</b> a formally valid language tag.
+Note also that you cannot, currently, go from an encoding back to a
+language tag that it's an encoding of.</p>
+<p>Note also that you <b>must</b> consider the encoded value as atomic; i.e.,
+you should not consider it as anything but an opaque, unanalysable
+string value.  (The internals of the encoding method may change in
+future versions, as the language tagging standard changes over time.)</p>
+<p><code class="inline"><span class="w">encode_language_tag</span></code>
+ returns undef if given anything other than a
+formally valid language tag.</p>
+<p>The reason <code class="inline"><span class="w">encode_language_tag</span></code>
+ exists is because different language
+tags may represent the same language; this is normally treatable with
+<code class="inline"><span class="w">same_language_tag</span></code>
+, but consider this situation:</p>
+<p>You have a data file that expresses greetings in different languages.
+Its format is "[language tag]=[how to say 'Hello']", like:</p>
+<pre class="verbatim">          en-US=Hiho
+          fr=Bonjour
+          i-mingo=Hau'</pre><p>And suppose you write a program that reads that file and then runs as
+a daemon, answering client requests that specify a language tag and
+then expect the string that says how to greet in that language.  So an
+interaction looks like:</p>
+<pre class="verbatim">          greeting-client asks:    fr
+          greeting-server answers: Bonjour</pre><p>So far so good.  But suppose the way you're implementing this is:</p>
+<pre class="verbatim">          <a class="l_k" href="../functions/my.html">my</a> <span class="i">%greetings</span><span class="sc">;</span>
+          <a class="l_k" href="../functions/die.html">die</a> unless <a class="l_k" href="../functions/open.html">open</a><span class="s">(</span><span class="w">IN</span><span class="cm">,</span> <span class="q">&quot;&lt;in.dat&quot;</span><span class="s">)</span><span class="sc">;</span>
+          while<span class="s">(</span><span class="q">&lt;IN&gt;</span><span class="s">)</span> <span class="s">{</span>
+            <a class="l_k" href="../functions/chomp.html">chomp</a><span class="sc">;</span>
+            <a class="l_k" href="../functions/next.html">next</a> unless <span class="q">/^([^=]+)=(.+)/s</span><span class="sc">;</span>
+            <a class="l_k" href="../functions/my.html">my</a><span class="s">(</span><span class="i">$lang</span><span class="cm">,</span> <span class="i">$expr</span><span class="s">)</span> = <span class="s">(</span><span class="i">$1</span><span class="cm">,</span> <span class="i">$2</span><span class="s">)</span><span class="sc">;</span>
+            <span class="i">$greetings</span>{<span class="i">$lang</span>} = <span class="i">$expr</span><span class="sc">;</span>
+          <span class="s">}</span>
+          <a class="l_k" href="../functions/close.html">close</a><span class="s">(</span><span class="w">IN</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>at which point %greetings has the contents:</p>
+<pre class="verbatim">          "en-US"   =&gt; "Hiho"
+          "fr"      =&gt; "Bonjour"
+          "i-mingo" =&gt; "Hau'"</pre><p>And suppose then that you answer client requests for language $wanted
+by just looking up $greetings{$wanted}.</p>
+<p>If the client asks for "fr", that will look up successfully in
+%greetings, to the value "Bonjour".  And if the client asks for
+"i-mingo", that will look up successfully in %greetings, to the value
+"Hau'".</p>
+<p>But if the client asks for "i-Mingo" or "x-mingo", or "Fr", then the
+lookup in %greetings fails.  That's the Wrong Thing.</p>
+<p>You could instead do lookups on $wanted with:</p>
+<pre class="verbatim">          <a class="l_k" href="../functions/use.html">use</a> <span class="w">I18N::LangTags</span> <span class="q">qw(same_language_tag)</span><span class="sc">;</span>
+          <a class="l_k" href="../functions/my.html">my</a> <span class="i">$response</span> = <span class="q">''</span><span class="sc">;</span>
+          foreach <a class="l_k" href="../functions/my.html">my</a> <span class="i">$l2</span> <span class="s">(</span><a class="l_k" href="../functions/keys.html">keys</a> <span class="i">%greetings</span><span class="s">)</span> <span class="s">{</span>
+            if<span class="s">(</span><span class="i">same_language_tag</span><span class="s">(</span><span class="i">$wanted</span><span class="cm">,</span> <span class="i">$l2</span><span class="s">)</span><span class="s">)</span> <span class="s">{</span>
+              <span class="i">$response</span> = <span class="i">$greetings</span>{<span class="i">$l2</span>}<span class="sc">;</span>
+              <a class="l_k" href="../functions/last.html">last</a><span class="sc">;</span>
+            <span class="s">}</span>
+          <span class="s">}</span></pre>
+<p>But that's rather inefficient.  A better way to do it is to start your
+program with:</p>
+<pre class="verbatim">          <a class="l_k" href="../functions/use.html">use</a> <span class="w">I18N::LangTags</span> <span class="q">qw(encode_language_tag)</span><span class="sc">;</span>
+          <a class="l_k" href="../functions/my.html">my</a> <span class="i">%greetings</span><span class="sc">;</span>
+          <a class="l_k" href="../functions/die.html">die</a> unless <a class="l_k" href="../functions/open.html">open</a><span class="s">(</span><span class="w">IN</span><span class="cm">,</span> <span class="q">&quot;&lt;in.dat&quot;</span><span class="s">)</span><span class="sc">;</span>
+          while<span class="s">(</span><span class="q">&lt;IN&gt;</span><span class="s">)</span> <span class="s">{</span>
+            <a class="l_k" href="../functions/chomp.html">chomp</a><span class="sc">;</span>
+            <a class="l_k" href="../functions/next.html">next</a> unless <span class="q">/^([^=]+)=(.+)/s</span><span class="sc">;</span>
+            <a class="l_k" href="../functions/my.html">my</a><span class="s">(</span><span class="i">$lang</span><span class="cm">,</span> <span class="i">$expr</span><span class="s">)</span> = <span class="s">(</span><span class="i">$1</span><span class="cm">,</span> <span class="i">$2</span><span class="s">)</span><span class="sc">;</span>
+            <span class="i">$greetings</span>{
+                        <span class="i">encode_language_tag</span><span class="s">(</span><span class="i">$lang</span><span class="s">)</span>
+                      } = <span class="i">$expr</span><span class="sc">;</span>
+          <span class="s">}</span>
+          <a class="l_k" href="../functions/close.html">close</a><span class="s">(</span><span class="w">IN</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>and then just answer client requests for language $wanted by just
+looking up</p>
+<pre class="verbatim">          <span class="i">$greetings</span>{<span class="i">encode_language_tag</span><span class="s">(</span><span class="i">$wanted</span><span class="s">)</span>}</pre>
+<p>And that does the Right Thing.</p>
+</li>
+<li><a name="*-the-function-alternate_language_tags(0x24lang1)"></a><b>the function alternate_language_tags($lang1)</b>
+<p>This function, if given a language tag, returns all language tags that
+are alternate forms of this language tag.  (I.e., tags which refer to
+the same language.)  This is meant to handle legacy tags caused by
+the minor changes in language tag standards over the years; and
+the x-/i- alternation is also dealt with.</p>
+<p>Note that this function does <i>not</i> try to equate new (and never-used,
+and unusable)
+ISO639-2 three-letter tags to old (and still in use) ISO639-1
+two-letter equivalents -- like "ara" -&gt; "ar" -- because
+"ara" has <i>never</i> been in use as an Internet language tag,
+and RFC 3066 stipulates that it never should be, since a shorter
+tag ("ar") exists.</p>
+<p>Examples:</p>
+<pre class="verbatim">          alternate_language_tags('no-bok')       is ('nb')
+          alternate_language_tags('nb')           is ('no-bok')
+          alternate_language_tags('he')           is ('iw')
+          alternate_language_tags('iw')           is ('he')
+          alternate_language_tags('i-hakka')      is ('zh-hakka', 'x-hakka')
+          alternate_language_tags('zh-hakka')     is ('i-hakka', 'x-hakka')
+          alternate_language_tags('en')           is ()
+          alternate_language_tags('x-mingo-tom')  is ('i-mingo-tom')
+          alternate_language_tags('x-klikitat')   is ('i-klikitat')
+          alternate_language_tags('i-klikitat')   is ('x-klikitat')</pre><p>This function returns empty-list if given anything other than a formally
+valid language tag.</p>
+</li>
+<li><a name="*-the-function-0x40langs-0x3d-panic_languages(0x40accept_languages)"></a><b>the function @langs = panic_languages(@accept_languages)</b>
+<p>This function takes a list of 0 or more language
+tags that constitute a given user's Accept-Language list, and
+returns a list of tags for <i>other</i> (non-super)
+languages that are probably acceptable to the user, to be
+used <i>if all else fails</i>.</p>
+<p>For example, if a user accepts only 'ca' (Catalan) and
+'es' (Spanish), and the documents/interfaces you have
+available are just in German, Italian, and Chinese, then
+the user will most likely want the Italian one (and not
+the Chinese or German one!), instead of getting
+nothing.  So <code class="inline"><span class="i">panic_languages</span><span class="s">(</span><span class="q">&#39;ca&#39;</span><span class="cm">,</span> <span class="q">&#39;es&#39;</span><span class="s">)</span></code>
+ returns
+a list containing 'it' (Italian).</p>
+<p>English ('en') is <i>always</i> in the return list, but
+whether it's at the very end or not depends
+on the input languages.  This function works by consulting
+an internal table that stipulates what common
+languages are "close" to each other.</p>
+<p>A useful construct you might consider using is:</p>
+<pre class="verbatim">  <span class="i">@fallbacks</span> = <span class="i">super_languages</span><span class="s">(</span><span class="i">@accept_languages</span><span class="s">)</span><span class="sc">;</span>
+  <a class="l_k" href="../functions/push.html">push</a> <span class="i">@fallbacks</span><span class="cm">,</span> <span class="i">panic_languages</span><span class="s">(</span>
+    <span class="i">@accept_languages</span><span class="cm">,</span> <span class="i">@fallbacks</span><span class="cm">,</span>
+  <span class="s">)</span><span class="sc">;</span></pre>
+</li>
+<li><a name="*-the-function-implicate_supers(-...languages...-)"></a><b>the function implicate_supers( ...languages... )</b>
+<p>This takes a list of strings (which are presumed to be language-tags;
+strings that aren't, are ignored); and after each one, this function
+inserts super-ordinate forms that don't already appear in the list.
+The original list, plus these insertions, is returned.</p>
+<p>In other words, it takes this:</p>
+<pre class="verbatim">  <span class="w">pt</span>-<span class="w">br</span> <span class="w">de</span>-<span class="w">DE</span> <span class="w">en</span>-<span class="w">US</span> <span class="w">fr</span> <span class="w">pt</span>-<span class="w">br</span>-<span class="w">janeiro</span></pre>
+<p>and returns this:</p>
+<pre class="verbatim">  <span class="w">pt</span>-<span class="w">br</span> <span class="w">pt</span> <span class="w">de</span>-<span class="w">DE</span> <span class="w">de</span> <span class="w">en</span>-<span class="w">US</span> <span class="w">en</span> <span class="w">fr</span> <span class="w">pt</span>-<span class="w">br</span>-<span class="w">janeiro</span></pre>
+<p>This function is most useful in the idiom</p>
+<pre class="verbatim">  <span class="i">implicate_supers</span><span class="s">(</span> <span class="i">I18N::LangTags::Detect::detect</span><span class="s">(</span><span class="s">)</span> <span class="s">)</span><span class="sc">;</span></pre>
+<p>(See <a href="../I18N/LangTags/Detect.html">I18N::LangTags::Detect</a>.)</p>
+</li>
+<li><a name="*-the-function-implicate_supers_strictly(-...languages...-)"></a><b>the function implicate_supers_strictly( ...languages... )</b>
+<p>This works like <code class="inline"><span class="w">implicate_supers</span></code>
+ except that the implicated
+forms are added to the end of the return list.</p>
+<p>In other words, implicate_supers_strictly takes a list of strings
+(which are presumed to be language-tags; strings that aren't, are
+ignored) and after the whole given list, it inserts the super-ordinate forms 
+of all given tags, minus any tags that already appear in the input list.</p>
+<p>In other words, it takes this:</p>
+<pre class="verbatim">  <span class="w">pt</span>-<span class="w">br</span> <span class="w">de</span>-<span class="w">DE</span> <span class="w">en</span>-<span class="w">US</span> <span class="w">fr</span> <span class="w">pt</span>-<span class="w">br</span>-<span class="w">janeiro</span></pre>
+<p>and returns this:</p>
+<pre class="verbatim">  <span class="w">pt</span>-<span class="w">br</span> <span class="w">de</span>-<span class="w">DE</span> <span class="w">en</span>-<span class="w">US</span> <span class="w">fr</span> <span class="w">pt</span>-<span class="w">br</span>-<span class="w">janeiro</span> <span class="w">pt</span> <span class="w">de</span> <span class="w">en</span></pre>
+<p>The reason this function has "_strictly" in its name is that when
+you're processing an Accept-Language list according to the RFCs, if
+you interpret the RFCs quite strictly, then you would use
+implicate_supers_strictly, but for normal use (i.e., common-sense use,
+as far as I'm concerned) you'd use implicate_supers.</p>
+</li>
+</ul>
+<a name="ABOUT-LOWERCASING"></a><h1>ABOUT LOWERCASING</h1>
+<p>I've considered making all the above functions that output language
+tags return all those tags strictly in lowercase.  Having all your
+language tags in lowercase does make some things easier.  But you
+might as well just lowercase as you like, or call
+<code class="inline"><span class="i">encode_language_tag</span><span class="s">(</span><span class="i">$lang1</span><span class="s">)</span></code>
+ where appropriate.</p>
+<a name="ABOUT-UNICODE-PLAINTEXT-LANGUAGE-TAGS"></a><h1>ABOUT UNICODE PLAINTEXT LANGUAGE TAGS</h1>
+<p>In some future version of I18N::LangTags, I plan to include support
+for RFC2482-style language tags -- which are basically just normal
+language tags with their ASCII characters shifted into Plane 14.</p>
+<a name="SEE-ALSO"></a><h1>SEE ALSO</h1>
+<p>* <a href="../I18N/LangTags/List.html">I18N::LangTags::List</a></p>
+<p>* RFC 3066, <code class="inline">&lt;a href="ftp://ftp.isi.edu/in-notes/rfc3066.txt"&gt;ftp://ftp.isi.edu/in-notes/rfc3066.txt&lt;/a&gt;</code>, "Tags for the
+Identification of Languages".  (Obsoletes RFC 1766)</p>
+<p>* RFC 2277, <code class="inline">&lt;a href="ftp://ftp.isi.edu/in-notes/rfc2277.txt"&gt;ftp://ftp.isi.edu/in-notes/rfc2277.txt&lt;/a&gt;</code>, "IETF Policy on
+Character Sets and Languages".</p>
+<p>* RFC 2231, <code class="inline">&lt;a href="ftp://ftp.isi.edu/in-notes/rfc2231.txt"&gt;ftp://ftp.isi.edu/in-notes/rfc2231.txt&lt;/a&gt;</code>, "MIME Parameter
+Value and Encoded Word Extensions: Character Sets, Languages, and
+Continuations".</p>
+<p>* RFC 2482, <code class="inline">&lt;a href="ftp://ftp.isi.edu/in-notes/rfc2482.txt"&gt;ftp://ftp.isi.edu/in-notes/rfc2482.txt&lt;/a&gt;</code>, 
+"Language Tagging in Unicode Plain Text".</p>
+<p>* Locale::Codes, in
+<code class="inline">&lt;a href="http://www.perl.com/CPAN/modules/by-module/Locale/"&gt;http://www.perl.com/CPAN/modules/by-module/Locale/&lt;/a&gt;</code></p>
+<p>* ISO 639-2, "Codes for the representation of names of languages",
+including two-letter and three-letter codes,
+<code class="inline">&lt;a href="http://www.loc.gov/standards/iso639-2/langcodes.html"&gt;http://www.loc.gov/standards/iso639-2/langcodes.html&lt;/a&gt;</code></p>
+<p>* The IANA list of registered languages (hopefully up-to-date),
+<code class="inline">&lt;a href="http://www.iana.org/assignments/language-tags"&gt;http://www.iana.org/assignments/language-tags&lt;/a&gt;</code></p>
+<a name="COPYRIGHT"></a><h1>COPYRIGHT</h1>
+<p>Copyright (c) 1998+ Sean M. Burke. All rights reserved.</p>
+<p>This library is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.</p>
+<p>The programs and documentation in this dist are distributed in
+the hope that they will be useful, but without any warranty; without
+even the implied warranty of merchantability or fitness for a
+particular purpose.</p>
+<a name="AUTHOR"></a><h1>AUTHOR</h1>
+<p>Sean M. Burke <code class="inline"><span class="w">sburke</span><span class="i">@cpan</span>.<span class="w">org</span></code>
+</p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../close_purple.gif';" onmouseout="rightCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('I18N::LangTags','I18N/LangTags.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

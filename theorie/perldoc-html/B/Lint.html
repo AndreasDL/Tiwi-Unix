@@ -1,0 +1,248 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>B::Lint - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 1;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../close_purple.gif';" onmouseout="leftCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../index-overview.html">Overview</a></li>
+        <li><a href="../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../index-faq.html">FAQs</a></li>
+        <li><a href="../index-history.html">History / Changes</a></li>
+        <li><a href="../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../index-language.html">Language</a></li>
+        <li><a href="../index-functions.html">Functions</a></li>
+        <li><a href="../perlop.html">Operators</a></li>
+        <li><a href="../perlvar.html">Special variables</a></li>
+        <li><a href="../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../index-modules-A.html">Core modules</a></li>
+        <li><a href="../index-utilities.html">Utilities</a></li>
+        <li><a href="../index-internals.html">Internals</a></li>
+        <li><a href="../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../index.html">Home</a> &gt; <a href="../index-modules-A.html">Core modules</a> &gt; <a href="../index-modules-B.html">B</a> &gt; B::Lint</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">B::Lint</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><li><a href="#OPTIONS-AND-LINT-CHECKS">OPTIONS AND LINT CHECKS</a><li><a href="#NON-LINT-CHECK-OPTIONS">NON LINT-CHECK OPTIONS</a><li><a href="#EXTENDING-LINT">EXTENDING LINT</a><li><a href="#TODO">TODO</a><li><a href="#BUGS">BUGS</a><li><a href="#AUTHOR">AUTHOR</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>B::Lint - Perl lint</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<p>perl -MO=Lint[,OPTIONS] foo.pl</p>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p>The B::Lint module is equivalent to an extended version of the <b>-w</b>
+option of <b>perl</b>. It is named after the program <i>lint</i> which carries
+out a similar process for C programs.</p>
+<a name="OPTIONS-AND-LINT-CHECKS"></a><h1>OPTIONS AND LINT CHECKS</h1>
+<p>Option words are separated by commas (not whitespace) and follow the
+usual conventions of compiler backend options. Following any options
+(indicated by a leading <b>-</b>) come lint check arguments. Each such
+argument (apart from the special <b>all</b> and <b>none</b> options) is a
+word representing one possible lint check (turning on that check) or
+is <b>no-foo</b> (turning off that check). Before processing the check
+arguments, a standard list of checks is turned on. Later options
+override earlier ones. Available options are:</p>
+<ul>
+<li><a name="*magic-diamond*"></a><b><b>magic-diamond</b></b>
+<p>Produces a warning whenever the magic <code class="inline">&lt;&gt;</code>
+ readline is
+used. Internally it uses perl's two-argument open which itself treats
+filenames with special characters specially. This could allow
+interestingly named files to have unexpected effects when reading.</p>
+<pre class="verbatim">  % touch 'rm *|'
+  % perl -pe 1</pre><p>The above creates a file named <code class="inline">rm *|</code>. When perl opens it with
+<code class="inline">&lt;&gt;</code>
+ it actually executes the shell program <code class="inline"><span class="w">rm</span> *</code>
+. This
+makes <code class="inline">&lt;&gt;</code>
+ dangerous to use carelessly.</p>
+</li>
+<li><a name="*context*"></a><b><b>context</b></b>
+<p>Produces a warning whenever an array is used in an implicit scalar
+context. For example, both of the lines</p>
+<pre class="verbatim">    <span class="i">$foo</span> = <a class="l_k" href="../functions/length.html">length</a><span class="s">(</span><span class="i">@bar</span><span class="s">)</span><span class="sc">;</span>
+    <span class="i">$foo</span> = <span class="i">@bar</span><span class="sc">;</span></pre>
+<p>will elicit a warning. Using an explicit <b>scalar()</b> silences the
+warning. For example,</p>
+<pre class="verbatim">    <span class="i">$foo</span> = <a class="l_k" href="../functions/scalar.html">scalar</a><span class="s">(</span><span class="i">@bar</span><span class="s">)</span><span class="sc">;</span></pre>
+</li>
+<li><a name="*implicit-read*-and-*implicit-write*"></a><b><b>implicit-read</b> and <b>implicit-write</b></b>
+<p>These options produce a warning whenever an operation implicitly
+reads or (respectively) writes to one of Perl's special variables.
+For example, <b>implicit-read</b> will warn about these:</p>
+<pre class="verbatim">    <span class="q">/foo/</span><span class="sc">;</span></pre>
+<p>and <b>implicit-write</b> will warn about these:</p>
+<pre class="verbatim">    <span class="q">s/foo/bar/</span><span class="sc">;</span></pre>
+<p>Both <b>implicit-read</b> and <b>implicit-write</b> warn about this:</p>
+<pre class="verbatim">    for <span class="s">(</span><span class="i">@a</span><span class="s">)</span> <span class="s">{</span> ... <span class="s">}</span></pre>
+</li>
+<li><a name="*bare-subs*"></a><b><b>bare-subs</b></b>
+<p>This option warns whenever a bareword is implicitly quoted, but is also
+the name of a subroutine in the current package. Typical mistakes that it will
+trap are:</p>
+<pre class="verbatim">    <a class="l_k" href="../functions/use.html">use</a> <span class="w">constant</span> <span class="i">foo</span> <span class="cm">=&gt;</span> <span class="q">&#39;bar&#39;</span><span class="sc">;</span>
+    <span class="i">@a</span> = <span class="s">(</span> <span class="i">foo</span> <span class="cm">=&gt;</span> <span class="n">1</span> <span class="s">)</span><span class="sc">;</span>
+    <span class="i">$b</span>{<span class="w">foo</span>} = <span class="n">2</span><span class="sc">;</span></pre>
+<p>Neither of these will do what a naive user would expect.</p>
+</li>
+<li><a name="*dollar-underscore*"></a><b><b>dollar-underscore</b></b>
+<p>This option warns whenever <code class="inline"><span class="i">$_</span></code>
+ is used either explicitly anywhere or
+as the implicit argument of a <b>print</b> statement.</p>
+</li>
+<li><a name="*private-names*"></a><b><b>private-names</b></b>
+<p>This option warns on each use of any variable, subroutine or
+method name that lives in a non-current package but begins with
+an underscore ("_"). Warnings aren't issued for the special case
+of the single character name "_" by itself (e.g. <code class="inline"><span class="i">$_</span></code>
+ and <code class="inline"><span class="i">@_</span></code>
+).</p>
+</li>
+<li><a name="*undefined-subs*"></a><b><b>undefined-subs</b></b>
+<p>This option warns whenever an undefined subroutine is invoked.
+This option will only catch explicitly invoked subroutines such
+as <code class="inline"><span class="i">foo</span><span class="s">(</span><span class="s">)</span></code>
+ and not indirect invocations such as <code class="inline"><span class="i">&amp;$subref</span><span class="s">(</span><span class="s">)</span></code>
+
+or <code class="inline"><span class="i">$obj</span><span class="i">-&gt;meth</span><span class="s">(</span><span class="s">)</span></code>
+. Note that some programs or modules delay
+definition of subs until runtime by means of the AUTOLOAD
+mechanism.</p>
+</li>
+<li><a name="*regexp-variables*"></a><b><b>regexp-variables</b></b>
+<p>This option warns whenever one of the regexp variables <code class="inline"><span class="i">$`</span></code>
+, <code class="inline"><span class="i">$&amp;</span></code>
+ or <code class="inline"><span class="i">$&#39;</span></code>
+
+is used. Any occurrence of any of these variables in your
+program can slow your whole program down. See <a href="../perlre.html">perlre</a> for
+details.</p>
+</li>
+<li><a name="*all*"></a><b><b>all</b></b>
+<p>Turn all warnings on.</p>
+</li>
+<li><a name="*none*"></a><b><b>none</b></b>
+<p>Turn all warnings off.</p>
+</li>
+</ul>
+<a name="NON-LINT-CHECK-OPTIONS"></a><h1>NON LINT-CHECK OPTIONS</h1>
+<ul>
+<li><a name="*-u-Package*"></a><b><b>-u Package</b></b>
+<p>Normally, Lint only checks the main code of the program together
+with all subs defined in package main. The <b>-u</b> option lets you
+include other package names whose subs are then checked by Lint.</p>
+</li>
+</ul>
+<a name="EXTENDING-LINT"></a><h1>EXTENDING LINT</h1>
+<p>Lint can be extended by with plugins. Lint uses <a href="../Module/Pluggable.html">Module::Pluggable</a>
+to find available plugins. Plugins are expected but not required to
+inform Lint of which checks they are adding.</p>
+<p>The <code class="inline"><span class="w">B::Lint</span><span class="w">-&gt;register_plugin</span><span class="s">(</span> <span class="w">MyPlugin</span> <span class="cm">=&gt;</span> \<span class="i">@new_checks</span> <span class="s">)</span></code>
+ method
+adds the list of <code class="inline"><span class="i">@new_checks</span></code>
+ to the list of valid checks. If your
+module wasn't loaded by <a href="../Module/Pluggable.html">Module::Pluggable</a> then your class name is
+added to the list of plugins.</p>
+<p>You must create a <code class="inline"><span class="i">match</span><span class="s">(</span> \<span class="i">%checks</span> <span class="s">)</span></code>
+ method in your plugin class or one
+of its parents. It will be called on every op as a regular method call
+with a hash ref of checks as its parameter.</p>
+<p>The class methods <code class="inline"><span class="w">B::Lint</span><span class="w">-&gt;file</span></code>
+ and <code class="inline"><span class="w">B::Lint</span><span class="w">-&gt;line</span></code>
+ contain
+the current filename and line number.</p>
+<pre class="verbatim"><a name="package-Sample"></a>  package <span class="i">Sample</span><span class="sc">;</span>
+  <a class="l_k" href="../functions/use.html">use</a> <span class="w">B::Lint</span><span class="sc">;</span>
+  <span class="w">B::Lint</span><span class="w">-&gt;register_plugin</span><span class="s">(</span> <span class="w">Sample</span> <span class="cm">=&gt;</span> <span class="s">[</span> <span class="q">'good_taste'</span> <span class="s">]</span> <span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim"><a name="match"></a>  sub <span class="m">match</span> <span class="s">{</span>
+      <a class="l_k" href="../functions/my.html">my</a> <span class="s">(</span> <span class="i">$op</span><span class="cm">,</span> <span class="i">$checks_href</span> <span class="s">)</span> = <a class="l_k" href="../functions/shift.html">shift</a> <span class="i">@_</span><span class="sc">;</span>
+      if <span class="s">(</span> <span class="i">$checks_href</span>-&gt;{<span class="w">good_taste</span>} <span class="s">)</span> <span class="s">{</span>
+          ...
+      <span class="s">}</span>
+  <span class="s">}</span></pre>
+<a name="TODO"></a><h1>TODO</h1>
+<ul>
+<li><a name="while(0x3cFH0x3e)-stomps-0x24_"></a><b>while(&lt;FH&gt;) stomps $_</b>
+</li>
+<li><a name="strict-oo"></a><b>strict oo</b>
+</li>
+<li><a name="unchecked-system-calls"></a><b>unchecked system calls</b>
+</li>
+<li><a name="more-tests0x2c-validate-against-older-perls"></a><b>more tests, validate against older perls</b>
+</li>
+</ul>
+<a name="BUGS"></a><h1>BUGS</h1>
+<p>This is only a very preliminary version.</p>
+<a name="AUTHOR"></a><h1>AUTHOR</h1>
+<p>Malcolm Beattie, mbeattie@sable.ox.ac.uk.</p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../close_purple.gif';" onmouseout="rightCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('B::Lint','B/Lint.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

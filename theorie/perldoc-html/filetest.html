@@ -1,0 +1,182 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>filetest - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 0;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='close_purple.gif';" onmouseout="leftCloseIcon.src='close_blue.gif';"><img src="close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="index-overview.html">Overview</a></li>
+        <li><a href="index-tutorials.html">Tutorials</a></li>
+        <li><a href="index-faq.html">FAQs</a></li>
+        <li><a href="index-history.html">History / Changes</a></li>
+        <li><a href="index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="index-language.html">Language</a></li>
+        <li><a href="index-functions.html">Functions</a></li>
+        <li><a href="perlop.html">Operators</a></li>
+        <li><a href="perlvar.html">Special variables</a></li>
+        <li><a href="index-pragmas.html">Pragmas</a></li>
+        <li><a href="index-modules-A.html">Core modules</a></li>
+        <li><a href="index-utilities.html">Utilities</a></li>
+        <li><a href="index-internals.html">Internals</a></li>
+        <li><a href="index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="index.html">Home</a> &gt; <a href="index-pragmas.html">Pragmas</a> &gt; filetest</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">filetest</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><ul><li><a href="#Consider-this-carefully">Consider this carefully</a><li><a href="#The-0x22access0x22-sub-pragma">The "access" sub-pragma</a><li><a href="#Limitation-with-regard-to-'_'">Limitation with regard to <code class="inline"><span class="w">_</span></code>
+</a></ul></ul><a name="NAME"></a><h1>NAME</h1>
+<p>filetest - Perl pragma to control the filetest permission operators</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">    <span class="i">$can_perhaps_read</span> = -r <span class="q">&quot;file&quot;</span><span class="sc">;</span>	<span class="c"># use the mode bits</span>
+    <span class="s">{</span>
+        <a class="l_k" href="functions/use.html">use</a> <span class="w">filetest</span> <span class="q">&#39;access&#39;</span><span class="sc">;</span>		<span class="c"># intuit harder</span>
+        <span class="i">$can_really_read</span> = -r <span class="q">&quot;file&quot;</span><span class="sc">;</span>
+    <span class="s">}</span>
+    <span class="i">$can_perhaps_read</span> = -r <span class="q">&quot;file&quot;</span><span class="sc">;</span>	<span class="c"># use the mode bits again</span></pre>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p>This pragma tells the compiler to change the behaviour of the filetest
+permission operators, <code class="inline">-r</code>
+ <code class="inline">-w</code>
+ <code class="inline">-x</code>
+ <code class="inline">-R</code>
+ <code class="inline">-W</code>
+ <code class="inline"><a class="l_k" href="functions/-X.html">-X</a></code>
+(see <a href="perlfunc.html">perlfunc</a>).</p>
+<p>The default behaviour of file test operators is to use the simple
+mode bits as returned by the stat() family of system calls.  However,
+many operating systems have additional features to define more complex
+access rights, for example ACLs (Access Control Lists).
+For such environments, <code class="inline"><a class="l_k" href="functions/use.html">use</a> <span class="w">filetest</span></code>
+ may help the permission
+operators to return results more consistent with other tools.</p>
+<p>The <code class="inline"><a class="l_k" href="functions/use.html">use</a> <span class="w">filetest</span></code>
+ or <code class="inline"><a class="l_k" href="functions/no.html">no</a> <span class="w">filetest</span></code>
+ statements affect file tests defined in
+their block, up to the end of the closest enclosing block (they are lexically
+block-scoped).</p>
+<p>Currently, only the <code class="inline"><span class="w">access</span></code>
+ sub-pragma is implemented.  It enables (or
+disables) the use of access() when available, that is, on most UNIX systems and
+other POSIX environments.  See details below.</p>
+<a name="Consider-this-carefully"></a><h2>Consider this carefully</h2>
+<p>The stat() mode bits are probably right for most of the files and
+directories found on your system, because few people want to use the
+additional features offered by access(). But you may encounter surprises
+if your program runs on a system that uses ACLs, since the stat()
+information won't reflect the actual permissions.</p>
+<p>There may be a slight performance decrease in the filetest operations
+when the filetest pragma is in effect, because checking bits is very
+cheap.</p>
+<p>Also, note that using the file tests for security purposes is a lost cause
+from the start: there is a window open for race conditions (who is to
+say that the permissions will not change between the test and the real
+operation?).  Therefore if you are serious about security, just try
+the real operation and test for its success - think in terms of atomic
+operations.  Filetests are more useful for filesystem administrative
+tasks, when you have no need for the content of the elements on disk.</p>
+<a name="The-0x22access0x22-sub-pragma"></a><h2>The "access" sub-pragma</h2>
+<p>UNIX and POSIX systems provide an abstract access() operating system call,
+which should be used to query the read, write, and execute rights. This
+function hides various distinct approaches in additional operating system
+specific security features, like Access Control Lists (ACLs)</p>
+<p>The extended filetest functionality is used by Perl only when the argument
+of the operators is a filename, not when it is a filehandle.</p>
+<a name="Limitation-with-regard-to-'_'"></a><h2>Limitation with regard to <code class="inline"><span class="w">_</span></code>
+</h2>
+<p>Because access() does not invoke stat() (at least not in a way visible
+to Perl), <b>the stat result cache "_" is not set</b>.  This means that the
+outcome of the following two tests is different.  The first has the stat
+bits of <code class="inline">/etc/passwd</code> in <code class="inline"><span class="w">_</span></code>
+, and in the second case this still
+contains the bits of <code class="inline">/etc</code>.</p>
+<pre class="verbatim"> <span class="s">{</span> -d <span class="q">'/etc'</span><span class="sc">;</span>
+   -w <span class="q">'/etc/passwd'</span><span class="sc">;</span>
+   <a class="l_k" href="functions/print.html">print</a> -f <span class="i">_</span> ? <span class="q">'Yes'</span> <span class="co">:</span> <span class="q">'No'</span><span class="sc">;</span>   <span class="c"># Yes</span>
+ <span class="s">}</span></pre>
+<pre class="verbatim"> <span class="s">{</span> <a class="l_k" href="functions/use.html">use</a> <span class="w">filetest</span> <span class="q">'access'</span><span class="sc">;</span>
+   -d <span class="q">'/etc'</span><span class="sc">;</span>
+   -w <span class="q">'/etc/passwd'</span><span class="sc">;</span>
+   <a class="l_k" href="functions/print.html">print</a> -f <span class="i">_</span> ? <span class="q">'Yes'</span> <span class="co">:</span> <span class="q">'No'</span><span class="sc">;</span>   <span class="c"># No</span>
+ <span class="s">}</span></pre>
+<p>Of course, unless your OS does not implement access(), in which case the
+pragma is simply ignored.  Best not to use <code class="inline"><span class="w">_</span></code>
+ at all in a file where
+the filetest pragma is active!</p>
+<p>As a side effect, as <code class="inline"><span class="w">_</span></code>
+ doesn't work, stacked filetest operators
+(<code class="inline">-f -w <span class="i">$file</span></code>
+) won't work either.</p>
+<p>This limitation might be removed in a future version of perl.</p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='close_purple.gif';" onmouseout="rightCloseIcon.src='close_blue.gif';"><img src="close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('filetest','filetest.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,184 @@
+==============================================================================
+Toelichting bij de Schwartzian transform
+tim.depauw@hogent.be - 2012-10-03
+==============================================================================
+
+Onze bedoeling is om een grote hoeveelheid woorden te ordenen volgens hun
+aantal klinkers. We zijn natuurlijk niet écht geïnteresseerd in de woorden,
+noch in hun aantal klinkers. Wat we willen aantonen is dat ordenen volgens een
+berekende waarde (in dit geval het aantal klinkers) op verschillende manieren
+kan, waarbij de ene al beter is dan de andere.
+
+Voer eerst het script '00-genereer-woorden.pl' uit. Dit maakt het bestand
+'woorden.txt' aan, dat als invoer dienst zal doen.
+
+Manier 1
+========
+
+We zagen reeds dat de sort-functie van Perl toelaat om een optionele
+vergelijkingsfunctie mee te geven, die wordt uitgevoerd telkens twee elementen
+van de te ordenen array met elkaar worden vergeleken; de te vergelijken
+elementen worden in de functie voorgesteld als '$a' en '$b'. Een vaak geziene
+constructie is het gebruik van de operator '<=>' om numeriek te ordenen i.p.v.
+lexicografisch (het standaardgedrag):
+
+	my @numeriek_geordend = sort
+		{ $a <=> $b }
+		@getallen;
+
+Gesteld dat we beschikken over een functie 'aantal_klinkers', die het aantal
+klinkers van een string bepaalt en teruggeeft, kunnen we dus schrijven:
+
+	my @geordend = sort
+		{ aantal_klinkers($a) <=> aantal_klinkers($b) }
+		@woorden;
+
+In het script '01-naief.pl' wordt de woordenlijst 'woorden.txt' ingelezen en
+wordt de inhoud daarvan vervolgens op bovenstaande manier geordend. De totale
+tijd benodigd voor het ordenen wordt uiteindelijk afgedrukt. Om enige precisie
+aan de dag te leggen, wordt de bewerking vijfmaal herhaald. Bekommer je niet
+om de implementatie van 'aantal_klinkers', noch om het gebruik van de functie
+'timethis'; enkel het ordenen zelf is van belang.
+
+Manier 2
+========
+
+De eerste manier werkt, maar neemt aardig wat tijd in beslag. Je zou kunnen
+denken dat dit aanvaardbaar is voor een behoorlijk lange woordenlijst, maar er
+is meer aan de hand. Laten we even de performantie analyseren.
+
+Zoals vermeld, wordt de vergelijkingsfunctie opgeroepen telkens twee elementen
+van de te ordenen array met elkaar worden vergeleken. In Algoritmen I zal je
+zien dat het ordenen van een array met n elementen minimaal n * log2(n)
+vergelijkingsoperaties vergt. Dit komt dus neer op n * log2(n) oproepen van de
+vergelijkingsfunctie, wat in ons geval 2 * n * log2(n) oproepen van
+'aantal_klinkers' geeft. Een array van 1 miljoen elementen zou op die manier
+in het beste geval zo'n 40 miljoen keer 'aantal_klinkers' oproepen, terwijl je
+intuïtief wel aanvoelt dat 1 miljoen (of dus n) keer zou moeten volstaan.
+
+Hoe kunnen we dit verwezenlijken? Een eerste oplossing kan erin bestaan om het
+resultaat van 'aantal_klinkers' vooraf op te slaan in een hash. Dit is ook
+wat gebeurt in '02-hash.pl': we zetten een hash klaar, overlopen alle woorden,
+bepalen het aantal klinkers van elk woord en stoppen dit in de hash, met de
+sleutel als woord. Het ordenen wordt dan triviaal, want de berekende waarde
+volgens dewelke we willen ordenen, is precies de hashwaarde die correspondeert
+met het arrayelement.
+
+Manier 3
+========
+
+We kunnen deze constructie ook enigszins inkorten. De hash hoeft immers niet
+noodzakelijk op voorhand te worden ingevuld; dit kan ook tijdens het ordenen.
+
+Telkens we het aantal klinkers van een arrayelement nodig hebben, gaan we
+na of dit al in de hash zit. Is dat niet het geval, dan berekenen we het en
+voegen we het toe. De operator '//=' laat toe om dit vrij compact te
+implementeren: (enkel) indien het linkerlid niet gedefinieerd is, wordt het
+rechterlid beschouwd en eraan toegewezen.
+
+De resulterende code is wat korter, maar leest mogelijk iets moeilijker. Je
+vindt ze in het script '03-cached-schwartz.pl'.
+
+Er is wel een subtiel verschil met manier 2: als een arrayelement meermaals
+voorkomt, wordt 'aantal_klinkers' bij manier 3 slechts één keer opgeroepen
+voor dit element; bij manier 2 wordt geen rekening gehouden met reeds
+bestaande hashelementen, al zou de code wel eenvoudig kunnen worden aangepast.
+Indien de array dus veel duplicaten bevat, zal manier 3 merkbaar sneller zijn.
+Omgekeerd, bij een array zónder duplicaten, wordt het grotendeels overbodig om
+te controleren of een hashelement al bestaat; manier 2 is in dit geval een
+weinig performanter.
+
+Manier 4
+========
+
+Ook het gebruik van de hash is echter optioneel. Tenzij we na het ordenen de
+berekende waarde nog nodig hebben, kunnen we de hash elimineren door middel
+van een vrij elegante constructie, genaamd de "Schwartzian transform". Deze
+gebeurt in drie stappen.
+
+In de eerste stap wordt een array opgebouwd, die een afspiegeling is van de te
+ordenen array. Elk element hiervan is een koppel, bestaande uit het
+oorspronkelijke element en zijn berekende waarde. Zo bevat het woord 'appel'
+twee klinkers, en is het resulterende koppel dus ('appel', 2). Op die manier
+ontstaat een n*2-matrix, of dus een array van arrayreferenties.
+
+Deze eerste stap zou verwezenlijkt kunnen worden met een foreach-lus:
+
+	my @koppels;
+	foreach my $woord (@woorden) {
+		push @koppels, [ $woord, aantal_klinkers($woord) ];
+	}
+
+Perl kent echter de functie 'map', die exact doet wat we zoeken: elk element
+van een array, voorgesteld door '$_', afbeelden op het resultaat van een
+functie. We kunnen dus ook schrijven:
+
+	my @koppels = map
+		{ [ $_, aantal_klinkers($_) ] }
+		@woorden;
+
+We willen deze array van koppels nu ordenen volgens het tweede element van elk
+koppel, want dat bevat het aantal klinkers. Dit is niet zo moeilijk:
+
+	my @koppels_geordend = sort
+		{ $a->[1] <=> $b->[1] }
+		@koppels;
+
+We kunnen de twee uitdrukkingen echter ook samenvoegen tot een oneliner. De
+invoer van 'sort' is immers juist de uitvoer van 'map':
+
+	my @koppels_geordend = sort { $a->[1] <=> $b->[1] }
+		map { [ $_, aantal_klinkers($_) ] }
+		@koppels;
+
+Deze uitdrukking moet van rechts naar links, en dus van onder naar boven
+worden gelezen. De invoer van 'map' is de array '@koppels', en 'map' levert
+op zijn beurt de invoer voor 'sort'.
+
+Nu beschikken we over een geordende array van koppels, maar we willen een
+geordende array van woorden. Die woorden bevinden zich in de koppels, telkens
+als eerste element. We moeten dus elk koppel daarop afbeelden. Opnieuw komt
+de functie 'map' handig van pas:
+
+	my @geordend = map
+		{ $_->[0] }
+		@koppels_geordend;
+
+Dit levert uiteindelijk het gewenste resultaat. Merk echter op dat we ook de
+hulpvariabele '@koppels_geordend' kunnen vermijden, door op analoge wijze
+beide uitdrukkingen samen te nemen:
+
+	my @geordend = map { $_->[0] }
+		sort { $a->[1] <=> $b->[1] }
+		map { [ $_, aantal_klinkers($_) ] }
+		@koppels;
+
+Let er nogmaals op dat je deze uitdrukking van achter naar voor moet lezen. De
+tweede 'map' wordt dus als eerste uitgevoerd! Het afgewerkte geheel vind je in
+het script '04-canonical-schwartz.pl'.
+
+De constructie 'map, sort, map' is precies de befaamde Schwartzian transform.
+Het is een mooi voorbeeld van hoe de uitvoer(lijst) van een (al dan niet
+ingebouwde) functie naadloos kan worden gebruikt als invoer(lijst) van een
+andere functie.
+
+De Schwartzian transform is niet alleen eleganter, maar (meestal) ook sneller.
+Indien we immers gebruikmaken van een hash, vereist zowel het toevoegen
+daaraan als het opzoeken erin enige verwerkingstijd. In Algoritmen II zal
+duidelijk worden dat deze tijd per bewerking van de orde log2(n) is, met n het
+aantal elementen in de hash. Aangezien de tijd om te ordenen zelf al minstens
+van de orde n * log2(n) is, vinden we een uitvoeringstijd van de orde
+n * (log2(n))^2. Daar de Schwartzian transform geen hash gebruikt, verdwijnt
+t.o.v. manier 3 dus een van de logaritmische factoren. Het gebruik van
+arrayreferenties levert wel een kleine vertraging op, maar in de meeste
+gevallen weegt die niet op tegen de verwerkingstijd die het gebruik van de
+hash met zich meebrengt.
+
+De verbeterde performantie van de Schwartzian transform vervalt echter wanneer
+de array veel duplicaten bevat. Onze array met woorden bevat (bijna) geen
+duplicaten, doordat het genereren ervan voldoende willekeur inhoudt. Was dit
+echter niet het geval, dan zou de Schwartzian transform voor elk element,
+uniek of niet, de functie 'aantal_klinkers' opnieuw uitvoeren. Manier 3 loste
+dit probleem reeds op en is in dit geval dus te verkiezen.
+
+==============================================================================

@@ -1,0 +1,294 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>CGI::Cookie - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 1;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../close_purple.gif';" onmouseout="leftCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../index-overview.html">Overview</a></li>
+        <li><a href="../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../index-faq.html">FAQs</a></li>
+        <li><a href="../index-history.html">History / Changes</a></li>
+        <li><a href="../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../index-language.html">Language</a></li>
+        <li><a href="../index-functions.html">Functions</a></li>
+        <li><a href="../perlop.html">Operators</a></li>
+        <li><a href="../perlvar.html">Special variables</a></li>
+        <li><a href="../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../index-modules-A.html">Core modules</a></li>
+        <li><a href="../index-utilities.html">Utilities</a></li>
+        <li><a href="../index-internals.html">Internals</a></li>
+        <li><a href="../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../index.html">Home</a> &gt; <a href="../index-modules-A.html">Core modules</a> &gt; <a href="../index-modules-C.html">C</a> &gt; CGI::Cookie</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">CGI::Cookie</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><li><a href="#USING-CGI0x3a0x3aCookie">USING CGI::Cookie</a><ul><li><a href="#Creating-New-Cookies">Creating New Cookies</a><li><a href="#Sending-the-Cookie-to-the-Browser">Sending the Cookie to the Browser</a><li><a href="#Recovering-Previous-Cookies">Recovering Previous Cookies</a><li><a href="#Manipulating-Cookies">Manipulating Cookies</a></ul><li><a href="#AUTHOR-INFORMATION">AUTHOR INFORMATION</a><li><a href="#BUGS">BUGS</a><li><a href="#SEE-ALSO">SEE ALSO</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>CGI::Cookie - Interface to Netscape Cookies</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">    <a class="l_k" href="../functions/use.html">use</a> <span class="w">CGI</span> <span class="q">qw/:standard/</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/use.html">use</a> <span class="w">CGI::Cookie</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="c"># Create new cookies and send them</span>
+    <span class="i">$cookie1</span> = <span class="w">new</span> <span class="i">CGI::Cookie</span><span class="s">(</span>-<span class="w">name</span><span class="cm">=&gt;</span><span class="q">&#39;ID&#39;</span><span class="cm">,</span>-<span class="w">value</span><span class="cm">=&gt;</span><span class="n">123456</span><span class="s">)</span><span class="sc">;</span>
+    <span class="i">$cookie2</span> = <span class="w">new</span> <span class="i">CGI::Cookie</span><span class="s">(</span>-<span class="w">name</span><span class="cm">=&gt;</span><span class="q">&#39;preferences&#39;</span><span class="cm">,</span>
+                               -<span class="w">value</span><span class="cm">=&gt;</span><span class="s">{</span> <span class="w">font</span> <span class="cm">=&gt;</span> <span class="w">Helvetica</span><span class="cm">,</span>
+                                         <span class="w">size</span> <span class="cm">=&gt;</span> <span class="n">12</span> <span class="s">}</span> 
+                               <span class="s">)</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/print.html">print</a> <span class="i">header</span><span class="s">(</span>-<span class="w">cookie</span><span class="cm">=&gt;</span><span class="s">[</span><span class="i">$cookie1</span><span class="cm">,</span><span class="i">$cookie2</span><span class="s">]</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="c"># fetch existing cookies</span>
+    <span class="i">%cookies</span> = <span class="w">fetch</span> <span class="w">CGI::Cookie</span><span class="sc">;</span>
+    <span class="i">$id</span> = <span class="i">$cookies</span>{<span class="q">&#39;ID&#39;</span>}<span class="i">-&gt;value</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="c"># create cookies returned from an external source</span>
+    <span class="i">%cookies</span> = <span class="w">parse</span> <span class="i">CGI::Cookie</span><span class="s">(</span><span class="i">$ENV</span>{<span class="w">COOKIE</span>}<span class="s">)</span><span class="sc">;</span></pre>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p>CGI::Cookie is an interface to Netscape (HTTP/1.1) cookies, an
+innovation that allows Web servers to store persistent information on
+the browser's side of the connection.  Although CGI::Cookie is
+intended to be used in conjunction with CGI.pm (and is in fact used by
+it internally), you can use this module independently.</p>
+<p>For full information on cookies see</p>
+<pre class="verbatim">	http://www.ics.uci.edu/pub/ietf/http/rfc2109.txt</pre><a name="USING-CGI0x3a0x3aCookie"></a><h1>USING CGI::Cookie</h1>
+<p>CGI::Cookie is object oriented.  Each cookie object has a name and a
+value.  The name is any scalar value.  The value is any scalar or
+array value (associative arrays are also allowed).  Cookies also have
+several optional attributes, including:</p>
+<ul>
+<li><a name="*1.-expiration-date*"></a><b><b>1. expiration date</b></b>
+<p>The expiration date tells the browser how long to hang on to the
+cookie.  If the cookie specifies an expiration date in the future, the
+browser will store the cookie information in a disk file and return it
+to the server every time the user reconnects (until the expiration
+date is reached).  If the cookie species an expiration date in the
+past, the browser will remove the cookie from the disk file.  If the
+expiration date is not specified, the cookie will persist only until
+the user quits the browser.</p>
+</li>
+<li><a name="*2.-domain*"></a><b><b>2. domain</b></b>
+<p>This is a partial or complete domain name for which the cookie is 
+valid.  The browser will return the cookie to any host that matches
+the partial domain name.  For example, if you specify a domain name
+of ".capricorn.com", then Netscape will return the cookie to
+Web servers running on any of the machines "www.capricorn.com", 
+"ftp.capricorn.com", "feckless.capricorn.com", etc.  Domain names
+must contain at least two periods to prevent attempts to match
+on top level domains like ".edu".  If no domain is specified, then
+the browser will only return the cookie to servers on the host the
+cookie originated from.</p>
+</li>
+<li><a name="*3.-path*"></a><b><b>3. path</b></b>
+<p>If you provide a cookie path attribute, the browser will check it
+against your script's URL before returning the cookie.  For example,
+if you specify the path "/cgi-bin", then the cookie will be returned
+to each of the scripts "/cgi-bin/tally.pl", "/cgi-bin/order.pl", and
+"/cgi-bin/customer_service/complain.pl", but not to the script
+"/cgi-private/site_admin.pl".  By default, the path is set to "/", so
+that all scripts at your site will receive the cookie.</p>
+</li>
+<li><a name="*4.-secure-flag*"></a><b><b>4. secure flag</b></b>
+<p>If the "secure" attribute is set, the cookie will only be sent to your
+script if the CGI request is occurring on a secure channel, such as SSL.</p>
+</li>
+<li><a name="*4.-httponly-flag*"></a><b><b>4. httponly flag</b></b>
+<p>If the "httponly" attribute is set, the cookie will only be accessible
+through HTTP Requests. This cookie will be inaccessible via JavaScript
+(to prevent XSS attacks).</p>
+<p>But, currently this feature only used and recognised by 
+MS Internet Explorer 6 Service Pack 1 and later.</p>
+<p>See this URL for more information:</p>
+<p><a href="http://msdn.microsoft.com/workshop/author/dhtml/httponly_cookies.asp">http://msdn.microsoft.com/workshop/author/dhtml/httponly_cookies.asp</a></p>
+</li>
+</ul>
+<a name="Creating-New-Cookies"></a><h2>Creating New Cookies</h2>
+<pre class="verbatim">	<a class="l_k" href="../functions/my.html">my</a> <span class="i">$c</span> = <span class="w">new</span> <span class="i">CGI::Cookie</span><span class="s">(</span>-<span class="w">name</span>    <span class="cm">=&gt;</span>  <span class="q">'foo'</span><span class="cm">,</span>
+                             -<span class="w">value</span>   <span class="cm">=&gt;</span>  <span class="q">'bar'</span><span class="cm">,</span>
+                             -<span class="w">expires</span> <span class="cm">=&gt;</span>  <span class="q">'+3M'</span><span class="cm">,</span>
+                             -<span class="w">domain</span>  <span class="cm">=&gt;</span>  <span class="q">'.capricorn.com'</span><span class="cm">,</span>
+                             -<span class="w">path</span>    <span class="cm">=&gt;</span>  <span class="q">'/cgi-bin/database'</span><span class="cm">,</span>
+                             -<span class="w">secure</span>  <span class="cm">=&gt;</span>  <span class="n">1</span>
+	                    <span class="s">)</span><span class="sc">;</span></pre>
+<p>Create cookies from scratch with the <b>new</b> method.  The <b>-name</b> and
+<b>-value</b> parameters are required.  The name must be a scalar value.
+The value can be a scalar, an array reference, or a hash reference.
+(At some point in the future cookies will support one of the Perl
+object serialization protocols for full generality).</p>
+<p><b>-expires</b> accepts any of the relative or absolute date formats
+recognized by CGI.pm, for example "+3M" for three months in the
+future.  See CGI.pm's documentation for details.</p>
+<p><b>-domain</b> points to a domain name or to a fully qualified host name.
+If not specified, the cookie will be returned only to the Web server
+that created it.</p>
+<p><b>-path</b> points to a partial URL on the current server.  The cookie
+will be returned to all URLs beginning with the specified path.  If
+not specified, it defaults to '/', which returns the cookie to all
+pages at your site.</p>
+<p><b>-secure</b> if set to a true value instructs the browser to return the
+cookie only when a cryptographic protocol is in use.</p>
+<p><b>-httponly</b> if set to a true value, the cookie will not be accessible
+via JavaScript.</p>
+<p>For compatibility with Apache::Cookie, you may optionally pass in
+a mod_perl request object as the first argument to <code class="inline"><span class="i">new</span><span class="s">(</span><span class="s">)</span></code>
+. It will
+simply be ignored:</p>
+<pre class="verbatim">  <a class="l_k" href="../functions/my.html">my</a> <span class="i">$c</span> = <span class="w">new</span> <span class="i">CGI::Cookie</span><span class="s">(</span><span class="i">$r</span><span class="cm">,</span>
+                          -<span class="w">name</span>    <span class="cm">=&gt;</span>  <span class="q">'foo'</span><span class="cm">,</span>
+                          -<span class="w">value</span>   <span class="cm">=&gt;</span>  <span class="s">[</span><span class="q">'bar'</span><span class="cm">,</span><span class="q">'baz'</span><span class="s">]</span><span class="s">)</span><span class="sc">;</span></pre>
+<a name="Sending-the-Cookie-to-the-Browser"></a><h2>Sending the Cookie to the Browser</h2>
+<p>The simplest way to send a cookie to the browser is by calling the bake()
+method:</p>
+<pre class="verbatim">  <span class="i">$c</span><span class="i">-&gt;bake</span><span class="sc">;</span></pre>
+<p>Under mod_perl, pass in an Apache request object:</p>
+<pre class="verbatim">  <span class="i">$c</span><span class="i">-&gt;bake</span><span class="s">(</span><span class="i">$r</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>If you want to set the cookie yourself, Within a CGI script you can send
+a cookie to the browser by creating one or more Set-Cookie: fields in the
+HTTP header.  Here is a typical sequence:</p>
+<pre class="verbatim">  <a class="l_k" href="../functions/my.html">my</a> <span class="i">$c</span> = <span class="w">new</span> <span class="i">CGI::Cookie</span><span class="s">(</span>-<span class="w">name</span>    <span class="cm">=&gt;</span>  <span class="q">&#39;foo&#39;</span><span class="cm">,</span>
+                          -<span class="w">value</span>   <span class="cm">=&gt;</span>  <span class="s">[</span><span class="q">&#39;bar&#39;</span><span class="cm">,</span><span class="q">&#39;baz&#39;</span><span class="s">]</span><span class="cm">,</span>
+                          -<span class="w">expires</span> <span class="cm">=&gt;</span>  <span class="q">&#39;+3M&#39;</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <a class="l_k" href="../functions/print.html">print</a> <span class="q">&quot;Set-Cookie: $c\n&quot;</span><span class="sc">;</span>
+  <a class="l_k" href="../functions/print.html">print</a> <span class="q">&quot;Content-Type: text/html\n\n&quot;</span><span class="sc">;</span></pre>
+<p>To send more than one cookie, create several Set-Cookie: fields.</p>
+<p>If you are using CGI.pm, you send cookies by providing a -cookie
+argument to the header() method:</p>
+<pre class="verbatim">  <a class="l_k" href="../functions/print.html">print</a> <span class="i">header</span><span class="s">(</span>-<span class="w">cookie</span><span class="cm">=&gt;</span><span class="i">$c</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Mod_perl users can set cookies using the request object's header_out()
+method:</p>
+<pre class="verbatim">  <span class="i">$r</span><span class="i">-&gt;headers_out</span><span class="i">-&gt;set</span><span class="s">(</span><span class="q">&#39;Set-Cookie&#39;</span> <span class="cm">=&gt;</span> <span class="i">$c</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Internally, Cookie overloads the "" operator to call its as_string()
+method when incorporated into the HTTP header.  as_string() turns the
+Cookie's internal representation into an RFC-compliant text
+representation.  You may call as_string() yourself if you prefer:</p>
+<pre class="verbatim">  <a class="l_k" href="../functions/print.html">print</a> <span class="q">&quot;Set-Cookie: &quot;</span><span class="cm">,</span><span class="i">$c</span><span class="i">-&gt;as_string</span><span class="cm">,</span><span class="q">&quot;\n&quot;</span><span class="sc">;</span></pre>
+<a name="Recovering-Previous-Cookies"></a><h2>Recovering Previous Cookies</h2>
+<pre class="verbatim">	<span class="i">%cookies</span> = <span class="w">fetch</span> <span class="w">CGI::Cookie</span><span class="sc">;</span></pre>
+<p><b>fetch</b> returns an associative array consisting of all cookies
+returned by the browser.  The keys of the array are the cookie names.  You
+can iterate through the cookies this way:</p>
+<pre class="verbatim">	<span class="i">%cookies</span> = <span class="w">fetch</span> <span class="w">CGI::Cookie</span><span class="sc">;</span>
+	foreach <span class="s">(</span><a class="l_k" href="../functions/keys.html">keys</a> <span class="i">%cookies</span><span class="s">)</span> <span class="s">{</span>
+	   <span class="i">do_something</span><span class="s">(</span><span class="i">$cookies</span>{<span class="i">$_</span>}<span class="s">)</span><span class="sc">;</span>
+        <span class="s">}</span></pre>
+<p>In a scalar context, fetch() returns a hash reference, which may be more
+efficient if you are manipulating multiple cookies.</p>
+<p>CGI.pm uses the URL escaping methods to save and restore reserved characters
+in its cookies.  If you are trying to retrieve a cookie set by a foreign server,
+this escaping method may trip you up.  Use raw_fetch() instead, which has the
+same semantics as fetch(), but performs no unescaping.</p>
+<p>You may also retrieve cookies that were stored in some external
+form using the parse() class method:</p>
+<pre class="verbatim">       <span class="i">$COOKIES</span> = <span class="q">`cat /usr/tmp/Cookie_stash`</span><span class="sc">;</span>
+       <span class="i">%cookies</span> = <span class="w">parse</span> <span class="i">CGI::Cookie</span><span class="s">(</span><span class="i">$COOKIES</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>If you are in a mod_perl environment, you can save some overhead by
+passing the request object to fetch() like this:</p>
+<pre class="verbatim">   <span class="w">CGI::Cookie</span><span class="w">-&gt;fetch</span><span class="s">(</span><span class="i">$r</span><span class="s">)</span><span class="sc">;</span></pre>
+<a name="Manipulating-Cookies"></a><h2>Manipulating Cookies</h2>
+<p>Cookie objects have a series of accessor methods to get and set cookie
+attributes.  Each accessor has a similar syntax.  Called without
+arguments, the accessor returns the current value of the attribute.
+Called with an argument, the accessor changes the attribute and
+returns its new value.</p>
+<ul>
+<li><a name="*name()*"></a><b><b>name()</b></b>
+<p>Get or set the cookie's name.  Example:</p>
+<pre class="verbatim">	<span class="i">$name</span> = <span class="i">$c</span><span class="i">-&gt;name</span><span class="sc">;</span>
+	<span class="i">$new_name</span> = <span class="i">$c</span><span class="i">-&gt;name</span><span class="s">(</span><span class="q">&#39;fred&#39;</span><span class="s">)</span><span class="sc">;</span></pre>
+</li>
+<li><a name="*value()*"></a><b><b>value()</b></b>
+<p>Get or set the cookie's value.  Example:</p>
+<pre class="verbatim">	<span class="i">$value</span> = <span class="i">$c</span><span class="i">-&gt;value</span><span class="sc">;</span>
+	<span class="i">@new_value</span> = <span class="i">$c</span><span class="i">-&gt;value</span><span class="s">(</span><span class="s">[</span><span class="q">&#39;a&#39;</span><span class="cm">,</span><span class="q">&#39;b&#39;</span><span class="cm">,</span><span class="q">&#39;c&#39;</span><span class="cm">,</span><span class="q">&#39;d&#39;</span><span class="s">]</span><span class="s">)</span><span class="sc">;</span></pre>
+<p><b>value()</b> is context sensitive.  In a list context it will return
+the current value of the cookie as an array.  In a scalar context it
+will return the <b>first</b> value of a multivalued cookie.</p>
+</li>
+<li><a name="*domain()*"></a><b><b>domain()</b></b>
+<p>Get or set the cookie's domain.</p>
+</li>
+<li><a name="*path()*"></a><b><b>path()</b></b>
+<p>Get or set the cookie's path.</p>
+</li>
+<li><a name="*expires()*"></a><b><b>expires()</b></b>
+<p>Get or set the cookie's expiration time.</p>
+</li>
+</ul>
+<a name="AUTHOR-INFORMATION"></a><h1>AUTHOR INFORMATION</h1>
+<p>Copyright 1997-1998, Lincoln D. Stein.  All rights reserved.</p>
+<p>This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.</p>
+<p>Address bug reports and comments to: lstein@cshl.org</p>
+<a name="BUGS"></a><h1>BUGS</h1>
+<p>This section intentionally left blank.</p>
+<a name="SEE-ALSO"></a><h1>SEE ALSO</h1>
+<p><a href="../CGI/Carp.html">CGI::Carp</a>, <a href="../CGI.html">CGI</a></p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../close_purple.gif';" onmouseout="rightCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('CGI::Cookie','CGI/Cookie.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

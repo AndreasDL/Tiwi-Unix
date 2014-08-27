@@ -1,0 +1,485 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>Test::Harness - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 1;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../close_purple.gif';" onmouseout="leftCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../index-overview.html">Overview</a></li>
+        <li><a href="../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../index-faq.html">FAQs</a></li>
+        <li><a href="../index-history.html">History / Changes</a></li>
+        <li><a href="../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../index-language.html">Language</a></li>
+        <li><a href="../index-functions.html">Functions</a></li>
+        <li><a href="../perlop.html">Operators</a></li>
+        <li><a href="../perlvar.html">Special variables</a></li>
+        <li><a href="../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../index-modules-A.html">Core modules</a></li>
+        <li><a href="../index-utilities.html">Utilities</a></li>
+        <li><a href="../index-internals.html">Internals</a></li>
+        <li><a href="../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../index.html">Home</a> &gt; <a href="../index-modules-A.html">Core modules</a> &gt; <a href="../index-modules-T.html">T</a> &gt; Test::Harness</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">Test::Harness</div><ul><li><a href="#NAME">NAME</a><li><a href="#VERSION">VERSION</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><ul><li><a href="#Taint-mode">Taint mode</a><li><a href="#Configuration-variables.">Configuration variables.</a><li><a href="#Failure">Failure</a></ul><li><a href="#FUNCTIONS">FUNCTIONS</a><ul><li><a href="#runtests(-0x40test_files-)">runtests( @test_files )</a><li><a href="#execute_tests(-tests-0x3d0x3e-0x5c0x40test_files0x2c-out-0x3d0x3e-0x5c*FH-)">execute_tests( tests =&gt; \@test_files, out =&gt; \*FH )</a></ul><li><a href="#EXPORT">EXPORT</a><li><a href="#DIAGNOSTICS">DIAGNOSTICS</a><li><a href="#ENVIRONMENT-VARIABLES-THAT-TEST0x3a0x3aHARNESS-SETS">ENVIRONMENT VARIABLES THAT TEST::HARNESS SETS</a><li><a href="#ENVIRONMENT-VARIABLES-THAT-AFFECT-TEST0x3a0x3aHARNESS">ENVIRONMENT VARIABLES THAT AFFECT TEST::HARNESS</a><li><a href="#EXAMPLE">EXAMPLE</a><li><a href="#SEE-ALSO">SEE ALSO</a><li><a href="#TODO">TODO</a><li><a href="#BUGS">BUGS</a><li><a href="#SUPPORT">SUPPORT</a><li><a href="#SOURCE-CODE">SOURCE CODE</a><li><a href="#AUTHORS">AUTHORS</a><li><a href="#COPYRIGHT">COPYRIGHT</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>Test::Harness - Run Perl standard test scripts with statistics</p>
+<a name="VERSION"></a><h1>VERSION</h1>
+<p>Version 2.64</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">  <a class="l_k" href="../functions/use.html">use</a> <span class="w">Test::Harness</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <span class="i">runtests</span><span class="s">(</span><span class="i">@test_files</span><span class="s">)</span><span class="sc">;</span></pre>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p><b>STOP!</b> If all you want to do is write a test script, consider
+using Test::Simple.  Test::Harness is the module that reads the
+output from Test::Simple, Test::More and other modules based on
+Test::Builder.  You don't need to know about Test::Harness to use
+those modules.</p>
+<p>Test::Harness runs tests and expects output from the test in a
+certain format.  That format is called TAP, the Test Anything
+Protocol.  It is defined in <a href="../Test/Harness/TAP.html">Test::Harness::TAP</a>.</p>
+<p><code class="inline"><span class="i">Test::Harness::runtests</span><span class="s">(</span><span class="i">@tests</span><span class="s">)</span></code>
+ runs all the testscripts named
+as arguments and checks standard output for the expected strings
+in TAP format.</p>
+<p>The <i>prove</i> utility is a thin wrapper around Test::Harness.</p>
+<a name="Taint-mode"></a><h2>Taint mode</h2>
+<p>Test::Harness will honor the <code class="inline">-T</code>
+ or <code class="inline">-t</code>
+ in the #! line on your
+test files.  So if you begin a test with:</p>
+<pre class="verbatim">    <span class="c">#!perl -T</span></pre>
+<p>the test will be run with taint mode on.</p>
+<a name="Configuration-variables."></a><h2>Configuration variables.</h2>
+<p>These variables can be used to configure the behavior of
+Test::Harness.  They are exported on request.</p>
+<ul>
+<li><a name="'0x24Test0x3a0x3aHarness0x3a0x3aVerbose'"></a><b><code class="inline"><span class="i">$Test::Harness::Verbose</span></code>
+</b>
+<p>The package variable <code class="inline"><span class="i">$Test::Harness::Verbose</span></code>
+ is exportable and can be
+used to let <code class="inline"><span class="i">runtests</span><span class="s">(</span><span class="s">)</span></code>
+ display the standard output of the script
+without altering the behavior otherwise.  The <i>prove</i> utility's <code class="inline">-<span class="w">v</span></code>
+
+flag will set this.</p>
+</li>
+<li><a name="'0x24Test0x3a0x3aHarness0x3a0x3aswitches'"></a><b><code class="inline"><span class="i">$Test::Harness::switches</span></code>
+</b>
+<p>The package variable <code class="inline"><span class="i">$Test::Harness::switches</span></code>
+ is exportable and can be
+used to set perl command line options used for running the test
+script(s). The default value is <code class="inline">-w</code>
+. It overrides <code class="inline"><span class="w">HARNESS_PERL_SWITCHES</span></code>
+.</p>
+</li>
+<li><a name="'0x24Test0x3a0x3aHarness0x3a0x3aTimer'"></a><b><code class="inline"><span class="i">$Test::Harness::Timer</span></code>
+</b>
+<p>If set to true, and <code class="inline"><span class="w">Time::HiRes</span></code>
+ is available, print elapsed seconds
+after each test file.</p>
+</li>
+</ul>
+<a name="Failure"></a><h2>Failure</h2>
+<p>When tests fail, analyze the summary report:</p>
+<pre class="verbatim">  t/base..............ok
+  t/nonumbers.........ok
+  t/ok................ok
+  t/test-harness......ok
+  t/waterloo..........dubious
+          Test returned status 3 (wstat 768, 0x300)
+  DIED. FAILED tests 1, 3, 5, 7, 9, 11, 13, 15, 17, 19
+          Failed 10/20 tests, 50.00% okay
+  Failed Test  Stat Wstat Total Fail  List of Failed
+  ---------------------------------------------------------------
+  t/waterloo.t    3   768    20   10  1 3 5 7 9 11 13 15 17 19
+  Failed 1/5 test scripts, 80.00% okay. 10/44 subtests failed, 77.27% okay.</pre><p>Everything passed but <i>t/waterloo.t</i>.  It failed 10 of 20 tests and
+exited with non-zero status indicating something dubious happened.</p>
+<p>The columns in the summary report mean:</p>
+<ul>
+<li><a name="*Failed-Test*"></a><b><b>Failed Test</b></b>
+<p>The test file which failed.</p>
+</li>
+<li><a name="*Stat*"></a><b><b>Stat</b></b>
+<p>If the test exited with non-zero, this is its exit status.</p>
+</li>
+<li><a name="*Wstat*"></a><b><b>Wstat</b></b>
+<p>The wait status of the test.</p>
+</li>
+<li><a name="*Total*"></a><b><b>Total</b></b>
+<p>Total number of tests expected to run.</p>
+</li>
+<li><a name="*Fail*"></a><b><b>Fail</b></b>
+<p>Number which failed, either from "not ok" or because they never ran.</p>
+</li>
+<li><a name="*List-of-Failed*"></a><b><b>List of Failed</b></b>
+<p>A list of the tests which failed.  Successive failures may be
+abbreviated (ie. 15-20 to indicate that tests 15, 16, 17, 18, 19 and
+20 failed).</p>
+</li>
+</ul>
+<a name="FUNCTIONS"></a><h1>FUNCTIONS</h1>
+<p>The following functions are available.</p>
+<a name="runtests(-0x40test_files-)"></a><h2>runtests( @test_files )</h2>
+<p>This runs all the given <i>@test_files</i> and divines whether they passed
+or failed based on their output to STDOUT (details above).  It prints
+out each individual test which failed along with a summary report and
+a how long it all took.</p>
+<p>It returns true if everything was ok.  Otherwise it will <code class="inline"><a class="l_k" href="../functions/die.html">die()</a></code> with
+one of the messages in the DIAGNOSTICS section.</p>
+<a name="execute_tests(-tests-0x3d0x3e-0x5c0x40test_files0x2c-out-0x3d0x3e-0x5c*FH-)"></a><h2>execute_tests( tests =&gt; \@test_files, out =&gt; \*FH )</h2>
+<p>Runs all the given <code class="inline"><span class="i">@test_files</span></code>
+ (just like <code class="inline"><span class="i">runtests</span><span class="s">(</span><span class="s">)</span></code>
+) but
+doesn't generate the final report.  During testing, progress
+information will be written to the currently selected output
+filehandle (usually <code class="inline"><span class="w">STDOUT</span></code>
+), or to the filehandle given by the
+<code class="inline"><span class="w">out</span></code>
+ parameter.  The <i>out</i> is optional.</p>
+<p>Returns a list of two values, <code class="inline"><span class="i">$total</span></code>
+ and <code class="inline"><span class="i">$failed</span></code>
+, describing the
+results.  <code class="inline"><span class="i">$total</span></code>
+ is a hash ref summary of all the tests run.  Its
+keys and values are this:</p>
+<pre class="verbatim">    <span class="w">bonus</span>           <span class="w">Number</span> <span class="w">of</span> <span class="w">individual</span> <span class="w">todo</span> <span class="w">tests</span> <span class="w">unexpectedly</span> <span class="w">passed</span>
+    <span class="w">max</span>             <span class="w">Number</span> <span class="w">of</span> <span class="w">individual</span> <span class="w">tests</span> <span class="w">ran</span>
+    <span class="w">ok</span>              <span class="w">Number</span> <span class="w">of</span> <span class="w">individual</span> <span class="w">tests</span> <span class="w">passed</span>
+    <span class="w">sub_skipped</span>     <span class="w">Number</span> <span class="w">of</span> <span class="w">individual</span> <span class="w">tests</span> <span class="w">skipped</span>
+    <span class="w">todo</span>            <span class="w">Number</span> <span class="w">of</span> <span class="w">individual</span> <span class="w">todo</span> <span class="w">tests</span></pre>
+<pre class="verbatim">    <span class="w">files</span>           <span class="w">Number</span> <span class="w">of</span> <span class="w">test</span> <span class="w">files</span> <span class="w">ran</span>
+    <span class="w">good</span>            <span class="w">Number</span> <span class="w">of</span> <span class="w">test</span> <span class="w">files</span> <span class="w">passed</span>
+    <span class="w">bad</span>             <span class="w">Number</span> <span class="w">of</span> <span class="w">test</span> <span class="w">files</span> <span class="w">failed</span>
+    <span class="w">tests</span>           <span class="w">Number</span> <span class="w">of</span> <span class="w">test</span> <span class="w">files</span> <span class="w">originally</span> given
+    <span class="w">skipped</span>         <span class="w">Number</span> <span class="w">of</span> <span class="w">test</span> <span class="w">files</span> <span class="w">skipped</span></pre>
+<p>If <code class="inline"><span class="i">$total</span>-&gt;{<span class="w">bad</span>} == <span class="n">0</span></code>
+ and <code class="inline"><span class="i">$total</span>-&gt;{<span class="w">max</span>} &gt; <span class="n">0</span></code>
+, you've
+got a successful test.</p>
+<p><code class="inline"><span class="i">$failed</span></code>
+ is a hash ref of all the test scripts that failed.  Each key
+is the name of a test script, each value is another hash representing
+how that script failed.  Its keys are these:</p>
+<pre class="verbatim">    name        Name of the test which failed
+    estat       Script's exit value
+    wstat       Script's wait status
+    max         Number of individual tests
+    failed      Number which failed
+    canon       List of tests which failed (as string).</pre><p><code class="inline"><span class="i">$failed</span></code>
+ should be empty if everything passed.</p>
+<pre class="verbatim">    <a class="l_k" href="../functions/my.html">my</a><span class="s">(</span><span class="i">$leader</span><span class="cm">,</span> <span class="i">$ml</span><span class="s">)</span> = <span class="i">_mk_leader</span><span class="s">(</span><span class="i">$test_file</span><span class="cm">,</span> <span class="i">$width</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Generates the 't/foo........' leader for the given <code class="inline"><span class="i">$test_file</span></code>
+ as well
+as a similar version which will overwrite the current line (by use of
+\r and such).  <code class="inline"><span class="i">$ml</span></code>
+ may be empty if Test::Harness doesn't think you're
+on TTY.</p>
+<p>The <code class="inline"><span class="i">$width</span></code>
+ is the width of the "yada/blah.." string.</p>
+<pre class="verbatim">  <a class="l_k" href="../functions/my.html">my</a><span class="s">(</span><span class="i">$width</span><span class="s">)</span> = <span class="i">_leader_width</span><span class="s">(</span><span class="i">@test_files</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Calculates how wide the leader should be based on the length of the
+longest test name.</p>
+<a name="EXPORT"></a><h1>EXPORT</h1>
+<p><code class="inline"><span class="i">&amp;runtests</span></code>
+ is exported by Test::Harness by default.</p>
+<p><code class="inline"><span class="i">&amp;execute_tests</span></code>
+, <code class="inline"><span class="i">$verbose</span></code>
+, <code class="inline"><span class="i">$switches</span></code>
+ and <code class="inline"><span class="i">$debug</span></code>
+ are
+exported upon request.</p>
+<a name="DIAGNOSTICS"></a><h1>DIAGNOSTICS</h1>
+<ul>
+<li><a name="'All-tests-successful.0x5cnFiles0x3d0x25d0x2c--Tests0x3d0x25d0x2c-0x25s'"></a><b><code class="inline"><span class="w">All</span> <span class="w">tests</span> <span class="w">successful</span>.\<span class="w">nFiles</span>=<span class="i">%d</span><span class="cm">,</span>  <span class="w">Tests</span>=<span class="i">%d</span><span class="cm">,</span> <span class="i">%s</span></code>
+</b>
+<p>If all tests are successful some statistics about the performance are
+printed.</p>
+</li>
+<li><a name="'FAILED-tests-0x25s0x5cn0x5ctFailed-0x25d0x2f0x25d-tests0x2c-0x25.2f0x250x25-okay.'"></a><b><code class="inline">FAILED tests %s\n\tFailed %d/%d tests, %.2f%% okay.</code></b>
+<p>For any single script that has failing subtests statistics like the
+above are printed.</p>
+</li>
+<li><a name="'Test-returned-status-0x25d-(wstat-0x25d)'"></a><b><code class="inline">Test returned status %d (wstat %d)</code></b>
+<p>Scripts that return a non-zero exit status, both <code class="inline"><span class="i">$?</span> &gt;&gt; <span class="n">8</span></code>
+
+and <code class="inline"><span class="i">$?</span></code>
+ are printed in a message similar to the above.</p>
+</li>
+<li><a name="'Failed-1-test0x2c-0x25.2f0x250x25-okay.-0x25s'"></a><b><code class="inline">Failed 1 test, %.2f%% okay. %s</code></b>
+</li>
+<li><a name="'Failed-0x25d0x2f0x25d-tests0x2c-0x25.2f0x250x25-okay.-0x25s'"></a><b><code class="inline">Failed %d/%d tests, %.2f%% okay. %s</code></b>
+<p>If not all tests were successful, the script dies with one of the
+above messages.</p>
+</li>
+<li><a name="'FAILED--Further-testing-stopped0x3a-0x25s'"></a><b><code class="inline">FAILED--Further testing stopped: %s</code></b>
+<p>If a single subtest decides that further testing will not make sense,
+the script dies with this message.</p>
+</li>
+</ul>
+<a name="ENVIRONMENT-VARIABLES-THAT-TEST0x3a0x3aHARNESS-SETS"></a><h1>ENVIRONMENT VARIABLES THAT TEST::HARNESS SETS</h1>
+<p>Test::Harness sets these before executing the individual tests.</p>
+<ul>
+<li><a name="'HARNESS_ACTIVE'"></a><b><code class="inline"><span class="w">HARNESS_ACTIVE</span></code>
+</b>
+<p>This is set to a true value.  It allows the tests to determine if they
+are being executed through the harness or by any other means.</p>
+</li>
+<li><a name="'HARNESS_VERSION'"></a><b><code class="inline"><span class="w">HARNESS_VERSION</span></code>
+</b>
+<p>This is the version of Test::Harness.</p>
+</li>
+</ul>
+<a name="ENVIRONMENT-VARIABLES-THAT-AFFECT-TEST0x3a0x3aHARNESS"></a><h1>ENVIRONMENT VARIABLES THAT AFFECT TEST::HARNESS</h1>
+<ul>
+<li><a name="'HARNESS_COLUMNS'"></a><b><code class="inline"><span class="w">HARNESS_COLUMNS</span></code>
+</b>
+<p>This value will be used for the width of the terminal. If it is not
+set then it will default to <code class="inline"><span class="w">COLUMNS</span></code>
+. If this is not set, it will
+default to 80. Note that users of Bourne-sh based shells will need to
+<code class="inline"><span class="w">export</span> <span class="w">COLUMNS</span></code>
+ for this module to use that variable.</p>
+</li>
+<li><a name="'HARNESS_COMPILE_TEST'"></a><b><code class="inline"><span class="w">HARNESS_COMPILE_TEST</span></code>
+</b>
+<p>When true it will make harness attempt to compile the test using
+<code class="inline"><span class="w">perlcc</span></code>
+ before running it.</p>
+<p><b>NOTE</b> This currently only works when sitting in the perl source
+directory!</p>
+</li>
+<li><a name="'HARNESS_DEBUG'"></a><b><code class="inline"><span class="w">HARNESS_DEBUG</span></code>
+</b>
+<p>If true, Test::Harness will print debugging information about itself as
+it runs the tests.  This is different from <code class="inline"><span class="w">HARNESS_VERBOSE</span></code>
+, which prints
+the output from the test being run.  Setting <code class="inline"><span class="i">$Test::Harness::Debug</span></code>
+ will
+override this, or you can use the <code class="inline">-d</code>
+ switch in the <i>prove</i> utility.</p>
+</li>
+<li><a name="'HARNESS_FILELEAK_IN_DIR'"></a><b><code class="inline"><span class="w">HARNESS_FILELEAK_IN_DIR</span></code>
+</b>
+<p>When set to the name of a directory, harness will check after each
+test whether new files appeared in that directory, and report them as</p>
+<pre class="verbatim">  LEAKED FILES: scr.tmp 0 my.db</pre><p>If relative, directory name is with respect to the current directory at
+the moment runtests() was called.  Putting absolute path into 
+<code class="inline"><span class="w">HARNESS_FILELEAK_IN_DIR</span></code>
+ may give more predictable results.</p>
+</li>
+<li><a name="'HARNESS_NOTTY'"></a><b><code class="inline"><span class="w">HARNESS_NOTTY</span></code>
+</b>
+<p>When set to a true value, forces it to behave as though STDOUT were
+not a console.  You may need to set this if you don't want harness to
+output more frequent progress messages using carriage returns.  Some
+consoles may not handle carriage returns properly (which results in a
+somewhat messy output).</p>
+</li>
+<li><a name="'HARNESS_PERL'"></a><b><code class="inline"><span class="w">HARNESS_PERL</span></code>
+</b>
+<p>Usually your tests will be run by <code class="inline"><span class="i">$^X</span></code>
+, the currently-executing Perl.
+However, you may want to have it run by a different executable, such as
+a threading perl, or a different version.</p>
+<p>If you're using the <i>prove</i> utility, you can use the <code class="inline">--<span class="w">perl</span></code>
+ switch.</p>
+</li>
+<li><a name="'HARNESS_PERL_SWITCHES'"></a><b><code class="inline"><span class="w">HARNESS_PERL_SWITCHES</span></code>
+</b>
+<p>Its value will be prepended to the switches used to invoke perl on
+each test.  For example, setting <code class="inline"><span class="w">HARNESS_PERL_SWITCHES</span></code>
+ to <code class="inline">-W</code>
+ will
+run all tests with all warnings enabled.</p>
+</li>
+<li><a name="'HARNESS_TIMER'"></a><b><code class="inline"><span class="w">HARNESS_TIMER</span></code>
+</b>
+<p>Setting this to true will make the harness display the number of
+milliseconds each test took.  You can also use <i>prove</i>'s <code class="inline">--<span class="w">timer</span></code>
+
+switch.</p>
+</li>
+<li><a name="'HARNESS_VERBOSE'"></a><b><code class="inline"><span class="w">HARNESS_VERBOSE</span></code>
+</b>
+<p>If true, Test::Harness will output the verbose results of running
+its tests.  Setting <code class="inline"><span class="i">$Test::Harness::verbose</span></code>
+ will override this,
+or you can use the <code class="inline">-<span class="w">v</span></code>
+ switch in the <i>prove</i> utility.</p>
+<p>If true, Test::Harness will output the verbose results of running
+its tests.  Setting <code class="inline"><span class="i">$Test::Harness::verbose</span></code>
+ will override this,
+or you can use the <code class="inline">-<span class="w">v</span></code>
+ switch in the <i>prove</i> utility.</p>
+</li>
+<li><a name="'HARNESS_STRAP_CLASS'"></a><b><code class="inline"><span class="w">HARNESS_STRAP_CLASS</span></code>
+</b>
+<p>Defines the Test::Harness::Straps subclass to use.  The value may either
+be a filename or a class name.</p>
+<p>If HARNESS_STRAP_CLASS is a class name, the class must be in <code class="inline"><span class="i">@INC</span></code>
+
+like any other class.</p>
+<p>If HARNESS_STRAP_CLASS is a filename, the .pm file must return the name
+of the class, instead of the canonical "1".</p>
+</li>
+</ul>
+<a name="EXAMPLE"></a><h1>EXAMPLE</h1>
+<p>Here's how Test::Harness tests itself</p>
+<pre class="verbatim">  $ cd ~/src/devel/Test-Harness
+  $ perl -Mblib -e 'use Test::Harness qw(&amp;runtests $verbose);
+    $verbose=0; runtests @ARGV;' t/*.t
+  Using /home/schwern/src/devel/Test-Harness/blib
+  t/base..............ok
+  t/nonumbers.........ok
+  t/ok................ok
+  t/test-harness......ok
+  All tests successful.
+  Files=4, Tests=24, 2 wallclock secs ( 0.61 cusr + 0.41 csys = 1.02 CPU)</pre><a name="SEE-ALSO"></a><h1>SEE ALSO</h1>
+<p>The included <i>prove</i> utility for running test scripts from the command line,
+<a href="../Test.html">Test</a> and <a href="../Test/Simple.html">Test::Simple</a> for writing test scripts, <a href="../Benchmark.html">Benchmark</a> for
+the underlying timing routines, and <a href="http://search.cpan.org/perldoc/Devel::Cover">Devel::Cover</a> for test coverage
+analysis.</p>
+<a name="TODO"></a><h1>TODO</h1>
+<p>Provide a way of running tests quietly (ie. no printing) for automated
+validation of tests.  This will probably take the form of a version
+of runtests() which rather than printing its output returns raw data
+on the state of the tests.  (Partially done in Test::Harness::Straps)</p>
+<p>Document the format.</p>
+<p>Fix HARNESS_COMPILE_TEST without breaking its core usage.</p>
+<p>Figure a way to report test names in the failure summary.</p>
+<p>Rework the test summary so long test names are not truncated as badly.
+(Partially done with new skip test styles)</p>
+<p>Add option for coverage analysis.</p>
+<p>Trap STDERR.</p>
+<p>Implement Straps total_results()</p>
+<p>Remember exit code</p>
+<p>Completely redo the print summary code.</p>
+<p>Straps-&gt;analyze_file() not taint clean, don't know if it can be</p>
+<p>Fix that damned VMS nit.</p>
+<p>Add a test for verbose.</p>
+<p>Change internal list of test results to a hash.</p>
+<p>Fix stats display when there's an overrun.</p>
+<p>Fix so perls with spaces in the filename work.</p>
+<p>Keeping whittling away at _run_all_tests()</p>
+<p>Clean up how the summary is printed.  Get rid of those damned formats.</p>
+<a name="BUGS"></a><h1>BUGS</h1>
+<p>Please report any bugs or feature requests to
+<code class="inline"><span class="w">bug</span>-<span class="w">test</span>-<span class="w">harness</span> <span class="w">at</span> <span class="w">rt</span>.<span class="w">cpan</span>.<span class="w">org</span></code>
+, or through the web interface at
+<a href="http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Test-Harness">http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Test-Harness</a>.
+I will be notified, and then you'll automatically be notified of progress on
+your bug as I make changes.</p>
+<a name="SUPPORT"></a><h1>SUPPORT</h1>
+<p>You can find documentation for this module with the <i>perldoc</i> command.</p>
+<pre class="verbatim">    <span class="w">perldoc</span> <span class="w">Test::Harness</span></pre>
+<p>You can get docs for <i>prove</i> with</p>
+<pre class="verbatim">    prove --man</pre><p>You can also look for information at:</p>
+<ul>
+<li><a name="*-AnnoCPAN0x3a-Annotated-CPAN-documentation"></a><b>AnnoCPAN: Annotated CPAN documentation</b>
+<p><a href="http://annocpan.org/dist/Test-Harness">http://annocpan.org/dist/Test-Harness</a></p>
+</li>
+<li><a name="*-CPAN-Ratings"></a><b>CPAN Ratings</b>
+<p><a href="http://cpanratings.perl.org/d/Test-Harness">http://cpanratings.perl.org/d/Test-Harness</a></p>
+</li>
+<li><a name="*-RT0x3a-CPAN's-request-tracker"></a><b>RT: CPAN's request tracker</b>
+<p><a href="http://rt.cpan.org/NoAuth/Bugs.html?Dist=Test-Harness">http://rt.cpan.org/NoAuth/Bugs.html?Dist=Test-Harness</a></p>
+</li>
+<li><a name="*-Search-CPAN"></a><b>Search CPAN</b>
+<p><a href="http://search.cpan.org/dist/Test-Harness">http://search.cpan.org/dist/Test-Harness</a></p>
+</li>
+</ul>
+<a name="SOURCE-CODE"></a><h1>SOURCE CODE</h1>
+<p>The source code repository for Test::Harness is at
+<a href="http://svn.perl.org/modules/Test-Harness">http://svn.perl.org/modules/Test-Harness</a>.</p>
+<a name="AUTHORS"></a><h1>AUTHORS</h1>
+<p>Either Tim Bunce or Andreas Koenig, we don't know. What we know for
+sure is, that it was inspired by Larry Wall's <i>TEST</i> script that came
+with perl distributions for ages. Numerous anonymous contributors
+exist.  Andreas Koenig held the torch for many years, and then
+Michael G Schwern.</p>
+<p>Current maintainer is Andy Lester <code class="inline"><span class="q">&lt;andy at petdance.com&gt;</span></code>
+.</p>
+<a name="COPYRIGHT"></a><h1>COPYRIGHT</h1>
+<p>Copyright 2002-2006
+by Michael G Schwern <code class="inline"><span class="q">&lt;schwern at pobox.com&gt;</span></code>
+,
+Andy Lester <code class="inline"><span class="q">&lt;andy at petdance.com&gt;</span></code>
+.</p>
+<p>This program is free software; you can redistribute it and/or 
+modify it under the same terms as Perl itself.</p>
+<p>See <a href="http://www.perl.com/perl/misc/Artistic.html">http://www.perl.com/perl/misc/Artistic.html</a>.</p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../close_purple.gif';" onmouseout="rightCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('Test::Harness','Test/Harness.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

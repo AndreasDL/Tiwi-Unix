@@ -1,0 +1,1452 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>I18N::LangTags::List - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 2;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../../close_purple.gif';" onmouseout="leftCloseIcon.src='../../close_blue.gif';"><img src="../../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../../index-overview.html">Overview</a></li>
+        <li><a href="../../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../../index-faq.html">FAQs</a></li>
+        <li><a href="../../index-history.html">History / Changes</a></li>
+        <li><a href="../../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../../index-language.html">Language</a></li>
+        <li><a href="../../index-functions.html">Functions</a></li>
+        <li><a href="../../perlop.html">Operators</a></li>
+        <li><a href="../../perlvar.html">Special variables</a></li>
+        <li><a href="../../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../../index-modules-A.html">Core modules</a></li>
+        <li><a href="../../index-utilities.html">Utilities</a></li>
+        <li><a href="../../index-internals.html">Internals</a></li>
+        <li><a href="../../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../../index.html">Home</a> &gt; <a href="../../index-modules-A.html">Core modules</a> &gt; <a href="../../index-modules-I.html">I</a> &gt; I18N::LangTags::List</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">I18N::LangTags::List</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><li><a href="#ABOUT-LANGUAGE-TAGS">ABOUT LANGUAGE TAGS</a><li><a href="#LIST-OF-LANGUAGES">LIST OF LANGUAGES</a><li><a href="#SEE-ALSO">SEE ALSO</a><li><a href="#COPYRIGHT-AND-DISCLAIMER">COPYRIGHT AND DISCLAIMER</a><li><a href="#AUTHOR">AUTHOR</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>I18N::LangTags::List -- tags and names for human languages</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">  <a class="l_k" href="../../functions/use.html">use</a> <span class="w">I18N::LangTags::List</span><span class="sc">;</span>
+  <a class="l_k" href="../../functions/print.html">print</a> <span class="q">&quot;Parlez-vous... &quot;</span><span class="cm">,</span> <a class="l_k" href="../../functions/join.html">join</a><span class="s">(</span><span class="q">&#39;, &#39;</span><span class="cm">,</span>
+      <span class="i">I18N::LangTags::List::name</span><span class="s">(</span><span class="q">&#39;elx&#39;</span><span class="s">)</span> || <span class="q">&#39;unknown_language&#39;</span><span class="cm">,</span>
+      <span class="i">I18N::LangTags::List::name</span><span class="s">(</span><span class="q">&#39;ar-Kw&#39;</span><span class="s">)</span> || <span class="q">&#39;unknown_language&#39;</span><span class="cm">,</span>
+      <span class="i">I18N::LangTags::List::name</span><span class="s">(</span><span class="q">&#39;en&#39;</span><span class="s">)</span> || <span class="q">&#39;unknown_language&#39;</span><span class="cm">,</span>
+      <span class="i">I18N::LangTags::List::name</span><span class="s">(</span><span class="q">&#39;en-CA&#39;</span><span class="s">)</span> || <span class="q">&#39;unknown_language&#39;</span><span class="cm">,</span>
+    <span class="s">)</span><span class="cm">,</span> <span class="q">&quot;?\n&quot;</span><span class="sc">;</span></pre>
+<p>prints:</p>
+<pre class="verbatim">  Parlez-vous... Elamite, Kuwait Arabic, English, Canadian English?</pre><a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p>This module provides a function 
+<code class="inline">I18N::LangTags::List::name( &lt;i&gt;langtag&lt;/i&gt; ) </code> that takes
+a language tag (see <a href="../../I18N/LangTags.html">I18N::LangTags</a>)
+and returns the best attempt at an English name for it, or
+undef if it can't make sense of the tag.</p>
+<p>The function I18N::LangTags::List::name(...) is not exported.</p>
+<p>This module also provides a function
+<code class="inline">I18N::LangTags::List::is_decent( &lt;i&gt;langtag&lt;/i&gt; )</code> that returns true iff
+the language tag is syntactically valid and is for general use (like
+"fr" or "fr-ca", below).  That is, it returns false for tags that are
+syntactically invalid and for tags, like "aus", that are listed in
+brackets below.  This function is not exported.</p>
+<p>The map of tags-to-names that it uses is accessible as
+%I18N::LangTags::List::Name, and it's the same as the list
+that follows in this documentation, which should be useful
+to you even if you don't use this module.</p>
+<a name="ABOUT-LANGUAGE-TAGS"></a><h1>ABOUT LANGUAGE TAGS</h1>
+<p>Internet language tags, as defined in RFC 3066, are a formalism
+for denoting human languages.  The two-letter ISO 639-1 language
+codes are well known (as "en" for English), as are their forms
+when qualified by a country code ("en-US").  Less well-known are the
+arbitrary-length non-ISO codes (like "i-mingo"), and the 
+recently (in 2001) introduced three-letter ISO-639-2 codes.</p>
+<p>Remember these important facts:</p>
+<ul>
+<li>
+<p>Language tags are not locale IDs.  A locale ID is written with a "_"
+instead of a "-", (almost?) always matches <code class="inline"><a class="l_k" href="../../functions/m.html">m/^\w\w_\w\w\b/</a></code>, and
+<i>means</i> something different than a language tag.  A language tag
+denotes a language.  A locale ID denotes a language <i>as used in</i>
+a particular place, in combination with non-linguistic
+location-specific information such as what currency is used
+there.  Locales <i>also</i> often denote character set information,
+as in "en_US.ISO8859-1".</p>
+</li>
+<li>
+<p>Language tags are not for computer languages.</p>
+</li>
+<li>
+<p>"Dialect" is not a useful term, since there is no objective
+criterion for establishing when two language-forms are
+dialects of eachother, or are separate languages.</p>
+</li>
+<li>
+<p>Language tags are not case-sensitive.  en-US, en-us, En-Us, etc.,
+are all the same tag, and denote the same language.</p>
+</li>
+<li>
+<p>Not every language tag really refers to a single language.  Some
+language tags refer to conditions: i-default (system-message text
+in English plus maybe other languages), und (undetermined
+language).  Others (notably lots of the three-letter codes) are
+bibliographic tags that classify whole groups of languages, as
+with cus "Cushitic (Other)" (i.e., a
+language that has been classed as Cushtic, but which has no more
+specific code) or the even less linguistically coherent
+sai for "South American Indian (Other)".  Though useful in
+bibliography, <b>SUCH TAGS ARE NOT
+FOR GENERAL USE</b>.  For further guidance, email me.</p>
+</li>
+<li>
+<p>Language tags are not country codes.  In fact, they are often
+distinct codes, as with language tag ja for Japanese, and
+ISO 3166 country code <code class="inline">.jp</code> for Japan.</p>
+</li>
+</ul>
+<a name="LIST-OF-LANGUAGES"></a><h1>LIST OF LANGUAGES</h1>
+<p>The first part of each item is the language tag, between
+{...}.  It
+is followed by an English name for the language or language-group.
+Language tags that I judge to be not for general use, are bracketed.</p>
+<p>This list is in alphabetical order by English name of the language.</p>
+<ul>
+<li><a name="0x7bab0x7d-0x3a-Abkhazian"></a><b>{ab} : Abkhazian</b>
+<p>eq Abkhaz</p>
+</li>
+<li><a name="0x7bace0x7d-0x3a-Achinese"></a><b>{ace} : Achinese</b>
+</li>
+<li><a name="0x7bach0x7d-0x3a-Acoli"></a><b>{ach} : Acoli</b>
+</li>
+<li><a name="0x7bada0x7d-0x3a-Adangme"></a><b>{ada} : Adangme</b>
+</li>
+<li><a name="0x7bady0x7d-0x3a-Adyghe"></a><b>{ady} : Adyghe</b>
+<p>eq Adygei</p>
+</li>
+<li><a name="0x7baa0x7d-0x3a-Afar"></a><b>{aa} : Afar</b>
+</li>
+<li><a name="0x7bafh0x7d-0x3a-Afrihili"></a><b>{afh} : Afrihili</b>
+<p>(Artificial)</p>
+</li>
+<li><a name="0x7baf0x7d-0x3a-Afrikaans"></a><b>{af} : Afrikaans</b>
+</li>
+<li><a name="0x5b0x7bafa0x7d-0x3a-Afro-Asiatic-(Other)0x5d"></a><b>[{afa} : Afro-Asiatic (Other)]</b>
+</li>
+<li><a name="0x7bak0x7d-0x3a-Akan"></a><b>{ak} : Akan</b>
+<p>(Formerly "aka".)</p>
+</li>
+<li><a name="0x7bakk0x7d-0x3a-Akkadian"></a><b>{akk} : Akkadian</b>
+<p>(Historical)</p>
+</li>
+<li><a name="0x7bsq0x7d-0x3a-Albanian"></a><b>{sq} : Albanian</b>
+</li>
+<li><a name="0x7bale0x7d-0x3a-Aleut"></a><b>{ale} : Aleut</b>
+</li>
+<li><a name="0x5b0x7balg0x7d-0x3a-Algonquian-languages0x5d"></a><b>[{alg} : Algonquian languages]</b>
+<p>NOT Algonquin!</p>
+</li>
+<li><a name="0x5b0x7btut0x7d-0x3a-Altaic-(Other)0x5d"></a><b>[{tut} : Altaic (Other)]</b>
+</li>
+<li><a name="0x7bam0x7d-0x3a-Amharic"></a><b>{am} : Amharic</b>
+<p>NOT Aramaic!</p>
+</li>
+<li><a name="0x7bi-ami0x7d-0x3a-Ami"></a><b>{i-ami} : Ami</b>
+<p>eq Amis.  eq 'Amis.  eq Pangca.</p>
+</li>
+<li><a name="0x5b0x7bapa0x7d-0x3a-Apache-languages0x5d"></a><b>[{apa} : Apache languages]</b>
+</li>
+<li><a name="0x7bar0x7d-0x3a-Arabic"></a><b>{ar} : Arabic</b>
+<p>Many forms are mutually un-intelligible in spoken media.
+Notable forms:
+{ar-ae} UAE Arabic;
+{ar-bh} Bahrain Arabic;
+{ar-dz} Algerian Arabic;
+{ar-eg} Egyptian Arabic;
+{ar-iq} Iraqi Arabic;
+{ar-jo} Jordanian Arabic;
+{ar-kw} Kuwait Arabic;
+{ar-lb} Lebanese Arabic;
+{ar-ly} Libyan Arabic;
+{ar-ma} Moroccan Arabic;
+{ar-om} Omani Arabic;
+{ar-qa} Qatari Arabic;
+{ar-sa} Sauda Arabic;
+{ar-sy} Syrian Arabic;
+{ar-tn} Tunisian Arabic;
+{ar-ye} Yemen Arabic.</p>
+</li>
+<li><a name="0x7barc0x7d-0x3a-Aramaic"></a><b>{arc} : Aramaic</b>
+<p>NOT Amharic!  NOT Samaritan Aramaic!</p>
+</li>
+<li><a name="0x7barp0x7d-0x3a-Arapaho"></a><b>{arp} : Arapaho</b>
+</li>
+<li><a name="0x7barn0x7d-0x3a-Araucanian"></a><b>{arn} : Araucanian</b>
+</li>
+<li><a name="0x7barw0x7d-0x3a-Arawak"></a><b>{arw} : Arawak</b>
+</li>
+<li><a name="0x7bhy0x7d-0x3a-Armenian"></a><b>{hy} : Armenian</b>
+</li>
+<li><a name="0x7ban0x7d-0x3a-Aragonese"></a><b>{an} : Aragonese</b>
+</li>
+<li><a name="0x5b0x7bart0x7d-0x3a-Artificial-(Other)0x5d"></a><b>[{art} : Artificial (Other)]</b>
+</li>
+<li><a name="0x7bast0x7d-0x3a-Asturian"></a><b>{ast} : Asturian</b>
+<p>eq Bable.</p>
+</li>
+<li><a name="0x7bas0x7d-0x3a-Assamese"></a><b>{as} : Assamese</b>
+</li>
+<li><a name="0x5b0x7bath0x7d-0x3a-Athapascan-languages0x5d"></a><b>[{ath} : Athapascan languages]</b>
+<p>eq Athabaskan.  eq Athapaskan.  eq Athabascan.</p>
+</li>
+<li><a name="0x5b0x7baus0x7d-0x3a-Australian-languages0x5d"></a><b>[{aus} : Australian languages]</b>
+</li>
+<li><a name="0x5b0x7bmap0x7d-0x3a-Austronesian-(Other)0x5d"></a><b>[{map} : Austronesian (Other)]</b>
+</li>
+<li><a name="0x7bav0x7d-0x3a-Avaric"></a><b>{av} : Avaric</b>
+<p>(Formerly "ava".)</p>
+</li>
+<li><a name="0x7bae0x7d-0x3a-Avestan"></a><b>{ae} : Avestan</b>
+<p>eq Zend</p>
+</li>
+<li><a name="0x7bawa0x7d-0x3a-Awadhi"></a><b>{awa} : Awadhi</b>
+</li>
+<li><a name="0x7bay0x7d-0x3a-Aymara"></a><b>{ay} : Aymara</b>
+</li>
+<li><a name="0x7baz0x7d-0x3a-Azerbaijani"></a><b>{az} : Azerbaijani</b>
+<p>eq Azeri</p>
+<p>Notable forms:
+{az-Arab} Azerbaijani in Arabic script;
+{az-Cyrl} Azerbaijani in Cyrillic script;
+{az-Latn} Azerbaijani in Latin script.</p>
+</li>
+<li><a name="0x7bban0x7d-0x3a-Balinese"></a><b>{ban} : Balinese</b>
+</li>
+<li><a name="0x5b0x7bbat0x7d-0x3a-Baltic-(Other)0x5d"></a><b>[{bat} : Baltic (Other)]</b>
+</li>
+<li><a name="0x7bbal0x7d-0x3a-Baluchi"></a><b>{bal} : Baluchi</b>
+</li>
+<li><a name="0x7bbm0x7d-0x3a-Bambara"></a><b>{bm} : Bambara</b>
+<p>(Formerly "bam".)</p>
+</li>
+<li><a name="0x5b0x7bbai0x7d-0x3a-Bamileke-languages0x5d"></a><b>[{bai} : Bamileke languages]</b>
+</li>
+<li><a name="0x7bbad0x7d-0x3a-Banda"></a><b>{bad} : Banda</b>
+</li>
+<li><a name="0x5b0x7bbnt0x7d-0x3a-Bantu-(Other)0x5d"></a><b>[{bnt} : Bantu (Other)]</b>
+</li>
+<li><a name="0x7bbas0x7d-0x3a-Basa"></a><b>{bas} : Basa</b>
+</li>
+<li><a name="0x7bba0x7d-0x3a-Bashkir"></a><b>{ba} : Bashkir</b>
+</li>
+<li><a name="0x7beu0x7d-0x3a-Basque"></a><b>{eu} : Basque</b>
+</li>
+<li><a name="0x7bbtk0x7d-0x3a-Batak-(Indonesia)"></a><b>{btk} : Batak (Indonesia)</b>
+</li>
+<li><a name="0x7bbej0x7d-0x3a-Beja"></a><b>{bej} : Beja</b>
+</li>
+<li><a name="0x7bbe0x7d-0x3a-Belarusian"></a><b>{be} : Belarusian</b>
+<p>eq Belarussian.  eq Byelarussian.
+eq Belorussian.  eq Byelorussian.
+eq White Russian.  eq White Ruthenian.
+NOT Ruthenian!</p>
+</li>
+<li><a name="0x7bbem0x7d-0x3a-Bemba"></a><b>{bem} : Bemba</b>
+</li>
+<li><a name="0x7bbn0x7d-0x3a-Bengali"></a><b>{bn} : Bengali</b>
+<p>eq Bangla.</p>
+</li>
+<li><a name="0x5b0x7bber0x7d-0x3a-Berber-(Other)0x5d"></a><b>[{ber} : Berber (Other)]</b>
+</li>
+<li><a name="0x7bbho0x7d-0x3a-Bhojpuri"></a><b>{bho} : Bhojpuri</b>
+</li>
+<li><a name="0x7bbh0x7d-0x3a-Bihari"></a><b>{bh} : Bihari</b>
+</li>
+<li><a name="0x7bbik0x7d-0x3a-Bikol"></a><b>{bik} : Bikol</b>
+</li>
+<li><a name="0x7bbin0x7d-0x3a-Bini"></a><b>{bin} : Bini</b>
+</li>
+<li><a name="0x7bbi0x7d-0x3a-Bislama"></a><b>{bi} : Bislama</b>
+<p>eq Bichelamar.</p>
+</li>
+<li><a name="0x7bbs0x7d-0x3a-Bosnian"></a><b>{bs} : Bosnian</b>
+</li>
+<li><a name="0x7bbra0x7d-0x3a-Braj"></a><b>{bra} : Braj</b>
+</li>
+<li><a name="0x7bbr0x7d-0x3a-Breton"></a><b>{br} : Breton</b>
+</li>
+<li><a name="0x7bbug0x7d-0x3a-Buginese"></a><b>{bug} : Buginese</b>
+</li>
+<li><a name="0x7bbg0x7d-0x3a-Bulgarian"></a><b>{bg} : Bulgarian</b>
+</li>
+<li><a name="0x7bi-bnn0x7d-0x3a-Bunun"></a><b>{i-bnn} : Bunun</b>
+</li>
+<li><a name="0x7bbua0x7d-0x3a-Buriat"></a><b>{bua} : Buriat</b>
+</li>
+<li><a name="0x7bmy0x7d-0x3a-Burmese"></a><b>{my} : Burmese</b>
+</li>
+<li><a name="0x7bcad0x7d-0x3a-Caddo"></a><b>{cad} : Caddo</b>
+</li>
+<li><a name="0x7bcar0x7d-0x3a-Carib"></a><b>{car} : Carib</b>
+</li>
+<li><a name="0x7bca0x7d-0x3a-Catalan"></a><b>{ca} : Catalan</b>
+<p>eq Catalán.  eq Catalonian.</p>
+</li>
+<li><a name="0x5b0x7bcau0x7d-0x3a-Caucasian-(Other)0x5d"></a><b>[{cau} : Caucasian (Other)]</b>
+</li>
+<li><a name="0x7bceb0x7d-0x3a-Cebuano"></a><b>{ceb} : Cebuano</b>
+</li>
+<li><a name="0x5b0x7bcel0x7d-0x3a-Celtic-(Other)0x5d"></a><b>[{cel} : Celtic (Other)]</b>
+<p>Notable forms:
+{cel-gaulish} Gaulish (Historical)</p>
+</li>
+<li><a name="0x5b0x7bcai0x7d-0x3a-Central-American-Indian-(Other)0x5d"></a><b>[{cai} : Central American Indian (Other)]</b>
+</li>
+<li><a name="0x7bchg0x7d-0x3a-Chagatai"></a><b>{chg} : Chagatai</b>
+<p>(Historical?)</p>
+</li>
+<li><a name="0x5b0x7bcmc0x7d-0x3a-Chamic-languages0x5d"></a><b>[{cmc} : Chamic languages]</b>
+</li>
+<li><a name="0x7bch0x7d-0x3a-Chamorro"></a><b>{ch} : Chamorro</b>
+</li>
+<li><a name="0x7bce0x7d-0x3a-Chechen"></a><b>{ce} : Chechen</b>
+</li>
+<li><a name="0x7bchr0x7d-0x3a-Cherokee"></a><b>{chr} : Cherokee</b>
+<p>eq Tsalagi</p>
+</li>
+<li><a name="0x7bchy0x7d-0x3a-Cheyenne"></a><b>{chy} : Cheyenne</b>
+</li>
+<li><a name="0x7bchb0x7d-0x3a-Chibcha"></a><b>{chb} : Chibcha</b>
+<p>(Historical)  NOT Chibchan (which is a language family).</p>
+</li>
+<li><a name="0x7bny0x7d-0x3a-Chichewa"></a><b>{ny} : Chichewa</b>
+<p>eq Nyanja.  eq Chinyanja.</p>
+</li>
+<li><a name="0x7bzh0x7d-0x3a-Chinese"></a><b>{zh} : Chinese</b>
+<p>Many forms are mutually un-intelligible in spoken media.
+Notable forms:
+{zh-Hans} Chinese, in simplified script;
+{zh-Hant} Chinese, in traditional script;
+{zh-tw} Taiwan Chinese;
+{zh-cn} PRC Chinese;
+{zh-sg} Singapore Chinese;
+{zh-mo} Macau Chinese;
+{zh-hk} Hong Kong Chinese;
+{zh-guoyu} Mandarin [Putonghua/Guoyu];
+{zh-hakka} Hakka [formerly "i-hakka"];
+{zh-min} Hokkien;
+{zh-min-nan} Southern Hokkien;
+{zh-wuu} Shanghaiese;
+{zh-xiang} Hunanese;
+{zh-gan} Gan;
+{zh-yue} Cantonese.</p>
+</li>
+<li><a name="0x7bchn0x7d-0x3a-Chinook-Jargon"></a><b>{chn} : Chinook Jargon</b>
+<p>eq Chinook Wawa.</p>
+</li>
+<li><a name="0x7bchp0x7d-0x3a-Chipewyan"></a><b>{chp} : Chipewyan</b>
+</li>
+<li><a name="0x7bcho0x7d-0x3a-Choctaw"></a><b>{cho} : Choctaw</b>
+</li>
+<li><a name="0x7bcu0x7d-0x3a-Church-Slavic"></a><b>{cu} : Church Slavic</b>
+<p>eq Old Church Slavonic.</p>
+</li>
+<li><a name="0x7bchk0x7d-0x3a-Chuukese"></a><b>{chk} : Chuukese</b>
+<p>eq Trukese.  eq Chuuk.  eq Truk.  eq Ruk.</p>
+</li>
+<li><a name="0x7bcv0x7d-0x3a-Chuvash"></a><b>{cv} : Chuvash</b>
+</li>
+<li><a name="0x7bcop0x7d-0x3a-Coptic"></a><b>{cop} : Coptic</b>
+</li>
+<li><a name="0x7bkw0x7d-0x3a-Cornish"></a><b>{kw} : Cornish</b>
+</li>
+<li><a name="0x7bco0x7d-0x3a-Corsican"></a><b>{co} : Corsican</b>
+<p>eq Corse.</p>
+</li>
+<li><a name="0x7bcr0x7d-0x3a-Cree"></a><b>{cr} : Cree</b>
+<p>NOT Creek!  (Formerly "cre".)</p>
+</li>
+<li><a name="0x7bmus0x7d-0x3a-Creek"></a><b>{mus} : Creek</b>
+<p>NOT Cree!</p>
+</li>
+<li><a name="0x5b0x7bcpe0x7d-0x3a-English-based-Creoles-and-pidgins-(Other)0x5d"></a><b>[{cpe} : English-based Creoles and pidgins (Other)]</b>
+</li>
+<li><a name="0x5b0x7bcpf0x7d-0x3a-French-based-Creoles-and-pidgins-(Other)0x5d"></a><b>[{cpf} : French-based Creoles and pidgins (Other)]</b>
+</li>
+<li><a name="0x5b0x7bcpp0x7d-0x3a-Portuguese-based-Creoles-and-pidgins-(Other)0x5d"></a><b>[{cpp} : Portuguese-based Creoles and pidgins (Other)]</b>
+</li>
+<li><a name="0x5b0x7bcrp0x7d-0x3a-Creoles-and-pidgins-(Other)0x5d"></a><b>[{crp} : Creoles and pidgins (Other)]</b>
+</li>
+<li><a name="0x7bhr0x7d-0x3a-Croatian"></a><b>{hr} : Croatian</b>
+<p>eq Croat.</p>
+</li>
+<li><a name="0x5b0x7bcus0x7d-0x3a-Cushitic-(Other)0x5d"></a><b>[{cus} : Cushitic (Other)]</b>
+</li>
+<li><a name="0x7bcs0x7d-0x3a-Czech"></a><b>{cs} : Czech</b>
+</li>
+<li><a name="0x7bdak0x7d-0x3a-Dakota"></a><b>{dak} : Dakota</b>
+<p>eq Nakota.  eq Latoka.</p>
+</li>
+<li><a name="0x7bda0x7d-0x3a-Danish"></a><b>{da} : Danish</b>
+</li>
+<li><a name="0x7bdar0x7d-0x3a-Dargwa"></a><b>{dar} : Dargwa</b>
+</li>
+<li><a name="0x7bday0x7d-0x3a-Dayak"></a><b>{day} : Dayak</b>
+</li>
+<li><a name="0x7bi-default0x7d-0x3a-Default-(Fallthru)-Language"></a><b>{i-default} : Default (Fallthru) Language</b>
+<p>Defined in RFC 2277, this is for tagging text
+(which must include English text, and might/should include text
+in other appropriate languages) that is emitted in a context
+where language-negotiation wasn't possible -- in SMTP mail failure
+messages, for example.</p>
+</li>
+<li><a name="0x7bdel0x7d-0x3a-Delaware"></a><b>{del} : Delaware</b>
+</li>
+<li><a name="0x7bdin0x7d-0x3a-Dinka"></a><b>{din} : Dinka</b>
+</li>
+<li><a name="0x7bdv0x7d-0x3a-Divehi"></a><b>{dv} : Divehi</b>
+<p>eq Maldivian.  (Formerly "div".)</p>
+</li>
+<li><a name="0x7bdoi0x7d-0x3a-Dogri"></a><b>{doi} : Dogri</b>
+<p>NOT Dogrib!</p>
+</li>
+<li><a name="0x7bdgr0x7d-0x3a-Dogrib"></a><b>{dgr} : Dogrib</b>
+<p>NOT Dogri!</p>
+</li>
+<li><a name="0x5b0x7bdra0x7d-0x3a-Dravidian-(Other)0x5d"></a><b>[{dra} : Dravidian (Other)]</b>
+</li>
+<li><a name="0x7bdua0x7d-0x3a-Duala"></a><b>{dua} : Duala</b>
+</li>
+<li><a name="0x7bnl0x7d-0x3a-Dutch"></a><b>{nl} : Dutch</b>
+<p>eq Netherlander.  Notable forms:
+{nl-nl} Netherlands Dutch;
+{nl-be} Belgian Dutch.</p>
+</li>
+<li><a name="0x7bdum0x7d-0x3a-Middle-Dutch-(ca.1050-1350)"></a><b>{dum} : Middle Dutch (ca.1050-1350)</b>
+<p>(Historical)</p>
+</li>
+<li><a name="0x7bdyu0x7d-0x3a-Dyula"></a><b>{dyu} : Dyula</b>
+</li>
+<li><a name="0x7bdz0x7d-0x3a-Dzongkha"></a><b>{dz} : Dzongkha</b>
+</li>
+<li><a name="0x7befi0x7d-0x3a-Efik"></a><b>{efi} : Efik</b>
+</li>
+<li><a name="0x7begy0x7d-0x3a-Ancient-Egyptian"></a><b>{egy} : Ancient Egyptian</b>
+<p>(Historical)</p>
+</li>
+<li><a name="0x7beka0x7d-0x3a-Ekajuk"></a><b>{eka} : Ekajuk</b>
+</li>
+<li><a name="0x7belx0x7d-0x3a-Elamite"></a><b>{elx} : Elamite</b>
+<p>(Historical)</p>
+</li>
+<li><a name="0x7ben0x7d-0x3a-English"></a><b>{en} : English</b>
+<p>Notable forms:
+{en-au} Australian English;
+{en-bz} Belize English;
+{en-ca} Canadian English;
+{en-gb} UK English;
+{en-ie} Irish English;
+{en-jm} Jamaican English;
+{en-nz} New Zealand English;
+{en-ph} Philippine English;
+{en-tt} Trinidad English;
+{en-us} US English;
+{en-za} South African English;
+{en-zw} Zimbabwe English.</p>
+</li>
+<li><a name="0x7benm0x7d-0x3a-Old-English-(1100-1500)"></a><b>{enm} : Old English (1100-1500)</b>
+<p>(Historical)</p>
+</li>
+<li><a name="0x7bang0x7d-0x3a-Old-English-(ca.450-1100)"></a><b>{ang} : Old English (ca.450-1100)</b>
+<p>eq Anglo-Saxon.  (Historical)</p>
+</li>
+<li><a name="0x7bi-enochian0x7d-0x3a-Enochian-(Artificial)"></a><b>{i-enochian} : Enochian (Artificial)</b>
+</li>
+<li><a name="0x7bmyv0x7d-0x3a-Erzya"></a><b>{myv} : Erzya</b>
+</li>
+<li><a name="0x7beo0x7d-0x3a-Esperanto"></a><b>{eo} : Esperanto</b>
+<p>(Artificial)</p>
+</li>
+<li><a name="0x7bet0x7d-0x3a-Estonian"></a><b>{et} : Estonian</b>
+</li>
+<li><a name="0x7bee0x7d-0x3a-Ewe"></a><b>{ee} : Ewe</b>
+<p>(Formerly "ewe".)</p>
+</li>
+<li><a name="0x7bewo0x7d-0x3a-Ewondo"></a><b>{ewo} : Ewondo</b>
+</li>
+<li><a name="0x7bfan0x7d-0x3a-Fang"></a><b>{fan} : Fang</b>
+</li>
+<li><a name="0x7bfat0x7d-0x3a-Fanti"></a><b>{fat} : Fanti</b>
+</li>
+<li><a name="0x7bfo0x7d-0x3a-Faroese"></a><b>{fo} : Faroese</b>
+</li>
+<li><a name="0x7bfj0x7d-0x3a-Fijian"></a><b>{fj} : Fijian</b>
+</li>
+<li><a name="0x7bfi0x7d-0x3a-Finnish"></a><b>{fi} : Finnish</b>
+</li>
+<li><a name="0x5b0x7bfiu0x7d-0x3a-Finno-Ugrian-(Other)0x5d"></a><b>[{fiu} : Finno-Ugrian (Other)]</b>
+<p>eq Finno-Ugric.  NOT Ugaritic!</p>
+</li>
+<li><a name="0x7bfon0x7d-0x3a-Fon"></a><b>{fon} : Fon</b>
+</li>
+<li><a name="0x7bfr0x7d-0x3a-French"></a><b>{fr} : French</b>
+<p>Notable forms:
+{fr-fr} France French;
+{fr-be} Belgian French;
+{fr-ca} Canadian French;
+{fr-ch} Swiss French;
+{fr-lu} Luxembourg French;
+{fr-mc} Monaco French.</p>
+</li>
+<li><a name="0x7bfrm0x7d-0x3a-Middle-French-(ca.1400-1600)"></a><b>{frm} : Middle French (ca.1400-1600)</b>
+<p>(Historical)</p>
+</li>
+<li><a name="0x7bfro0x7d-0x3a-Old-French-(842-ca.1400)"></a><b>{fro} : Old French (842-ca.1400)</b>
+<p>(Historical)</p>
+</li>
+<li><a name="0x7bfy0x7d-0x3a-Frisian"></a><b>{fy} : Frisian</b>
+</li>
+<li><a name="0x7bfur0x7d-0x3a-Friulian"></a><b>{fur} : Friulian</b>
+</li>
+<li><a name="0x7bff0x7d-0x3a-Fulah"></a><b>{ff} : Fulah</b>
+<p>(Formerly "ful".)</p>
+</li>
+<li><a name="0x7bgaa0x7d-0x3a-Ga"></a><b>{gaa} : Ga</b>
+</li>
+<li><a name="0x7bgd0x7d-0x3a-Scots-Gaelic"></a><b>{gd} : Scots Gaelic</b>
+<p>NOT Scots!</p>
+</li>
+<li><a name="0x7bgl0x7d-0x3a-Gallegan"></a><b>{gl} : Gallegan</b>
+<p>eq Galician</p>
+</li>
+<li><a name="0x7blg0x7d-0x3a-Ganda"></a><b>{lg} : Ganda</b>
+<p>(Formerly "lug".)</p>
+</li>
+<li><a name="0x7bgay0x7d-0x3a-Gayo"></a><b>{gay} : Gayo</b>
+</li>
+<li><a name="0x7bgba0x7d-0x3a-Gbaya"></a><b>{gba} : Gbaya</b>
+</li>
+<li><a name="0x7bgez0x7d-0x3a-Geez"></a><b>{gez} : Geez</b>
+<p>eq Ge'ez</p>
+</li>
+<li><a name="0x7bka0x7d-0x3a-Georgian"></a><b>{ka} : Georgian</b>
+</li>
+<li><a name="0x7bde0x7d-0x3a-German"></a><b>{de} : German</b>
+<p>Notable forms:
+{de-at} Austrian German;
+{de-be} Belgian German;
+{de-ch} Swiss German;
+{de-de} Germany German;
+{de-li} Liechtenstein German;
+{de-lu} Luxembourg German.</p>
+</li>
+<li><a name="0x7bgmh0x7d-0x3a-Middle-High-German-(ca.1050-1500)"></a><b>{gmh} : Middle High German (ca.1050-1500)</b>
+<p>(Historical)</p>
+</li>
+<li><a name="0x7bgoh0x7d-0x3a-Old-High-German-(ca.750-1050)"></a><b>{goh} : Old High German (ca.750-1050)</b>
+<p>(Historical)</p>
+</li>
+<li><a name="0x5b0x7bgem0x7d-0x3a-Germanic-(Other)0x5d"></a><b>[{gem} : Germanic (Other)]</b>
+</li>
+<li><a name="0x7bgil0x7d-0x3a-Gilbertese"></a><b>{gil} : Gilbertese</b>
+</li>
+<li><a name="0x7bgon0x7d-0x3a-Gondi"></a><b>{gon} : Gondi</b>
+</li>
+<li><a name="0x7bgor0x7d-0x3a-Gorontalo"></a><b>{gor} : Gorontalo</b>
+</li>
+<li><a name="0x7bgot0x7d-0x3a-Gothic"></a><b>{got} : Gothic</b>
+<p>(Historical)</p>
+</li>
+<li><a name="0x7bgrb0x7d-0x3a-Grebo"></a><b>{grb} : Grebo</b>
+</li>
+<li><a name="0x7bgrc0x7d-0x3a-Ancient-Greek"></a><b>{grc} : Ancient Greek</b>
+<p>(Historical)  (Until 15th century or so.)</p>
+</li>
+<li><a name="0x7bel0x7d-0x3a-Modern-Greek"></a><b>{el} : Modern Greek</b>
+<p>(Since 15th century or so.)</p>
+</li>
+<li><a name="0x7bgn0x7d-0x3a-Guarani"></a><b>{gn} : Guarani</b>
+<p>Guaraní</p>
+</li>
+<li><a name="0x7bgu0x7d-0x3a-Gujarati"></a><b>{gu} : Gujarati</b>
+</li>
+<li><a name="0x7bgwi0x7d-0x3a-Gwich'in"></a><b>{gwi} : Gwich'in</b>
+<p>eq Gwichin</p>
+</li>
+<li><a name="0x7bhai0x7d-0x3a-Haida"></a><b>{hai} : Haida</b>
+</li>
+<li><a name="0x7bht0x7d-0x3a-Haitian"></a><b>{ht} : Haitian</b>
+<p>eq Haitian Creole</p>
+</li>
+<li><a name="0x7bha0x7d-0x3a-Hausa"></a><b>{ha} : Hausa</b>
+</li>
+<li><a name="0x7bhaw0x7d-0x3a-Hawaiian"></a><b>{haw} : Hawaiian</b>
+<p>Hawai'ian</p>
+</li>
+<li><a name="0x7bhe0x7d-0x3a-Hebrew"></a><b>{he} : Hebrew</b>
+<p>(Formerly "iw".)</p>
+</li>
+<li><a name="0x7bhz0x7d-0x3a-Herero"></a><b>{hz} : Herero</b>
+</li>
+<li><a name="0x7bhil0x7d-0x3a-Hiligaynon"></a><b>{hil} : Hiligaynon</b>
+</li>
+<li><a name="0x7bhim0x7d-0x3a-Himachali"></a><b>{him} : Himachali</b>
+</li>
+<li><a name="0x7bhi0x7d-0x3a-Hindi"></a><b>{hi} : Hindi</b>
+</li>
+<li><a name="0x7bho0x7d-0x3a-Hiri-Motu"></a><b>{ho} : Hiri Motu</b>
+</li>
+<li><a name="0x7bhit0x7d-0x3a-Hittite"></a><b>{hit} : Hittite</b>
+<p>(Historical)</p>
+</li>
+<li><a name="0x7bhmn0x7d-0x3a-Hmong"></a><b>{hmn} : Hmong</b>
+</li>
+<li><a name="0x7bhu0x7d-0x3a-Hungarian"></a><b>{hu} : Hungarian</b>
+</li>
+<li><a name="0x7bhup0x7d-0x3a-Hupa"></a><b>{hup} : Hupa</b>
+</li>
+<li><a name="0x7biba0x7d-0x3a-Iban"></a><b>{iba} : Iban</b>
+</li>
+<li><a name="0x7bis0x7d-0x3a-Icelandic"></a><b>{is} : Icelandic</b>
+</li>
+<li><a name="0x7bio0x7d-0x3a-Ido"></a><b>{io} : Ido</b>
+<p>(Artificial)</p>
+</li>
+<li><a name="0x7big0x7d-0x3a-Igbo"></a><b>{ig} : Igbo</b>
+<p>(Formerly "ibo".)</p>
+</li>
+<li><a name="0x7bijo0x7d-0x3a-Ijo"></a><b>{ijo} : Ijo</b>
+</li>
+<li><a name="0x7bilo0x7d-0x3a-Iloko"></a><b>{ilo} : Iloko</b>
+</li>
+<li><a name="0x5b0x7binc0x7d-0x3a-Indic-(Other)0x5d"></a><b>[{inc} : Indic (Other)]</b>
+</li>
+<li><a name="0x5b0x7bine0x7d-0x3a-Indo-European-(Other)0x5d"></a><b>[{ine} : Indo-European (Other)]</b>
+</li>
+<li><a name="0x7bid0x7d-0x3a-Indonesian"></a><b>{id} : Indonesian</b>
+<p>(Formerly "in".)</p>
+</li>
+<li><a name="0x7binh0x7d-0x3a-Ingush"></a><b>{inh} : Ingush</b>
+</li>
+<li><a name="0x7bia0x7d-0x3a-Interlingua-(International-Auxiliary-Language-Association)"></a><b>{ia} : Interlingua (International Auxiliary Language Association)</b>
+<p>(Artificial)  NOT Interlingue!</p>
+</li>
+<li><a name="0x7bie0x7d-0x3a-Interlingue"></a><b>{ie} : Interlingue</b>
+<p>(Artificial)  NOT Interlingua!</p>
+</li>
+<li><a name="0x7biu0x7d-0x3a-Inuktitut"></a><b>{iu} : Inuktitut</b>
+<p>A subform of "Eskimo".</p>
+</li>
+<li><a name="0x7bik0x7d-0x3a-Inupiaq"></a><b>{ik} : Inupiaq</b>
+<p>A subform of "Eskimo".</p>
+</li>
+<li><a name="0x5b0x7bira0x7d-0x3a-Iranian-(Other)0x5d"></a><b>[{ira} : Iranian (Other)]</b>
+</li>
+<li><a name="0x7bga0x7d-0x3a-Irish"></a><b>{ga} : Irish</b>
+</li>
+<li><a name="0x7bmga0x7d-0x3a-Middle-Irish-(900-1200)"></a><b>{mga} : Middle Irish (900-1200)</b>
+<p>(Historical)</p>
+</li>
+<li><a name="0x7bsga0x7d-0x3a-Old-Irish-(to-900)"></a><b>{sga} : Old Irish (to 900)</b>
+<p>(Historical)</p>
+</li>
+<li><a name="0x5b0x7biro0x7d-0x3a-Iroquoian-languages0x5d"></a><b>[{iro} : Iroquoian languages]</b>
+</li>
+<li><a name="0x7bit0x7d-0x3a-Italian"></a><b>{it} : Italian</b>
+<p>Notable forms:
+{it-it} Italy Italian;
+{it-ch} Swiss Italian.</p>
+</li>
+<li><a name="0x7bja0x7d-0x3a-Japanese"></a><b>{ja} : Japanese</b>
+<p>(NOT "jp"!)</p>
+</li>
+<li><a name="0x7bjv0x7d-0x3a-Javanese"></a><b>{jv} : Javanese</b>
+<p>(Formerly "jw" because of a typo.)</p>
+</li>
+<li><a name="0x7bjrb0x7d-0x3a-Judeo-Arabic"></a><b>{jrb} : Judeo-Arabic</b>
+</li>
+<li><a name="0x7bjpr0x7d-0x3a-Judeo-Persian"></a><b>{jpr} : Judeo-Persian</b>
+</li>
+<li><a name="0x7bkbd0x7d-0x3a-Kabardian"></a><b>{kbd} : Kabardian</b>
+</li>
+<li><a name="0x7bkab0x7d-0x3a-Kabyle"></a><b>{kab} : Kabyle</b>
+</li>
+<li><a name="0x7bkac0x7d-0x3a-Kachin"></a><b>{kac} : Kachin</b>
+</li>
+<li><a name="0x7bkl0x7d-0x3a-Kalaallisut"></a><b>{kl} : Kalaallisut</b>
+<p>eq Greenlandic "Eskimo"</p>
+</li>
+<li><a name="0x7bxal0x7d-0x3a-Kalmyk"></a><b>{xal} : Kalmyk</b>
+</li>
+<li><a name="0x7bkam0x7d-0x3a-Kamba"></a><b>{kam} : Kamba</b>
+</li>
+<li><a name="0x7bkn0x7d-0x3a-Kannada"></a><b>{kn} : Kannada</b>
+<p>eq Kanarese.  NOT Canadian!</p>
+</li>
+<li><a name="0x7bkr0x7d-0x3a-Kanuri"></a><b>{kr} : Kanuri</b>
+<p>(Formerly "kau".)</p>
+</li>
+<li><a name="0x7bkrc0x7d-0x3a-Karachay-Balkar"></a><b>{krc} : Karachay-Balkar</b>
+</li>
+<li><a name="0x7bkaa0x7d-0x3a-Kara-Kalpak"></a><b>{kaa} : Kara-Kalpak</b>
+</li>
+<li><a name="0x7bkar0x7d-0x3a-Karen"></a><b>{kar} : Karen</b>
+</li>
+<li><a name="0x7bks0x7d-0x3a-Kashmiri"></a><b>{ks} : Kashmiri</b>
+</li>
+<li><a name="0x7bcsb0x7d-0x3a-Kashubian"></a><b>{csb} : Kashubian</b>
+<p>eq Kashub</p>
+</li>
+<li><a name="0x7bkaw0x7d-0x3a-Kawi"></a><b>{kaw} : Kawi</b>
+</li>
+<li><a name="0x7bkk0x7d-0x3a-Kazakh"></a><b>{kk} : Kazakh</b>
+</li>
+<li><a name="0x7bkha0x7d-0x3a-Khasi"></a><b>{kha} : Khasi</b>
+</li>
+<li><a name="0x7bkm0x7d-0x3a-Khmer"></a><b>{km} : Khmer</b>
+<p>eq Cambodian.  eq Kampuchean.</p>
+</li>
+<li><a name="0x5b0x7bkhi0x7d-0x3a-Khoisan-(Other)0x5d"></a><b>[{khi} : Khoisan (Other)]</b>
+</li>
+<li><a name="0x7bkho0x7d-0x3a-Khotanese"></a><b>{kho} : Khotanese</b>
+</li>
+<li><a name="0x7bki0x7d-0x3a-Kikuyu"></a><b>{ki} : Kikuyu</b>
+<p>eq Gikuyu.</p>
+</li>
+<li><a name="0x7bkmb0x7d-0x3a-Kimbundu"></a><b>{kmb} : Kimbundu</b>
+</li>
+<li><a name="0x7brw0x7d-0x3a-Kinyarwanda"></a><b>{rw} : Kinyarwanda</b>
+</li>
+<li><a name="0x7bky0x7d-0x3a-Kirghiz"></a><b>{ky} : Kirghiz</b>
+</li>
+<li><a name="0x7bi-klingon0x7d-0x3a-Klingon"></a><b>{i-klingon} : Klingon</b>
+</li>
+<li><a name="0x7bkv0x7d-0x3a-Komi"></a><b>{kv} : Komi</b>
+</li>
+<li><a name="0x7bkg0x7d-0x3a-Kongo"></a><b>{kg} : Kongo</b>
+<p>(Formerly "kon".)</p>
+</li>
+<li><a name="0x7bkok0x7d-0x3a-Konkani"></a><b>{kok} : Konkani</b>
+</li>
+<li><a name="0x7bko0x7d-0x3a-Korean"></a><b>{ko} : Korean</b>
+</li>
+<li><a name="0x7bkos0x7d-0x3a-Kosraean"></a><b>{kos} : Kosraean</b>
+</li>
+<li><a name="0x7bkpe0x7d-0x3a-Kpelle"></a><b>{kpe} : Kpelle</b>
+</li>
+<li><a name="0x7bkro0x7d-0x3a-Kru"></a><b>{kro} : Kru</b>
+</li>
+<li><a name="0x7bkj0x7d-0x3a-Kuanyama"></a><b>{kj} : Kuanyama</b>
+</li>
+<li><a name="0x7bkum0x7d-0x3a-Kumyk"></a><b>{kum} : Kumyk</b>
+</li>
+<li><a name="0x7bku0x7d-0x3a-Kurdish"></a><b>{ku} : Kurdish</b>
+</li>
+<li><a name="0x7bkru0x7d-0x3a-Kurukh"></a><b>{kru} : Kurukh</b>
+</li>
+<li><a name="0x7bkut0x7d-0x3a-Kutenai"></a><b>{kut} : Kutenai</b>
+</li>
+<li><a name="0x7blad0x7d-0x3a-Ladino"></a><b>{lad} : Ladino</b>
+<p>eq Judeo-Spanish.  NOT Ladin (a minority language in Italy).</p>
+</li>
+<li><a name="0x7blah0x7d-0x3a-Lahnda"></a><b>{lah} : Lahnda</b>
+<p>NOT Lamba!</p>
+</li>
+<li><a name="0x7blam0x7d-0x3a-Lamba"></a><b>{lam} : Lamba</b>
+<p>NOT Lahnda!</p>
+</li>
+<li><a name="0x7blo0x7d-0x3a-Lao"></a><b>{lo} : Lao</b>
+<p>eq Laotian.</p>
+</li>
+<li><a name="0x7bla0x7d-0x3a-Latin"></a><b>{la} : Latin</b>
+<p>(Historical)  NOT Ladin!  NOT Ladino!</p>
+</li>
+<li><a name="0x7blv0x7d-0x3a-Latvian"></a><b>{lv} : Latvian</b>
+<p>eq Lettish.</p>
+</li>
+<li><a name="0x7blb0x7d-0x3a-Letzeburgesch"></a><b>{lb} : Letzeburgesch</b>
+<p>eq Luxemburgian, eq Luxemburger.  (Formerly "i-lux".)</p>
+</li>
+<li><a name="0x7blez0x7d-0x3a-Lezghian"></a><b>{lez} : Lezghian</b>
+</li>
+<li><a name="0x7bli0x7d-0x3a-Limburgish"></a><b>{li} : Limburgish</b>
+<p>eq Limburger, eq Limburgan.  NOT Letzeburgesch!</p>
+</li>
+<li><a name="0x7bln0x7d-0x3a-Lingala"></a><b>{ln} : Lingala</b>
+</li>
+<li><a name="0x7blt0x7d-0x3a-Lithuanian"></a><b>{lt} : Lithuanian</b>
+</li>
+<li><a name="0x7bnds0x7d-0x3a-Low-German"></a><b>{nds} : Low German</b>
+<p>eq Low Saxon.  eq Low German.  eq Low Saxon.</p>
+</li>
+<li><a name="0x7bart-lojban0x7d-0x3a-Lojban-(Artificial)"></a><b>{art-lojban} : Lojban (Artificial)</b>
+</li>
+<li><a name="0x7bloz0x7d-0x3a-Lozi"></a><b>{loz} : Lozi</b>
+</li>
+<li><a name="0x7blu0x7d-0x3a-Luba-Katanga"></a><b>{lu} : Luba-Katanga</b>
+<p>(Formerly "lub".)</p>
+</li>
+<li><a name="0x7blua0x7d-0x3a-Luba-Lulua"></a><b>{lua} : Luba-Lulua</b>
+</li>
+<li><a name="0x7blui0x7d-0x3a-Luiseno"></a><b>{lui} : Luiseno</b>
+<p>eq Luiseño.</p>
+</li>
+<li><a name="0x7blun0x7d-0x3a-Lunda"></a><b>{lun} : Lunda</b>
+</li>
+<li><a name="0x7bluo0x7d-0x3a-Luo-(Kenya-and-Tanzania)"></a><b>{luo} : Luo (Kenya and Tanzania)</b>
+</li>
+<li><a name="0x7blus0x7d-0x3a-Lushai"></a><b>{lus} : Lushai</b>
+</li>
+<li><a name="0x7bmk0x7d-0x3a-Macedonian"></a><b>{mk} : Macedonian</b>
+<p>eq the modern Slavic language spoken in what was Yugoslavia.
+NOT the form of Greek spoken in Greek Macedonia!</p>
+</li>
+<li><a name="0x7bmad0x7d-0x3a-Madurese"></a><b>{mad} : Madurese</b>
+</li>
+<li><a name="0x7bmag0x7d-0x3a-Magahi"></a><b>{mag} : Magahi</b>
+</li>
+<li><a name="0x7bmai0x7d-0x3a-Maithili"></a><b>{mai} : Maithili</b>
+</li>
+<li><a name="0x7bmak0x7d-0x3a-Makasar"></a><b>{mak} : Makasar</b>
+</li>
+<li><a name="0x7bmg0x7d-0x3a-Malagasy"></a><b>{mg} : Malagasy</b>
+</li>
+<li><a name="0x7bms0x7d-0x3a-Malay"></a><b>{ms} : Malay</b>
+<p>NOT Malayalam!</p>
+</li>
+<li><a name="0x7bml0x7d-0x3a-Malayalam"></a><b>{ml} : Malayalam</b>
+<p>NOT Malay!</p>
+</li>
+<li><a name="0x7bmt0x7d-0x3a-Maltese"></a><b>{mt} : Maltese</b>
+</li>
+<li><a name="0x7bmnc0x7d-0x3a-Manchu"></a><b>{mnc} : Manchu</b>
+</li>
+<li><a name="0x7bmdr0x7d-0x3a-Mandar"></a><b>{mdr} : Mandar</b>
+<p>NOT Mandarin!</p>
+</li>
+<li><a name="0x7bman0x7d-0x3a-Mandingo"></a><b>{man} : Mandingo</b>
+</li>
+<li><a name="0x7bmni0x7d-0x3a-Manipuri"></a><b>{mni} : Manipuri</b>
+<p>eq Meithei.</p>
+</li>
+<li><a name="0x5b0x7bmno0x7d-0x3a-Manobo-languages0x5d"></a><b>[{mno} : Manobo languages]</b>
+</li>
+<li><a name="0x7bgv0x7d-0x3a-Manx"></a><b>{gv} : Manx</b>
+</li>
+<li><a name="0x7bmi0x7d-0x3a-Maori"></a><b>{mi} : Maori</b>
+<p>NOT Mari!</p>
+</li>
+<li><a name="0x7bmr0x7d-0x3a-Marathi"></a><b>{mr} : Marathi</b>
+</li>
+<li><a name="0x7bchm0x7d-0x3a-Mari"></a><b>{chm} : Mari</b>
+<p>NOT Maori!</p>
+</li>
+<li><a name="0x7bmh0x7d-0x3a-Marshall"></a><b>{mh} : Marshall</b>
+<p>eq Marshallese.</p>
+</li>
+<li><a name="0x7bmwr0x7d-0x3a-Marwari"></a><b>{mwr} : Marwari</b>
+</li>
+<li><a name="0x7bmas0x7d-0x3a-Masai"></a><b>{mas} : Masai</b>
+</li>
+<li><a name="0x5b0x7bmyn0x7d-0x3a-Mayan-languages0x5d"></a><b>[{myn} : Mayan languages]</b>
+</li>
+<li><a name="0x7bmen0x7d-0x3a-Mende"></a><b>{men} : Mende</b>
+</li>
+<li><a name="0x7bmic0x7d-0x3a-Micmac"></a><b>{mic} : Micmac</b>
+</li>
+<li><a name="0x7bmin0x7d-0x3a-Minangkabau"></a><b>{min} : Minangkabau</b>
+</li>
+<li><a name="0x7bi-mingo0x7d-0x3a-Mingo"></a><b>{i-mingo} : Mingo</b>
+<p>eq the Irquoian language West Virginia Seneca.  NOT New York Seneca!</p>
+</li>
+<li><a name="0x5b0x7bmis0x7d-0x3a-Miscellaneous-languages0x5d"></a><b>[{mis} : Miscellaneous languages]</b>
+<p>Don't use this.</p>
+</li>
+<li><a name="0x7bmoh0x7d-0x3a-Mohawk"></a><b>{moh} : Mohawk</b>
+</li>
+<li><a name="0x7bmdf0x7d-0x3a-Moksha"></a><b>{mdf} : Moksha</b>
+</li>
+<li><a name="0x7bmo0x7d-0x3a-Moldavian"></a><b>{mo} : Moldavian</b>
+<p>eq Moldovan.</p>
+</li>
+<li><a name="0x5b0x7bmkh0x7d-0x3a-Mon-Khmer-(Other)0x5d"></a><b>[{mkh} : Mon-Khmer (Other)]</b>
+</li>
+<li><a name="0x7blol0x7d-0x3a-Mongo"></a><b>{lol} : Mongo</b>
+</li>
+<li><a name="0x7bmn0x7d-0x3a-Mongolian"></a><b>{mn} : Mongolian</b>
+<p>eq Mongol.</p>
+</li>
+<li><a name="0x7bmos0x7d-0x3a-Mossi"></a><b>{mos} : Mossi</b>
+</li>
+<li><a name="0x5b0x7bmul0x7d-0x3a-Multiple-languages0x5d"></a><b>[{mul} : Multiple languages]</b>
+<p>Not for normal use.</p>
+</li>
+<li><a name="0x5b0x7bmun0x7d-0x3a-Munda-languages0x5d"></a><b>[{mun} : Munda languages]</b>
+</li>
+<li><a name="0x7bnah0x7d-0x3a-Nahuatl"></a><b>{nah} : Nahuatl</b>
+</li>
+<li><a name="0x7bnap0x7d-0x3a-Neapolitan"></a><b>{nap} : Neapolitan</b>
+</li>
+<li><a name="0x7bna0x7d-0x3a-Nauru"></a><b>{na} : Nauru</b>
+</li>
+<li><a name="0x7bnv0x7d-0x3a-Navajo"></a><b>{nv} : Navajo</b>
+<p>eq Navaho.  (Formerly "i-navajo".)</p>
+</li>
+<li><a name="0x7bnd0x7d-0x3a-North-Ndebele"></a><b>{nd} : North Ndebele</b>
+</li>
+<li><a name="0x7bnr0x7d-0x3a-South-Ndebele"></a><b>{nr} : South Ndebele</b>
+</li>
+<li><a name="0x7bng0x7d-0x3a-Ndonga"></a><b>{ng} : Ndonga</b>
+</li>
+<li><a name="0x7bne0x7d-0x3a-Nepali"></a><b>{ne} : Nepali</b>
+<p>eq Nepalese.  Notable forms:
+{ne-np} Nepal Nepali;
+{ne-in} India Nepali.</p>
+</li>
+<li><a name="0x7bnew0x7d-0x3a-Newari"></a><b>{new} : Newari</b>
+</li>
+<li><a name="0x7bnia0x7d-0x3a-Nias"></a><b>{nia} : Nias</b>
+</li>
+<li><a name="0x5b0x7bnic0x7d-0x3a-Niger-Kordofanian-(Other)0x5d"></a><b>[{nic} : Niger-Kordofanian (Other)]</b>
+</li>
+<li><a name="0x5b0x7bssa0x7d-0x3a-Nilo-Saharan-(Other)0x5d"></a><b>[{ssa} : Nilo-Saharan (Other)]</b>
+</li>
+<li><a name="0x7bniu0x7d-0x3a-Niuean"></a><b>{niu} : Niuean</b>
+</li>
+<li><a name="0x7bnog0x7d-0x3a-Nogai"></a><b>{nog} : Nogai</b>
+</li>
+<li><a name="0x7bnon0x7d-0x3a-Old-Norse"></a><b>{non} : Old Norse</b>
+<p>(Historical)</p>
+</li>
+<li><a name="0x5b0x7bnai0x7d-0x3a-North-American-Indian0x5d"></a><b>[{nai} : North American Indian]</b>
+<p>Do not use this.</p>
+</li>
+<li><a name="0x7bno0x7d-0x3a-Norwegian"></a><b>{no} : Norwegian</b>
+<p>Note the two following forms:</p>
+</li>
+<li><a name="0x7bnb0x7d-0x3a-Norwegian-Bokmal"></a><b>{nb} : Norwegian Bokmal</b>
+<p>eq Bokmål, (A form of Norwegian.)  (Formerly "no-bok".)</p>
+</li>
+<li><a name="0x7bnn0x7d-0x3a-Norwegian-Nynorsk"></a><b>{nn} : Norwegian Nynorsk</b>
+<p>(A form of Norwegian.)  (Formerly "no-nyn".)</p>
+</li>
+<li><a name="0x5b0x7bnub0x7d-0x3a-Nubian-languages0x5d"></a><b>[{nub} : Nubian languages]</b>
+</li>
+<li><a name="0x7bnym0x7d-0x3a-Nyamwezi"></a><b>{nym} : Nyamwezi</b>
+</li>
+<li><a name="0x7bnyn0x7d-0x3a-Nyankole"></a><b>{nyn} : Nyankole</b>
+</li>
+<li><a name="0x7bnyo0x7d-0x3a-Nyoro"></a><b>{nyo} : Nyoro</b>
+</li>
+<li><a name="0x7bnzi0x7d-0x3a-Nzima"></a><b>{nzi} : Nzima</b>
+</li>
+<li><a name="0x7boc0x7d-0x3a-Occitan-(post-1500)"></a><b>{oc} : Occitan (post 1500)</b>
+<p>eq Provençal, eq Provencal</p>
+</li>
+<li><a name="0x7boj0x7d-0x3a-Ojibwa"></a><b>{oj} : Ojibwa</b>
+<p>eq Ojibwe.  (Formerly "oji".)</p>
+</li>
+<li><a name="0x7bor0x7d-0x3a-Oriya"></a><b>{or} : Oriya</b>
+</li>
+<li><a name="0x7bom0x7d-0x3a-Oromo"></a><b>{om} : Oromo</b>
+</li>
+<li><a name="0x7bosa0x7d-0x3a-Osage"></a><b>{osa} : Osage</b>
+</li>
+<li><a name="0x7bos0x7d-0x3a-Ossetian0x3b-Ossetic"></a><b>{os} : Ossetian; Ossetic</b>
+</li>
+<li><a name="0x5b0x7boto0x7d-0x3a-Otomian-languages0x5d"></a><b>[{oto} : Otomian languages]</b>
+<p>Group of languages collectively called "Otomí".</p>
+</li>
+<li><a name="0x7bpal0x7d-0x3a-Pahlavi"></a><b>{pal} : Pahlavi</b>
+<p>eq Pahlevi</p>
+</li>
+<li><a name="0x7bi-pwn0x7d-0x3a-Paiwan"></a><b>{i-pwn} : Paiwan</b>
+<p>eq Pariwan</p>
+</li>
+<li><a name="0x7bpau0x7d-0x3a-Palauan"></a><b>{pau} : Palauan</b>
+</li>
+<li><a name="0x7bpi0x7d-0x3a-Pali"></a><b>{pi} : Pali</b>
+<p>(Historical?)</p>
+</li>
+<li><a name="0x7bpam0x7d-0x3a-Pampanga"></a><b>{pam} : Pampanga</b>
+</li>
+<li><a name="0x7bpag0x7d-0x3a-Pangasinan"></a><b>{pag} : Pangasinan</b>
+</li>
+<li><a name="0x7bpa0x7d-0x3a-Panjabi"></a><b>{pa} : Panjabi</b>
+<p>eq Punjabi</p>
+</li>
+<li><a name="0x7bpap0x7d-0x3a-Papiamento"></a><b>{pap} : Papiamento</b>
+<p>eq Papiamentu.</p>
+</li>
+<li><a name="0x5b0x7bpaa0x7d-0x3a-Papuan-(Other)0x5d"></a><b>[{paa} : Papuan (Other)]</b>
+</li>
+<li><a name="0x7bfa0x7d-0x3a-Persian"></a><b>{fa} : Persian</b>
+<p>eq Farsi.  eq Iranian.</p>
+</li>
+<li><a name="0x7bpeo0x7d-0x3a-Old-Persian-(ca.600-400-B.C.)"></a><b>{peo} : Old Persian (ca.600-400 B.C.)</b>
+</li>
+<li><a name="0x5b0x7bphi0x7d-0x3a-Philippine-(Other)0x5d"></a><b>[{phi} : Philippine (Other)]</b>
+</li>
+<li><a name="0x7bphn0x7d-0x3a-Phoenician"></a><b>{phn} : Phoenician</b>
+<p>(Historical)</p>
+</li>
+<li><a name="0x7bpon0x7d-0x3a-Pohnpeian"></a><b>{pon} : Pohnpeian</b>
+<p>NOT Pompeiian!</p>
+</li>
+<li><a name="0x7bpl0x7d-0x3a-Polish"></a><b>{pl} : Polish</b>
+</li>
+<li><a name="0x7bpt0x7d-0x3a-Portuguese"></a><b>{pt} : Portuguese</b>
+<p>eq Portugese.  Notable forms:
+{pt-pt} Portugal Portuguese;
+{pt-br} Brazilian Portuguese.</p>
+</li>
+<li><a name="0x5b0x7bpra0x7d-0x3a-Prakrit-languages0x5d"></a><b>[{pra} : Prakrit languages]</b>
+</li>
+<li><a name="0x7bpro0x7d-0x3a-Old-Provencal-(to-1500)"></a><b>{pro} : Old Provencal (to 1500)</b>
+<p>eq Old Provençal.  (Historical.)</p>
+</li>
+<li><a name="0x7bps0x7d-0x3a-Pushto"></a><b>{ps} : Pushto</b>
+<p>eq Pashto.  eq Pushtu.</p>
+</li>
+<li><a name="0x7bqu0x7d-0x3a-Quechua"></a><b>{qu} : Quechua</b>
+<p>eq Quecha.</p>
+</li>
+<li><a name="0x7brm0x7d-0x3a-Raeto-Romance"></a><b>{rm} : Raeto-Romance</b>
+<p>eq Romansh.</p>
+</li>
+<li><a name="0x7braj0x7d-0x3a-Rajasthani"></a><b>{raj} : Rajasthani</b>
+</li>
+<li><a name="0x7brap0x7d-0x3a-Rapanui"></a><b>{rap} : Rapanui</b>
+</li>
+<li><a name="0x7brar0x7d-0x3a-Rarotongan"></a><b>{rar} : Rarotongan</b>
+</li>
+<li><a name="0x5b0x7bqaa---qtz0x7d-0x3a-Reserved-for-local-use.0x5d"></a><b>[{qaa - qtz} : Reserved for local use.]</b>
+</li>
+<li><a name="0x5b0x7broa0x7d-0x3a-Romance-(Other)0x5d"></a><b>[{roa} : Romance (Other)]</b>
+<p>NOT Romanian!  NOT Romany!  NOT Romansh!</p>
+</li>
+<li><a name="0x7bro0x7d-0x3a-Romanian"></a><b>{ro} : Romanian</b>
+<p>eq Rumanian.  NOT Romany!</p>
+</li>
+<li><a name="0x7brom0x7d-0x3a-Romany"></a><b>{rom} : Romany</b>
+<p>eq Rom.  NOT Romanian!</p>
+</li>
+<li><a name="0x7brn0x7d-0x3a-Rundi"></a><b>{rn} : Rundi</b>
+</li>
+<li><a name="0x7bru0x7d-0x3a-Russian"></a><b>{ru} : Russian</b>
+<p>NOT White Russian!  NOT Rusyn!</p>
+</li>
+<li><a name="0x5b0x7bsal0x7d-0x3a-Salishan-languages0x5d"></a><b>[{sal} : Salishan languages]</b>
+<p>Large language group.</p>
+</li>
+<li><a name="0x7bsam0x7d-0x3a-Samaritan-Aramaic"></a><b>{sam} : Samaritan Aramaic</b>
+<p>NOT Aramaic!</p>
+</li>
+<li><a name="0x7bse0x7d-0x3a-Northern-Sami"></a><b>{se} : Northern Sami</b>
+<p>eq Lappish.  eq Lapp.  eq (Northern) Saami.</p>
+</li>
+<li><a name="0x7bsma0x7d-0x3a-Southern-Sami"></a><b>{sma} : Southern Sami</b>
+</li>
+<li><a name="0x7bsmn0x7d-0x3a-Inari-Sami"></a><b>{smn} : Inari Sami</b>
+</li>
+<li><a name="0x7bsmj0x7d-0x3a-Lule-Sami"></a><b>{smj} : Lule Sami</b>
+</li>
+<li><a name="0x7bsms0x7d-0x3a-Skolt-Sami"></a><b>{sms} : Skolt Sami</b>
+</li>
+<li><a name="0x5b0x7bsmi0x7d-0x3a-Sami-languages-(Other)0x5d"></a><b>[{smi} : Sami languages (Other)]</b>
+</li>
+<li><a name="0x7bsm0x7d-0x3a-Samoan"></a><b>{sm} : Samoan</b>
+</li>
+<li><a name="0x7bsad0x7d-0x3a-Sandawe"></a><b>{sad} : Sandawe</b>
+</li>
+<li><a name="0x7bsg0x7d-0x3a-Sango"></a><b>{sg} : Sango</b>
+</li>
+<li><a name="0x7bsa0x7d-0x3a-Sanskrit"></a><b>{sa} : Sanskrit</b>
+<p>(Historical)</p>
+</li>
+<li><a name="0x7bsat0x7d-0x3a-Santali"></a><b>{sat} : Santali</b>
+</li>
+<li><a name="0x7bsc0x7d-0x3a-Sardinian"></a><b>{sc} : Sardinian</b>
+<p>eq Sard.</p>
+</li>
+<li><a name="0x7bsas0x7d-0x3a-Sasak"></a><b>{sas} : Sasak</b>
+</li>
+<li><a name="0x7bsco0x7d-0x3a-Scots"></a><b>{sco} : Scots</b>
+<p>NOT Scots Gaelic!</p>
+</li>
+<li><a name="0x7bsel0x7d-0x3a-Selkup"></a><b>{sel} : Selkup</b>
+</li>
+<li><a name="0x5b0x7bsem0x7d-0x3a-Semitic-(Other)0x5d"></a><b>[{sem} : Semitic (Other)]</b>
+</li>
+<li><a name="0x7bsr0x7d-0x3a-Serbian"></a><b>{sr} : Serbian</b>
+<p>eq Serb.  NOT Sorbian.</p>
+<p>Notable forms:
+{sr-Cyrl} : Serbian in Cyrillic script;
+{sr-Latn} : Serbian in Latin script.</p>
+</li>
+<li><a name="0x7bsrr0x7d-0x3a-Serer"></a><b>{srr} : Serer</b>
+</li>
+<li><a name="0x7bshn0x7d-0x3a-Shan"></a><b>{shn} : Shan</b>
+</li>
+<li><a name="0x7bsn0x7d-0x3a-Shona"></a><b>{sn} : Shona</b>
+</li>
+<li><a name="0x7bsid0x7d-0x3a-Sidamo"></a><b>{sid} : Sidamo</b>
+</li>
+<li><a name="0x7bsgn-...0x7d-0x3a-Sign-Languages"></a><b>{sgn-...} : Sign Languages</b>
+<p>Always use with a subtag.  Notable forms:
+{sgn-gb} British Sign Language (BSL);
+{sgn-ie} Irish Sign Language (ESL);
+{sgn-ni} Nicaraguan Sign Language (ISN);
+{sgn-us} American Sign Language (ASL).</p>
+<p>(And so on with other country codes as the subtag.)</p>
+</li>
+<li><a name="0x7bbla0x7d-0x3a-Siksika"></a><b>{bla} : Siksika</b>
+<p>eq Blackfoot.  eq Pikanii.</p>
+</li>
+<li><a name="0x7bsd0x7d-0x3a-Sindhi"></a><b>{sd} : Sindhi</b>
+</li>
+<li><a name="0x7bsi0x7d-0x3a-Sinhalese"></a><b>{si} : Sinhalese</b>
+<p>eq Sinhala.</p>
+</li>
+<li><a name="0x5b0x7bsit0x7d-0x3a-Sino-Tibetan-(Other)0x5d"></a><b>[{sit} : Sino-Tibetan (Other)]</b>
+</li>
+<li><a name="0x5b0x7bsio0x7d-0x3a-Siouan-languages0x5d"></a><b>[{sio} : Siouan languages]</b>
+</li>
+<li><a name="0x7bden0x7d-0x3a-Slave-(Athapascan)"></a><b>{den} : Slave (Athapascan)</b>
+<p>("Slavey" is a subform.)</p>
+</li>
+<li><a name="0x5b0x7bsla0x7d-0x3a-Slavic-(Other)0x5d"></a><b>[{sla} : Slavic (Other)]</b>
+</li>
+<li><a name="0x7bsk0x7d-0x3a-Slovak"></a><b>{sk} : Slovak</b>
+<p>eq Slovakian.</p>
+</li>
+<li><a name="0x7bsl0x7d-0x3a-Slovenian"></a><b>{sl} : Slovenian</b>
+<p>eq Slovene.</p>
+</li>
+<li><a name="0x7bsog0x7d-0x3a-Sogdian"></a><b>{sog} : Sogdian</b>
+</li>
+<li><a name="0x7bso0x7d-0x3a-Somali"></a><b>{so} : Somali</b>
+</li>
+<li><a name="0x7bson0x7d-0x3a-Songhai"></a><b>{son} : Songhai</b>
+</li>
+<li><a name="0x7bsnk0x7d-0x3a-Soninke"></a><b>{snk} : Soninke</b>
+</li>
+<li><a name="0x7bwen0x7d-0x3a-Sorbian-languages"></a><b>{wen} : Sorbian languages</b>
+<p>eq Wendish.  eq Sorb.  eq Lusatian.  eq Wend.  NOT Venda!  NOT Serbian!</p>
+</li>
+<li><a name="0x7bnso0x7d-0x3a-Northern-Sotho"></a><b>{nso} : Northern Sotho</b>
+</li>
+<li><a name="0x7bst0x7d-0x3a-Southern-Sotho"></a><b>{st} : Southern Sotho</b>
+<p>eq Sutu.  eq Sesotho.</p>
+</li>
+<li><a name="0x5b0x7bsai0x7d-0x3a-South-American-Indian-(Other)0x5d"></a><b>[{sai} : South American Indian (Other)]</b>
+</li>
+<li><a name="0x7bes0x7d-0x3a-Spanish"></a><b>{es} : Spanish</b>
+<p>Notable forms:
+{es-ar} Argentine Spanish;
+{es-bo} Bolivian Spanish;
+{es-cl} Chilean Spanish;
+{es-co} Colombian Spanish;
+{es-do} Dominican Spanish;
+{es-ec} Ecuadorian Spanish;
+{es-es} Spain Spanish;
+{es-gt} Guatemalan Spanish;
+{es-hn} Honduran Spanish;
+{es-mx} Mexican Spanish;
+{es-pa} Panamanian Spanish;
+{es-pe} Peruvian Spanish;
+{es-pr} Puerto Rican Spanish;
+{es-py} Paraguay Spanish;
+{es-sv} Salvadoran Spanish;
+{es-us} US Spanish;
+{es-uy} Uruguayan Spanish;
+{es-ve} Venezuelan Spanish.</p>
+</li>
+<li><a name="0x7bsuk0x7d-0x3a-Sukuma"></a><b>{suk} : Sukuma</b>
+</li>
+<li><a name="0x7bsux0x7d-0x3a-Sumerian"></a><b>{sux} : Sumerian</b>
+<p>(Historical)</p>
+</li>
+<li><a name="0x7bsu0x7d-0x3a-Sundanese"></a><b>{su} : Sundanese</b>
+</li>
+<li><a name="0x7bsus0x7d-0x3a-Susu"></a><b>{sus} : Susu</b>
+</li>
+<li><a name="0x7bsw0x7d-0x3a-Swahili"></a><b>{sw} : Swahili</b>
+<p>eq Kiswahili</p>
+</li>
+<li><a name="0x7bss0x7d-0x3a-Swati"></a><b>{ss} : Swati</b>
+</li>
+<li><a name="0x7bsv0x7d-0x3a-Swedish"></a><b>{sv} : Swedish</b>
+<p>Notable forms:
+{sv-se} Sweden Swedish;
+{sv-fi} Finland Swedish.</p>
+</li>
+<li><a name="0x7bsyr0x7d-0x3a-Syriac"></a><b>{syr} : Syriac</b>
+</li>
+<li><a name="0x7btl0x7d-0x3a-Tagalog"></a><b>{tl} : Tagalog</b>
+</li>
+<li><a name="0x7bty0x7d-0x3a-Tahitian"></a><b>{ty} : Tahitian</b>
+</li>
+<li><a name="0x5b0x7btai0x7d-0x3a-Tai-(Other)0x5d"></a><b>[{tai} : Tai (Other)]</b>
+<p>NOT Thai!</p>
+</li>
+<li><a name="0x7btg0x7d-0x3a-Tajik"></a><b>{tg} : Tajik</b>
+</li>
+<li><a name="0x7btmh0x7d-0x3a-Tamashek"></a><b>{tmh} : Tamashek</b>
+</li>
+<li><a name="0x7bta0x7d-0x3a-Tamil"></a><b>{ta} : Tamil</b>
+</li>
+<li><a name="0x7bi-tao0x7d-0x3a-Tao"></a><b>{i-tao} : Tao</b>
+<p>eq Yami.</p>
+</li>
+<li><a name="0x7btt0x7d-0x3a-Tatar"></a><b>{tt} : Tatar</b>
+</li>
+<li><a name="0x7bi-tay0x7d-0x3a-Tayal"></a><b>{i-tay} : Tayal</b>
+<p>eq Atayal.  eq Atayan.</p>
+</li>
+<li><a name="0x7bte0x7d-0x3a-Telugu"></a><b>{te} : Telugu</b>
+</li>
+<li><a name="0x7bter0x7d-0x3a-Tereno"></a><b>{ter} : Tereno</b>
+</li>
+<li><a name="0x7btet0x7d-0x3a-Tetum"></a><b>{tet} : Tetum</b>
+</li>
+<li><a name="0x7bth0x7d-0x3a-Thai"></a><b>{th} : Thai</b>
+<p>NOT Tai!</p>
+</li>
+<li><a name="0x7bbo0x7d-0x3a-Tibetan"></a><b>{bo} : Tibetan</b>
+</li>
+<li><a name="0x7btig0x7d-0x3a-Tigre"></a><b>{tig} : Tigre</b>
+</li>
+<li><a name="0x7bti0x7d-0x3a-Tigrinya"></a><b>{ti} : Tigrinya</b>
+</li>
+<li><a name="0x7btem0x7d-0x3a-Timne"></a><b>{tem} : Timne</b>
+<p>eq Themne.  eq Timene.</p>
+</li>
+<li><a name="0x7btiv0x7d-0x3a-Tiv"></a><b>{tiv} : Tiv</b>
+</li>
+<li><a name="0x7btli0x7d-0x3a-Tlingit"></a><b>{tli} : Tlingit</b>
+</li>
+<li><a name="0x7btpi0x7d-0x3a-Tok-Pisin"></a><b>{tpi} : Tok Pisin</b>
+</li>
+<li><a name="0x7btkl0x7d-0x3a-Tokelau"></a><b>{tkl} : Tokelau</b>
+</li>
+<li><a name="0x7btog0x7d-0x3a-Tonga-(Nyasa)"></a><b>{tog} : Tonga (Nyasa)</b>
+<p>NOT Tsonga!</p>
+</li>
+<li><a name="0x7bto0x7d-0x3a-Tonga-(Tonga-Islands)"></a><b>{to} : Tonga (Tonga Islands)</b>
+<p>(Pronounced "Tong-a", not "Tong-ga")</p>
+<p>NOT Tsonga!</p>
+</li>
+<li><a name="0x7btsi0x7d-0x3a-Tsimshian"></a><b>{tsi} : Tsimshian</b>
+<p>eq Sm'algyax</p>
+</li>
+<li><a name="0x7bts0x7d-0x3a-Tsonga"></a><b>{ts} : Tsonga</b>
+<p>NOT Tonga!</p>
+</li>
+<li><a name="0x7bi-tsu0x7d-0x3a-Tsou"></a><b>{i-tsu} : Tsou</b>
+</li>
+<li><a name="0x7btn0x7d-0x3a-Tswana"></a><b>{tn} : Tswana</b>
+<p>Same as Setswana.</p>
+</li>
+<li><a name="0x7btum0x7d-0x3a-Tumbuka"></a><b>{tum} : Tumbuka</b>
+</li>
+<li><a name="0x5b0x7btup0x7d-0x3a-Tupi-languages0x5d"></a><b>[{tup} : Tupi languages]</b>
+</li>
+<li><a name="0x7btr0x7d-0x3a-Turkish"></a><b>{tr} : Turkish</b>
+<p>(Typically in Roman script)</p>
+</li>
+<li><a name="0x7bota0x7d-0x3a-Ottoman-Turkish-(1500-1928)"></a><b>{ota} : Ottoman Turkish (1500-1928)</b>
+<p>(Typically in Arabic script)  (Historical)</p>
+</li>
+<li><a name="0x7bcrh0x7d-0x3a-Crimean-Turkish"></a><b>{crh} : Crimean Turkish</b>
+<p>eq Crimean Tatar</p>
+</li>
+<li><a name="0x7btk0x7d-0x3a-Turkmen"></a><b>{tk} : Turkmen</b>
+<p>eq Turkmeni.</p>
+</li>
+<li><a name="0x7btvl0x7d-0x3a-Tuvalu"></a><b>{tvl} : Tuvalu</b>
+</li>
+<li><a name="0x7btyv0x7d-0x3a-Tuvinian"></a><b>{tyv} : Tuvinian</b>
+<p>eq Tuvan.  eq Tuvin.</p>
+</li>
+<li><a name="0x7btw0x7d-0x3a-Twi"></a><b>{tw} : Twi</b>
+</li>
+<li><a name="0x7budm0x7d-0x3a-Udmurt"></a><b>{udm} : Udmurt</b>
+</li>
+<li><a name="0x7buga0x7d-0x3a-Ugaritic"></a><b>{uga} : Ugaritic</b>
+<p>NOT Ugric!</p>
+</li>
+<li><a name="0x7bug0x7d-0x3a-Uighur"></a><b>{ug} : Uighur</b>
+</li>
+<li><a name="0x7buk0x7d-0x3a-Ukrainian"></a><b>{uk} : Ukrainian</b>
+</li>
+<li><a name="0x7bumb0x7d-0x3a-Umbundu"></a><b>{umb} : Umbundu</b>
+</li>
+<li><a name="0x7bund0x7d-0x3a-Undetermined"></a><b>{und} : Undetermined</b>
+<p>Not a tag for normal use.</p>
+</li>
+<li><a name="0x7bur0x7d-0x3a-Urdu"></a><b>{ur} : Urdu</b>
+</li>
+<li><a name="0x7buz0x7d-0x3a-Uzbek"></a><b>{uz} : Uzbek</b>
+<p>eq Özbek</p>
+<p>Notable forms:
+{uz-Cyrl} Uzbek in Cyrillic script;
+{uz-Latn} Uzbek in Latin script.</p>
+</li>
+<li><a name="0x7bvai0x7d-0x3a-Vai"></a><b>{vai} : Vai</b>
+</li>
+<li><a name="0x7bve0x7d-0x3a-Venda"></a><b>{ve} : Venda</b>
+<p>NOT Wendish!  NOT Wend!  NOT Avestan!  (Formerly "ven".)</p>
+</li>
+<li><a name="0x7bvi0x7d-0x3a-Vietnamese"></a><b>{vi} : Vietnamese</b>
+<p>eq Viet.</p>
+</li>
+<li><a name="0x7bvo0x7d-0x3a-Volapuk"></a><b>{vo} : Volapuk</b>
+<p>eq Volapük.  (Artificial)</p>
+</li>
+<li><a name="0x7bvot0x7d-0x3a-Votic"></a><b>{vot} : Votic</b>
+<p>eq Votian.  eq Vod.</p>
+</li>
+<li><a name="0x5b0x7bwak0x7d-0x3a-Wakashan-languages0x5d"></a><b>[{wak} : Wakashan languages]</b>
+</li>
+<li><a name="0x7bwa0x7d-0x3a-Walloon"></a><b>{wa} : Walloon</b>
+</li>
+<li><a name="0x7bwal0x7d-0x3a-Walamo"></a><b>{wal} : Walamo</b>
+<p>eq Wolaytta.</p>
+</li>
+<li><a name="0x7bwar0x7d-0x3a-Waray"></a><b>{war} : Waray</b>
+<p>Presumably the Philippine language Waray-Waray (Samareño),
+not the smaller Philippine language Waray Sorsogon, nor the extinct
+Australian language Waray.</p>
+</li>
+<li><a name="0x7bwas0x7d-0x3a-Washo"></a><b>{was} : Washo</b>
+<p>eq Washoe</p>
+</li>
+<li><a name="0x7bcy0x7d-0x3a-Welsh"></a><b>{cy} : Welsh</b>
+</li>
+<li><a name="0x7bwo0x7d-0x3a-Wolof"></a><b>{wo} : Wolof</b>
+</li>
+<li><a name="0x7bx-...0x7d-0x3a-Unregistered-(Semi-Private-Use)"></a><b>{x-...} : Unregistered (Semi-Private Use)</b>
+<p>"x-" is a prefix for language tags that are not registered with ISO
+or IANA.  Example, x-double-dutch</p>
+</li>
+<li><a name="0x7bxh0x7d-0x3a-Xhosa"></a><b>{xh} : Xhosa</b>
+</li>
+<li><a name="0x7bsah0x7d-0x3a-Yakut"></a><b>{sah} : Yakut</b>
+</li>
+<li><a name="0x7byao0x7d-0x3a-Yao"></a><b>{yao} : Yao</b>
+<p>(The Yao in Malawi?)</p>
+</li>
+<li><a name="0x7byap0x7d-0x3a-Yapese"></a><b>{yap} : Yapese</b>
+<p>eq Yap</p>
+</li>
+<li><a name="0x7bii0x7d-0x3a-Sichuan-Yi"></a><b>{ii} : Sichuan Yi</b>
+</li>
+<li><a name="0x7byi0x7d-0x3a-Yiddish"></a><b>{yi} : Yiddish</b>
+<p>Formerly "ji".  Usually in Hebrew script.</p>
+<p>Notable forms:
+{yi-latn} Yiddish in Latin script</p>
+</li>
+<li><a name="0x7byo0x7d-0x3a-Yoruba"></a><b>{yo} : Yoruba</b>
+</li>
+<li><a name="0x5b0x7bypk0x7d-0x3a-Yupik-languages0x5d"></a><b>[{ypk} : Yupik languages]</b>
+<p>Several "Eskimo" languages.</p>
+</li>
+<li><a name="0x7bznd0x7d-0x3a-Zande"></a><b>{znd} : Zande</b>
+</li>
+<li><a name="0x5b0x7bzap0x7d-0x3a-Zapotec0x5d"></a><b>[{zap} : Zapotec]</b>
+<p>(A group of languages.)</p>
+</li>
+<li><a name="0x7bzen0x7d-0x3a-Zenaga"></a><b>{zen} : Zenaga</b>
+<p>NOT Zend.</p>
+</li>
+<li><a name="0x7bza0x7d-0x3a-Zhuang"></a><b>{za} : Zhuang</b>
+</li>
+<li><a name="0x7bzu0x7d-0x3a-Zulu"></a><b>{zu} : Zulu</b>
+</li>
+<li><a name="0x7bzun0x7d-0x3a-Zuni"></a><b>{zun} : Zuni</b>
+<p>eq Zuñi</p>
+</li>
+</ul>
+<a name="SEE-ALSO"></a><h1>SEE ALSO</h1>
+<p><a href="../../I18N/LangTags.html">I18N::LangTags</a> and its "See Also" section.</p>
+<a name="COPYRIGHT-AND-DISCLAIMER"></a><h1>COPYRIGHT AND DISCLAIMER</h1>
+<p>Copyright (c) 2001+ Sean M. Burke. All rights reserved.</p>
+<p>You can redistribute and/or
+modify this document under the same terms as Perl itself.</p>
+<p>This document is provided in the hope that it will be
+useful, but without any warranty;
+without even the implied warranty of accuracy, authoritativeness,
+completeness, merchantability, or fitness for a particular purpose.</p>
+<p>Email any corrections or questions to me.</p>
+<a name="AUTHOR"></a><h1>AUTHOR</h1>
+<p>Sean M. Burke, sburke@cpan.org</p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../../close_purple.gif';" onmouseout="rightCloseIcon.src='../../close_blue.gif';"><img src="../../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('I18N::LangTags::List','I18N/LangTags/List.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,28 @@
+zaterdag, 9
+Temperatuur: 11
+Neerslag: Kans op regen
+
+zondag, 10
+Temperatuur: 9
+Neerslag: Regen
+
+maandag, 11
+Temperatuur: 11
+Neerslag: Geheel bewolkt
+
+dinsdag, 12
+Temperatuur: 12
+Neerslag: Kans op regen
+
+woensdag, 13
+Temperatuur: 11
+Neerslag: Gedeeltelijk bewolkt
+
+donderdag, 14
+Temperatuur: 9
+Neerslag: Kans op regen
+
+vrijdag, 15
+Temperatuur: 9
+Neerslag: Gedeeltelijk bewolkt
+

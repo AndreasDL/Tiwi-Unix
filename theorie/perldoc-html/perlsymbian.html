@@ -1,0 +1,367 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>perlsymbian - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 0;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='close_purple.gif';" onmouseout="leftCloseIcon.src='close_blue.gif';"><img src="close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="index-overview.html">Overview</a></li>
+        <li><a href="index-tutorials.html">Tutorials</a></li>
+        <li><a href="index-faq.html">FAQs</a></li>
+        <li><a href="index-history.html">History / Changes</a></li>
+        <li><a href="index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="index-language.html">Language</a></li>
+        <li><a href="index-functions.html">Functions</a></li>
+        <li><a href="perlop.html">Operators</a></li>
+        <li><a href="perlvar.html">Special variables</a></li>
+        <li><a href="index-pragmas.html">Pragmas</a></li>
+        <li><a href="index-modules-A.html">Core modules</a></li>
+        <li><a href="index-utilities.html">Utilities</a></li>
+        <li><a href="index-internals.html">Internals</a></li>
+        <li><a href="index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="index.html">Home</a> &gt; <a href="index-platforms.html">Platform specific</a> &gt; perlsymbian</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">perlsymbian</div><ul><li><a href="#NAME">NAME</a><li><a href="#DESCRIPTION">DESCRIPTION</a><ul><li><a href="#Compiling-Perl-on-Symbian">Compiling Perl on Symbian</a><li><a href="#Compilation-problems">Compilation problems</a><li><a href="#PerlApp">PerlApp</a><li><a href="#sisify.pl">sisify.pl</a><li><a href="#Using-Perl-in-Symbian">Using Perl in Symbian</a></ul><li><a href="#TO-DO">TO DO</a><li><a href="#WARNING">WARNING</a><li><a href="#NOTE">NOTE</a><li><a href="#AUTHOR">AUTHOR</a><li><a href="#COPYRIGHT">COPYRIGHT</a><li><a href="#LICENSE">LICENSE</a><li><a href="#HISTORY">HISTORY</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>README.symbian - Perl version 5 on Symbian OS</p>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p>This document describes various features of the Symbian operating
+system that will affect how Perl version 5 (hereafter just Perl)
+is compiled and/or runs.</p>
+<p><b>NOTE: this port (as of 0.4.1) does not compile into a Symbian
+OS GUI application, but instead it results in a Symbian DLL.</b>
+The DLL includes a C++ class called CPerlBase, which one can then
+(derive from and) use to embed Perl into applications, see <i>symbian/README</i>.</p>
+<p>The base port of Perl to Symbian only implements the basic POSIX-like
+functionality; it does not implement any further Symbian or Series 60,
+Series 80, or UIQ bindings for Perl.</p>
+<p>It is also possible to generate Symbian executables for "miniperl"
+and "perl", but since there is no standard command line interface
+for Symbian (nor full keyboards in the devices), these are useful
+mainly as demonstrations.</p>
+<a name="Compiling-Perl-on-Symbian"></a><h2>Compiling Perl on Symbian</h2>
+<p>(0) You need to have the appropriate Symbian SDK installed.</p>
+<pre class="verbatim">    These instructions have been tested under various Nokia Series 60
+    Symbian SDKs (1.2 to 2.6, 2.8 should also work, 1.2 compiles but
+    does not work), Series 80 2.0, and Nokia 7710 (Series 90) SDK.
+    You can get the SDKs from Forum Nokia (http://www.forum.nokia.com/).
+    A very rough port ("it compiles") to UIQ 2.1 has also been made.</pre><pre class="verbatim">    A prerequisite for any of the SDKs is to install ActivePerl
+    from ActiveState, http://www.activestate.com/Products/ActivePerl/</pre><pre class="verbatim">    Having the SDK installed also means that you need to have either
+    the Metrowerks CodeWarrior installed (2.8 and 3.0 were used in testing)
+    or the Microsoft Visual C++ 6.0 installed (SP3 minimum, SP5 recommended).</pre><pre class="verbatim">    Note that for example the Series 60 2.0 VC SDK installation talks
+    about ActivePerl build 518, which does no more (as of mid-2005) exist
+    at the ActiveState website.  The ActivePerl 5.8.4 build 810 was
+    used successfully for compiling Perl on Symbian.  The 5.6.x ActivePerls
+    do not work.</pre><pre class="verbatim">    <span class="w">Other</span> <span class="w">SDKs</span> or <span class="w">compilers</span> <span class="w">like</span> <span class="w">Visual</span>.<span class="w">NET</span><span class="cm">,</span> <span class="w">command</span>-<span class="w">line</span>-<span class="w">only</span>
+    <span class="w">Visual</span>.<span class="w">NET</span><span class="cm">,</span> <span class="w">Borland</span><span class="cm">,</span> <span class="w">GnuPoc</span><span class="cm">,</span> or <span class="w">sdk2unix</span> <span class="w">have</span> not <span class="w">been</span> <span class="w">tried</span>.</pre>
+<pre class="verbatim">    <span class="w">These</span> <span class="w">instructions</span> <span class="w">almost</span> <span class="w">certainly</span> <span class="w">won't</span> <span class="w">work</span> <span class="w">with</span> <span class="w">older</span> <span class="w">Symbian</span>
+    <span class="w">releases</span> or <span class="w">other</span> <span class="w">SDKs</span>.  <span class="w">Patches</span> <span class="w">to</span> <span class="w">get</span> <span class="w">this</span> <span class="w">port</span> <span class="w">running</span> <span class="w">in</span> <span class="w">other</span>
+    <span class="w">releases</span><span class="cm">,</span> <span class="w">SDKs</span><span class="cm">,</span> <span class="w">compilers</span><span class="cm">,</span> <span class="w">platforms</span><span class="cm">,</span> or <span class="w">devices</span> <span class="w">are</span> <span class="w">naturally</span> <span class="w">welcome</span>.</pre>
+<p>(1) Get a Perl source code distribution (for example the file
+    perl-5.9.2.tar.gz is fine) from <a href="http://www.cpan.org/src/">http://www.cpan.org/src/</a>
+    and unpack it in your the C:/Symbian directory of your Windows
+    system.</p>
+<p>(2) Change to the perl source directory.</p>
+<pre class="verbatim">	cd c:\Symbian\perl-5.x.x</pre><p>(3) Run the following script using the perl coming with the SDK</p>
+<pre class="verbatim">	<span class="w">perl</span> <span class="w">symbian</span>\<span class="w">config</span>.<span class="w">pl</span></pre>
+<pre class="verbatim">    <span class="w">You</span> <span class="w">must</span> <a class="l_k" href="functions/use.html">use</a> <span class="w">the</span> <span class="w">cmd</span>.<span class="w">exe</span><span class="cm">,</span> <span class="w">the</span> <span class="w">Cygwin</span> <span class="w">shell</span> <span class="w">will</span> not <span class="w">work</span>.
+    <span class="w">The</span> <span class="w">PATH</span> <span class="w">must</span> <span class="w">include</span> <span class="w">the</span> <span class="w">SDK</span> <span class="w">tools</span><span class="cm">,</span> <span class="w">including</span> <span class="w">a</span> <span class="w">Perl</span><span class="cm">,</span>
+    <span class="w">which</span> <span class="w">should</span> <span class="w">be</span> <span class="w">the</span> case <span class="w">under</span> <span class="w">cmd</span>.<span class="w">exe</span>.  <span class="w">If</span> <span class="w">you</span> <a class="l_k" href="functions/do.html">do</a> not
+    <span class="w">have</span> <span class="w">that</span><span class="cm">,</span> <span class="w">see</span> <span class="w">the</span> <span class="w">end</span> <span class="w">of</span> <span class="w">symbian</span>\<span class="w">sdk</span>.<span class="w">pl</span> for <span class="w">notes</span> <span class="w">of</span>
+    <span class="w">how</span> <span class="w">your</span> <span class="w">environment</span> <span class="w">should</span> <span class="w">be</span> <span class="w">set</span> <span class="w">up</span> for <span class="w">Symbian</span> <span class="w">compiles</span>.</pre>
+<p>(4) Build the project, either by</p>
+<pre class="verbatim">	<span class="w">make</span> <span class="w">all</span></pre>
+<pre class="verbatim">    in cmd.exe or by using either the Metrowerks CodeWarrior
+    or the Visual C++ 6.0, or the Visual Studio 8 (the Visual C++
+    2005 Express Edition works fine).</pre><pre class="verbatim">    If you use the VC IDE, you will have to run F&lt;symbian\config.pl&gt;
+    first using the cmd.exe, and then run 'make win.mf vc6.mf' to generate
+    the VC6 makefiles and workspaces.  "make vc6" will compile for the VC6,
+    and "make cw" for the CodeWarrior.</pre><pre class="verbatim">    The following SDK and compiler configurations and Nokia phones were
+    tested at some point in time (+ = compiled and PerlApp run, - = not),
+    both for Perl 5.8.x and 5.9.x:</pre><pre class="verbatim">        SDK     | VC | CW |
+        --------+----+----+---
+        S60 1.2 | +  | +  | 3650 (*)
+        S60 2.0 | +  | +  | 6600
+        S60 2.1 | -  | +  | 6670
+        S60 2.6 | +  | +  | 6630    
+        S60 2.8 | +  | +  | (not tested in a device)
+        S80 2.6 | -  | +  | 9300
+        S90 1.1 | +  | -  | 7710
+        UIQ 2.1 | -  | +  | (not tested in a device)</pre><pre class="verbatim">    (*) Compiles but does not work, unfortunately, a problem with Symbian.</pre><pre class="verbatim">    If you are using the 'make' directly, it is the GNU make from the SDKs,
+    and it will invoke the right make commands for the Windows emulator
+    build and the Arm target builds ('thumb' by default) as necessary.</pre><pre class="verbatim">    The build scripts assume the 'absolute style' SDK installs under C:,
+    the 'subst style' will not work.</pre><pre class="verbatim">    If using the VC IDE, to build use for example the File-&gt;Open Workspace-&gt;
+    C:\Symbian\8.0a\S60_2nd_FP2\epoc32\build\symbian\perl\perl\wins\perl.dsw
+    The emulator binaries will appear in the same directory.</pre><pre class="verbatim">    <span class="w">If</span> <span class="w">using</span> <span class="w">the</span> <span class="w">VC</span> <span class="w">IDE</span><span class="cm">,</span> <span class="w">you</span> <span class="w">will</span> <span class="w">a</span> <span class="w">lot</span> <span class="w">of</span> <span class="w">warnings</span> <span class="w">in</span> <span class="w">the</span> <span class="w">beginning</span> <span class="w">of</span>
+    <span class="w">the</span> <span class="w">build</span> <span class="w">because</span> <span class="w">a</span> <span class="w">lot</span> <span class="w">of</span> <span class="w">headers</span> <span class="w">mentioned</span> <span class="w">by</span> <span class="w">the</span> <span class="w">source</span> <span class="w">cannot</span>
+    <span class="w">be</span> <span class="w">found</span><span class="cm">,</span> <span class="w">but</span> <span class="w">this</span> <span class="w">is</span> not <span class="w">serious</span> <span class="w">since</span> <span class="w">those</span> <span class="w">headers</span> <span class="w">are</span> not <span class="w">used</span>.</pre>
+<pre class="verbatim">    <span class="w">The</span> <span class="w">Metrowerks</span> <span class="w">will</span> <span class="w">give</span> <span class="w">a</span> <span class="w">lot</span> <span class="w">of</span> <span class="w">warnings</span> <span class="w">about</span> <span class="w">unused</span> <span class="w">variables</span> and
+    <span class="w">empty</span> <span class="w">declarations</span><span class="cm">,</span> <span class="w">you</span> <span class="w">can</span> <span class="w">ignore</span> <span class="w">those</span>.</pre>
+<pre class="verbatim">    When the Windows and Arm DLLs are built do not be scared by a very long
+    messages whizzing by: it is the "export freeze" phase where the whole
+    (rather large) API of Perl is listed.</pre><pre class="verbatim">    <span class="w">Once</span> <span class="w">the</span> <span class="w">build</span> <span class="w">is</span> <span class="w">completed</span> <span class="w">you</span> <span class="w">need</span> <span class="w">to</span> <span class="w">create</span> <span class="w">the</span> <span class="w">DLL</span> <span class="w">SIS</span> <span class="w">file</span> <span class="w">by</span></pre>
+<pre class="verbatim">	<span class="w">make</span> <span class="w">perldll</span>.<span class="w">sis</span></pre>
+<pre class="verbatim">    which will create the file perlXYZ.sis (the XYZ being the Perl version)
+    which you can then install into your Symbian device: an easy way
+    to do this is to send them via Bluetooth or infrared and just open
+    the messages.</pre><pre class="verbatim">    Since the total size of all Perl SIS files once installed is
+    over 2 MB, it is recommended to do the installation into a
+    memory card (drive E:) instead of the C: drive.</pre><pre class="verbatim">    The size of the perlXYZ.SIS is about 370 kB but once it is in the
+    device it is about one 750 kB (according to the application manager).</pre><pre class="verbatim">    The perlXYZ.sis includes only the Perl DLL: to create an additional
+    SIS file which includes some of the standard (pure) Perl libraries,
+    issue the command</pre><pre class="verbatim">        <span class="w">make</span> <span class="w">perllib</span>.<span class="w">sis</span></pre>
+<pre class="verbatim">    Some of the standard Perl libraries are included, but not all:
+    see L&lt;/HISTORY&gt; or F&lt;symbian\install.cfg&gt; for more details
+    (250 kB -&gt; 700 kB).</pre><pre class="verbatim">    Some of the standard Perl XS extensions (see L&lt;/HISTORY&gt; are
+    also available:</pre><pre class="verbatim">        <span class="w">make</span> <span class="w">perlext</span>.<span class="w">sis</span></pre>
+<pre class="verbatim">    which will create perlXYZext.sis (290 kB -&gt; 770 kB).</pre><pre class="verbatim">    <span class="w">To</span> <span class="w">compile</span> <span class="w">the</span> <span class="w">demonstration</span> <span class="w">application</span> <span class="w">PerlApp</span> <span class="w">you</span> <span class="w">need</span> <span class="w">first</span> <span class="w">to</span>
+    <span class="w">install</span> <span class="w">the</span> <span class="w">Perl</span> <span class="w">headers</span> <span class="w">under</span> <span class="w">the</span> <span class="w">SDK</span>.</pre>
+<pre class="verbatim">    To install the Perl headers and the class CPerlBase documentation
+    so that you no more need the Perl sources around to compile Perl
+    applications using the SDK:</pre><pre class="verbatim">        <span class="w">make</span> <span class="w">sdkinstall</span></pre>
+<pre class="verbatim">    The destination directory is C:\Symbian\perl\X.Y.Z.  For more
+    details, see F&lt;symbian\PerlBase.pod&gt;.</pre><pre class="verbatim">    Once the headers have been installed, you can create a SIS for
+    the PerlApp:</pre><pre class="verbatim">        <span class="w">make</span> <span class="w">perlapp</span>.<span class="w">sis</span></pre>
+<pre class="verbatim">    The perlapp.sis (11 kB -&gt; 16 kB) will be built in the symbian
+    subdirectory, but a copy will also be made to the main directory.</pre><pre class="verbatim">    If you want to package the Perl DLLs (one for WINS, one for ARMI),
+    the headers, and the documentation:</pre><pre class="verbatim">        <span class="w">make</span> <span class="w">perlsdk</span>.<span class="w">zip</span></pre>
+<pre class="verbatim">    <span class="w">which</span> <span class="w">will</span> <span class="w">create</span> <span class="w">perlXYZsdk</span>.<span class="w">zip</span> <span class="w">that</span> <span class="w">can</span> <span class="w">be</span> <span class="w">used</span> <span class="w">in</span> <span class="w">another</span>
+    <span class="w">Windows</span> <a class="l_k" href="functions/system.html">system</a> <span class="i">with</span> <span class="w">the</span> <span class="w">SDK</span><span class="cm">,</span> <span class="w">without</span> <span class="w">having</span> <span class="w">to</span> <span class="w">compile</span> <span class="w">Perl</span> <span class="w">in</span>
+    <span class="w">that</span> <a class="l_k" href="functions/system.html">system</a>.</pre>
+<pre class="verbatim">    If you want to package the PerlApp sources:</pre><pre class="verbatim">        <span class="w">make</span> <span class="w">perlapp</span>.<span class="w">zip</span></pre>
+<pre class="verbatim">    If you want to package the perl.exe and miniperl.exe, you
+    can use the perlexe.sis and miniperlexe.sis make targets.
+    You also probably want the perllib.sis for the libraries
+    and maybe even the perlapp.sis for the recognizer.</pre><pre class="verbatim">    The make target 'allsis' combines all the above SIS targets.</pre><pre class="verbatim">    <span class="w">To</span> <span class="w">clean</span> <span class="w">up</span> <span class="w">after</span> <span class="w">compilation</span> <span class="w">you</span> <span class="w">can</span> <a class="l_k" href="functions/use.html">use</a> <span class="w">either</span> <span class="w">of</span></pre>
+<pre class="verbatim">        <span class="w">make</span> <span class="w">clean</span>
+        <span class="w">make</span> <span class="w">distclean</span></pre>
+<pre class="verbatim">    <span class="w">depending</span> <span class="w">on</span> <span class="w">how</span> <span class="w">clean</span> <span class="w">you</span> <span class="w">want</span> <span class="w">to</span> <span class="w">be</span>.</pre>
+<a name="Compilation-problems"></a><h2>Compilation problems</h2>
+<p>If you see right after "make" this</p>
+<pre class="verbatim">    cat makefile.sh &gt;makefile
+    'cat' is not recognized as an internal or external command,
+    operable program or batch file.</pre><p>it means you need to (re)run the symbian\config.pl.</p>
+<p>If you get the error</p>
+<pre class="verbatim">        'perl' is not recognized as an internal or external command,
+        operable program or batch file.</pre><p>you may need to reinstall the ActivePerl.</p>
+<p>If you see this</p>
+<pre class="verbatim">    ren makedef.pl nomakedef.pl
+    The system cannot find the file specified.
+    C:\Symbian\...\make.exe: [rename_makedef] Error 1 (ignored)</pre><p>please ignore it since it is nothing serious (the build process of
+renames the Perl makedef.pl as nomakedef.pl to avoid confusing it
+with a makedef.pl of the SDK).</p>
+<a name="PerlApp"></a><h2>PerlApp</h2>
+<p>The PerlApp application demonstrates how to embed Perl interpreters
+to a Symbian application.  The "Time" menu item runs the following
+Perl code: <code class="inline"><a class="l_k" href="functions/print.html">print</a> <span class="q">&quot;Running in &quot;</span><span class="cm">,</span> <span class="i">$^O</span><span class="cm">,</span> <span class="q">&quot;\n&quot;</span><span class="cm">,</span> <a class="l_k" href="functions/scalar.html">scalar</a> <a class="l_k" href="functions/localtime.html">localtime</a></code>
+,
+the "Oneliner" allows one to type in Perl code, and the "Run"
+opens a file chooser for selecting a Perl file to run.</p>
+<p>The PerlApp also is started when the "Perl recognizer" (also included
+and installed) detects a Perl file being activated througg the GUI,
+and offers either to install it under \Perl (if the Perl file is in
+the inbox of the messaging application) or to run it (if the Perl file
+is under \Perl).</p>
+<a name="sisify.pl"></a><h2>sisify.pl</h2>
+<p>In the symbian subdirectory there is sisify.pl utility which can be
+used to package Perl scripts and/or Perl library directories into SIS
+files, which can be installed to the device.  To run the sisify.pl
+utility, you will need to have the 'makesis' and 'uidcrc' utilities
+already installed.  If you don't have the Win32 SDKs, you may try
+for example <a href="http://gnupoc.sourceforge.net/">http://gnupoc.sourceforge.net/</a> or <a href="http://symbianos.org/~andreh/">http://symbianos.org/~andreh/</a>.</p>
+<a name="Using-Perl-in-Symbian"></a><h2>Using Perl in Symbian</h2>
+<p>First of all note that you have full access to the Symbian device
+when using Perl: you can do a lot of damage to your device (like
+removing system files) unless you are careful.  Please do take
+backups before doing anything.</p>
+<p>The Perl port has been done for the most part using the Symbian
+standard POSIX-ish STDLIB library. It is a reasonably complete
+library, but certain corners of such emulation libraries that tend
+to be left unimplemented on non-UNIX platforms have been left
+unimplemented also this time: fork(), signals(), user/group ids,
+select() working for sockets, non-blocking sockets, and so forth.
+See the file symbian/config.sh and look for 'undef' to find the
+unsupported APIs (or from Perl use Config).</p>
+<p>The filesystem of Symbian devices uses DOSish syntax, "drives"
+separated from paths by a colon, and backslashes for the path.  The
+exact assignment of the drives probably varies between platforms, but
+for example in Series 60 you might see C: as the (flash) main memory,
+D: as the RAM drive, E: as the memory card (MMC), Z: as the ROM.  In
+Series 80 D: is the memory card.  As far the devices go the NUL: is
+the bit bucket, the COMx: are the serial lines, IRCOMx: are the IR
+ports, TMP: might be C:\System\Temp.  Remember to double those
+backslashes in doublequoted strings.</p>
+<p>The Perl DLL is installed in \System\Libs\.  The Perl libraries and
+extension DLLs are installed in \System\Libs\Perl\X.Y.Z\.  The PerlApp
+is installed in \System\Apps\, and the SIS also installs a couple of
+demo scripts in \Perl\ (C:\Mydocs\Perl\ on Nokia 7710).</p>
+<p>Note that the Symbian filesystem is very picky: it strongly prefers
+the \ instead of the /.</p>
+<p>When doing XS / Symbian C++ programming include first the Symbian
+headers, then any standard C/POSIX headers, then Perl headers, and finally
+any application headers.</p>
+<p>New() and Copy() are unfortunately used by both Symbian and Perl code
+so you'll have to play cpp games if you need them.  PerlBase.h undefines
+the Perl definitions and redefines them as PerlNew() and PerlCopy().</p>
+<a name="TO-DO"></a><h1>TO DO</h1>
+<p>Lots.  See <i>symbian\TODO</i>.</p>
+<a name="WARNING"></a><h1>WARNING</h1>
+<p>As of Perl Symbian port version 0.4.1 any part of Perl's standard
+regression test suite has not been run on a real Symbian device using
+the ported Perl, so innumerable bugs may lie in wait.  Therefore there
+is absolutely no warranty.</p>
+<a name="NOTE"></a><h1>NOTE</h1>
+<p>When creating and extending application programming interfaces (APIs)
+for Symbian or Series 60 or Series 80 or Series 90 it is suggested
+that trademarks, registered trademarks, or trade names are not used in
+the API names.  Instead, developers should consider basing the API
+naming in the existing (C++, or maybe Java) public component and API
+naming, modified as appropriate by the rules of the programming
+language the new APIs are for.</p>
+<p>Nokia is a registered trademark of Nokia Corporation. Nokia's product
+names are trademarks or registered trademarks of Nokia.  Other product
+and company names mentioned herein may be trademarks or trade names of
+their respective owners.</p>
+<a name="AUTHOR"></a><h1>AUTHOR</h1>
+<p>Jarkko Hietaniemi</p>
+<a name="COPYRIGHT"></a><h1>COPYRIGHT</h1>
+<p>Copyright (c) 2004-2005 Nokia.  All rights reserved.</p>
+<p>Copyright (c) 2006-2007 Jarkko Hietaniemi.</p>
+<a name="LICENSE"></a><h1>LICENSE</h1>
+<p>The Symbian port is licensed under the same terms as Perl itself.</p>
+<a name="HISTORY"></a><h1>HISTORY</h1>
+<ul>
+<li>
+<p>0.1.0: April 2005</p>
+<p>(This will show as "0.01" in the Symbian Installer.)</p>
+<pre class="verbatim">  - The console window is a very simple console indeed: one can
+    get the newline with "000" and the "C" button is a backspace.
+    Do not expect a terminal capable of vt100 or ANSI sequences.
+    The console is also "ASCII", you cannot input e.g. any accented
+    letters.  Because of obvious physical constraints the console is
+    also very small: (in Nokia 6600) 22 columns, 17 rows.
+  - The following libraries are available:
+    AnyDBM_File AutoLoader base Carp Config Cwd constant
+    DynaLoader Exporter File::Spec integer lib strict Symbol
+    vars warnings XSLoader
+  - The following extensions are available:
+    attrs Compress::Zlib Cwd Data::Dumper Devel::Peek Digest::MD5 DynaLoader
+    Fcntl File::Glob Filter::Util::Call IO List::Util MIME::Base64
+    PerlIO::scalar PerlIO::via SDBM_File Socket Storable Time::HiRes
+  - The following extensions are missing for various technical reasons:
+    B ByteLoader Devel::DProf Devel::PPPort Encode GDBM_File
+    I18N::Langinfo IPC::SysV NDBM_File Opcode PerlIO::encoding POSIX
+    re Safe Sys::Hostname Sys::Syslog
+    threads threads::shared Unicode::Normalize
+  - Using MakeMaker or the Module::* to build and install modules
+    is not supported.
+  - Building XS other than the ones in the core is not supported.</pre><p>Since this is 0.something release, any future releases are almost
+guaranteed to be binary incompatible.  As a sign of this the Symbian
+symbol exports are kept unfrozen and the .def files fully rebuilt
+every time.</p>
+</li>
+<li>
+<p>0.2.0: October 2005</p>
+<pre class="verbatim">  - Perl 5.9.3 (patch level 25741)
+  - Compress::Zlib and IO::Zlib supported
+  - sisify.pl added</pre><p>We maintain the binary incompatibility.</p>
+</li>
+<li>
+<p>0.3.0: October 2005</p>
+<pre class="verbatim">  - Perl 5.9.3 (patch level 25911)
+  - Series 80 2.0 and UIQ 2.1 support</pre><p>We maintain the binary incompatibility.</p>
+</li>
+<li>
+<p>0.4.0: November 2005</p>
+<pre class="verbatim">  - Perl 5.9.3 (patch level 26052)
+  - adding a sample Symbian extension</pre><p>We maintain the binary incompatibility.</p>
+</li>
+<li>
+<p>0.4.1: December 2006</p>
+<pre class="verbatim">  - Perl 5.9.5-to-be (patch level 30002)
+  - added extensions: Compress/Raw/Zlib, Digest/SHA,
+    Hash/Util, Math/BigInt/FastCalc, Text/Soundex, Time/Piece
+  - port to S90 1.1 by alexander smishlajev</pre><p>We maintain the binary incompatibility.</p>
+</li>
+<li>
+<p>0.4.2: March 2007</p>
+<pre class="verbatim">  - catchup with Perl 5.9.5-to-be (patch level 30812)
+  - tested to build with Microsoft Visual C++ 2005 Express Edition
+    (which uses Microsoft Visual C 8, instead of the old VC6),
+    SDK used for testing S60_2nd_FP3 aka 8.1a</pre><p>We maintain the binary incompatibility.</p>
+</li>
+</ul>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='close_purple.gif';" onmouseout="rightCloseIcon.src='close_blue.gif';"><img src="close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('perlsymbian','perlsymbian.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

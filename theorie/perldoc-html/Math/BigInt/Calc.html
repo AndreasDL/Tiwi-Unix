@@ -1,0 +1,219 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>Math::BigInt::Calc - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 2;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../../close_purple.gif';" onmouseout="leftCloseIcon.src='../../close_blue.gif';"><img src="../../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../../index-overview.html">Overview</a></li>
+        <li><a href="../../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../../index-faq.html">FAQs</a></li>
+        <li><a href="../../index-history.html">History / Changes</a></li>
+        <li><a href="../../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../../index-language.html">Language</a></li>
+        <li><a href="../../index-functions.html">Functions</a></li>
+        <li><a href="../../perlop.html">Operators</a></li>
+        <li><a href="../../perlvar.html">Special variables</a></li>
+        <li><a href="../../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../../index-modules-A.html">Core modules</a></li>
+        <li><a href="../../index-utilities.html">Utilities</a></li>
+        <li><a href="../../index-internals.html">Internals</a></li>
+        <li><a href="../../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../../index.html">Home</a> &gt; <a href="../../index-modules-A.html">Core modules</a> &gt; <a href="../../index-modules-M.html">M</a> &gt; Math::BigInt::Calc</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">Math::BigInt::Calc</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><li><a href="#STORAGE">STORAGE</a><li><a href="#METHODS">METHODS</a><li><a href="#WRAP-YOUR-OWN">WRAP YOUR OWN</a><li><a href="#LICENSE">LICENSE</a><li><a href="#AUTHORS">AUTHORS</a><li><a href="#SEE-ALSO">SEE ALSO</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>Math::BigInt::Calc - Pure Perl module to support Math::BigInt</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<p>Provides support for big integer calculations. Not intended to be used by other
+modules. Other modules which sport the same functions can also be used to support
+Math::BigInt, like Math::BigInt::GMP or Math::BigInt::Pari.</p>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p>In order to allow for multiple big integer libraries, Math::BigInt was
+rewritten to use library modules for core math routines. Any module which
+follows the same API as this can be used instead by using the following:</p>
+<pre class="verbatim">	<a class="l_k" href="../../functions/use.html">use</a> <span class="w">Math::BigInt</span> <span class="w">lib</span> <span class="cm">=&gt;</span> <span class="q">&#39;libname&#39;</span><span class="sc">;</span></pre>
+<p>'libname' is either the long name ('Math::BigInt::Pari'), or only the short
+version like 'Pari'.</p>
+<a name="STORAGE"></a><h1>STORAGE</h1>
+<a name="METHODS"></a><h1>METHODS</h1>
+<p>The following functions MUST be defined in order to support the use by
+Math::BigInt v1.70 or later:</p>
+<pre class="verbatim">	api_version()	return API version, 1 for v1.70, 2 for v1.83
+	_new(string)	return ref to new object from ref to decimal string
+	_zero()		return a new object with value 0
+	_one()		return a new object with value 1
+	_two()		return a new object with value 2
+	_ten()		return a new object with value 10</pre><pre class="verbatim">	_str(obj)	return ref to a string representing the object
+	_num(obj)	returns a Perl integer/floating point number
+			NOTE: because of Perl numeric notation defaults,
+			the _num'ified obj may lose accuracy due to 
+			machine-dependent floating point size limitations</pre><pre class="verbatim">	_add(obj,obj)	Simple addition of two objects
+	_mul(obj,obj)	Multiplication of two objects
+	_div(obj,obj)	Division of the 1st object by the 2nd
+			In list context, returns (result,remainder).
+			NOTE: this is integer math, so no
+			fractional part will be returned.
+			The second operand will be not be 0, so no need to
+			check for that.
+	_sub(obj,obj)	Simple subtraction of 1 object from another
+			a third, optional parameter indicates that the params
+			are swapped. In this case, the first param needs to
+			be preserved, while you can destroy the second.
+			sub (x,y,1) =&gt; return x - y and keep x intact!
+	_dec(obj)	decrement object by one (input is guaranteed to be &gt; 0)
+	_inc(obj)	increment object by one</pre><pre class="verbatim">	<span class="i">_acmp</span><span class="s">(</span><span class="w">obj</span><span class="cm">,</span><span class="w">obj</span><span class="s">)</span>	&lt;=&gt; <span class="w">operator</span> for <span class="w">objects</span> <span class="s">(</span><a class="l_k" href="../../functions/return.html">return</a> <span class="n">-1</span><span class="cm">,</span> <span class="n">0</span> or <span class="n">1</span><span class="s">)</span></pre>
+<pre class="verbatim">	_len(obj)	returns count of the decimal digits of the object
+	_digit(obj,n)	returns the n'th decimal digit of object</pre><pre class="verbatim">	_is_one(obj)	return true if argument is 1
+	_is_two(obj)	return true if argument is 2
+	_is_ten(obj)	return true if argument is 10
+	_is_zero(obj)	return true if argument is 0
+	_is_even(obj)	return true if argument is even (0,2,4,6..)
+	_is_odd(obj)	return true if argument is odd (1,3,5,7..)</pre><pre class="verbatim">	<span class="w">_copy</span>		<a class="l_k" href="../../functions/return.html">return</a> <span class="w">a</span> <a class="l_k" href="../../functions/ref.html">ref</a> <span class="w">to</span> <span class="w">a</span> <span class="w">true</span> <span class="w">copy</span> <span class="w">of</span> <span class="w">the</span> <span class="w">object</span></pre>
+<pre class="verbatim">	_check(obj)	check whether internal representation is still intact
+			return 0 for ok, otherwise error message as string</pre><pre class="verbatim">	<span class="i">_from_hex</span><span class="s">(</span><span class="w">str</span><span class="s">)</span>	<a class="l_k" href="../../functions/return.html">return</a> <span class="w">new</span> <span class="w">object</span> <span class="w">from</span> <span class="w">a</span> <span class="w">hexadecimal</span> <span class="w">string</span>
+	<span class="i">_from_bin</span><span class="s">(</span><span class="w">str</span><span class="s">)</span>	<a class="l_k" href="../../functions/return.html">return</a> <span class="w">new</span> <span class="w">object</span> <span class="w">from</span> <span class="w">a</span> <span class="w">binary</span> <span class="w">string</span>
+	<span class="i">_from_oct</span><span class="s">(</span><span class="w">str</span><span class="s">)</span>	<a class="l_k" href="../../functions/return.html">return</a> <span class="w">new</span> <span class="w">object</span> <span class="w">from</span> <span class="w">an</span> <span class="w">octal</span> <span class="w">string</span></pre>
+<pre class="verbatim">	_as_hex(str)	return string containing the value as
+			unsigned hex string, with the '0x' prepended.
+			Leading zeros must be stripped.
+	_as_bin(str)	Like as_hex, only as binary string containing only
+			zeros and ones. Leading zeros must be stripped and a
+			'0b' must be prepended.</pre><pre class="verbatim">	_rsft(obj,N,B)	shift object in base B by N 'digits' right
+	_lsft(obj,N,B)	shift object in base B by N 'digits' left</pre><pre class="verbatim">	_xor(obj1,obj2)	XOR (bit-wise) object 1 with object 2
+			Note: XOR, AND and OR pad with zeros if size mismatches
+	_and(obj1,obj2)	AND (bit-wise) object 1 with object 2
+	_or(obj1,obj2)	OR (bit-wise) object 1 with object 2</pre><pre class="verbatim">	_mod(obj1,obj2)	Return remainder of div of the 1st by the 2nd object
+	_sqrt(obj)	return the square root of object (truncated to int)
+	_root(obj)	return the n'th (n &gt;= 3) root of obj (truncated to int)
+	_fac(obj)	return factorial of object 1 (1*2*3*4..)
+	_pow(obj1,obj2)	return object 1 to the power of object 2
+			return undef for NaN
+	_zeros(obj)	return number of trailing decimal zeros
+	_modinv		return inverse modulus
+	_modpow		return modulus of power ($x ** $y) % $z
+	_log_int(X,N)	calculate integer log() of X in base N
+			X &gt;= 0, N &gt;= 0 (return undef for NaN)
+			returns (RESULT, EXACT) where EXACT is:
+			 1     : result is exactly RESULT
+			 0     : result was truncated to RESULT
+			 undef : unknown whether result is exactly RESULT
+        _gcd(obj,obj)	return Greatest Common Divisor of two objects</pre><p>The following functions are REQUIRED for an api_version of 2 or greater:</p>
+<pre class="verbatim">	_1ex($x)	create the number 1Ex where x &gt;= 0
+	_alen(obj)	returns approximate count of the decimal digits of the
+			object. This estimate MUST always be greater or equal
+			to what _len() returns.
+        _nok(n,k)	calculate n over k (binomial coefficient)</pre><p>The following functions are optional, and can be defined if the underlying lib
+has a fast way to do them. If undefined, Math::BigInt will use pure Perl (hence
+slow) fallback routines to emulate these:</p>
+<pre class="verbatim">	<span class="w">_signed_or</span>
+	<span class="w">_signed_and</span>
+	<span class="w">_signed_xor</span></pre>
+<p>Input strings come in as unsigned but with prefix (i.e. as '123', '0xabc'
+or '0b1101').</p>
+<p>So the library needs only to deal with unsigned big integers. Testing of input
+parameter validity is done by the caller, so you need not worry about
+underflow (f.i. in <code class="inline"><span class="i">_sub</span><span class="s">(</span><span class="s">)</span></code>
+, <code class="inline"><span class="i">_dec</span><span class="s">(</span><span class="s">)</span></code>
+) nor about division by zero or similar
+cases.</p>
+<p>The first parameter can be modified, that includes the possibility that you
+return a reference to a completely different object instead. Although keeping
+the reference and just changing its contents is preferred over creating and
+returning a different reference.</p>
+<p>Return values are always references to objects, strings, or true/false for
+comparison routines.</p>
+<a name="WRAP-YOUR-OWN"></a><h1>WRAP YOUR OWN</h1>
+<p>If you want to port your own favourite c-lib for big numbers to the
+Math::BigInt interface, you can take any of the already existing modules as
+a rough guideline. You should really wrap up the latest BigInt and BigFloat
+testsuites with your module, and replace in them any of the following:</p>
+<pre class="verbatim">	<a class="l_k" href="../../functions/use.html">use</a> <span class="w">Math::BigInt</span><span class="sc">;</span></pre>
+<p>by this:</p>
+<pre class="verbatim">	<a class="l_k" href="../../functions/use.html">use</a> <span class="w">Math::BigInt</span> <span class="w">lib</span> <span class="cm">=&gt;</span> <span class="q">&#39;yourlib&#39;</span><span class="sc">;</span></pre>
+<p>This way you ensure that your library really works 100% within Math::BigInt.</p>
+<a name="LICENSE"></a><h1>LICENSE</h1>
+<p>This program is free software; you may redistribute it and/or modify it under
+the same terms as Perl itself.</p>
+<a name="AUTHORS"></a><h1>AUTHORS</h1>
+<p>Original math code by Mark Biggar, rewritten by Tels <a href="http://bloodgate.com/">http://bloodgate.com/</a>
+in late 2000.
+Seperated from BigInt and shaped API with the help of John Peacock.</p>
+<p>Fixed, speed-up, streamlined and enhanced by Tels 2001 - 2007.</p>
+<a name="SEE-ALSO"></a><h1>SEE ALSO</h1>
+<p><a href="../../Math/BigInt.html">Math::BigInt</a>, <a href="../../Math/BigFloat.html">Math::BigFloat</a>,
+<a href="http://search.cpan.org/perldoc/Math::BigInt::GMP">Math::BigInt::GMP</a>, <a href="../../Math/BigInt/FastCalc.html">Math::BigInt::FastCalc</a> and <a href="http://search.cpan.org/perldoc/Math::BigInt::Pari">Math::BigInt::Pari</a>.</p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../../close_purple.gif';" onmouseout="rightCloseIcon.src='../../close_blue.gif';"><img src="../../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('Math::BigInt::Calc','Math/BigInt/Calc.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>Encode::Byte - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 1;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../close_purple.gif';" onmouseout="leftCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../index-overview.html">Overview</a></li>
+        <li><a href="../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../index-faq.html">FAQs</a></li>
+        <li><a href="../index-history.html">History / Changes</a></li>
+        <li><a href="../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../index-language.html">Language</a></li>
+        <li><a href="../index-functions.html">Functions</a></li>
+        <li><a href="../perlop.html">Operators</a></li>
+        <li><a href="../perlvar.html">Special variables</a></li>
+        <li><a href="../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../index-modules-A.html">Core modules</a></li>
+        <li><a href="../index-utilities.html">Utilities</a></li>
+        <li><a href="../index-internals.html">Internals</a></li>
+        <li><a href="../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../index.html">Home</a> &gt; <a href="../index-modules-A.html">Core modules</a> &gt; <a href="../index-modules-E.html">E</a> &gt; Encode::Byte</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">Encode::Byte</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#ABSTRACT">ABSTRACT</a><li><a href="#DESCRIPTION">DESCRIPTION</a><li><a href="#SEE-ALSO">SEE ALSO</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>Encode::Byte - Single Byte Encodings</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Encode</span> <span class="q">qw/encode decode/</span><span class="sc">;</span> 
+    <span class="i">$greek</span> = <span class="i">encode</span><span class="s">(</span><span class="q">&quot;iso-8859-7&quot;</span><span class="cm">,</span> <span class="i">$utf8</span><span class="s">)</span><span class="sc">;</span>  <span class="c"># loads Encode::Byte implicitly</span>
+    <span class="i">$utf8</span>  = <span class="i">decode</span><span class="s">(</span><span class="q">&quot;iso-8859-7&quot;</span><span class="cm">,</span> <span class="i">$greek</span><span class="s">)</span><span class="sc">;</span> <span class="c"># ditto</span></pre>
+<a name="ABSTRACT"></a><h1>ABSTRACT</h1>
+<p>This module implements various single byte encodings.  For most cases it uses
+\x80-\xff (upper half) to map non-ASCII characters.  Encodings
+supported are as follows.</p>
+<pre class="verbatim">  Canonical      Alias		                      Description
+  --------------------------------------------------------------------
+  # ISO 8859 series
+  (iso-8859-1	is in built-in)
+  iso-8859-2	latin2					     [ISO]
+  iso-8859-3	latin3					     [ISO]
+  iso-8859-4	latin4					     [ISO]
+  iso-8859-5						     [ISO]
+  iso-8859-6						     [ISO]
+  iso-8859-7						     [ISO]
+  iso-8859-8						     [ISO]
+  iso-8859-9	latin5					     [ISO]
+  iso-8859-10	latin6					     [ISO]
+  iso-8859-11
+  (iso-8859-12 is nonexistent)
+  iso-8859-13   latin7					     [ISO]
+  iso-8859-14	latin8					     [ISO]
+  iso-8859-15	latin9					     [ISO]
+  iso-8859-16	latin10					     [ISO]</pre><pre class="verbatim">  <span class="c"># Cyrillic</span>
+  <span class="w">koi8</span>-f					
+  <span class="w">koi8</span>-r        <span class="w">cp878</span>					 <span class="s">[</span><span class="w">RFC1489</span><span class="s">]</span>
+  <span class="w">koi8</span>-u						 <span class="s">[</span><span class="w">RFC2319</span><span class="s">]</span></pre>
+<pre class="verbatim">  <span class="c"># Vietnamese</span>
+  <span class="w">viscii</span></pre>
+<pre class="verbatim">  <span class="c"># all cp* are also available as ibm-*, ms-*, and windows-*</span>
+  <span class="c"># also see L&lt;<a href="http://msdn.microsoft.com/workshop/author/dhtml/reference/charsets/charset4.asp">http://msdn.microsoft.com/workshop/author/dhtml/reference/charsets/charset4.asp</a>&gt;</span></pre>
+<pre class="verbatim">  <span class="w">cp424</span>  
+  <span class="w">cp437</span>  
+  <span class="w">cp737</span>  
+  <span class="w">cp775</span>  
+  <span class="w">cp850</span>  
+  <span class="w">cp852</span>  
+  <span class="w">cp855</span>  
+  <span class="w">cp856</span>  
+  <span class="w">cp857</span>  
+  <span class="w">cp860</span>  
+  <span class="w">cp861</span>  
+  <span class="w">cp862</span>  
+  <span class="w">cp863</span>  
+  <span class="w">cp864</span>  
+  <span class="w">cp865</span>  
+  <span class="w">cp866</span>  
+  <span class="w">cp869</span>  
+  <span class="w">cp874</span>  
+  <span class="w">cp1006</span>  
+  <span class="w">cp1250</span>	<span class="w">WinLatin2</span>
+  <span class="w">cp1251</span>	<span class="w">WinCyrillic</span>
+  <span class="w">cp1252</span>	<span class="w">WinLatin1</span>
+  <span class="w">cp1253</span>	<span class="w">WinGreek</span>
+  <span class="w">cp1254</span>	<span class="w">WinTurkish</span>
+  <span class="w">cp1255</span>	<span class="w">WinHebrew</span>
+  <span class="w">cp1256</span>	<span class="w">WinArabic</span>
+  <span class="w">cp1257</span>	<span class="w">WinBaltic</span>
+  <span class="w">cp1258</span>	<span class="w">WinVietnamese</span></pre>
+<pre class="verbatim">  <span class="c"># Macintosh</span>
+  <span class="c"># Also see L&lt;<a href="http://developer.apple.com/technotes/tn/tn1150.html">http://developer.apple.com/technotes/tn/tn1150.html</a>&gt;</span>
+  <span class="w">MacArabic</span>  
+  <span class="w">MacCentralEurRoman</span>  
+  <span class="w">MacCroatian</span>  
+  <span class="w">MacCyrillic</span>  
+  <span class="w">MacFarsi</span>  
+  <span class="w">MacGreek</span>  
+  <span class="w">MacHebrew</span>  
+  <span class="w">MacIcelandic</span>  
+  <span class="w">MacRoman</span>  
+  <span class="w">MacRomanian</span>  
+  <span class="w">MacRumanian</span>  
+  <span class="w">MacSami</span>  
+  <span class="w">MacThai</span>  
+  <span class="w">MacTurkish</span>  
+  <span class="w">MacUkrainian</span></pre>
+<pre class="verbatim">  <span class="c"># More vendor encodings</span>
+  <span class="w">AdobeStandardEncoding</span>
+  <span class="w">nextstep</span>
+  <span class="w">hp</span>-<span class="w">roman8</span></pre>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p>To find how to use this module in detail, see <a href="../Encode.html">Encode</a>.</p>
+<a name="SEE-ALSO"></a><h1>SEE ALSO</h1>
+<p><a href="../Encode.html">Encode</a></p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../close_purple.gif';" onmouseout="rightCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('Encode::Byte','Encode/Byte.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

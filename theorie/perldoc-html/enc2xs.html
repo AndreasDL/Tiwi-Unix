@@ -1,0 +1,332 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>enc2xs - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 0;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='close_purple.gif';" onmouseout="leftCloseIcon.src='close_blue.gif';"><img src="close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="index-overview.html">Overview</a></li>
+        <li><a href="index-tutorials.html">Tutorials</a></li>
+        <li><a href="index-faq.html">FAQs</a></li>
+        <li><a href="index-history.html">History / Changes</a></li>
+        <li><a href="index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="index-language.html">Language</a></li>
+        <li><a href="index-functions.html">Functions</a></li>
+        <li><a href="perlop.html">Operators</a></li>
+        <li><a href="perlvar.html">Special variables</a></li>
+        <li><a href="index-pragmas.html">Pragmas</a></li>
+        <li><a href="index-modules-A.html">Core modules</a></li>
+        <li><a href="index-utilities.html">Utilities</a></li>
+        <li><a href="index-internals.html">Internals</a></li>
+        <li><a href="index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="index.html">Home</a> &gt; <a href="index-utilities.html">Utilities</a> &gt; enc2xs</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">enc2xs</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><li><a href="#Quick-Guide">Quick Guide</a><li><a href="#The-Unicode-Character-Map">The Unicode Character Map</a><ul><li><a href="#Coping-with-duplicate-mappings">Coping with duplicate mappings</a></ul><li><a href="#Bookmarks">Bookmarks</a><li><a href="#SEE-ALSO">SEE ALSO</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>enc2xs -- Perl Encode Module Generator</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">  <span class="w">enc2xs</span> -<span class="s">[</span><span class="w">options</span><span class="s">]</span>
+  <span class="w">enc2xs</span> -M <span class="w">ModName</span> <span class="w">mapfiles</span>...
+  <span class="w">enc2xs</span> -C</pre>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p><i>enc2xs</i> builds a Perl extension for use by Encode from either
+Unicode Character Mapping files (.ucm) or Tcl Encoding Files (.enc).
+Besides being used internally during the build process of the Encode
+module, you can use <i>enc2xs</i> to add your own encoding to perl.
+No knowledge of XS is necessary.</p>
+<a name="Quick-Guide"></a><h1>Quick Guide</h1>
+<p>If you want to know as little about Perl as possible but need to
+add a new encoding, just read this chapter and forget the rest.</p>
+<ol>
+<li>
+<p>Have a .ucm file ready.  You can get it from somewhere or you can write
+your own from scratch or you can grab one from the Encode distribution
+and customize it.  For the UCM format, see the next Chapter.  In the
+example below, I'll call my theoretical encoding myascii, defined
+in <i>my.ucm</i>.  <code class="inline"><span class="i">$</span></code>
+ is a shell prompt.</p>
+<pre class="verbatim">  <span class="i">$ ls</span> -<span class="w">F</span>
+  <a class="l_k" href="functions/my.html">my</a>.<span class="w">ucm</span></pre>
+</li>
+<li>
+<p>Issue a command as follows;</p>
+<pre class="verbatim">  <span class="i">$ enc2xs</span> -<span class="w">M</span> <span class="w">My</span> <a class="l_k" href="functions/my.html">my</a>.<span class="w">ucm</span>
+  <span class="w">generating</span> <span class="w">Makefile</span>.<span class="w">PL</span>
+  <span class="w">generating</span> <span class="w">My</span>.<span class="w">pm</span>
+  <span class="w">generating</span> <span class="w">README</span>
+  <span class="w">generating</span> <span class="w">Changes</span></pre>
+<p>Now take a look at your current directory.  It should look like this.</p>
+<pre class="verbatim">  <span class="i">$ ls</span> -<span class="w">F</span>
+  <span class="w">Makefile</span>.<span class="w">PL</span>   <span class="w">My</span>.<span class="w">pm</span>         <a class="l_k" href="functions/my.html">my</a>.<span class="w">ucm</span>        <span class="w">t</span>/</pre>
+<p>The following files were created.</p>
+<pre class="verbatim">  <span class="w">Makefile</span>.<span class="w">PL</span> - <span class="w">MakeMaker</span> <span class="w">script</span>
+  <span class="w">My</span>.<span class="w">pm</span>       - <span class="w">Encode</span> <span class="w">submodule</span>
+  <span class="w">t</span>/<span class="w">My</span>.<span class="w">t</span>      - <span class="w">test</span> <span class="w">file</span></pre>
+<ol>
+<li><a name="1.1."></a><b>1.</b>
+<p>If you want *.ucm installed together with the modules, do as follows;</p>
+<pre class="verbatim">  $ mkdir Encode
+  $ mv *.ucm Encode
+  $ enc2xs -M My Encode/*ucm</pre></li>
+</ol>
+</li>
+<li>
+<p>Edit the files generated.  You don't have to if you have no time AND no
+intention to give it to someone else.  But it is a good idea to edit
+the pod and to add more tests.</p>
+</li>
+<li>
+<p>Now issue a command all Perl Mongers love:</p>
+<pre class="verbatim">  $ perl Makefile.PL
+  Writing Makefile for Encode::My</pre></li>
+<li>
+<p>Now all you have to do is make.</p>
+<pre class="verbatim">  $ make
+  cp My.pm blib/lib/Encode/My.pm
+  /usr/local/bin/perl /usr/local/bin/enc2xs -Q -O \
+    -o encode_t.c -f encode_t.fnm
+  Reading myascii (myascii)
+  Writing compiled form
+  128 bytes in string tables
+  384 bytes (75%) saved spotting duplicates
+  1 bytes (0.775%) saved using substrings
+  ....
+  chmod 644 blib/arch/auto/Encode/My/My.bs
+  $</pre><p>The time it takes varies depending on how fast your machine is and
+how large your encoding is.  Unless you are working on something big
+like euc-tw, it won't take too long.</p>
+</li>
+<li>
+<p>You can "make install" already but you should test first.</p>
+<pre class="verbatim">  $ make test
+  PERL_DL_NONLAZY=1 /usr/local/bin/perl -Iblib/arch -Iblib/lib \
+    -e 'use Test::Harness  qw(&amp;runtests $verbose); \
+    $verbose=0; runtests @ARGV;' t/*.t
+  t/My....ok
+  All tests successful.
+  Files=1, Tests=2,  0 wallclock secs
+   ( 0.09 cusr + 0.01 csys = 0.09 CPU)</pre></li>
+<li>
+<p>If you are content with the test result, just "make install"</p>
+</li>
+<li>
+<p>If you want to add your encoding to Encode's demand-loading list
+(so you don't have to "use Encode::YourEncoding"), run</p>
+<pre class="verbatim">  <span class="w">enc2xs</span> -C</pre>
+<p>to update Encode::ConfigLocal, a module that controls local settings.
+After that, "use Encode;" is enough to load your encodings on demand.</p>
+</li>
+</ol>
+<a name="The-Unicode-Character-Map"></a><h1>The Unicode Character Map</h1>
+<p>Encode uses the Unicode Character Map (UCM) format for source character
+mappings.  This format is used by IBM's ICU package and was adopted
+by Nick Ing-Simmons for use with the Encode module.  Since UCM is
+more flexible than Tcl's Encoding Map and far more user-friendly,
+this is the recommended format for Encode now.</p>
+<p>A UCM file looks like this.</p>
+<pre class="verbatim">  #
+  # Comments
+  #
+  &lt;code_set_name&gt; "US-ascii" # Required
+  &lt;code_set_alias&gt; "ascii"   # Optional
+  &lt;mb_cur_min&gt; 1             # Required; usually 1
+  &lt;mb_cur_max&gt; 1             # Max. # of bytes/char
+  &lt;subchar&gt; \x3F             # Substitution char
+  #
+  CHARMAP
+  &lt;U0000&gt; \x00 |0 # &lt;control&gt;
+  &lt;U0001&gt; \x01 |0 # &lt;control&gt;
+  &lt;U0002&gt; \x02 |0 # &lt;control&gt;
+  ....
+  &lt;U007C&gt; \x7C |0 # VERTICAL LINE
+  &lt;U007D&gt; \x7D |0 # RIGHT CURLY BRACKET
+  &lt;U007E&gt; \x7E |0 # TILDE
+  &lt;U007F&gt; \x7F |0 # &lt;control&gt;
+  END CHARMAP</pre><ul>
+<li>
+<p>Anything that follows <code class="inline"><span class="c">#</span></code>
+ is treated as a comment.</p>
+</li>
+<li>
+<p>The header section continues until a line containing the word
+CHARMAP. This section has a form of <i>&lt;keyword&gt; value</i>, one
+pair per line.  Strings used as values must be quoted. Barewords are
+treated as numbers.  <i>\xXX</i> represents a byte.</p>
+<p>Most of the keywords are self-explanatory. <i>subchar</i> means
+substitution character, not subcharacter.  When you decode a Unicode
+sequence to this encoding but no matching character is found, the byte
+sequence defined here will be used.  For most cases, the value here is
+\x3F; in ASCII, this is a question mark.</p>
+</li>
+<li>
+<p>CHARMAP starts the character map section.  Each line has a form as
+follows:</p>
+<pre class="verbatim">  &lt;UXXXX&gt; \xXX.. |0 # comment
+    ^     ^      ^
+    |     |      +- Fallback flag
+    |     +-------- Encoded byte sequence
+    +-------------- Unicode Character ID in hex</pre><p>The format is roughly the same as a header section except for the
+fallback flag: | followed by 0..3.   The meaning of the possible
+values is as follows:</p>
+<ul>
+<li><a name="0x7c0"></a><b>|0</b>
+<p>Round trip safe.  A character decoded to Unicode encodes back to the
+same byte sequence.  Most characters have this flag.</p>
+</li>
+<li><a name="0x7c1"></a><b>|1</b>
+<p>Fallback for unicode -&gt; encoding.  When seen, enc2xs adds this
+character for the encode map only.</p>
+</li>
+<li><a name="0x7c2"></a><b>|2</b>
+<p>Skip sub-char mapping should there be no code point.</p>
+</li>
+<li><a name="0x7c3"></a><b>|3</b>
+<p>Fallback for encoding -&gt; unicode.  When seen, enc2xs adds this
+character for the decode map only.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>And finally, END OF CHARMAP ends the section.</p>
+</li>
+</ul>
+<p>When you are manually creating a UCM file, you should copy ascii.ucm
+or an existing encoding which is close to yours, rather than write
+your own from scratch.</p>
+<p>When you do so, make sure you leave at least <b>U0000</b> to <b>U0020</b> as
+is, unless your environment is EBCDIC.</p>
+<p><b>CAVEAT</b>: not all features in UCM are implemented.  For example,
+icu:state is not used.  Because of that, you need to write a perl
+module if you want to support algorithmical encodings, notably
+the ISO-2022 series.  Such modules include <a href="http://search.cpan.org/perldoc/Encode::JP::2022_JP">Encode::JP::2022_JP</a>,
+<a href="Encode/KR/2022_KR.html">Encode::KR::2022_KR</a>, and <a href="http://search.cpan.org/perldoc/Encode::TW::HZ">Encode::TW::HZ</a>.</p>
+<a name="Coping-with-duplicate-mappings"></a><h2>Coping with duplicate mappings</h2>
+<p>When you create a map, you SHOULD make your mappings round-trip safe.
+That is, <code class="inline"><span class="i">encode</span><span class="s">(</span><span class="q">&#39;your-encoding&#39;</span><span class="cm">,</span> <span class="i">decode</span><span class="s">(</span><span class="q">&#39;your-encoding&#39;</span><span class="cm">,</span> <span class="i">$data</span><span class="s">)</span><span class="s">)</span> eq
+<span class="i">$data</span></code>
+ stands for all characters that are marked as <code class="inline">|0</code>.  Here is
+how to make sure:</p>
+<ul>
+<li>
+<p>Sort your map in Unicode order.</p>
+</li>
+<li>
+<p>When you have a duplicate entry, mark either one with '|1' or '|3'.</p>
+</li>
+<li>
+<p>And make sure the '|1' or '|3' entry FOLLOWS the '|0' entry.</p>
+</li>
+</ul>
+<p>Here is an example from big5-eten.</p>
+<pre class="verbatim">  <span class="q">&lt;U2550&gt;</span> \<span class="w">xF9</span>\<span class="w">xF9</span> |<span class="n">0</span>
+  &lt;<span class="w">U2550</span>&gt; \<span class="w">xA2</span>\<span class="w">xA4</span> |<span class="n">3</span></pre>
+<p>Internally Encoding -&gt; Unicode and Unicode -&gt; Encoding Map looks like
+this;</p>
+<pre class="verbatim">  <span class="w">E</span> <span class="w">to</span> <span class="w">U</span>               <span class="w">U</span> <span class="w">to</span> <span class="w">E</span>
+  --------------------------------------
+  \<span class="w">xF9</span>\<span class="w">xF9</span> <span class="cm">=&gt;</span> <span class="w">U2550</span>    <span class="w">U2550</span> <span class="cm">=&gt;</span> \<span class="w">xF9</span>\<span class="w">xF9</span>
+  \<span class="w">xA2</span>\<span class="w">xA4</span> <span class="cm">=&gt;</span> <span class="w">U2550</span></pre>
+<p>So it is round-trip safe for \xF9\xF9.  But if the line above is upside
+down, here is what happens.</p>
+<pre class="verbatim">  <span class="w">E</span> <span class="w">to</span> <span class="w">U</span>               <span class="w">U</span> <span class="w">to</span> <span class="w">E</span>
+  --------------------------------------
+  \<span class="w">xA2</span>\<span class="w">xA4</span> <span class="cm">=&gt;</span> <span class="w">U2550</span>    <span class="w">U2550</span> <span class="cm">=&gt;</span> \<span class="w">xF9</span>\<span class="i">xF9</span>
+  <span class="s">(</span>\<span class="w">xF9</span>\<span class="w">xF9</span> <span class="cm">=&gt;</span> <span class="w">U2550</span> <span class="w">is</span> <span class="w">now</span> <span class="w">overwritten</span>!<span class="s">)</span></pre>
+<p>The Encode package comes with <i>ucmlint</i>, a crude but sufficient
+utility to check the integrity of a UCM file.  Check under the
+Encode/bin directory for this.</p>
+<p>When in doubt, you can use <i>ucmsort</i>, yet another utility under
+Encode/bin directory.</p>
+<a name="Bookmarks"></a><h1>Bookmarks</h1>
+<ul>
+<li>
+<p>ICU Home Page 
+<a href="http://oss.software.ibm.com/icu/">http://oss.software.ibm.com/icu/</a></p>
+</li>
+<li>
+<p>ICU Character Mapping Tables
+<a href="http://oss.software.ibm.com/icu/charset/">http://oss.software.ibm.com/icu/charset/</a></p>
+</li>
+<li>
+<p>ICU:Conversion Data
+<a href="http://oss.software.ibm.com/icu/userguide/conversion-data.html">http://oss.software.ibm.com/icu/userguide/conversion-data.html</a></p>
+</li>
+</ul>
+<a name="SEE-ALSO"></a><h1>SEE ALSO</h1>
+<p><a href="Encode.html">Encode</a>,
+<a href="perlmod.html">perlmod</a>,
+<a href="perlpod.html">perlpod</a></p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='close_purple.gif';" onmouseout="rightCloseIcon.src='close_blue.gif';"><img src="close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('enc2xs','enc2xs.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

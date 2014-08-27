@@ -1,0 +1,45 @@
+#oef 1.a
+set hoi.txt
+[[ -f $1 ]] && {
+aantalregels=$(wc -l < $1)
+totwoorden=$(wc -w < $1)
+totchars=$(wc -m < $1)
+
+echo "aantalregels: " $aantalregels
+echo "aantal woorden: " $totwoorden
+echo "aantal chars: " $totchars
+
+echo "gem woorden: " $(($totwoorden / $aantalregels))
+echo "gem chars: " $(($totchars / $aantalregels))
+}
+
+#oef 1.b
+set hoi.txt
+[[ -f $1 ]] && {
+aantalregels=$(wc -l $1 | cut -d\  -f1 )
+totwoorden=$(wc -w $1 | cut -d\  -f1 )
+totchars=$(wc -m < $1 | cut -d\  -f1 )
+
+echo "aantalregels: " $aantalregels
+echo "aantal woorden: " $totwoorden
+echo "aantal chars: " $totchars
+
+echo "gem woorden: " $(($totwoorden / $aantalregels))
+echo "gem chars: " $(($totchars / $aantalregels))
+}
+
+#oef 3
+user="root"
+cat /etc/passwd | grep -E ^$user | cut -d: -f1
+cat /etc/passwd | grep -E ^$user | cut -d: -f3
+
+
+#oef 4
+set hoi.txt 5
+(( $# == 1 )) && { aantal=11; } || { aantal=$(($2+1)); }
+
+[[ -f $1 ]] && {
+   cat $1 | tail -n $aantal
+}
+
+#oef 5

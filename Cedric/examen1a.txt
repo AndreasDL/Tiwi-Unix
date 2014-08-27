@@ -1,0 +1,18 @@
+[ $# -eq 1 ] || { echo Usage: examen1a groupname  ; exit 1 ; }
+grep -E "^$1:" group > /dev/null || { echo Group: $1 does not exist ; exit 1 ; }
+
+users=`grep $1 group | cut -d : -f 4`
+[ users = "" ] && { echo No users in group: $1 ; exit 1 ; }
+
+echo $users 
+
+IFS=,
+
+set $users
+
+while [ $# -gt 0 ]
+do
+	echo $1
+	find -type f -user $1 |du -a |sort -rn | head -n 5
+	shift 1
+done

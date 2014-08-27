@@ -1,0 +1,439 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>Class::Struct - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 1;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../close_purple.gif';" onmouseout="leftCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../index-overview.html">Overview</a></li>
+        <li><a href="../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../index-faq.html">FAQs</a></li>
+        <li><a href="../index-history.html">History / Changes</a></li>
+        <li><a href="../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../index-language.html">Language</a></li>
+        <li><a href="../index-functions.html">Functions</a></li>
+        <li><a href="../perlop.html">Operators</a></li>
+        <li><a href="../perlvar.html">Special variables</a></li>
+        <li><a href="../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../index-modules-A.html">Core modules</a></li>
+        <li><a href="../index-utilities.html">Utilities</a></li>
+        <li><a href="../index-internals.html">Internals</a></li>
+        <li><a href="../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../index.html">Home</a> &gt; <a href="../index-modules-A.html">Core modules</a> &gt; <a href="../index-modules-C.html">C</a> &gt; Class::Struct</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">Class::Struct</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><ul><li><a href="#The-'struct()'-function">The <code class="inline"><span class="i">struct</span><span class="s">(</span><span class="s">)</span></code>
+ function</a><li><a href="#Class-Creation-at-Compile-Time">Class Creation at Compile Time</a><li><a href="#Element-Types-and-Accessor-Methods">Element Types and Accessor Methods</a><li><a href="#Initializing-with-'new'">Initializing with <code class="inline"><span class="w">new</span></code>
+</a></ul><li><a href="#EXAMPLES">EXAMPLES</a><li><a href="#Author-and-Modification-History">Author and Modification History</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>Class::Struct - declare struct-like datatypes as Perl classes</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Class::Struct</span><span class="sc">;</span>
+            <span class="c"># declare struct, based on array:</span>
+    <span class="i">struct</span><span class="s">(</span> <span class="w">CLASS_NAME</span> <span class="cm">=&gt;</span> <span class="s">[</span> <span class="w">ELEMENT_NAME</span> <span class="cm">=&gt;</span> <span class="w">ELEMENT_TYPE</span><span class="cm">,</span> ... <span class="s">]</span><span class="s">)</span><span class="sc">;</span>
+            <span class="c"># declare struct, based on hash:</span>
+    <span class="i">struct</span><span class="s">(</span> <span class="w">CLASS_NAME</span> <span class="cm">=&gt;</span> <span class="s">{</span> <span class="w">ELEMENT_NAME</span> <span class="cm">=&gt;</span> <span class="w">ELEMENT_TYPE</span><span class="cm">,</span> ... <span class="s">}</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim"><a name="package-CLASS_NAME"></a>    package <span class="i">CLASS_NAME</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Class::Struct</span><span class="sc">;</span>
+            <span class="c"># declare struct, based on array, implicit class name:</span>
+    <span class="i">struct</span><span class="s">(</span> <span class="w">ELEMENT_NAME</span> <span class="cm">=&gt;</span> <span class="w">ELEMENT_TYPE</span><span class="cm">,</span> ... <span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="c"># Declare struct at compile time</span>
+    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Class::Struct</span> <span class="w">CLASS_NAME</span> <span class="cm">=&gt;</span> <span class="s">[</span> <span class="w">ELEMENT_NAME</span> <span class="cm">=&gt;</span> <span class="w">ELEMENT_TYPE</span><span class="cm">,</span> ... <span class="s">]</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Class::Struct</span> <span class="w">CLASS_NAME</span> <span class="cm">=&gt;</span> <span class="s">{</span> <span class="w">ELEMENT_NAME</span> <span class="cm">=&gt;</span> <span class="w">ELEMENT_TYPE</span><span class="cm">,</span> ... <span class="s">}</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="c"># declare struct at compile time, based on array, implicit class name:</span>
+<a name="package-CLASS_NAME"></a>    package <span class="i">CLASS_NAME</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Class::Struct</span> <span class="w">ELEMENT_NAME</span> <span class="cm">=&gt;</span> <span class="w">ELEMENT_TYPE</span><span class="cm">,</span> ... <span class="sc">;</span></pre>
+<pre class="verbatim"><a name="package-Myobj"></a>    package <span class="i">Myobj</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Class::Struct</span><span class="sc">;</span>
+            <span class="c"># declare struct with four types of elements:</span>
+    <span class="i">struct</span><span class="s">(</span> <span class="w">s</span> <span class="cm">=&gt;</span> <span class="q">&#39;$&#39;</span><span class="cm">,</span> <span class="w">a</span> <span class="cm">=&gt;</span> <span class="q">&#39;@&#39;</span><span class="cm">,</span> <span class="w">h</span> <span class="cm">=&gt;</span> <span class="q">&#39;%&#39;</span><span class="cm">,</span> <span class="w">c</span> <span class="cm">=&gt;</span> <span class="q">&#39;My_Other_Class&#39;</span> <span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="i">$obj</span> = <span class="w">new</span> <span class="w">Myobj</span><span class="sc">;</span>               <span class="c"># constructor</span></pre>
+<pre class="verbatim">                                    <span class="c"># scalar type accessor:</span>
+    <span class="i">$element_value</span> = <span class="i">$obj</span><span class="i">-&gt;s</span><span class="sc">;</span>           <span class="c"># element value</span>
+    <span class="i">$obj</span><span class="i">-&gt;s</span><span class="s">(</span><span class="q">&#39;new value&#39;</span><span class="s">)</span><span class="sc">;</span>               <span class="c"># assign to element</span></pre>
+<pre class="verbatim">                                    <span class="c"># array type accessor:</span>
+    <span class="i">$ary_ref</span> = <span class="i">$obj</span><span class="i">-&gt;a</span><span class="sc">;</span>                 <span class="c"># reference to whole array</span>
+    <span class="i">$ary_element_value</span> = <span class="i">$obj</span><span class="i">-&gt;a</span><span class="s">(</span><span class="n">2</span><span class="s">)</span><span class="sc">;</span>    <span class="c"># array element value</span>
+    <span class="i">$obj</span><span class="i">-&gt;a</span><span class="s">(</span><span class="n">2</span><span class="cm">,</span> <span class="q">&#39;new value&#39;</span><span class="s">)</span><span class="sc">;</span>            <span class="c"># assign to array element</span></pre>
+<pre class="verbatim">                                    <span class="c"># hash type accessor:</span>
+    <span class="i">$hash_ref</span> = <span class="i">$obj</span><span class="i">-&gt;h</span><span class="sc">;</span>                <span class="c"># reference to whole hash</span>
+    <span class="i">$hash_element_value</span> = <span class="i">$obj</span><span class="i">-&gt;h</span><span class="s">(</span><span class="q">&#39;x&#39;</span><span class="s">)</span><span class="sc">;</span> <span class="c"># hash element value</span>
+    <span class="i">$obj</span><span class="i">-&gt;h</span><span class="s">(</span><span class="q">&#39;x&#39;</span><span class="cm">,</span> <span class="q">&#39;new value&#39;</span><span class="s">)</span><span class="sc">;</span>          <span class="c"># assign to hash element</span></pre>
+<pre class="verbatim">                                    <span class="c"># class type accessor:</span>
+    <span class="i">$element_value</span> = <span class="i">$obj</span><span class="i">-&gt;c</span><span class="sc">;</span>           <span class="c"># object reference</span>
+    <span class="i">$obj</span><span class="i">-&gt;c</span><span class="i">-&gt;method</span><span class="s">(</span>...<span class="s">)</span><span class="sc">;</span>               <span class="c"># call method of object</span>
+    <span class="i">$obj</span><span class="i">-&gt;c</span><span class="s">(</span><span class="w">new</span> <span class="w">My_Other_Class</span><span class="s">)</span><span class="sc">;</span>        <span class="c"># assign a new object</span></pre>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p><code class="inline"><span class="w">Class::Struct</span></code>
+ exports a single function, <code class="inline"><span class="w">struct</span></code>
+.
+Given a list of element names and types, and optionally
+a class name, <code class="inline"><span class="w">struct</span></code>
+ creates a Perl 5 class that implements
+a "struct-like" data structure.</p>
+<p>The new class is given a constructor method, <code class="inline"><span class="w">new</span></code>
+, for creating
+struct objects.</p>
+<p>Each element in the struct data has an accessor method, which is
+used to assign to the element and to fetch its value.  The
+default accessor can be overridden by declaring a <code class="inline"><a class="l_k" href="../functions/sub.html">sub</a></code> of the
+same name in the package.  (See Example 2.)</p>
+<p>Each element's type can be scalar, array, hash, or class.</p>
+<a name="The-'struct()'-function"></a><h2>The <code class="inline"><span class="i">struct</span><span class="s">(</span><span class="s">)</span></code>
+ function</h2>
+<p>The <code class="inline"><span class="w">struct</span></code>
+ function has three forms of parameter-list.</p>
+<pre class="verbatim">    <span class="i">struct</span><span class="s">(</span> <span class="w">CLASS_NAME</span> <span class="cm">=&gt;</span> <span class="s">[</span> <span class="w">ELEMENT_LIST</span> <span class="s">]</span><span class="s">)</span><span class="sc">;</span>
+    <span class="i">struct</span><span class="s">(</span> <span class="w">CLASS_NAME</span> <span class="cm">=&gt;</span> <span class="s">{</span> <span class="w">ELEMENT_LIST</span> <span class="s">}</span><span class="s">)</span><span class="sc">;</span>
+    <span class="i">struct</span><span class="s">(</span> <span class="w">ELEMENT_LIST</span> <span class="s">)</span><span class="sc">;</span></pre>
+<p>The first and second forms explicitly identify the name of the
+class being created.  The third form assumes the current package
+name as the class name.</p>
+<p>An object of a class created by the first and third forms is
+based on an array, whereas an object of a class created by the
+second form is based on a hash. The array-based forms will be
+somewhat faster and smaller; the hash-based forms are more
+flexible.</p>
+<p>The class created by <code class="inline"><span class="w">struct</span></code>
+ must not be a subclass of another
+class other than <code class="inline"><span class="w">UNIVERSAL</span></code>
+.</p>
+<p>It can, however, be used as a superclass for other classes. To facilitate
+this, the generated constructor method uses a two-argument blessing.
+Furthermore, if the class is hash-based, the key of each element is
+prefixed with the class name (see <i>Perl Cookbook</i>, Recipe 13.12).</p>
+<p>A function named <code class="inline"><span class="w">new</span></code>
+ must not be explicitly defined in a class
+created by <code class="inline"><span class="w">struct</span></code>
+.</p>
+<p>The <i>ELEMENT_LIST</i> has the form</p>
+<pre class="verbatim">    <span class="w">NAME</span> <span class="cm">=&gt;</span> <span class="w">TYPE</span><span class="cm">,</span> ...</pre>
+<p>Each name-type pair declares one element of the struct. Each
+element name will be defined as an accessor method unless a
+method by that name is explicitly defined; in the latter case, a
+warning is issued if the warning flag (<b>-w</b>) is set.</p>
+<a name="Class-Creation-at-Compile-Time"></a><h2>Class Creation at Compile Time</h2>
+<p><code class="inline"><span class="w">Class::Struct</span></code>
+ can create your class at compile time.  The main reason
+for doing this is obvious, so your class acts like every other class in
+Perl.  Creating your class at compile time will make the order of events
+similar to using any other class ( or Perl module ).</p>
+<p>There is no significant speed gain between compile time and run time
+class creation, there is just a new, more standard order of events.</p>
+<a name="Element-Types-and-Accessor-Methods"></a><h2>Element Types and Accessor Methods</h2>
+<p>The four element types -- scalar, array, hash, and class -- are
+represented by strings -- <code class="inline"><span class="q">&#39;$&#39;</span></code>
+, <code class="inline"><span class="q">&#39;@&#39;</span></code>
+, <code class="inline"><span class="q">&#39;%&#39;</span></code>
+, and a class name --
+optionally preceded by a <code class="inline"><span class="q">&#39;*&#39;</span></code>
+.</p>
+<p>The accessor method provided by <code class="inline"><span class="w">struct</span></code>
+ for an element depends
+on the declared type of the element.</p>
+<ul>
+<li><a name="Scalar-(''0x24''-or-''*0x24'')"></a><b>Scalar (<code class="inline"><span class="q">&#39;$&#39;</span></code>
+ or <code class="inline"><span class="q">&#39;*$&#39;</span></code>
+)</b>
+<p>The element is a scalar, and by default is initialized to <code class="inline"><a class="l_k" href="../functions/undef.html">undef</a></code>
+(but see <a href="#Initializing-with-new">"Initializing with new"</a>).</p>
+<p>The accessor's argument, if any, is assigned to the element.</p>
+<p>If the element type is <code class="inline"><span class="q">&#39;$&#39;</span></code>
+, the value of the element (after
+assignment) is returned. If the element type is <code class="inline"><span class="q">&#39;*$&#39;</span></code>
+, a reference
+to the element is returned.</p>
+</li>
+<li><a name="Array-(''0x40''-or-''*0x40'')"></a><b>Array (<code class="inline"><span class="q">&#39;@&#39;</span></code>
+ or <code class="inline"><span class="q">&#39;*@&#39;</span></code>
+)</b>
+<p>The element is an array, initialized by default to <code class="inline"><span class="s">(</span><span class="s">)</span></code>
+.</p>
+<p>With no argument, the accessor returns a reference to the
+element's whole array (whether or not the element was
+specified as <code class="inline"><span class="q">&#39;@&#39;</span></code>
+ or <code class="inline"><span class="q">&#39;*@&#39;</span></code>
+).</p>
+<p>With one or two arguments, the first argument is an index
+specifying one element of the array; the second argument, if
+present, is assigned to the array element.  If the element type
+is <code class="inline"><span class="q">&#39;@&#39;</span></code>
+, the accessor returns the array element value.  If the
+element type is <code class="inline"><span class="q">&#39;*@&#39;</span></code>
+, a reference to the array element is
+returned.</p>
+<p>As a special case, when the accessor is called with an array reference
+as the sole argument, this causes an assignment of the whole array element.
+The object reference is returned.</p>
+</li>
+<li><a name="Hash-(''0x25''-or-''*0x25'')"></a><b>Hash (<code class="inline"><span class="q">&#39;%&#39;</span></code>
+ or <code class="inline"><span class="q">&#39;*%&#39;</span></code>
+)</b>
+<p>The element is a hash, initialized by default to <code class="inline"><span class="s">(</span><span class="s">)</span></code>
+.</p>
+<p>With no argument, the accessor returns a reference to the
+element's whole hash (whether or not the element was
+specified as <code class="inline"><span class="q">&#39;%&#39;</span></code>
+ or <code class="inline"><span class="q">&#39;*%&#39;</span></code>
+).</p>
+<p>With one or two arguments, the first argument is a key specifying
+one element of the hash; the second argument, if present, is
+assigned to the hash element.  If the element type is <code class="inline"><span class="q">&#39;%&#39;</span></code>
+, the
+accessor returns the hash element value.  If the element type is
+<code class="inline"><span class="q">&#39;*%&#39;</span></code>
+, a reference to the hash element is returned.</p>
+<p>As a special case, when the accessor is called with a hash reference
+as the sole argument, this causes an assignment of the whole hash element.
+The object reference is returned.</p>
+</li>
+<li><a name="Class-(''Class_Name''-or-''*Class_Name'')"></a><b>Class (<code class="inline"><span class="q">&#39;Class_Name&#39;</span></code>
+ or <code class="inline"><span class="q">&#39;*Class_Name&#39;</span></code>
+)</b>
+<p>The element's value must be a reference blessed to the named
+class or to one of its subclasses. The element is not initialized
+by default.</p>
+<p>The accessor's argument, if any, is assigned to the element. The
+accessor will <code class="inline"><span class="w">croak</span></code>
+ if this is not an appropriate object
+reference.</p>
+<p>If the element type does not start with a <code class="inline"><span class="q">&#39;*&#39;</span></code>
+, the accessor
+returns the element value (after assignment). If the element type
+starts with a <code class="inline"><span class="q">&#39;*&#39;</span></code>
+, a reference to the element itself is returned.</p>
+</li>
+</ul>
+<a name="Initializing-with-'new'"></a><h2>Initializing with <code class="inline"><span class="w">new</span></code>
+</h2>
+<p><code class="inline"><span class="w">struct</span></code>
+ always creates a constructor called <code class="inline"><span class="w">new</span></code>
+. That constructor
+may take a list of initializers for the various elements of the new
+struct.</p>
+<p>Each initializer is a pair of values: <i>element name</i><code class="inline"> <span class="cm">=&gt;</span> </code>
+<i>value</i>.
+The initializer value for a scalar element is just a scalar value. The 
+initializer for an array element is an array reference. The initializer
+for a hash is a hash reference.</p>
+<p>The initializer for a class element is an object of the corresponding class,
+or of one of it's subclasses, or a reference to a hash containing named 
+arguments to be passed to the element's constructor.</p>
+<p>See Example 3 below for an example of initialization.</p>
+<a name="EXAMPLES"></a><h1>EXAMPLES</h1>
+<ul>
+<li><a name="Example-1"></a><b>Example 1</b>
+<p>Giving a struct element a class type that is also a struct is how
+structs are nested.  Here, <code class="inline"><span class="w">Timeval</span></code>
+ represents a time (seconds and
+microseconds), and <code class="inline"><span class="w">Rusage</span></code>
+ has two elements, each of which is of
+type <code class="inline"><span class="w">Timeval</span></code>
+.</p>
+<pre class="verbatim">    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Class::Struct</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="i">struct</span><span class="s">(</span> <span class="w">Rusage</span> <span class="cm">=&gt;</span> <span class="s">{</span>
+        <span class="w">ru_utime</span> <span class="cm">=&gt;</span> <span class="q">&#39;Timeval&#39;</span><span class="cm">,</span>  <span class="c"># user time used</span>
+        <span class="w">ru_stime</span> <span class="cm">=&gt;</span> <span class="q">&#39;Timeval&#39;</span><span class="cm">,</span>  <span class="c"># system time used</span>
+    <span class="s">}</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="i">struct</span><span class="s">(</span> <span class="w">Timeval</span> <span class="cm">=&gt;</span> <span class="s">[</span>
+        <span class="w">tv_secs</span>  <span class="cm">=&gt;</span> <span class="q">&#39;$&#39;</span><span class="cm">,</span>        <span class="c"># seconds</span>
+        <span class="w">tv_usecs</span> <span class="cm">=&gt;</span> <span class="q">&#39;$&#39;</span><span class="cm">,</span>        <span class="c"># microseconds</span>
+    <span class="s">]</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">        <span class="c"># create an object:</span>
+    <a class="l_k" href="../functions/my.html">my</a> <span class="i">$t</span> = <span class="w">Rusage</span><span class="w">-&gt;new</span><span class="s">(</span><span class="w">ru_utime</span><span class="cm">=&gt;</span><span class="w">Timeval</span><span class="w">-&gt;new</span><span class="s">(</span><span class="s">)</span><span class="cm">,</span> <span class="w">ru_stime</span><span class="cm">=&gt;</span><span class="w">Timeval</span><span class="w">-&gt;new</span><span class="s">(</span><span class="s">)</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">        <span class="c"># $t-&gt;ru_utime and $t-&gt;ru_stime are objects of type Timeval.</span>
+        <span class="c"># set $t-&gt;ru_utime to 100.0 sec and $t-&gt;ru_stime to 5.0 sec.</span>
+    <span class="i">$t</span><span class="i">-&gt;ru_utime</span><span class="i">-&gt;tv_secs</span><span class="s">(</span><span class="n">100</span><span class="s">)</span><span class="sc">;</span>
+    <span class="i">$t</span><span class="i">-&gt;ru_utime</span><span class="i">-&gt;tv_usecs</span><span class="s">(</span><span class="n">0</span><span class="s">)</span><span class="sc">;</span>
+    <span class="i">$t</span><span class="i">-&gt;ru_stime</span><span class="i">-&gt;tv_secs</span><span class="s">(</span><span class="n">5</span><span class="s">)</span><span class="sc">;</span>
+    <span class="i">$t</span><span class="i">-&gt;ru_stime</span><span class="i">-&gt;tv_usecs</span><span class="s">(</span><span class="n">0</span><span class="s">)</span><span class="sc">;</span></pre>
+</li>
+<li><a name="Example-2"></a><b>Example 2</b>
+<p>An accessor function can be redefined in order to provide
+additional checking of values, etc.  Here, we want the <code class="inline"><span class="w">count</span></code>
+
+element always to be nonnegative, so we redefine the <code class="inline"><span class="w">count</span></code>
+
+accessor accordingly.</p>
+<pre class="verbatim"><a name="package-MyObj"></a>    package <span class="i">MyObj</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Class::Struct</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="c"># declare the struct</span>
+    <span class="w">struct</span> <span class="s">(</span> <span class="q">&#39;MyObj&#39;</span><span class="cm">,</span> <span class="s">{</span> <span class="w">count</span> <span class="cm">=&gt;</span> <span class="q">&#39;$&#39;</span><span class="cm">,</span> <span class="w">stuff</span> <span class="cm">=&gt;</span> <span class="q">&#39;%&#39;</span> <span class="s">}</span> <span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="c"># override the default accessor method for &#39;count&#39;</span>
+<a name="count"></a>    sub <span class="m">count</span> <span class="s">{</span>
+        <a class="l_k" href="../functions/my.html">my</a> <span class="i">$self</span> = <a class="l_k" href="../functions/shift.html">shift</a><span class="sc">;</span>
+        if <span class="s">(</span> <span class="i">@_</span> <span class="s">)</span> <span class="s">{</span>
+            <a class="l_k" href="../functions/die.html">die</a> <span class="q">&#39;count must be nonnegative&#39;</span> if <span class="i">$_</span>[<span class="n">0</span>] &lt; <span class="n">0</span><span class="sc">;</span>
+            <span class="i">$self</span>-&gt;{<span class="q">&#39;MyObj::count&#39;</span>} = <a class="l_k" href="../functions/shift.html">shift</a><span class="sc">;</span>
+            <a class="l_k" href="../functions/warn.html">warn</a> <span class="q">&quot;Too many args to count&quot;</span> if <span class="i">@_</span><span class="sc">;</span>
+        <span class="s">}</span>
+        <a class="l_k" href="../functions/return.html">return</a> <span class="i">$self</span>-&gt;{<span class="q">&#39;MyObj::count&#39;</span>}<span class="sc">;</span>
+    <span class="s">}</span></pre>
+<pre class="verbatim"><a name="package-main"></a>    package <span class="i">main</span><span class="sc">;</span>
+    <span class="i">$x</span> = <span class="w">new</span> <span class="w">MyObj</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/print.html">print</a> <span class="q">&quot;\$x-&gt;count(5) = &quot;</span><span class="cm">,</span> <span class="i">$x</span><span class="i">-&gt;count</span><span class="s">(</span><span class="n">5</span><span class="s">)</span><span class="cm">,</span> <span class="q">&quot;\n&quot;</span><span class="sc">;</span>
+                            <span class="c"># prints &#39;$x-&gt;count(5) = 5&#39;</span></pre>
+<pre class="verbatim">    <a class="l_k" href="../functions/print.html">print</a> <span class="q">&quot;\$x-&gt;count = &quot;</span><span class="cm">,</span> <span class="i">$x</span><span class="i">-&gt;count</span><span class="cm">,</span> <span class="q">&quot;\n&quot;</span><span class="sc">;</span>
+                            <span class="c"># prints &#39;$x-&gt;count = 5&#39;</span></pre>
+<pre class="verbatim">    <a class="l_k" href="../functions/print.html">print</a> <span class="q">&quot;\$x-&gt;count(-5) = &quot;</span><span class="cm">,</span> <span class="i">$x</span><span class="i">-&gt;count</span><span class="s">(</span><span class="n">-5</span><span class="s">)</span><span class="cm">,</span> <span class="q">&quot;\n&quot;</span><span class="sc">;</span>
+                            <span class="c"># dies due to negative argument!</span></pre>
+</li>
+<li><a name="Example-3"></a><b>Example 3</b>
+<p>The constructor of a generated class can be passed a list
+of <i>element</i>=&gt;<i>value</i> pairs, with which to initialize the struct.
+If no initializer is specified for a particular element, its default
+initialization is performed instead. Initializers for non-existent
+elements are silently ignored.</p>
+<p>Note that the initializer for a nested class may be specified as
+an object of that class, or as a reference to a hash of initializers
+that are passed on to the nested struct's constructor.</p>
+<pre class="verbatim">    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Class::Struct</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="w">struct</span> <span class="w">Breed</span> <span class="cm">=&gt;</span>
+    <span class="s">{</span>
+        <span class="w">name</span>  <span class="cm">=&gt;</span> <span class="q">&#39;$&#39;</span><span class="cm">,</span>
+        <span class="w">cross</span> <span class="cm">=&gt;</span> <span class="q">&#39;$&#39;</span><span class="cm">,</span>
+    <span class="s">}</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="w">struct</span> <span class="w">Cat</span> <span class="cm">=&gt;</span>
+    <span class="s">[</span>
+        <span class="w">name</span>     <span class="cm">=&gt;</span> <span class="q">&#39;$&#39;</span><span class="cm">,</span>
+        <span class="w">kittens</span>  <span class="cm">=&gt;</span> <span class="q">&#39;@&#39;</span><span class="cm">,</span>
+        <span class="w">markings</span> <span class="cm">=&gt;</span> <span class="q">&#39;%&#39;</span><span class="cm">,</span>
+        <span class="w">breed</span>    <span class="cm">=&gt;</span> <span class="q">&#39;Breed&#39;</span><span class="cm">,</span>
+    <span class="s">]</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <a class="l_k" href="../functions/my.html">my</a> <span class="i">$cat</span> = <span class="w">Cat</span><span class="w">-&gt;new</span><span class="s">(</span> <span class="w">name</span>     <span class="cm">=&gt;</span> <span class="q">&#39;Socks&#39;</span><span class="cm">,</span>
+                        <span class="w">kittens</span>  <span class="cm">=&gt;</span> <span class="s">[</span><span class="q">&#39;Monica&#39;</span><span class="cm">,</span> <span class="q">&#39;Kenneth&#39;</span><span class="s">]</span><span class="cm">,</span>
+                        <span class="w">markings</span> <span class="cm">=&gt;</span> <span class="s">{</span> <span class="w">socks</span><span class="cm">=&gt;</span><span class="n">1</span><span class="cm">,</span> <span class="w">blaze</span><span class="cm">=&gt;</span><span class="q">&quot;white&quot;</span> <span class="s">}</span><span class="cm">,</span>
+                        <span class="w">breed</span>    <span class="cm">=&gt;</span> <span class="w">Breed</span><span class="w">-&gt;new</span><span class="s">(</span><span class="w">name</span><span class="cm">=&gt;</span><span class="q">&#39;short-hair&#39;</span><span class="cm">,</span> <span class="w">cross</span><span class="cm">=&gt;</span><span class="n">1</span><span class="s">)</span><span class="cm">,</span>
+                   or<span class="co">:</span>  <span class="w">breed</span>    <span class="cm">=&gt;</span> <span class="s">{</span><span class="w">name</span><span class="cm">=&gt;</span><span class="q">&#39;short-hair&#39;</span><span class="cm">,</span> <span class="w">cross</span><span class="cm">=&gt;</span><span class="n">1</span><span class="s">}</span><span class="cm">,</span>
+                      <span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <a class="l_k" href="../functions/print.html">print</a> <span class="q">&quot;Once a cat called &quot;</span><span class="cm">,</span> <span class="i">$cat</span><span class="i">-&gt;name</span><span class="cm">,</span> <span class="q">&quot;\n&quot;</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/print.html">print</a> <span class="q">&quot;(which was a &quot;</span><span class="cm">,</span> <span class="i">$cat</span><span class="i">-&gt;breed</span><span class="i">-&gt;name</span><span class="cm">,</span> <span class="q">&quot;)\n&quot;</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/print.html">print</a> <span class="q">&quot;had two kittens: &quot;</span><span class="cm">,</span> <a class="l_k" href="../functions/join.html">join</a><span class="s">(</span><span class="q">&#39; and &#39;</span><span class="cm">,</span> <span class="i">@</span>{<span class="i">$cat</span><span class="i">-&gt;kittens</span>}<span class="s">)</span><span class="cm">,</span> <span class="q">&quot;\n&quot;</span><span class="sc">;</span></pre>
+</li>
+</ul>
+<a name="Author-and-Modification-History"></a><h1>Author and Modification History</h1>
+<p>Modified by Damian Conway, 2001-09-10, v0.62.</p>
+<pre class="verbatim">   Modified implicit construction of nested objects.
+   Now will also take an object ref instead of requiring a hash ref.
+   Also default initializes nested object attributes to undef, rather
+   than calling object constructor without args
+   Original over-helpfulness was fraught with problems:
+       * the class's constructor might not be called 'new'
+       * the class might not have a hash-like-arguments constructor
+       * the class might not have a no-argument constructor
+       * "recursive" data structures didn't work well:
+                 package Person;
+                 struct { mother =&gt; 'Person', father =&gt; 'Person'};</pre><p>Modified by Casey West, 2000-11-08, v0.59.</p>
+<pre class="verbatim">    Added the ability for compile time class creation.</pre><p>Modified by Damian Conway, 1999-03-05, v0.58.</p>
+<pre class="verbatim">    <span class="w">Added</span> <span class="w">handling</span> <span class="w">of</span> <span class="w">hash</span>-<span class="w">like</span> <span class="w">arg</span> <span class="w">list</span> <span class="w">to</span> <span class="w">class</span> <span class="w">ctor</span>.</pre>
+<pre class="verbatim">    <span class="w">Changed</span> <span class="w">to</span> <span class="w">two</span>-<span class="w">argument</span> <span class="w">blessing</span> <span class="w">in</span> <span class="w">ctor</span> <span class="w">to</span> <span class="w">support</span>
+    <span class="w">derivation</span> <span class="w">from</span> <span class="w">created</span> <span class="w">classes</span>.</pre>
+<pre class="verbatim">    <span class="w">Added</span> <span class="w">classname</span> <span class="w">prefixes</span> <span class="w">to</span> <a class="l_k" href="../functions/keys.html">keys</a> <span class="w">in</span> <span class="w">hash</span>-<span class="w">based</span> <span class="i">classes</span>
+    <span class="s">(</span><span class="w">refer</span> <span class="w">to</span> <span class="q">&quot;Perl Cookbook&quot;</span><span class="cm">,</span> <span class="w">Recipe</span> <span class="n">13.12</span> for <span class="w">rationale</span><span class="s">)</span>.</pre>
+<pre class="verbatim">    Corrected behaviour of accessors for '*@' and '*%' struct
+    elements.  Package now implements documented behaviour when
+    returning a reference to an entire hash or array element.
+    Previously these were returned as a reference to a reference
+    to the element.</pre><p>Renamed to <code class="inline"><span class="w">Class::Struct</span></code>
+ and modified by Jim Miner, 1997-04-02.</p>
+<pre class="verbatim">    members() function removed.
+    Documentation corrected and extended.
+    Use of struct() in a subclass prohibited.
+    User definition of accessor allowed.
+    Treatment of '*' in element types corrected.
+    Treatment of classes as element types corrected.
+    Class name to struct() made optional.
+    Diagnostic checks added.</pre><p>Originally <code class="inline"><span class="w">Class::Template</span></code>
+ by Dean Roehrich.</p>
+<pre class="verbatim">    <span class="c"># Template.pm   --- struct/member template builder</span>
+    <span class="c">#   12mar95</span>
+    <span class="c">#   Dean Roehrich</span>
+    <span class="c">#</span>
+    <span class="c"># changes/bugs fixed since 28nov94 version:</span>
+    <span class="c">#  - podified</span>
+    <span class="c"># changes/bugs fixed since 21nov94 version:</span>
+    <span class="c">#  - Fixed examples.</span>
+    <span class="c"># changes/bugs fixed since 02sep94 version:</span>
+    <span class="c">#  - Moved to Class::Template.</span>
+    <span class="c"># changes/bugs fixed since 20feb94 version:</span>
+    <span class="c">#  - Updated to be a more proper module.</span>
+    <span class="c">#  - Added &quot;use strict&quot;.</span>
+    <span class="c">#  - Bug in build_methods, was using @var when @$var needed.</span>
+    <span class="c">#  - Now using my() rather than local().</span>
+    <span class="c">#</span>
+    <span class="c"># Uses perl5 classes to create nested data types.</span>
+    <span class="c"># This is offered as one implementation of Tom Christiansen&#39;s &quot;structs.pl&quot;</span>
+    <span class="c"># idea.</span></pre>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../close_purple.gif';" onmouseout="rightCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('Class::Struct','Class/Struct.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

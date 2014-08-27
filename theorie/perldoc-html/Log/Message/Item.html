@@ -1,0 +1,171 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>Log::Message::Item - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 2;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../../close_purple.gif';" onmouseout="leftCloseIcon.src='../../close_blue.gif';"><img src="../../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../../index-overview.html">Overview</a></li>
+        <li><a href="../../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../../index-faq.html">FAQs</a></li>
+        <li><a href="../../index-history.html">History / Changes</a></li>
+        <li><a href="../../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../../index-language.html">Language</a></li>
+        <li><a href="../../index-functions.html">Functions</a></li>
+        <li><a href="../../perlop.html">Operators</a></li>
+        <li><a href="../../perlvar.html">Special variables</a></li>
+        <li><a href="../../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../../index-modules-A.html">Core modules</a></li>
+        <li><a href="../../index-utilities.html">Utilities</a></li>
+        <li><a href="../../index-internals.html">Internals</a></li>
+        <li><a href="../../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../../index.html">Home</a> &gt; <a href="../../index-modules-A.html">Core modules</a> &gt; <a href="../../index-modules-L.html">L</a> &gt; Log::Message::Item</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">Log::Message::Item</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><li><a href="#Methods-and-Accessors">Methods and Accessors</a><ul><li><a href="#remove">remove</a><li><a href="#id">id</a><li><a href="#when">when</a><li><a href="#message">message</a><li><a href="#level">level</a><li><a href="#tag">tag</a><li><a href="#shortmess">shortmess</a><li><a href="#longmess">longmess</a><li><a href="#parent">parent</a></ul><li><a href="#SEE-ALSO">SEE ALSO</a><li><a href="#AUTHOR">AUTHOR</a><li><a href="#Acknowledgements">Acknowledgements</a><li><a href="#COPYRIGHT">COPYRIGHT</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>Log::Message::Item  - Message objects for Log::Message</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">    <span class="c"># Implicitly used by Log::Message to create Log::Message::Item objects</span></pre>
+<pre class="verbatim">    <a class="l_k" href="../../functions/print.html">print</a> <span class="q">&quot;this is the message's id: &quot;</span><span class="cm">,</span>     <span class="i">$item</span><span class="i">-&gt;id</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <a class="l_k" href="../../functions/print.html">print</a> <span class="q">&quot;this is the message stored: &quot;</span><span class="cm">,</span>   <span class="i">$item</span><span class="i">-&gt;message</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <a class="l_k" href="../../functions/print.html">print</a> <span class="q">&quot;this is when it happened: &quot;</span><span class="cm">,</span>     <span class="i">$item</span><span class="i">-&gt;when</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <a class="l_k" href="../../functions/print.html">print</a> <span class="q">&quot;the message was tagged: &quot;</span><span class="cm">,</span>       <span class="i">$item</span><span class="i">-&gt;tag</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <a class="l_k" href="../../functions/print.html">print</a> <span class="q">&quot;this was the severity level: &quot;</span><span class="cm">,</span>  <span class="i">$item</span><span class="i">-&gt;level</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="i">$item</span><span class="i">-&gt;remove</span><span class="sc">;</span>  <span class="c"># delete the item from the stack it was on</span></pre>
+<pre class="verbatim">    <span class="c"># Besides these methods, you can also call the handlers on</span>
+    <span class="c"># the object specificallly.</span>
+    <span class="c"># See the Log::Message::Handlers manpage for documentation on what</span>
+    <span class="c"># handlers are available by default and how to add your own</span></pre>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p>Log::Message::Item is a class that generates generic Log items.
+These items are stored on a Log::Message stack, so see the Log::Message
+manpage about details how to retrieve them.</p>
+<p>You should probably not create new items by yourself, but use the
+storing mechanism provided by Log::Message.</p>
+<p>However, the accessors and handlers are of interest if you want to do
+fine tuning of how your messages are handled.</p>
+<p>The accessors and methods are described below, the handlers are
+documented in the Log::Message::Handlers manpage.</p>
+<a name="Methods-and-Accessors"></a><h1>Methods and Accessors</h1>
+<a name="remove"></a><h2>remove</h2>
+<p>Calling remove will remove the object from the stack it was on, so it
+will not show up any more in subsequent fetches of messages.</p>
+<p>You can still call accessors and handlers on it however, to handle it
+as you will.</p>
+<a name="id"></a><h2>id</h2>
+<p>Returns the internal ID of the item. This may be useful for comparing
+since the ID is incremented each time a new item is created.
+Therefore, an item with ID 4 must have been logged before an item with
+ID 9.</p>
+<a name="when"></a><h2>when</h2>
+<p>Returns the timestamp of when the message was logged</p>
+<a name="message"></a><h2>message</h2>
+<p>The actual message that was stored</p>
+<a name="level"></a><h2>level</h2>
+<p>The severity type of this message, as well as the name of the handler
+that was called upon storing it.</p>
+<a name="tag"></a><h2>tag</h2>
+<p>Returns the identification tag that was put on the message.</p>
+<a name="shortmess"></a><h2>shortmess</h2>
+<p>Returns the equivalent of a <code class="inline"><span class="w">Carp::shortmess</span></code>
+ for this item.
+See the <code class="inline"><span class="w">Carp</span></code>
+ manpage for details.</p>
+<a name="longmess"></a><h2>longmess</h2>
+<p>Returns the equivalent of a <code class="inline"><span class="w">Carp::longmess</span></code>
+ for this item, which
+is essentially a stack trace.
+See the <code class="inline"><span class="w">Carp</span></code>
+ manpage for details.</p>
+<a name="parent"></a><h2>parent</h2>
+<p>Returns a reference to the Log::Message object that stored this item.
+This is useful if you want to have access to the full stack in a
+handler.</p>
+<a name="SEE-ALSO"></a><h1>SEE ALSO</h1>
+<p><a href="../../Log/Message.html">Log::Message</a>, <a href="../../Log/Message/Handlers.html">Log::Message::Handlers</a>, <a href="../../Log/Message/Config.html">Log::Message::Config</a></p>
+<a name="AUTHOR"></a><h1>AUTHOR</h1>
+<p>This module by
+Jos Boumans &lt;kane@cpan.org&gt;.</p>
+<a name="Acknowledgements"></a><h1>Acknowledgements</h1>
+<p>Thanks to Ann Barcomb for her suggestions.</p>
+<a name="COPYRIGHT"></a><h1>COPYRIGHT</h1>
+<p>This module is
+copyright (c) 2002 Jos Boumans &lt;kane@cpan.org&gt;.
+All rights reserved.</p>
+<p>This library is free software;
+you may redistribute and/or modify it under the same
+terms as Perl itself.</p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../../close_purple.gif';" onmouseout="rightCloseIcon.src='../../close_blue.gif';"><img src="../../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('Log::Message::Item','Log/Message/Item.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

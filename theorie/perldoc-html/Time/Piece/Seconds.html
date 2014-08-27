@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>Time::Piece::Seconds - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 2;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../../close_purple.gif';" onmouseout="leftCloseIcon.src='../../close_blue.gif';"><img src="../../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../../index-overview.html">Overview</a></li>
+        <li><a href="../../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../../index-faq.html">FAQs</a></li>
+        <li><a href="../../index-history.html">History / Changes</a></li>
+        <li><a href="../../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../../index-language.html">Language</a></li>
+        <li><a href="../../index-functions.html">Functions</a></li>
+        <li><a href="../../perlop.html">Operators</a></li>
+        <li><a href="../../perlvar.html">Special variables</a></li>
+        <li><a href="../../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../../index-modules-A.html">Core modules</a></li>
+        <li><a href="../../index-utilities.html">Utilities</a></li>
+        <li><a href="../../index-internals.html">Internals</a></li>
+        <li><a href="../../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../../index.html">Home</a> &gt; <a href="../../index-modules-A.html">Core modules</a> &gt; <a href="../../index-modules-T.html">T</a> &gt; Time::Piece::Seconds</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">Time::Piece::Seconds</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><li><a href="#METHODS">METHODS</a><li><a href="#AUTHOR">AUTHOR</a><li><a href="#LICENSE">LICENSE</a><li><a href="#Bugs">Bugs</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>Time::Seconds - a simple API to convert seconds to other date values</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">    <a class="l_k" href="../../functions/use.html">use</a> <span class="w">Time::Piece</span><span class="sc">;</span>
+    <a class="l_k" href="../../functions/use.html">use</a> <span class="w">Time::Seconds</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <a class="l_k" href="../../functions/my.html">my</a> <span class="i">$t</span> = <a class="l_k" href="../../functions/localtime.html">localtime</a><span class="sc">;</span>
+    <span class="i">$t</span> += <span class="w">ONE_DAY</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <a class="l_k" href="../../functions/my.html">my</a> <span class="i">$t2</span> = <a class="l_k" href="../../functions/localtime.html">localtime</a><span class="sc">;</span>
+    <a class="l_k" href="../../functions/my.html">my</a> <span class="i">$s</span> = <span class="i">$t</span> - <span class="i">$t2</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <a class="l_k" href="../../functions/print.html">print</a> <span class="q">&quot;Difference is: &quot;</span><span class="cm">,</span> <span class="i">$s</span><span class="i">-&gt;days</span><span class="cm">,</span> <span class="q">&quot;\n&quot;</span><span class="sc">;</span></pre>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p>This module is part of the Time::Piece distribution. It allows the user
+to find out the number of minutes, hours, days, weeks or years in a given
+number of seconds. It is returned by Time::Piece when you delta two
+Time::Piece objects.</p>
+<p>Time::Seconds also exports the following constants:</p>
+<pre class="verbatim">    <span class="w">ONE_DAY</span>
+    <span class="w">ONE_WEEK</span>
+    <span class="w">ONE_HOUR</span>
+    <span class="w">ONE_MINUTE</span>
+	<span class="w">ONE_MONTH</span>
+	<span class="w">ONE_YEAR</span>
+	<span class="w">ONE_FINANCIAL_MONTH</span>
+    <span class="w">LEAP_YEAR</span>
+    <span class="w">NON_LEAP_YEAR</span></pre>
+<p>Since perl does not (yet?) support constant objects, these constants are in
+seconds only, so you cannot, for example, do this: <code class="inline"><a class="l_k" href="../../functions/print.html">print</a> <span class="i">ONE_WEEK</span><span class="i">-&gt;minutes</span><span class="sc">;</span></code>
+</p>
+<a name="METHODS"></a><h1>METHODS</h1>
+<p>The following methods are available:</p>
+<pre class="verbatim">    my $val = Time::Seconds-&gt;new(SECONDS)
+    $val-&gt;seconds;
+    $val-&gt;minutes;
+    $val-&gt;hours;
+    $val-&gt;days;
+    $val-&gt;weeks;
+	$val-&gt;months;
+	$val-&gt;financial_months; # 30 days
+    $val-&gt;years;</pre><p>The methods make the assumption that there are 24 hours in a day, 7 days in
+a week, 365.24225 days in a year and 12 months in a year.
+(from The Calendar FAQ at <a href="http://www.tondering.dk/claus/calendar.html">http://www.tondering.dk/claus/calendar.html</a>)</p>
+<a name="AUTHOR"></a><h1>AUTHOR</h1>
+<p>Matt Sergeant, matt@sergeant.org</p>
+<p>Tobias Brox, tobiasb@tobiasb.funcom.com</p>
+<p>Bal�zs Szab� (dLux), dlux@kapu.hu</p>
+<a name="LICENSE"></a><h1>LICENSE</h1>
+<p>Please see Time::Piece for the license.</p>
+<a name="Bugs"></a><h1>Bugs</h1>
+<p>Currently the methods aren't as efficient as they could be, for reasons of
+clarity. This is probably a bad idea.</p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../../close_purple.gif';" onmouseout="rightCloseIcon.src='../../close_blue.gif';"><img src="../../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('Time::Piece::Seconds','Time/Piece/Seconds.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

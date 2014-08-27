@@ -1,0 +1,830 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>Unicode::Collate - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 1;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../close_purple.gif';" onmouseout="leftCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../index-overview.html">Overview</a></li>
+        <li><a href="../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../index-faq.html">FAQs</a></li>
+        <li><a href="../index-history.html">History / Changes</a></li>
+        <li><a href="../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../index-language.html">Language</a></li>
+        <li><a href="../index-functions.html">Functions</a></li>
+        <li><a href="../perlop.html">Operators</a></li>
+        <li><a href="../perlvar.html">Special variables</a></li>
+        <li><a href="../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../index-modules-A.html">Core modules</a></li>
+        <li><a href="../index-utilities.html">Utilities</a></li>
+        <li><a href="../index-internals.html">Internals</a></li>
+        <li><a href="../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../index.html">Home</a> &gt; <a href="../index-modules-A.html">Core modules</a> &gt; <a href="../index-modules-U.html">U</a> &gt; Unicode::Collate</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">Unicode::Collate</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><ul><li><a href="#Constructor-and-Tailoring">Constructor and Tailoring</a><li><a href="#Methods-for-Collation">Methods for Collation</a><li><a href="#Methods-for-Searching">Methods for Searching</a><li><a href="#Other-Methods">Other Methods</a></ul><li><a href="#EXPORT">EXPORT</a><li><a href="#INSTALL">INSTALL</a><li><a href="#CAVEATS">CAVEATS</a><li><a href="#AUTHOR0x2c-COPYRIGHT-AND-LICENSE">AUTHOR, COPYRIGHT AND LICENSE</a><li><a href="#SEE-ALSO">SEE ALSO</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>Unicode::Collate - Unicode Collation Algorithm</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">  <a class="l_k" href="../functions/use.html">use</a> <span class="w">Unicode::Collate</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <span class="c">#construct</span>
+  <span class="i">$Collator</span> = <span class="w">Unicode::Collate</span><span class="w">-&gt;new</span><span class="s">(</span><span class="i">%tailoring</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <span class="c">#sort</span>
+  <span class="i">@sorted</span> = <span class="i">$Collator</span><span class="i">-&gt;sort</span><span class="s">(</span><span class="i">@not_sorted</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <span class="c">#compare</span>
+  <span class="i">$result</span> = <span class="i">$Collator</span><span class="i">-&gt;cmp</span><span class="s">(</span><span class="i">$a</span><span class="cm">,</span> <span class="i">$b</span><span class="s">)</span><span class="sc">;</span> <span class="c"># returns 1, 0, or -1.</span></pre>
+<pre class="verbatim">  <span class="c"># If %tailoring is false (i.e. empty),</span>
+  <span class="c"># $Collator should do the default collation.</span></pre>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p>This module is an implementation of Unicode Technical Standard #10
+(a.k.a. UTS #10) - Unicode Collation Algorithm (a.k.a. UCA).</p>
+<a name="Constructor-and-Tailoring"></a><h2>Constructor and Tailoring</h2>
+<p>The <code class="inline"><span class="w">new</span></code>
+ method returns a collator object.</p>
+<pre class="verbatim">   <span class="i">$Collator</span> = <span class="w">Unicode::Collate</span><span class="w">-&gt;new</span><span class="s">(</span>
+      <span class="w">UCA_Version</span> <span class="cm">=&gt;</span> <span class="i">$UCA_Version</span><span class="cm">,</span>
+      <span class="w">alternate</span> <span class="cm">=&gt;</span> <span class="i">$alternate</span><span class="cm">,</span> <span class="c"># deprecated: use of &#39;variable&#39; is recommended.</span>
+      <span class="w">backwards</span> <span class="cm">=&gt;</span> <span class="i">$levelNumber</span><span class="cm">,</span> <span class="c"># or \@levelNumbers</span>
+      <span class="w">entry</span> <span class="cm">=&gt;</span> <span class="i">$element</span><span class="cm">,</span>
+      <span class="w">hangul_terminator</span> <span class="cm">=&gt;</span> <span class="i">$term_primary_weight</span><span class="cm">,</span>
+      <span class="w">ignoreName</span> <span class="cm">=&gt;</span> <span class="q">qr/$ignoreName/</span><span class="cm">,</span>
+      <span class="w">ignoreChar</span> <span class="cm">=&gt;</span> <span class="q">qr/$ignoreChar/</span><span class="cm">,</span>
+      <span class="w">katakana_before_hiragana</span> <span class="cm">=&gt;</span> <span class="i">$bool</span><span class="cm">,</span>
+      <span class="w">level</span> <span class="cm">=&gt;</span> <span class="i">$collationLevel</span><span class="cm">,</span>
+      <span class="w">normalization</span>  <span class="cm">=&gt;</span> <span class="i">$normalization_form</span><span class="cm">,</span>
+      <span class="w">overrideCJK</span> <span class="cm">=&gt;</span> \<span class="i">&amp;overrideCJK</span><span class="cm">,</span>
+      <span class="w">overrideHangul</span> <span class="cm">=&gt;</span> \<span class="i">&amp;overrideHangul</span><span class="cm">,</span>
+      <span class="w">preprocess</span> <span class="cm">=&gt;</span> \<span class="i">&amp;preprocess</span><span class="cm">,</span>
+      <span class="w">rearrange</span> <span class="cm">=&gt;</span> \<span class="i">@charList</span><span class="cm">,</span>
+      <span class="w">table</span> <span class="cm">=&gt;</span> <span class="i">$filename</span><span class="cm">,</span>
+      <span class="w">undefName</span> <span class="cm">=&gt;</span> <span class="q">qr/$undefName/</span><span class="cm">,</span>
+      <span class="w">undefChar</span> <span class="cm">=&gt;</span> <span class="q">qr/$undefChar/</span><span class="cm">,</span>
+      <span class="w">upper_before_lower</span> <span class="cm">=&gt;</span> <span class="i">$bool</span><span class="cm">,</span>
+      <span class="w">variable</span> <span class="cm">=&gt;</span> <span class="i">$variable</span><span class="cm">,</span>
+   <span class="s">)</span><span class="sc">;</span></pre>
+<ul>
+<li><a name="UCA_Version"></a><b>UCA_Version</b>
+<p>If the tracking version number of UCA is given,
+behavior of that tracking version is emulated on collating.
+If omitted, the return value of <code class="inline"><span class="i">UCA_Version</span><span class="s">(</span><span class="s">)</span></code>
+ is used.
+<code class="inline"><span class="i">UCA_Version</span><span class="s">(</span><span class="s">)</span></code>
+ should return the latest tracking version supported.</p>
+<p>The supported tracking version: 8, 9, 11, or 14.</p>
+<pre class="verbatim">     UCA       Unicode Standard         DUCET (@version)
+     ---------------------------------------------------
+      8              3.1                3.0.1 (3.0.1d9)
+      9     3.1 with Corrigendum 3      3.1.1 (3.1.1)
+     11              4.0                4.0.0 (4.0.0)
+     14             4.1.0               4.1.0 (4.1.0)</pre><p>Note: Recent UTS #10 renames "Tracking Version" to "Revision."</p>
+</li>
+<li><a name="alternate"></a><b>alternate</b>
+<p>-- see 3.2.2 Alternate Weighting, version 8 of UTS #10</p>
+<p>For backward compatibility, <code class="inline"><span class="w">alternate</span></code>
+ (old name) can be used
+as an alias for <code class="inline"><span class="w">variable</span></code>
+.</p>
+</li>
+<li><a name="backwards"></a><b>backwards</b>
+<p>-- see 3.1.2 French Accents, UTS #10.</p>
+<pre class="verbatim">     <span class="w">backwards</span> <span class="cm">=&gt;</span> <span class="i">$levelNumber</span> or \<span class="i">@levelNumbers</span></pre>
+<p>Weights in reverse order; ex. level 2 (diacritic ordering) in French.
+If omitted, forwards at all the levels.</p>
+</li>
+<li><a name="entry"></a><b>entry</b>
+<p>-- see 3.1 Linguistic Features; 3.2.1 File Format, UTS #10.</p>
+<p>If the same character (or a sequence of characters) exists
+in the collation element table through <code class="inline"><span class="w">table</span></code>
+,
+mapping to collation elements is overrided.
+If it does not exist, the mapping is defined additionally.</p>
+<pre class="verbatim">    <span class="w">entry</span> <span class="cm">=&gt;</span> <span class="h">&lt;&lt;&#39;ENTRY&#39;</span><span class="cm">,</span> <span class="c"># for DUCET v4.0.0 (allkeys-4.0.0.txt)</span>
+<span class="hh">0063 0068 ; [.0E6A.0020.0002.0063] # ch</span>
+<span class="hh">0043 0068 ; [.0E6A.0020.0007.0043] # Ch</span>
+<span class="hh">0043 0048 ; [.0E6A.0020.0008.0043] # CH</span>
+<span class="hh">006C 006C ; [.0F4C.0020.0002.006C] # ll</span>
+<span class="hh">004C 006C ; [.0F4C.0020.0007.004C] # Ll</span>
+<span class="hh">004C 004C ; [.0F4C.0020.0008.004C] # LL</span>
+<span class="hh">00F1      ; [.0F7B.0020.0002.00F1] # n-tilde</span>
+<span class="hh">006E 0303 ; [.0F7B.0020.0002.00F1] # n-tilde</span>
+<span class="hh">00D1      ; [.0F7B.0020.0008.00D1] # N-tilde</span>
+<span class="hh">004E 0303 ; [.0F7B.0020.0008.00D1] # N-tilde</span>
+<span class="h">ENTRY</span></pre>
+<pre class="verbatim">    <span class="w">entry</span> <span class="cm">=&gt;</span> <span class="h">&lt;&lt;&#39;ENTRY&#39;</span><span class="cm">,</span> <span class="c"># for DUCET v4.0.0 (allkeys-4.0.0.txt)</span>
+<span class="hh">00E6 ; [.0E33.0020.0002.00E6][.0E8B.0020.0002.00E6] # ae ligature as &lt;a&gt;&lt;e&gt;</span>
+<span class="hh">00C6 ; [.0E33.0020.0008.00C6][.0E8B.0020.0008.00C6] # AE ligature as &lt;A&gt;&lt;E&gt;</span>
+<span class="h">ENTRY</span></pre>
+<p><b>NOTE:</b> The code point in the UCA file format (before <code class="inline"><span class="q">&#39;;&#39;</span></code>
+)
+<b>must</b> be a Unicode code point (defined as hexadecimal),
+but not a native code point.
+So <code class="inline"><span class="n">0063</span></code>
+ must always denote <code class="inline"><span class="w">U</span>+<span class="n">0063</span></code>
+,
+but not a character of <code class="inline"><span class="q">&quot;\x63&quot;</span></code>
+.</p>
+<p>Weighting may vary depending on collation element table.
+So ensure the weights defined in <code class="inline"><span class="w">entry</span></code>
+ will be consistent with
+those in the collation element table loaded via <code class="inline"><span class="w">table</span></code>
+.</p>
+<p>In DUCET v4.0.0, primary weight of <code class="inline"><span class="w">C</span></code>
+ is <code class="inline"><span class="n">0E60</span></code>
+
+and that of <code class="inline"><span class="w">D</span></code>
+ is <code class="inline"><span class="n">0E6D</span></code>
+. So setting primary weight of <code class="inline"><span class="w">CH</span></code>
+ to <code class="inline"><span class="n">0E6A</span></code>
+
+(as a value between <code class="inline"><span class="n">0E60</span></code>
+ and <code class="inline"><span class="n">0E6D</span></code>
+)
+makes ordering as <code class="inline"><span class="w">C</span> &lt; <span class="w">CH</span> &lt; <span class="w">D</span></code>
+.
+Exactly speaking DUCET already has some characters between <code class="inline"><span class="w">C</span></code>
+ and <code class="inline"><span class="w">D</span></code>
+:
+<code class="inline"><span class="w">small</span> <span class="w">capital</span> <span class="w">C</span></code>
+ (<code class="inline">U+1D04</code>) with primary weight <code class="inline"><span class="n">0E64</span></code>
+,
+<code class="inline"><span class="w">c</span>-<span class="w">hook</span>/<span class="w">C</span>-<span class="w">hook</span></code>
+ (<code class="inline">U+0188/U+0187</code>) with <code class="inline"><span class="n">0E65</span></code>
+,
+and <code class="inline"><span class="w">c</span>-<span class="w">curl</span></code>
+ (<code class="inline"><span class="w">U</span>+<span class="n">0255</span></code>
+) with <code class="inline"><span class="n">0E69</span></code>
+.
+Then primary weight <code class="inline"><span class="n">0E6A</span></code>
+ for <code class="inline"><span class="w">CH</span></code>
+ makes <code class="inline"><span class="w">CH</span></code>
+
+ordered between <code class="inline"><span class="w">c</span>-<span class="w">curl</span></code>
+ and <code class="inline"><span class="w">D</span></code>
+.</p>
+</li>
+<li><a name="hangul_terminator"></a><b>hangul_terminator</b>
+<p>-- see 7.1.4 Trailing Weights, UTS #10.</p>
+<p>If a true value is given (non-zero but should be positive),
+it will be added as a terminator primary weight to the end of
+every standard Hangul syllable. Secondary and any higher weights
+for terminator are set to zero.
+If the value is false or <code class="inline"><span class="w">hangul_terminator</span></code>
+ key does not exist,
+insertion of terminator weights will not be performed.</p>
+<p>Boundaries of Hangul syllables are determined
+according to conjoining Jamo behavior in <i>the Unicode Standard</i>
+and <i>HangulSyllableType.txt</i>.</p>
+<p><b>Implementation Note:</b>
+(1) For expansion mapping (Unicode character mapped
+to a sequence of collation elements), a terminator will not be added
+between collation elements, even if Hangul syllable boundary exists there.
+Addition of terminator is restricted to the next position
+to the last collation element.</p>
+<p>(2) Non-conjoining Hangul letters
+(Compatibility Jamo, halfwidth Jamo, and enclosed letters) are not
+automatically terminated with a terminator primary weight.
+These characters may need terminator included in a collation element
+table beforehand.</p>
+</li>
+<li><a name="ignoreChar"></a><b>ignoreChar</b>
+</li>
+<li><a name="ignoreName"></a><b>ignoreName</b>
+<p>-- see 3.2.2 Variable Weighting, UTS #10.</p>
+<p>Makes the entry in the table completely ignorable;
+i.e. as if the weights were zero at all level.</p>
+<p>Through <code class="inline"><span class="w">ignoreChar</span></code>
+, any character matching <code class="inline"><a class="l_k" href="../functions/qr.html">qr/$ignoreChar/</a></code>
+will be ignored. Through <code class="inline"><span class="w">ignoreName</span></code>
+, any character whose name
+(given in the <code class="inline"><span class="w">table</span></code>
+ file as a comment) matches <code class="inline"><a class="l_k" href="../functions/qr.html">qr/$ignoreName/</a></code>
+will be ignored.</p>
+<p>E.g. when 'a' and 'e' are ignorable,
+'element' is equal to 'lament' (or 'lmnt').</p>
+</li>
+<li><a name="katakana_before_hiragana"></a><b>katakana_before_hiragana</b>
+<p>-- see 7.3.1 Tertiary Weight Table, UTS #10.</p>
+<p>By default, hiragana is before katakana.
+If the parameter is made true, this is reversed.</p>
+<p><b>NOTE</b>: This parameter simplemindedly assumes that any hiragana/katakana
+distinctions must occur in level 3, and their weights at level 3 must be
+same as those mentioned in 7.3.1, UTS #10.
+If you define your collation elements which violate this requirement,
+this parameter does not work validly.</p>
+</li>
+<li><a name="level"></a><b>level</b>
+<p>-- see 4.3 Form Sort Key, UTS #10.</p>
+<p>Set the maximum level.
+Any higher levels than the specified one are ignored.</p>
+<pre class="verbatim">  Level 1: alphabetic ordering
+  Level 2: diacritic ordering
+  Level 3: case ordering
+  Level 4: tie-breaking (e.g. in the case when variable is 'shifted')</pre><pre class="verbatim">  <span class="w">ex</span>.<span class="w">level</span> <span class="cm">=&gt;</span> <span class="n">2</span><span class="cm">,</span></pre>
+<p>If omitted, the maximum is the 4th.</p>
+</li>
+<li><a name="normalization"></a><b>normalization</b>
+<p>-- see 4.1 Normalize, UTS #10.</p>
+<p>If specified, strings are normalized before preparation of sort keys
+(the normalization is executed after preprocess).</p>
+<p>A form name <code class="inline"><span class="i">Unicode::Normalize::normalize</span><span class="s">(</span><span class="s">)</span></code>
+ accepts will be applied
+as <code class="inline"><span class="i">$normalization_form</span></code>
+.
+Acceptable names include <code class="inline"><span class="q">&#39;NFD&#39;</span></code>
+, <code class="inline"><span class="q">&#39;NFC&#39;</span></code>
+, <code class="inline"><span class="q">&#39;NFKD&#39;</span></code>
+, and <code class="inline"><span class="q">&#39;NFKC&#39;</span></code>
+.
+See <code class="inline"><span class="i">Unicode::Normalize::normalize</span><span class="s">(</span><span class="s">)</span></code>
+ for detail.
+If omitted, <code class="inline"><span class="q">&#39;NFD&#39;</span></code>
+ is used.</p>
+<p><code class="inline"><span class="w">normalization</span></code>
+ is performed after <code class="inline"><span class="w">preprocess</span></code>
+ (if defined).</p>
+<p>Furthermore, special values, <code class="inline"><a class="l_k" href="../functions/undef.html">undef</a></code> and <code class="inline"><span class="q">&quot;prenormalized&quot;</span></code>
+, can be used,
+though they are not concerned with <code class="inline"><span class="i">Unicode::Normalize::normalize</span><span class="s">(</span><span class="s">)</span></code>
+.</p>
+<p>If <code class="inline"><a class="l_k" href="../functions/undef.html">undef</a></code> (not a string <code class="inline"><span class="q">&quot;undef&quot;</span></code>
+) is passed explicitly
+as the value for this key,
+any normalization is not carried out (this may make tailoring easier
+if any normalization is not desired). Under <code class="inline"><span class="s">(</span><span class="w">normalization</span> <span class="cm">=&gt;</span> <a class="l_k" href="../functions/undef.html">undef</a><span class="s">)</span></code>
+,
+only contiguous contractions are resolved;
+e.g. even if <code class="inline"><span class="w">A</span>-<span class="w">ring</span></code>
+ (and <code class="inline"><span class="w">A</span>-<span class="w">ring</span>-<span class="w">cedilla</span></code>
+) is ordered after <code class="inline"><span class="w">Z</span></code>
+,
+<code class="inline"><span class="w">A</span>-<span class="w">cedilla</span>-<span class="w">ring</span></code>
+ would be primary equal to <code class="inline"><span class="w">A</span></code>
+.
+In this point,
+<code class="inline"><span class="s">(</span><span class="w">normalization</span> <span class="cm">=&gt;</span> <a class="l_k" href="../functions/undef.html">undef</a><span class="cm">,</span> <span class="w">preprocess</span> <span class="cm">=&gt;</span> <a class="l_k" href="../functions/sub.html">sub</a> <span class="s">{</span> <span class="i">NFD</span><span class="s">(</span><a class="l_k" href="../functions/shift.html">shift</a><span class="s">)</span> <span class="s">}</span><span class="s">)</span></code>
+
+<b>is not</b> equivalent to <code class="inline"><span class="s">(</span><span class="w">normalization</span> <span class="cm">=&gt;</span> <span class="q">&#39;NFD&#39;</span><span class="s">)</span></code>
+.</p>
+<p>In the case of <code class="inline"><span class="s">(</span><span class="w">normalization</span> <span class="cm">=&gt;</span> <span class="q">&quot;prenormalized&quot;</span><span class="s">)</span></code>
+,
+any normalization is not performed, but
+non-contiguous contractions with combining characters are performed.
+Therefore
+<code class="inline"><span class="s">(</span><span class="w">normalization</span> <span class="cm">=&gt;</span> <span class="q">&#39;prenormalized&#39;</span><span class="cm">,</span> <span class="w">preprocess</span> <span class="cm">=&gt;</span> <a class="l_k" href="../functions/sub.html">sub</a> <span class="s">{</span> <span class="i">NFD</span><span class="s">(</span><a class="l_k" href="../functions/shift.html">shift</a><span class="s">)</span> <span class="s">}</span><span class="s">)</span></code>
+
+<b>is</b> equivalent to <code class="inline"><span class="s">(</span><span class="w">normalization</span> <span class="cm">=&gt;</span> <span class="q">&#39;NFD&#39;</span><span class="s">)</span></code>
+.
+If source strings are finely prenormalized,
+<code class="inline"><span class="s">(</span><span class="w">normalization</span> <span class="cm">=&gt;</span> <span class="q">&#39;prenormalized&#39;</span><span class="s">)</span></code>
+ may save time for normalization.</p>
+<p>Except <code class="inline"><span class="s">(</span><span class="w">normalization</span> <span class="cm">=&gt;</span> <a class="l_k" href="../functions/undef.html">undef</a><span class="s">)</span></code>
+,
+<b>Unicode::Normalize</b> is required (see also <b>CAVEAT</b>).</p>
+</li>
+<li><a name="overrideCJK"></a><b>overrideCJK</b>
+<p>-- see 7.1 Derived Collation Elements, UTS #10.</p>
+<p>By default, CJK Unified Ideographs are ordered in Unicode codepoint order
+but <code class="inline"><span class="w">CJK</span> <span class="w">Unified</span> <span class="w">Ideographs</span></code>
+ (if <code class="inline"><span class="w">UCA_Version</span></code>
+ is 8 to 11, its range is
+<code class="inline">U+4E00..U+9FA5</code>; if <code class="inline"><span class="w">UCA_Version</span></code>
+ is 14, its range is <code class="inline">U+4E00..U+9FBB</code>)
+are lesser than <code class="inline"><span class="w">CJK</span> <span class="w">Unified</span> <span class="w">Ideographs</span> <span class="w">Extension</span></code>
+ (its range is
+<code class="inline">U+3400..U+4DB5</code> and <code class="inline">U+20000..U+2A6D6</code>).</p>
+<p>Through <code class="inline"><span class="w">overrideCJK</span></code>
+, ordering of CJK Unified Ideographs can be overrided.</p>
+<p>ex. CJK Unified Ideographs in the JIS code point order.</p>
+<pre class="verbatim">  <span class="w">overrideCJK</span> <span class="cm">=&gt;</span> <a class="l_k" href="../functions/sub.html">sub</a> <span class="s">{</span>
+      <a class="l_k" href="../functions/my.html">my</a> <span class="i">$u</span> = <a class="l_k" href="../functions/shift.html">shift</a><span class="sc">;</span>             <span class="c"># get a Unicode codepoint</span>
+      <a class="l_k" href="../functions/my.html">my</a> <span class="i">$b</span> = <a class="l_k" href="../functions/pack.html">pack</a><span class="s">(</span><span class="q">&#39;n&#39;</span><span class="cm">,</span> <span class="i">$u</span><span class="s">)</span><span class="sc">;</span>     <span class="c"># to UTF-16BE</span>
+      <a class="l_k" href="../functions/my.html">my</a> <span class="i">$s</span> = <span class="i">your_unicode_to_sjis_converter</span><span class="s">(</span><span class="i">$b</span><span class="s">)</span><span class="sc">;</span> <span class="c"># convert</span>
+      <a class="l_k" href="../functions/my.html">my</a> <span class="i">$n</span> = <a class="l_k" href="../functions/unpack.html">unpack</a><span class="s">(</span><span class="q">&#39;n&#39;</span><span class="cm">,</span> <span class="i">$s</span><span class="s">)</span><span class="sc">;</span>   <span class="c"># convert sjis to short</span>
+      <span class="s">[</span> <span class="i">$n</span><span class="cm">,</span> <span class="n">0x20</span><span class="cm">,</span> <span class="n">0x2</span><span class="cm">,</span> <span class="i">$u</span> <span class="s">]</span><span class="sc">;</span>     <span class="c"># return the collation element</span>
+  <span class="s">}</span><span class="cm">,</span></pre>
+<p>ex. ignores all CJK Unified Ideographs.</p>
+<pre class="verbatim">  <span class="w">overrideCJK</span> <span class="cm">=&gt;</span> <a class="l_k" href="../functions/sub.html">sub</a> <span class="s">{</span><span class="s">(</span><span class="s">)</span><span class="s">}</span><span class="cm">,</span> <span class="c"># CODEREF returning empty list</span></pre>
+<pre class="verbatim">   <span class="c"># where -&gt;eq(&quot;Pe\x{4E00}rl&quot;, &quot;Perl&quot;) is true</span>
+   <span class="c"># as U+4E00 is a CJK Unified Ideograph and to be ignorable.</span></pre>
+<p>If <code class="inline"><a class="l_k" href="../functions/undef.html">undef</a></code> is passed explicitly as the value for this key,
+weights for CJK Unified Ideographs are treated as undefined.
+But assignment of weight for CJK Unified Ideographs
+in table or <code class="inline"><span class="w">entry</span></code>
+ is still valid.</p>
+</li>
+<li><a name="overrideHangul"></a><b>overrideHangul</b>
+<p>-- see 7.1 Derived Collation Elements, UTS #10.</p>
+<p>By default, Hangul Syllables are decomposed into Hangul Jamo,
+even if <code class="inline"><span class="s">(</span><span class="w">normalization</span> <span class="cm">=&gt;</span> <a class="l_k" href="../functions/undef.html">undef</a><span class="s">)</span></code>
+.
+But the mapping of Hangul Syllables may be overrided.</p>
+<p>This parameter works like <code class="inline"><span class="w">overrideCJK</span></code>
+, so see there for examples.</p>
+<p>If you want to override the mapping of Hangul Syllables,
+NFD, NFKD, and FCD are not appropriate,
+since they will decompose Hangul Syllables before overriding.</p>
+<p>If <code class="inline"><a class="l_k" href="../functions/undef.html">undef</a></code> is passed explicitly as the value for this key,
+weight for Hangul Syllables is treated as undefined
+without decomposition into Hangul Jamo.
+But definition of weight for Hangul Syllables
+in table or <code class="inline"><span class="w">entry</span></code>
+ is still valid.</p>
+</li>
+<li><a name="preprocess"></a><b>preprocess</b>
+<p>-- see 5.1 Preprocessing, UTS #10.</p>
+<p>If specified, the coderef is used to preprocess
+before the formation of sort keys.</p>
+<p>ex. dropping English articles, such as "a" or "the".
+Then, "the pen" is before "a pencil".</p>
+<pre class="verbatim">     <span class="w">preprocess</span> <span class="cm">=&gt;</span> <a class="l_k" href="../functions/sub.html">sub</a> <span class="s">{</span>
+           <a class="l_k" href="../functions/my.html">my</a> <span class="i">$str</span> = <a class="l_k" href="../functions/shift.html">shift</a><span class="sc">;</span>
+           <span class="i">$str</span> =~ <span class="q">s/\b(?:an?|the)\s+//gi</span><span class="sc">;</span>
+           <a class="l_k" href="../functions/return.html">return</a> <span class="i">$str</span><span class="sc">;</span>
+        <span class="s">}</span><span class="cm">,</span></pre>
+<p><code class="inline"><span class="w">preprocess</span></code>
+ is performed before <code class="inline"><span class="w">normalization</span></code>
+ (if defined).</p>
+</li>
+<li><a name="rearrange"></a><b>rearrange</b>
+<p>-- see 3.1.3 Rearrangement, UTS #10.</p>
+<p>Characters that are not coded in logical order and to be rearranged.
+If <code class="inline"><span class="w">UCA_Version</span></code>
+ is equal to or lesser than 11, default is:</p>
+<pre class="verbatim">    <span class="w">rearrange</span> <span class="cm">=&gt;</span> <span class="s">[</span> <span class="n">0x0E40</span>..<span class="n">0x0E44</span><span class="cm">,</span> <span class="n">0x0EC0</span>..<span class="n">0x0EC4</span> <span class="s">]</span><span class="cm">,</span></pre>
+<p>If you want to disallow any rearrangement, pass <code class="inline"><a class="l_k" href="../functions/undef.html">undef</a></code> or <code class="inline"><span class="s">[</span><span class="s">]</span></code>
+
+(a reference to empty list) as the value for this key.</p>
+<p>If <code class="inline"><span class="w">UCA_Version</span></code>
+ is equal to 14, default is <code class="inline"><span class="s">[</span><span class="s">]</span></code>
+ (i.e. no rearrangement).</p>
+<p><b>According to the version 9 of UCA, this parameter shall not be used;
+but it is not warned at present.</b></p>
+</li>
+<li><a name="table"></a><b>table</b>
+<p>-- see 3.2 Default Unicode Collation Element Table, UTS #10.</p>
+<p>You can use another collation element table if desired.</p>
+<p>The table file should locate in the <i>Unicode/Collate</i> directory
+on <code class="inline"><span class="i">@INC</span></code>
+. Say, if the filename is <i>Foo.txt</i>,
+the table file is searched as <i>Unicode/Collate/Foo.txt</i> in <code class="inline"><span class="i">@INC</span></code>
+.</p>
+<p>By default, <i>allkeys.txt</i> (as the filename of DUCET) is used.
+If you will prepare your own table file, any name other than <i>allkeys.txt</i>
+may be better to avoid namespace conflict.</p>
+<p>If <code class="inline"><a class="l_k" href="../functions/undef.html">undef</a></code> is passed explicitly as the value for this key,
+no file is read (but you can define collation elements via <code class="inline"><span class="w">entry</span></code>
+).</p>
+<p>A typical way to define a collation element table
+without any file of table:</p>
+<pre class="verbatim">   <span class="i">$onlyABC</span> = <span class="w">Unicode::Collate</span><span class="w">-&gt;new</span><span class="s">(</span>
+       <span class="w">table</span> <span class="cm">=&gt;</span> <a class="l_k" href="../functions/undef.html">undef</a><span class="cm">,</span>
+       <span class="w">entry</span> <span class="cm">=&gt;</span> <span class="h">&lt;&lt; &#39;ENTRIES&#39;</span><span class="cm">,</span>
+<span class="hh">0061 ; [.0101.0020.0002.0061] # LATIN SMALL LETTER A</span>
+<span class="hh">0041 ; [.0101.0020.0008.0041] # LATIN CAPITAL LETTER A</span>
+<span class="hh">0062 ; [.0102.0020.0002.0062] # LATIN SMALL LETTER B</span>
+<span class="hh">0042 ; [.0102.0020.0008.0042] # LATIN CAPITAL LETTER B</span>
+<span class="hh">0063 ; [.0103.0020.0002.0063] # LATIN SMALL LETTER C</span>
+<span class="hh">0043 ; [.0103.0020.0008.0043] # LATIN CAPITAL LETTER C</span>
+<span class="h">ENTRIES</span>
+    <span class="s">)</span><span class="sc">;</span></pre>
+<p>If <code class="inline"><span class="w">ignoreName</span></code>
+ or <code class="inline"><span class="w">undefName</span></code>
+ is used, character names should be
+specified as a comment (following <code class="inline"><span class="c">#</span></code>
+) on each line.</p>
+</li>
+<li><a name="undefChar"></a><b>undefChar</b>
+</li>
+<li><a name="undefName"></a><b>undefName</b>
+<p>-- see 6.3.4 Reducing the Repertoire, UTS #10.</p>
+<p>Undefines the collation element as if it were unassigned in the table.
+This reduces the size of the table.
+If an unassigned character appears in the string to be collated,
+the sort key is made from its codepoint
+as a single-character collation element,
+as it is greater than any other assigned collation elements
+(in the codepoint order among the unassigned characters).
+But, it'd be better to ignore characters
+unfamiliar to you and maybe never used.</p>
+<p>Through <code class="inline"><span class="w">undefChar</span></code>
+, any character matching <code class="inline"><a class="l_k" href="../functions/qr.html">qr/$undefChar/</a></code>
+will be undefined. Through <code class="inline"><span class="w">undefName</span></code>
+, any character whose name
+(given in the <code class="inline"><span class="w">table</span></code>
+ file as a comment) matches <code class="inline"><a class="l_k" href="../functions/qr.html">qr/$undefName/</a></code>
+will be undefined.</p>
+<p>ex. Collation weights for beyond-BMP characters are not stored in object:</p>
+<pre class="verbatim">    <span class="w">undefChar</span> <span class="cm">=&gt;</span> <span class="q">qr/[^\0-\x{fffd}]/</span><span class="cm">,</span></pre>
+</li>
+<li><a name="upper_before_lower"></a><b>upper_before_lower</b>
+<p>-- see 6.6 Case Comparisons, UTS #10.</p>
+<p>By default, lowercase is before uppercase.
+If the parameter is made true, this is reversed.</p>
+<p><b>NOTE</b>: This parameter simplemindedly assumes that any lowercase/uppercase
+distinctions must occur in level 3, and their weights at level 3 must be
+same as those mentioned in 7.3.1, UTS #10.
+If you define your collation elements which differs from this requirement,
+this parameter doesn't work validly.</p>
+</li>
+<li><a name="variable"></a><b>variable</b>
+<p>-- see 3.2.2 Variable Weighting, UTS #10.</p>
+<p>This key allows to variable weighting for variable collation elements,
+which are marked with an ASTERISK in the table
+(NOTE: Many punction marks and symbols are variable in <i>allkeys.txt</i>).</p>
+<pre class="verbatim">   <span class="w">variable</span> <span class="cm">=&gt;</span> <span class="q">&#39;blanked&#39;</span><span class="cm">,</span> <span class="q">&#39;non-ignorable&#39;</span><span class="cm">,</span> <span class="q">&#39;shifted&#39;</span><span class="cm">,</span> or <span class="q">&#39;shift-trimmed&#39;</span>.</pre>
+<p>These names are case-insensitive.
+By default (if specification is omitted), 'shifted' is adopted.</p>
+<pre class="verbatim">   'Blanked'        Variable elements are made ignorable at levels 1 through 3;
+                    considered at the 4th level.</pre><pre class="verbatim">   'Non-Ignorable'  Variable elements are not reset to ignorable.</pre><pre class="verbatim">   'Shifted'        Variable elements are made ignorable at levels 1 through 3
+                    their level 4 weight is replaced by the old level 1 weight.
+                    Level 4 weight for Non-Variable elements is 0xFFFF.</pre><pre class="verbatim">   'Shift-Trimmed'  Same as 'shifted', but all FFFF's at the 4th level
+                    are trimmed.</pre></li>
+</ul>
+<a name="Methods-for-Collation"></a><h2>Methods for Collation</h2>
+<ul>
+<li><a name="'0x40sorted-0x3d-0x24Collator-0x3esort(0x40not_sorted)'"></a><b><code class="inline"><span class="i">@sorted</span> = <span class="i">$Collator</span><span class="i">-&gt;sort</span><span class="s">(</span><span class="i">@not_sorted</span><span class="s">)</span></code>
+</b>
+<p>Sorts a list of strings.</p>
+</li>
+<li><a name="'0x24result-0x3d-0x24Collator-0x3ecmp(0x24a0x2c-0x24b)'"></a><b><code class="inline"><span class="i">$result</span> = <span class="i">$Collator</span><span class="i">-&gt;cmp</span><span class="s">(</span><span class="i">$a</span><span class="cm">,</span> <span class="i">$b</span><span class="s">)</span></code>
+</b>
+<p>Returns 1 (when <code class="inline"><span class="i">$a</span></code>
+ is greater than <code class="inline"><span class="i">$b</span></code>
+)
+or 0 (when <code class="inline"><span class="i">$a</span></code>
+ is equal to <code class="inline"><span class="i">$b</span></code>
+)
+or -1 (when <code class="inline"><span class="i">$a</span></code>
+ is lesser than <code class="inline"><span class="i">$b</span></code>
+).</p>
+</li>
+<li><a name="'0x24result-0x3d-0x24Collator-0x3eeq(0x24a0x2c-0x24b)'"></a><b><code class="inline"><span class="i">$result</span> = <span class="i">$Collator</span><span class="i">-&gt;eq</span><span class="s">(</span><span class="i">$a</span><span class="cm">,</span> <span class="i">$b</span><span class="s">)</span></code>
+</b>
+</li>
+<li><a name="'0x24result-0x3d-0x24Collator-0x3ene(0x24a0x2c-0x24b)'"></a><b><code class="inline"><span class="i">$result</span> = <span class="i">$Collator</span><span class="i">-&gt;ne</span><span class="s">(</span><span class="i">$a</span><span class="cm">,</span> <span class="i">$b</span><span class="s">)</span></code>
+</b>
+</li>
+<li><a name="'0x24result-0x3d-0x24Collator-0x3elt(0x24a0x2c-0x24b)'"></a><b><code class="inline"><span class="i">$result</span> = <span class="i">$Collator</span><span class="i">-&gt;lt</span><span class="s">(</span><span class="i">$a</span><span class="cm">,</span> <span class="i">$b</span><span class="s">)</span></code>
+</b>
+</li>
+<li><a name="'0x24result-0x3d-0x24Collator-0x3ele(0x24a0x2c-0x24b)'"></a><b><code class="inline"><span class="i">$result</span> = <span class="i">$Collator</span><span class="i">-&gt;le</span><span class="s">(</span><span class="i">$a</span><span class="cm">,</span> <span class="i">$b</span><span class="s">)</span></code>
+</b>
+</li>
+<li><a name="'0x24result-0x3d-0x24Collator-0x3egt(0x24a0x2c-0x24b)'"></a><b><code class="inline"><span class="i">$result</span> = <span class="i">$Collator</span><span class="i">-&gt;gt</span><span class="s">(</span><span class="i">$a</span><span class="cm">,</span> <span class="i">$b</span><span class="s">)</span></code>
+</b>
+</li>
+<li><a name="'0x24result-0x3d-0x24Collator-0x3ege(0x24a0x2c-0x24b)'"></a><b><code class="inline"><span class="i">$result</span> = <span class="i">$Collator</span><span class="i">-&gt;ge</span><span class="s">(</span><span class="i">$a</span><span class="cm">,</span> <span class="i">$b</span><span class="s">)</span></code>
+</b>
+<p>They works like the same name operators as theirs.</p>
+<pre class="verbatim">   eq : whether $a is equal to $b.
+   ne : whether $a is not equal to $b.
+   lt : whether $a is lesser than $b.
+   le : whether $a is lesser than $b or equal to $b.
+   gt : whether $a is greater than $b.
+   ge : whether $a is greater than $b or equal to $b.</pre></li>
+<li><a name="'0x24sortKey-0x3d-0x24Collator-0x3egetSortKey(0x24string)'"></a><b><code class="inline"><span class="i">$sortKey</span> = <span class="i">$Collator</span><span class="i">-&gt;getSortKey</span><span class="s">(</span><span class="i">$string</span><span class="s">)</span></code>
+</b>
+<p>-- see 4.3 Form Sort Key, UTS #10.</p>
+<p>Returns a sort key.</p>
+<p>You compare the sort keys using a binary comparison
+and get the result of the comparison of the strings using UCA.</p>
+<pre class="verbatim">   <span class="i">$Collator</span><span class="i">-&gt;getSortKey</span><span class="s">(</span><span class="i">$a</span><span class="s">)</span> cmp <span class="i">$Collator</span><span class="i">-&gt;getSortKey</span><span class="s">(</span><span class="i">$b</span><span class="s">)</span></pre>
+<pre class="verbatim">      <span class="w">is</span> <span class="w">equivalent</span> <span class="w">to</span></pre>
+<pre class="verbatim">   <span class="i">$Collator</span><span class="i">-&gt;cmp</span><span class="s">(</span><span class="i">$a</span><span class="cm">,</span> <span class="i">$b</span><span class="s">)</span></pre>
+</li>
+<li><a name="'0x24sortKeyForm-0x3d-0x24Collator-0x3eviewSortKey(0x24string)'"></a><b><code class="inline"><span class="i">$sortKeyForm</span> = <span class="i">$Collator</span><span class="i">-&gt;viewSortKey</span><span class="s">(</span><span class="i">$string</span><span class="s">)</span></code>
+</b>
+<p>Converts a sorting key into its representation form.
+If <code class="inline"><span class="w">UCA_Version</span></code>
+ is 8, the output is slightly different.</p>
+<pre class="verbatim">   <a class="l_k" href="../functions/use.html">use</a> <span class="w">Unicode::Collate</span><span class="sc">;</span>
+   <a class="l_k" href="../functions/my.html">my</a> <span class="i">$c</span> = <span class="w">Unicode::Collate</span><span class="w">-&gt;new</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span>
+   <a class="l_k" href="../functions/print.html">print</a> <span class="i">$c</span><span class="i">-&gt;viewSortKey</span><span class="s">(</span><span class="q">&quot;Perl&quot;</span><span class="s">)</span><span class="cm">,</span><span class="q">&quot;\n&quot;</span><span class="sc">;</span></pre>
+<pre class="verbatim">   <span class="c"># output:</span>
+   <span class="c"># [0B67 0A65 0B7F 0B03 | 0020 0020 0020 0020 | 0008 0002 0002 0002 | FFFF FFFF FFFF FFFF]</span>
+   <span class="c">#  Level 1               Level 2               Level 3               Level 4</span></pre>
+</li>
+</ul>
+<a name="Methods-for-Searching"></a><h2>Methods for Searching</h2>
+<p><b>DISCLAIMER:</b> If <code class="inline"><span class="w">preprocess</span></code>
+ or <code class="inline"><span class="w">normalization</span></code>
+ parameter is true
+for <code class="inline"><span class="i">$Collator</span></code>
+, calling these methods (<code class="inline"><a class="l_k" href="../functions/index.html">index</a></code>, <code class="inline"><span class="w">match</span></code>
+, <code class="inline"><span class="w">gmatch</span></code>
+,
+<code class="inline"><span class="w">subst</span></code>
+, <code class="inline"><span class="w">gsubst</span></code>
+) is croaked,
+as the position and the length might differ
+from those on the specified string.
+(And <code class="inline"><span class="w">rearrange</span></code>
+ and <code class="inline"><span class="w">hangul_terminator</span></code>
+ parameters are neglected.)</p>
+<p>The <code class="inline"><span class="w">match</span></code>
+, <code class="inline"><span class="w">gmatch</span></code>
+, <code class="inline"><span class="w">subst</span></code>
+, <code class="inline"><span class="w">gsubst</span></code>
+ methods work
+like <code class="inline"><a class="l_k" href="../functions/m.html">m//</a></code>, <code class="inline"><a class="l_k" href="../functions/m.html">m//g</a></code>, <code class="inline"><a class="l_k" href="../functions/s.html">s///</a></code>, <code class="inline"><a class="l_k" href="../functions/s.html">s///g</a></code>, respectively,
+but they are not aware of any pattern, but only a literal substring.</p>
+<ul>
+<li><a name="'0x24position-0x3d-0x24Collator-0x3eindex(0x24string0x2c-0x24substring0x5b0x2c-0x24position0x5d)'"></a><b><code class="inline"><span class="i">$position</span> = <span class="i">$Collator</span><span class="i">-&gt;index</span><span class="s">(</span><span class="i">$string</span><span class="cm">,</span> <span class="i">$substring</span>[<span class="cm">,</span> <span class="i">$position</span>]<span class="s">)</span></code>
+</b>
+</li>
+<li><a name="'(0x24position0x2c-0x24length)-0x3d-0x24Collator-0x3eindex(0x24string0x2c-0x24substring0x5b0x2c-0x24position0x5d)'"></a><b><code class="inline"><span class="s">(</span><span class="i">$position</span><span class="cm">,</span> <span class="i">$length</span><span class="s">)</span> = <span class="i">$Collator</span><span class="i">-&gt;index</span><span class="s">(</span><span class="i">$string</span><span class="cm">,</span> <span class="i">$substring</span>[<span class="cm">,</span> <span class="i">$position</span>]<span class="s">)</span></code>
+</b>
+<p>If <code class="inline"><span class="i">$substring</span></code>
+ matches a part of <code class="inline"><span class="i">$string</span></code>
+, returns
+the position of the first occurrence of the matching part in scalar context;
+in list context, returns a two-element list of
+the position and the length of the matching part.</p>
+<p>If <code class="inline"><span class="i">$substring</span></code>
+ does not match any part of <code class="inline"><span class="i">$string</span></code>
+,
+returns <code class="inline"><span class="n">-1</span></code>
+ in scalar context and
+an empty list in list context.</p>
+<p>e.g. you say</p>
+<pre class="verbatim">  <a class="l_k" href="../functions/my.html">my</a> <span class="i">$Collator</span> = <span class="w">Unicode::Collate</span><span class="w">-&gt;new</span><span class="s">(</span> <span class="w">normalization</span> <span class="cm">=&gt;</span> <a class="l_k" href="../functions/undef.html">undef</a><span class="cm">,</span> <span class="w">level</span> <span class="cm">=&gt;</span> <span class="n">1</span> <span class="s">)</span><span class="sc">;</span>
+                                     <span class="c"># (normalization =&gt; undef) is REQUIRED.</span>
+  <a class="l_k" href="../functions/my.html">my</a> <span class="i">$str</span> = <span class="q">&quot;Ich mu&szlig; studieren Perl.&quot;</span><span class="sc">;</span>
+  <a class="l_k" href="../functions/my.html">my</a> <span class="i">$sub</span> = <span class="q">&quot;M&Uuml;SS&quot;</span><span class="sc">;</span>
+  <a class="l_k" href="../functions/my.html">my</a> <span class="i">$match</span><span class="sc">;</span>
+  if <span class="s">(</span><a class="l_k" href="../functions/my.html">my</a><span class="s">(</span><span class="i">$pos</span><span class="cm">,</span><span class="i">$len</span><span class="s">)</span> = <span class="i">$Collator</span><span class="i">-&gt;index</span><span class="s">(</span><span class="i">$str</span><span class="cm">,</span> <span class="i">$sub</span><span class="s">)</span><span class="s">)</span> <span class="s">{</span>
+      <span class="i">$match</span> = <a class="l_k" href="../functions/substr.html">substr</a><span class="s">(</span><span class="i">$str</span><span class="cm">,</span> <span class="i">$pos</span><span class="cm">,</span> <span class="i">$len</span><span class="s">)</span><span class="sc">;</span>
+  <span class="s">}</span></pre>
+<p>and get <code class="inline"><span class="q">&quot;mu&szlig;&quot;</span></code>
+ in <code class="inline"><span class="i">$match</span></code>
+ since <code class="inline"><span class="q">&quot;mu&szlig;&quot;</span></code>
+
+is primary equal to <code class="inline"><span class="q">&quot;M&Uuml;SS&quot;</span></code>
+.</p>
+</li>
+<li><a name="'0x24match_ref-0x3d-0x24Collator-0x3ematch(0x24string0x2c-0x24substring)'"></a><b><code class="inline"><span class="i">$match_ref</span> = <span class="i">$Collator</span><span class="i">-&gt;match</span><span class="s">(</span><span class="i">$string</span><span class="cm">,</span> <span class="i">$substring</span><span class="s">)</span></code>
+</b>
+</li>
+<li><a name="'(0x24match)---0x3d-0x24Collator-0x3ematch(0x24string0x2c-0x24substring)'"></a><b><code class="inline"><span class="s">(</span><span class="i">$match</span><span class="s">)</span>   = <span class="i">$Collator</span><span class="i">-&gt;match</span><span class="s">(</span><span class="i">$string</span><span class="cm">,</span> <span class="i">$substring</span><span class="s">)</span></code>
+</b>
+<p>If <code class="inline"><span class="i">$substring</span></code>
+ matches a part of <code class="inline"><span class="i">$string</span></code>
+, in scalar context, returns
+<b>a reference to</b> the first occurrence of the matching part
+(<code class="inline"><span class="i">$match_ref</span></code>
+ is always true if matches,
+since every reference is <b>true</b>);
+in list context, returns the first occurrence of the matching part.</p>
+<p>If <code class="inline"><span class="i">$substring</span></code>
+ does not match any part of <code class="inline"><span class="i">$string</span></code>
+,
+returns <code class="inline"><a class="l_k" href="../functions/undef.html">undef</a></code> in scalar context and
+an empty list in list context.</p>
+<p>e.g.</p>
+<pre class="verbatim">    if <span class="s">(</span><span class="i">$match_ref</span> = <span class="i">$Collator</span><span class="i">-&gt;match</span><span class="s">(</span><span class="i">$str</span><span class="cm">,</span> <span class="i">$sub</span><span class="s">)</span><span class="s">)</span> <span class="s">{</span> <span class="c"># scalar context</span>
+	<a class="l_k" href="../functions/print.html">print</a> <span class="q">&quot;matches [$$match_ref].\n&quot;</span><span class="sc">;</span>
+    <span class="s">}</span> else <span class="s">{</span>
+	<a class="l_k" href="../functions/print.html">print</a> <span class="q">&quot;doesn&#39;t match.\n&quot;</span><span class="sc">;</span>
+    <span class="s">}</span></pre>
+<pre class="verbatim">     or</pre>
+<pre class="verbatim">    if <span class="s">(</span><span class="s">(</span><span class="i">$match</span><span class="s">)</span> = <span class="i">$Collator</span><span class="i">-&gt;match</span><span class="s">(</span><span class="i">$str</span><span class="cm">,</span> <span class="i">$sub</span><span class="s">)</span><span class="s">)</span> <span class="s">{</span> <span class="c"># list context</span>
+	<a class="l_k" href="../functions/print.html">print</a> <span class="q">&quot;matches [$match].\n&quot;</span><span class="sc">;</span>
+    <span class="s">}</span> else <span class="s">{</span>
+	<a class="l_k" href="../functions/print.html">print</a> <span class="q">&quot;doesn&#39;t match.\n&quot;</span><span class="sc">;</span>
+    <span class="s">}</span></pre>
+</li>
+<li><a name="'0x40match-0x3d-0x24Collator-0x3egmatch(0x24string0x2c-0x24substring)'"></a><b><code class="inline"><span class="i">@match</span> = <span class="i">$Collator</span><span class="i">-&gt;gmatch</span><span class="s">(</span><span class="i">$string</span><span class="cm">,</span> <span class="i">$substring</span><span class="s">)</span></code>
+</b>
+<p>If <code class="inline"><span class="i">$substring</span></code>
+ matches a part of <code class="inline"><span class="i">$string</span></code>
+, returns
+all the matching parts (or matching count in scalar context).</p>
+<p>If <code class="inline"><span class="i">$substring</span></code>
+ does not match any part of <code class="inline"><span class="i">$string</span></code>
+,
+returns an empty list.</p>
+</li>
+<li><a name="'0x24count-0x3d-0x24Collator-0x3esubst(0x24string0x2c-0x24substring0x2c-0x24replacement)'"></a><b><code class="inline"><span class="i">$count</span> = <span class="i">$Collator</span><span class="i">-&gt;subst</span><span class="s">(</span><span class="i">$string</span><span class="cm">,</span> <span class="i">$substring</span><span class="cm">,</span> <span class="i">$replacement</span><span class="s">)</span></code>
+</b>
+<p>If <code class="inline"><span class="i">$substring</span></code>
+ matches a part of <code class="inline"><span class="i">$string</span></code>
+,
+the first occurrence of the matching part is replaced by <code class="inline"><span class="i">$replacement</span></code>
+
+(<code class="inline"><span class="i">$string</span></code>
+ is modified) and return <code class="inline"><span class="i">$count</span></code>
+ (always equals to <code class="inline"><span class="n">1</span></code>
+).</p>
+<p><code class="inline"><span class="i">$replacement</span></code>
+ can be a <code class="inline"><span class="w">CODEREF</span></code>
+,
+taking the matching part as an argument,
+and returning a string to replace the matching part
+(a bit similar to <code class="inline"><a class="l_k" href="../functions/s.html">s/(..)/$coderef->($1)/e</a></code>).</p>
+</li>
+<li><a name="'0x24count-0x3d-0x24Collator-0x3egsubst(0x24string0x2c-0x24substring0x2c-0x24replacement)'"></a><b><code class="inline"><span class="i">$count</span> = <span class="i">$Collator</span><span class="i">-&gt;gsubst</span><span class="s">(</span><span class="i">$string</span><span class="cm">,</span> <span class="i">$substring</span><span class="cm">,</span> <span class="i">$replacement</span><span class="s">)</span></code>
+</b>
+<p>If <code class="inline"><span class="i">$substring</span></code>
+ matches a part of <code class="inline"><span class="i">$string</span></code>
+,
+all the occurrences of the matching part is replaced by <code class="inline"><span class="i">$replacement</span></code>
+
+(<code class="inline"><span class="i">$string</span></code>
+ is modified) and return <code class="inline"><span class="i">$count</span></code>
+.</p>
+<p><code class="inline"><span class="i">$replacement</span></code>
+ can be a <code class="inline"><span class="w">CODEREF</span></code>
+,
+taking the matching part as an argument,
+and returning a string to replace the matching part
+(a bit similar to <code class="inline"><a class="l_k" href="../functions/s.html">s/(..)/$coderef->($1)/eg</a></code>).</p>
+<p>e.g.</p>
+<pre class="verbatim">  <a class="l_k" href="../functions/my.html">my</a> <span class="i">$Collator</span> = <span class="w">Unicode::Collate</span><span class="w">-&gt;new</span><span class="s">(</span> <span class="w">normalization</span> <span class="cm">=&gt;</span> <a class="l_k" href="../functions/undef.html">undef</a><span class="cm">,</span> <span class="w">level</span> <span class="cm">=&gt;</span> <span class="n">1</span> <span class="s">)</span><span class="sc">;</span>
+                                     <span class="c"># (normalization =&gt; undef) is REQUIRED.</span>
+  <a class="l_k" href="../functions/my.html">my</a> <span class="i">$str</span> = <span class="q">&quot;Camel donkey zebra came\x{301}l CAMEL horse cAm\0E\0L...&quot;</span><span class="sc">;</span>
+  <span class="i">$Collator</span><span class="i">-&gt;gsubst</span><span class="s">(</span><span class="i">$str</span><span class="cm">,</span> <span class="q">&quot;camel&quot;</span><span class="cm">,</span> <a class="l_k" href="../functions/sub.html">sub</a> <span class="s">{</span> <span class="q">&quot;&lt;b&gt;$_[0]&lt;/b&gt;&quot;</span> <span class="s">}</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <span class="c"># now $str is &quot;&lt;b&gt;Camel&lt;/b&gt; donkey zebra &lt;b&gt;came\x{301}l&lt;/b&gt; &lt;b&gt;CAMEL&lt;/b&gt; horse &lt;b&gt;cAm\0E\0L&lt;/b&gt;...&quot;;</span>
+  <span class="c"># i.e., all the camels are made bold-faced.</span></pre>
+</li>
+</ul>
+<a name="Other-Methods"></a><h2>Other Methods</h2>
+<ul>
+<li><a name="'0x25old_tailoring-0x3d-0x24Collator-0x3echange(0x25new_tailoring)'"></a><b><code class="inline"><span class="i">%old_tailoring</span> = <span class="i">$Collator</span><span class="i">-&gt;change</span><span class="s">(</span><span class="i">%new_tailoring</span><span class="s">)</span></code>
+</b>
+<p>Change the value of specified keys and returns the changed part.</p>
+<pre class="verbatim">    <span class="i">$Collator</span> = <span class="w">Unicode::Collate</span><span class="w">-&gt;new</span><span class="s">(</span><span class="w">level</span> <span class="cm">=&gt;</span> <span class="n">4</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="i">$Collator</span><span class="i">-&gt;eq</span><span class="s">(</span><span class="q">&quot;perl&quot;</span><span class="cm">,</span> <span class="q">&quot;PERL&quot;</span><span class="s">)</span><span class="sc">;</span> <span class="c"># false</span></pre>
+<pre class="verbatim">    <span class="i">%old</span> = <span class="i">$Collator</span><span class="i">-&gt;change</span><span class="s">(</span><span class="w">level</span> <span class="cm">=&gt;</span> <span class="n">2</span><span class="s">)</span><span class="sc">;</span> <span class="c"># returns (level =&gt; 4).</span></pre>
+<pre class="verbatim">    <span class="i">$Collator</span><span class="i">-&gt;eq</span><span class="s">(</span><span class="q">&quot;perl&quot;</span><span class="cm">,</span> <span class="q">&quot;PERL&quot;</span><span class="s">)</span><span class="sc">;</span> <span class="c"># true</span></pre>
+<pre class="verbatim">    <span class="i">$Collator</span><span class="i">-&gt;change</span><span class="s">(</span><span class="i">%old</span><span class="s">)</span><span class="sc">;</span> <span class="c"># returns (level =&gt; 2).</span></pre>
+<pre class="verbatim">    <span class="i">$Collator</span><span class="i">-&gt;eq</span><span class="s">(</span><span class="q">&quot;perl&quot;</span><span class="cm">,</span> <span class="q">&quot;PERL&quot;</span><span class="s">)</span><span class="sc">;</span> <span class="c"># false</span></pre>
+<p>Not all <code class="inline"><span class="s">(</span><span class="w">key</span><span class="cm">,</span><span class="w">value</span><span class="s">)</span></code>
+s are allowed to be changed.
+See also <code class="inline"><span class="i">@Unicode::Collate::ChangeOK</span></code>
+ and <code class="inline"><span class="i">@Unicode::Collate::ChangeNG</span></code>
+.</p>
+<p>In the scalar context, returns the modified collator
+(but it is <b>not</b> a clone from the original).</p>
+<pre class="verbatim">    <span class="i">$Collator</span><span class="i">-&gt;change</span><span class="s">(</span><span class="w">level</span> <span class="cm">=&gt;</span> <span class="n">2</span><span class="s">)</span><span class="i">-&gt;eq</span><span class="s">(</span><span class="q">&quot;perl&quot;</span><span class="cm">,</span> <span class="q">&quot;PERL&quot;</span><span class="s">)</span><span class="sc">;</span> <span class="c"># true</span></pre>
+<pre class="verbatim">    <span class="i">$Collator</span><span class="i">-&gt;eq</span><span class="s">(</span><span class="q">&quot;perl&quot;</span><span class="cm">,</span> <span class="q">&quot;PERL&quot;</span><span class="s">)</span><span class="sc">;</span> <span class="c"># true; now max level is 2nd.</span></pre>
+<pre class="verbatim">    <span class="i">$Collator</span><span class="i">-&gt;change</span><span class="s">(</span><span class="w">level</span> <span class="cm">=&gt;</span> <span class="n">4</span><span class="s">)</span><span class="i">-&gt;eq</span><span class="s">(</span><span class="q">&quot;perl&quot;</span><span class="cm">,</span> <span class="q">&quot;PERL&quot;</span><span class="s">)</span><span class="sc">;</span> <span class="c"># false</span></pre>
+</li>
+<li><a name="'0x24version-0x3d-0x24Collator-0x3eversion()'"></a><b><code class="inline"><span class="i">$version</span> = <span class="i">$Collator</span><span class="i">-&gt;version</span><span class="s">(</span><span class="s">)</span></code>
+</b>
+<p>Returns the version number (a string) of the Unicode Standard
+which the <code class="inline"><span class="w">table</span></code>
+ file used by the collator object is based on.
+If the table does not include a version line (starting with <code class="inline"><span class="i">@version</span></code>
+),
+returns <code class="inline"><span class="q">&quot;unknown&quot;</span></code>
+.</p>
+</li>
+<li><a name="'UCA_Version()'"></a><b><code class="inline"><span class="i">UCA_Version</span><span class="s">(</span><span class="s">)</span></code>
+</b>
+<p>Returns the tracking version number of UTS #10 this module consults.</p>
+</li>
+<li><a name="'Base_Unicode_Version()'"></a><b><code class="inline"><span class="i">Base_Unicode_Version</span><span class="s">(</span><span class="s">)</span></code>
+</b>
+<p>Returns the version number of UTS #10 this module consults.</p>
+</li>
+</ul>
+<a name="EXPORT"></a><h1>EXPORT</h1>
+<p>No method will be exported.</p>
+<a name="INSTALL"></a><h1>INSTALL</h1>
+<p>Though this module can be used without any <code class="inline"><span class="w">table</span></code>
+ file,
+to use this module easily, it is recommended to install a table file
+in the UCA format, by copying it under the directory
+&lt;a place in @INC&gt;/Unicode/Collate.</p>
+<p>The most preferable one is "The Default Unicode Collation Element Table"
+(aka DUCET), available from the Unicode Consortium's website:</p>
+<pre class="verbatim">   http://www.unicode.org/Public/UCA/</pre><pre class="verbatim">   http://www.unicode.org/Public/UCA/latest/allkeys.txt (latest version)</pre><p>If DUCET is not installed, it is recommended to copy the file
+from <a href="http://www.unicode.org/Public/UCA/latest/allkeys.txt">http://www.unicode.org/Public/UCA/latest/allkeys.txt</a>
+to &lt;a place in @INC&gt;/Unicode/Collate/allkeys.txt
+manually.</p>
+<a name="CAVEATS"></a><h1>CAVEATS</h1>
+<ul>
+<li><a name="Normalization"></a><b>Normalization</b>
+<p>Use of the <code class="inline"><span class="w">normalization</span></code>
+ parameter requires the <b>Unicode::Normalize</b>
+module (see <a href="../Unicode/Normalize.html">Unicode::Normalize</a>).</p>
+<p>If you need not it (say, in the case when you need not
+handle any combining characters),
+assign <code class="inline"><span class="w">normalization</span> <span class="cm">=&gt;</span> <a class="l_k" href="../functions/undef.html">undef</a></code>
+ explicitly.</p>
+<p>-- see 6.5 Avoiding Normalization, UTS #10.</p>
+</li>
+<li><a name="Conformance-Test"></a><b>Conformance Test</b>
+<p>The Conformance Test for the UCA is available
+under <a href="http://www.unicode.org/Public/UCA/">http://www.unicode.org/Public/UCA/</a>.</p>
+<p>For <i>CollationTest_SHIFTED.txt</i>,
+a collator via <code class="inline"><span class="w">Unicode::Collate</span><span class="w">-&gt;new</span><span class="s">(</span> <span class="s">)</span></code>
+ should be used;
+for <i>CollationTest_NON_IGNORABLE.txt</i>, a collator via
+<code class="inline"><span class="w">Unicode::Collate</span><span class="w">-&gt;new</span><span class="s">(</span><span class="w">variable</span> <span class="cm">=&gt;</span> <span class="q">&quot;non-ignorable&quot;</span><span class="cm">,</span> <span class="w">level</span> <span class="cm">=&gt;</span> <span class="n">3</span><span class="s">)</span></code>
+.</p>
+<p><b>Unicode::Normalize is required to try The Conformance Test.</b></p>
+</li>
+</ul>
+<a name="AUTHOR0x2c-COPYRIGHT-AND-LICENSE"></a><h1>AUTHOR, COPYRIGHT AND LICENSE</h1>
+<p>The Unicode::Collate module for perl was written by SADAHIRO Tomoyuki,
+&lt;SADAHIRO@cpan.org&gt;. This module is Copyright(C) 2001-2005,
+SADAHIRO Tomoyuki. Japan. All rights reserved.</p>
+<p>This module is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.</p>
+<p>The file Unicode/Collate/allkeys.txt was copied directly
+from <a href="http://www.unicode.org/Public/UCA/4.1.0/allkeys.txt">http://www.unicode.org/Public/UCA/4.1.0/allkeys.txt</a>.
+This file is Copyright (c) 1991-2005 Unicode, Inc. All rights reserved.
+Distributed under the Terms of Use in <a href="http://www.unicode.org/copyright.html">http://www.unicode.org/copyright.html</a>.</p>
+<a name="SEE-ALSO"></a><h1>SEE ALSO</h1>
+<ul>
+<li><a name="Unicode-Collation-Algorithm---UTS-0x2310"></a><b>Unicode Collation Algorithm - UTS #10</b>
+<p><a href="http://www.unicode.org/reports/tr10/">http://www.unicode.org/reports/tr10/</a></p>
+</li>
+<li><a name="The-Default-Unicode-Collation-Element-Table-(DUCET)"></a><b>The Default Unicode Collation Element Table (DUCET)</b>
+<p><a href="http://www.unicode.org/Public/UCA/latest/allkeys.txt">http://www.unicode.org/Public/UCA/latest/allkeys.txt</a></p>
+</li>
+<li><a name="The-conformance-test-for-the-UCA"></a><b>The conformance test for the UCA</b>
+<p><a href="http://www.unicode.org/Public/UCA/latest/CollationTest.html">http://www.unicode.org/Public/UCA/latest/CollationTest.html</a></p>
+<p><a href="http://www.unicode.org/Public/UCA/latest/CollationTest.zip">http://www.unicode.org/Public/UCA/latest/CollationTest.zip</a></p>
+</li>
+<li><a name="Hangul-Syllable-Type"></a><b>Hangul Syllable Type</b>
+<p><a href="http://www.unicode.org/Public/UNIDATA/HangulSyllableType.txt">http://www.unicode.org/Public/UNIDATA/HangulSyllableType.txt</a></p>
+</li>
+<li><a name="Unicode-Normalization-Forms---UAX-0x2315"></a><b>Unicode Normalization Forms - UAX #15</b>
+<p><a href="http://www.unicode.org/reports/tr15/">http://www.unicode.org/reports/tr15/</a></p>
+</li>
+</ul>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../close_purple.gif';" onmouseout="rightCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('Unicode::Collate','Unicode/Collate.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>corelist - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 0;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='close_purple.gif';" onmouseout="leftCloseIcon.src='close_blue.gif';"><img src="close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="index-overview.html">Overview</a></li>
+        <li><a href="index-tutorials.html">Tutorials</a></li>
+        <li><a href="index-faq.html">FAQs</a></li>
+        <li><a href="index-history.html">History / Changes</a></li>
+        <li><a href="index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="index-language.html">Language</a></li>
+        <li><a href="index-functions.html">Functions</a></li>
+        <li><a href="perlop.html">Operators</a></li>
+        <li><a href="perlvar.html">Special variables</a></li>
+        <li><a href="index-pragmas.html">Pragmas</a></li>
+        <li><a href="index-modules-A.html">Core modules</a></li>
+        <li><a href="index-utilities.html">Utilities</a></li>
+        <li><a href="index-internals.html">Internals</a></li>
+        <li><a href="index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="index.html">Home</a> &gt; <a href="index-utilities.html">Utilities</a> &gt; corelist</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">corelist</div><ul><li><a href="#NAME">NAME</a><li><a href="#DESCRIPTION">DESCRIPTION</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#OPTIONS">OPTIONS</a><li><a href="#EXAMPLES">EXAMPLES</a><li><a href="#COPYRIGHT">COPYRIGHT</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>corelist - a commandline frontend to Module::CoreList</p>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p>See <a href="Module/CoreList.html">Module::CoreList</a> for one.</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">    <span class="w">corelist</span> -<span class="w">v</span>
+    <span class="w">corelist</span> <span class="s">[</span>-<span class="w">a</span><span class="s">]</span> <span class="q">&lt;ModuleName&gt;</span> | <span class="q">/&lt;ModuleRegex&gt;/</span> <span class="s">[</span><span class="q">&lt;ModuleVersion&gt;</span><span class="s">]</span> ...
+    <span class="w">corelist</span> <span class="s">[</span>-<span class="w">v</span> <span class="q">&lt;PerlVersion&gt;</span><span class="s">]</span> <span class="s">[</span> <span class="q">&lt;ModuleName&gt;</span> | <span class="q">/&lt;ModuleRegex&gt;/</span> <span class="s">]</span> ...</pre>
+<a name="OPTIONS"></a><h1>OPTIONS</h1>
+<ul>
+<li><a name="-a-modulename"></a><b>-a modulename</b>
+<p>lists all versions of the given module (or the matching modules, in case you
+used a module regexp) in the perls Module::CoreList knows about.</p>
+<pre class="verbatim">    <span class="w">corelist</span> -<span class="w">a</span> <span class="w">utf8</span></pre>
+<pre class="verbatim">    utf8 was first released with perl 5.006
+      5.006      undef
+      5.006001   undef
+      5.006002   undef
+      5.007003   1.00
+      5.008      1.00
+      5.008001   1.02
+      5.008002   1.02
+      5.008003   1.02
+      5.008004   1.03
+      5.008005   1.04
+      5.008006   1.04
+      5.008007   1.05
+      5.008008   1.06
+      5.009      1.02
+      5.009001   1.02
+      5.009002   1.04
+      5.009003   1.06</pre></li>
+<li><a name="-0x3f-or--help"></a><b>-? or -help</b>
+<p>help! help! help! to see more help, try --man.</p>
+</li>
+<li><a name="-man"></a><b>-man</b>
+<p>all of the help</p>
+</li>
+<li><a name="-v"></a><b>-v</b>
+<p>lists all of the perl release versions we got the CoreList for.</p>
+<p>If you pass a version argument (value of <code class="inline"><span class="i">$]</span></code>
+, like <code class="inline"><span class="n">5.00503</span></code>
+ or <code class="inline"><span class="n">5.008008</span></code>
+),
+you get a list of all the modules and their respective versions.
+(If you have the <code class="inline"><span class="w">version</span></code>
+ module, you can also use new-style version numbers,
+like <code class="inline"><span class="v">5.8.8</span></code>
+.)</p>
+<p>In module filtering context, it can be used as Perl version filter.</p>
+</li>
+</ul>
+<p>As a special case, if you specify the module name <code class="inline"><span class="w">Unicode</span></code>
+, you'll get
+the version number of the Unicode Character Database bundled with the
+requested perl versions.</p>
+<a name="EXAMPLES"></a><h1>EXAMPLES</h1>
+<pre class="verbatim">    $ corelist File::Spec</pre><pre class="verbatim">    <span class="w">File::Spec</span> <span class="w">was</span> <span class="w">first</span> <span class="w">released</span> <span class="w">with</span> <span class="w">perl</span> <span class="n">5.005</span></pre>
+<pre class="verbatim">    $ corelist File::Spec 0.83</pre><pre class="verbatim">    File::Spec 0.83 was released with perl 5.007003</pre><pre class="verbatim">    $ corelist File::Spec 0.89</pre><pre class="verbatim">    File::Spec 0.89 was not in CORE (or so I think)</pre><pre class="verbatim">    $ corelist File::Spec::Aliens</pre><pre class="verbatim">    <span class="w">File::Spec::Aliens</span>  <span class="w">was</span> not <span class="w">in</span> <span class="w">CORE</span> <span class="s">(</span>or <span class="w">so</span> <span class="w">I</span> <span class="w">think</span><span class="s">)</span></pre>
+<pre class="verbatim">    <span class="i">$ corelist</span> /<span class="w">IPC::Open</span>/</pre>
+<pre class="verbatim">    <span class="w">IPC::Open2</span> <span class="w">was</span> <span class="w">first</span> <span class="w">released</span> <span class="w">with</span> <span class="w">perl</span> <span class="n">5</span></pre>
+<pre class="verbatim">    <span class="w">IPC::Open3</span> <span class="w">was</span> <span class="w">first</span> <span class="w">released</span> <span class="w">with</span> <span class="w">perl</span> <span class="n">5</span></pre>
+<pre class="verbatim">    <span class="i">$ corelist</span> /<span class="w">MANIFEST</span>/<span class="w">i</span></pre>
+<pre class="verbatim">    <span class="w">ExtUtils::Manifest</span> <span class="w">was</span> <span class="w">first</span> <span class="w">released</span> <span class="w">with</span> <span class="w">perl</span> <span class="n">5.001</span></pre>
+<pre class="verbatim">    <span class="i">$ corelist</span> /<span class="w">Template</span>/</pre>
+<pre class="verbatim">    /Template/  has no match in CORE (or so I think)</pre><pre class="verbatim">    $ corelist -v 5.8.8 B</pre><pre class="verbatim">    <span class="w">B</span>                        <span class="n">1.09_01</span></pre>
+<pre class="verbatim">    $ corelist -v 5.8.8 /^B::/</pre><pre class="verbatim">    B::Asmdata               1.01
+    B::Assembler             0.07
+    B::Bblock                1.02_01
+    B::Bytecode              1.01_01
+    B::C                     1.04_01
+    B::CC                    1.00_01
+    B::Concise               0.66
+    B::Debug                 1.02_01
+    B::Deparse               0.71
+    B::Disassembler          1.05
+    B::Lint                  1.03
+    B::O                     1.00
+    B::Showlex               1.02
+    B::Stackobj              1.00
+    B::Stash                 1.00
+    B::Terse                 1.03_01
+    B::Xref                  1.01</pre><a name="COPYRIGHT"></a><h1>COPYRIGHT</h1>
+<p>Copyright (c) 2002-2007 by D.H. aka PodMaster</p>
+<p>Currently maintained by the perl 5 porters &lt;perl5-porters@perl.org&gt;.</p>
+<p>This program is distributed under the same terms as perl itself.
+See <a href="http://perl.org/">http://perl.org/</a> or <a href="http://cpan.org/">http://cpan.org/</a> for more info on that.</p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='close_purple.gif';" onmouseout="rightCloseIcon.src='close_blue.gif';"><img src="close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('corelist','corelist.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

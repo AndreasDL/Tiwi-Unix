@@ -1,0 +1,478 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>Unicode::Normalize - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 1;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../close_purple.gif';" onmouseout="leftCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../index-overview.html">Overview</a></li>
+        <li><a href="../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../index-faq.html">FAQs</a></li>
+        <li><a href="../index-history.html">History / Changes</a></li>
+        <li><a href="../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../index-language.html">Language</a></li>
+        <li><a href="../index-functions.html">Functions</a></li>
+        <li><a href="../perlop.html">Operators</a></li>
+        <li><a href="../perlvar.html">Special variables</a></li>
+        <li><a href="../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../index-modules-A.html">Core modules</a></li>
+        <li><a href="../index-utilities.html">Utilities</a></li>
+        <li><a href="../index-internals.html">Internals</a></li>
+        <li><a href="../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../index.html">Home</a> &gt; <a href="../index-modules-A.html">Core modules</a> &gt; <a href="../index-modules-U.html">U</a> &gt; Unicode::Normalize</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">Unicode::Normalize</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><ul><li><a href="#Normalization-Forms">Normalization Forms</a><li><a href="#Decomposition-and-Composition">Decomposition and Composition</a><li><a href="#Quick-Check">Quick Check</a><li><a href="#Character-Data">Character Data</a></ul><li><a href="#EXPORT">EXPORT</a><li><a href="#CAVEATS">CAVEATS</a><li><a href="#AUTHOR">AUTHOR</a><li><a href="#SEE-ALSO">SEE ALSO</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>Unicode::Normalize - Unicode Normalization Forms</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<p>(1) using function names exported by default:</p>
+<pre class="verbatim">  <a class="l_k" href="../functions/use.html">use</a> <span class="w">Unicode::Normalize</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <span class="i">$NFD_string</span>  = <span class="i">NFD</span><span class="s">(</span><span class="i">$string</span><span class="s">)</span><span class="sc">;</span>  <span class="c"># Normalization Form D</span>
+  <span class="i">$NFC_string</span>  = <span class="i">NFC</span><span class="s">(</span><span class="i">$string</span><span class="s">)</span><span class="sc">;</span>  <span class="c"># Normalization Form C</span>
+  <span class="i">$NFKD_string</span> = <span class="i">NFKD</span><span class="s">(</span><span class="i">$string</span><span class="s">)</span><span class="sc">;</span> <span class="c"># Normalization Form KD</span>
+  <span class="i">$NFKC_string</span> = <span class="i">NFKC</span><span class="s">(</span><span class="i">$string</span><span class="s">)</span><span class="sc">;</span> <span class="c"># Normalization Form KC</span></pre>
+<p>(2) using function names exported on request:</p>
+<pre class="verbatim">  <a class="l_k" href="../functions/use.html">use</a> <span class="w">Unicode::Normalize</span> <span class="q">&#39;normalize&#39;</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <span class="i">$NFD_string</span>  = <span class="i">normalize</span><span class="s">(</span><span class="q">&#39;D&#39;</span><span class="cm">,</span>  <span class="i">$string</span><span class="s">)</span><span class="sc">;</span>  <span class="c"># Normalization Form D</span>
+  <span class="i">$NFC_string</span>  = <span class="i">normalize</span><span class="s">(</span><span class="q">&#39;C&#39;</span><span class="cm">,</span>  <span class="i">$string</span><span class="s">)</span><span class="sc">;</span>  <span class="c"># Normalization Form C</span>
+  <span class="i">$NFKD_string</span> = <span class="i">normalize</span><span class="s">(</span><span class="q">&#39;KD&#39;</span><span class="cm">,</span> <span class="i">$string</span><span class="s">)</span><span class="sc">;</span>  <span class="c"># Normalization Form KD</span>
+  <span class="i">$NFKC_string</span> = <span class="i">normalize</span><span class="s">(</span><span class="q">&#39;KC&#39;</span><span class="cm">,</span> <span class="i">$string</span><span class="s">)</span><span class="sc">;</span>  <span class="c"># Normalization Form KC</span></pre>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p>Parameters:</p>
+<p><code class="inline"><span class="i">$string</span></code>
+ is used as a string under character semantics (see <i>perlunicode</i>).</p>
+<p><code class="inline"><span class="i">$code_point</span></code>
+ should be an unsigned integer representing a Unicode code point.</p>
+<p>Note: Between XSUB and pure Perl, there is an incompatibility
+about the interpretation of <code class="inline"><span class="i">$code_point</span></code>
+ as a decimal number.
+XSUB converts <code class="inline"><span class="i">$code_point</span></code>
+ to an unsigned integer, but pure Perl does not.
+Do not use a floating point nor a negative sign in <code class="inline"><span class="i">$code_point</span></code>
+.</p>
+<a name="Normalization-Forms"></a><h2>Normalization Forms</h2>
+<ul>
+<li><a name="'0x24NFD_string-0x3d-NFD(0x24string)'"></a><b><code class="inline"><span class="i">$NFD_string</span> = <span class="i">NFD</span><span class="s">(</span><span class="i">$string</span><span class="s">)</span></code>
+</b>
+<p>It returns the Normalization Form D (formed by canonical decomposition).</p>
+</li>
+<li><a name="'0x24NFC_string-0x3d-NFC(0x24string)'"></a><b><code class="inline"><span class="i">$NFC_string</span> = <span class="i">NFC</span><span class="s">(</span><span class="i">$string</span><span class="s">)</span></code>
+</b>
+<p>It returns the Normalization Form C (formed by canonical decomposition
+followed by canonical composition).</p>
+</li>
+<li><a name="'0x24NFKD_string-0x3d-NFKD(0x24string)'"></a><b><code class="inline"><span class="i">$NFKD_string</span> = <span class="i">NFKD</span><span class="s">(</span><span class="i">$string</span><span class="s">)</span></code>
+</b>
+<p>It returns the Normalization Form KD (formed by compatibility decomposition).</p>
+</li>
+<li><a name="'0x24NFKC_string-0x3d-NFKC(0x24string)'"></a><b><code class="inline"><span class="i">$NFKC_string</span> = <span class="i">NFKC</span><span class="s">(</span><span class="i">$string</span><span class="s">)</span></code>
+</b>
+<p>It returns the Normalization Form KC (formed by compatibility decomposition
+followed by <b>canonical</b> composition).</p>
+</li>
+<li><a name="'0x24FCD_string-0x3d-FCD(0x24string)'"></a><b><code class="inline"><span class="i">$FCD_string</span> = <span class="i">FCD</span><span class="s">(</span><span class="i">$string</span><span class="s">)</span></code>
+</b>
+<p>If the given string is in FCD ("Fast C or D" form; cf. UTN #5),
+it returns the string without modification; otherwise it returns an FCD string.</p>
+<p>Note: FCD is not always unique, then plural forms may be equivalent
+each other. <code class="inline"><span class="i">FCD</span><span class="s">(</span><span class="s">)</span></code>
+ will return one of these equivalent forms.</p>
+</li>
+<li><a name="'0x24FCC_string-0x3d-FCC(0x24string)'"></a><b><code class="inline"><span class="i">$FCC_string</span> = <span class="i">FCC</span><span class="s">(</span><span class="i">$string</span><span class="s">)</span></code>
+</b>
+<p>It returns the FCC form ("Fast C Contiguous"; cf. UTN #5).</p>
+<p>Note: FCC is unique, as well as four normalization forms (NF*).</p>
+</li>
+<li><a name="'0x24normalized_string-0x3d-normalize(0x24form_name0x2c-0x24string)'"></a><b><code class="inline"><span class="i">$normalized_string</span> = <span class="i">normalize</span><span class="s">(</span><span class="i">$form_name</span><span class="cm">,</span> <span class="i">$string</span><span class="s">)</span></code>
+</b>
+<p>It returns the normalization form of <code class="inline"><span class="i">$form_name</span></code>
+.</p>
+<p>As <code class="inline"><span class="i">$form_name</span></code>
+, one of the following names must be given.</p>
+<pre class="verbatim">  'C'  or 'NFC'  for Normalization Form C  (UAX #15)
+  'D'  or 'NFD'  for Normalization Form D  (UAX #15)
+  'KC' or 'NFKC' for Normalization Form KC (UAX #15)
+  'KD' or 'NFKD' for Normalization Form KD (UAX #15)</pre><pre class="verbatim">  'FCD'          for "Fast C or D" Form  (UTN #5)
+  'FCC'          for "Fast C Contiguous" (UTN #5)</pre></li>
+</ul>
+<a name="Decomposition-and-Composition"></a><h2>Decomposition and Composition</h2>
+<ul>
+<li><a name="'0x24decomposed_string-0x3d-decompose(0x24string-0x5b0x2c-0x24useCompatMapping0x5d)'"></a><b><code class="inline"><span class="i">$decomposed_string</span> = <span class="i">decompose</span><span class="s">(</span><span class="i">$string</span> [<span class="cm">,</span> <span class="i">$useCompatMapping</span>]<span class="s">)</span></code>
+</b>
+<p>It returns the concatenation of the decomposition of each character
+in the string.</p>
+<p>If the second parameter (a boolean) is omitted or false,
+the decomposition is canonical decomposition;
+if the second parameter (a boolean) is true,
+the decomposition is compatibility decomposition.</p>
+<p>The string returned is not always in NFD/NFKD. Reordering may be required.</p>
+<pre class="verbatim">    <span class="i">$NFD_string</span>  = <span class="i">reorder</span><span class="s">(</span><span class="i">decompose</span><span class="s">(</span><span class="i">$string</span><span class="s">)</span><span class="s">)</span><span class="sc">;</span>       <span class="c"># eq. to NFD()</span>
+    <span class="i">$NFKD_string</span> = <span class="i">reorder</span><span class="s">(</span><span class="i">decompose</span><span class="s">(</span><span class="i">$string</span><span class="cm">,</span> <span class="w">TRUE</span><span class="s">)</span><span class="s">)</span><span class="sc">;</span> <span class="c"># eq. to NFKD()</span></pre>
+</li>
+<li><a name="'0x24reordered_string-0x3d-reorder(0x24string)'"></a><b><code class="inline"><span class="i">$reordered_string</span> = <span class="i">reorder</span><span class="s">(</span><span class="i">$string</span><span class="s">)</span></code>
+</b>
+<p>It returns the result of reordering the combining characters
+according to Canonical Ordering Behavior.</p>
+<p>For example, when you have a list of NFD/NFKD strings,
+you can get the concatenated NFD/NFKD string from them, by saying</p>
+<pre class="verbatim">    <span class="i">$concat_NFD</span>  = <span class="i">reorder</span><span class="s">(</span><a class="l_k" href="../functions/join.html">join</a> <span class="q">&#39;&#39;</span><span class="cm">,</span> <span class="i">@NFD_strings</span><span class="s">)</span><span class="sc">;</span>
+    <span class="i">$concat_NFKD</span> = <span class="i">reorder</span><span class="s">(</span><a class="l_k" href="../functions/join.html">join</a> <span class="q">&#39;&#39;</span><span class="cm">,</span> <span class="i">@NFKD_strings</span><span class="s">)</span><span class="sc">;</span></pre>
+</li>
+<li><a name="'0x24composed_string-0x3d-compose(0x24string)'"></a><b><code class="inline"><span class="i">$composed_string</span> = <span class="i">compose</span><span class="s">(</span><span class="i">$string</span><span class="s">)</span></code>
+</b>
+<p>It returns the result of canonical composition
+without applying any decomposition.</p>
+<p>For example, when you have a NFD/NFKD string,
+you can get its NFC/NFKC string, by saying</p>
+<pre class="verbatim">    <span class="i">$NFC_string</span>  = <span class="i">compose</span><span class="s">(</span><span class="i">$NFD_string</span><span class="s">)</span><span class="sc">;</span>
+    <span class="i">$NFKC_string</span> = <span class="i">compose</span><span class="s">(</span><span class="i">$NFKD_string</span><span class="s">)</span><span class="sc">;</span></pre>
+</li>
+</ul>
+<a name="Quick-Check"></a><h2>Quick Check</h2>
+<p>(see Annex 8, UAX #15; and <i>DerivedNormalizationProps.txt</i>)</p>
+<p>The following functions check whether the string is in that normalization form.</p>
+<p>The result returned will be one of the following:</p>
+<pre class="verbatim">    <span class="w">YES</span>     <span class="w">The</span> <span class="w">string</span> <span class="w">is</span> <span class="w">in</span> <span class="w">that</span> <span class="w">normalization</span> <span class="w">form</span>.
+    <span class="w">NO</span>      <span class="w">The</span> <span class="w">string</span> <span class="w">is</span> not <span class="w">in</span> <span class="w">that</span> <span class="w">normalization</span> <span class="w">form</span>.
+    <span class="w">MAYBE</span>   <span class="w">Dubious</span>. <span class="w">Maybe</span> <span class="w">yes</span><span class="cm">,</span> <span class="w">maybe</span> <a class="l_k" href="../functions/no.html">no</a>.</pre>
+<ul>
+<li><a name="'0x24result-0x3d-checkNFD(0x24string)'"></a><b><code class="inline"><span class="i">$result</span> = <span class="i">checkNFD</span><span class="s">(</span><span class="i">$string</span><span class="s">)</span></code>
+</b>
+<p>It returns true (<code class="inline"><span class="n">1</span></code>
+) if <code class="inline"><span class="w">YES</span></code>
+; false (<code class="inline"><span class="w">empty</span> <span class="w">string</span></code>
+) if <code class="inline"><span class="w">NO</span></code>
+.</p>
+</li>
+<li><a name="'0x24result-0x3d-checkNFC(0x24string)'"></a><b><code class="inline"><span class="i">$result</span> = <span class="i">checkNFC</span><span class="s">(</span><span class="i">$string</span><span class="s">)</span></code>
+</b>
+<p>It returns true (<code class="inline"><span class="n">1</span></code>
+) if <code class="inline"><span class="w">YES</span></code>
+; false (<code class="inline"><span class="w">empty</span> <span class="w">string</span></code>
+) if <code class="inline"><span class="w">NO</span></code>
+;
+<code class="inline"><a class="l_k" href="../functions/undef.html">undef</a></code> if <code class="inline"><span class="w">MAYBE</span></code>
+.</p>
+</li>
+<li><a name="'0x24result-0x3d-checkNFKD(0x24string)'"></a><b><code class="inline"><span class="i">$result</span> = <span class="i">checkNFKD</span><span class="s">(</span><span class="i">$string</span><span class="s">)</span></code>
+</b>
+<p>It returns true (<code class="inline"><span class="n">1</span></code>
+) if <code class="inline"><span class="w">YES</span></code>
+; false (<code class="inline"><span class="w">empty</span> <span class="w">string</span></code>
+) if <code class="inline"><span class="w">NO</span></code>
+.</p>
+</li>
+<li><a name="'0x24result-0x3d-checkNFKC(0x24string)'"></a><b><code class="inline"><span class="i">$result</span> = <span class="i">checkNFKC</span><span class="s">(</span><span class="i">$string</span><span class="s">)</span></code>
+</b>
+<p>It returns true (<code class="inline"><span class="n">1</span></code>
+) if <code class="inline"><span class="w">YES</span></code>
+; false (<code class="inline"><span class="w">empty</span> <span class="w">string</span></code>
+) if <code class="inline"><span class="w">NO</span></code>
+;
+<code class="inline"><a class="l_k" href="../functions/undef.html">undef</a></code> if <code class="inline"><span class="w">MAYBE</span></code>
+.</p>
+</li>
+<li><a name="'0x24result-0x3d-checkFCD(0x24string)'"></a><b><code class="inline"><span class="i">$result</span> = <span class="i">checkFCD</span><span class="s">(</span><span class="i">$string</span><span class="s">)</span></code>
+</b>
+<p>It returns true (<code class="inline"><span class="n">1</span></code>
+) if <code class="inline"><span class="w">YES</span></code>
+; false (<code class="inline"><span class="w">empty</span> <span class="w">string</span></code>
+) if <code class="inline"><span class="w">NO</span></code>
+.</p>
+</li>
+<li><a name="'0x24result-0x3d-checkFCC(0x24string)'"></a><b><code class="inline"><span class="i">$result</span> = <span class="i">checkFCC</span><span class="s">(</span><span class="i">$string</span><span class="s">)</span></code>
+</b>
+<p>It returns true (<code class="inline"><span class="n">1</span></code>
+) if <code class="inline"><span class="w">YES</span></code>
+; false (<code class="inline"><span class="w">empty</span> <span class="w">string</span></code>
+) if <code class="inline"><span class="w">NO</span></code>
+;
+<code class="inline"><a class="l_k" href="../functions/undef.html">undef</a></code> if <code class="inline"><span class="w">MAYBE</span></code>
+.</p>
+<p>Note: If a string is not in FCD, it must not be in FCC.
+So <code class="inline"><span class="i">checkFCC</span><span class="s">(</span><span class="i">$not_FCD_string</span><span class="s">)</span></code>
+ should return <code class="inline"><span class="w">NO</span></code>
+.</p>
+</li>
+<li><a name="'0x24result-0x3d-check(0x24form_name0x2c-0x24string)'"></a><b><code class="inline"><span class="i">$result</span> = <span class="i">check</span><span class="s">(</span><span class="i">$form_name</span><span class="cm">,</span> <span class="i">$string</span><span class="s">)</span></code>
+</b>
+<p>It returns true (<code class="inline"><span class="n">1</span></code>
+) if <code class="inline"><span class="w">YES</span></code>
+; false (<code class="inline"><span class="w">empty</span> <span class="w">string</span></code>
+) if <code class="inline"><span class="w">NO</span></code>
+;
+<code class="inline"><a class="l_k" href="../functions/undef.html">undef</a></code> if <code class="inline"><span class="w">MAYBE</span></code>
+.</p>
+<p>As <code class="inline"><span class="i">$form_name</span></code>
+, one of the following names must be given.</p>
+<pre class="verbatim">  'C'  or 'NFC'  for Normalization Form C  (UAX #15)
+  'D'  or 'NFD'  for Normalization Form D  (UAX #15)
+  'KC' or 'NFKC' for Normalization Form KC (UAX #15)
+  'KD' or 'NFKD' for Normalization Form KD (UAX #15)</pre><pre class="verbatim">  'FCD'          for "Fast C or D" Form  (UTN #5)
+  'FCC'          for "Fast C Contiguous" (UTN #5)</pre></li>
+</ul>
+<p><b>Note</b></p>
+<p>In the cases of NFD, NFKD, and FCD, the answer must be
+either <code class="inline"><span class="w">YES</span></code>
+ or <code class="inline"><span class="w">NO</span></code>
+. The answer <code class="inline"><span class="w">MAYBE</span></code>
+ may be returned
+in the cases of NFC, NFKC, and FCC.</p>
+<p>A <code class="inline"><span class="w">MAYBE</span></code>
+ string should contain at least one combining character
+or the like. For example, <code class="inline"><span class="w">COMBINING</span> <span class="w">ACUTE</span> <span class="w">ACCENT</span></code>
+ has
+the MAYBE_NFC/MAYBE_NFKC property.</p>
+<p>Both <code class="inline"><span class="i">checkNFC</span><span class="s">(</span><span class="q">&quot;A\N{COMBINING ACUTE ACCENT}&quot;</span><span class="s">)</span></code>
+
+and <code class="inline"><span class="i">checkNFC</span><span class="s">(</span><span class="q">&quot;B\N{COMBINING ACUTE ACCENT}&quot;</span><span class="s">)</span></code>
+ will return <code class="inline"><span class="w">MAYBE</span></code>
+.
+<code class="inline"><span class="q">&quot;A\N{COMBINING ACUTE ACCENT}&quot;</span></code>
+ is not in NFC
+(its NFC is <code class="inline"><span class="q">&quot;\N{LATIN CAPITAL LETTER A WITH ACUTE}&quot;</span></code>
+),
+while <code class="inline"><span class="q">&quot;B\N{COMBINING ACUTE ACCENT}&quot;</span></code>
+ is in NFC.</p>
+<p>If you want to check exactly, compare the string with its NFC/NFKC/FCC.</p>
+<pre class="verbatim">    if <span class="s">(</span><span class="i">$string</span> eq <span class="i">NFC</span><span class="s">(</span><span class="i">$string</span><span class="s">)</span><span class="s">)</span> <span class="s">{</span>
+	<span class="c"># $string is exactly normalized in NFC;</span>
+    <span class="s">}</span> else <span class="s">{</span>
+	<span class="c"># $string is not normalized in NFC;</span>
+    <span class="s">}</span></pre>
+<pre class="verbatim">    if <span class="s">(</span><span class="i">$string</span> eq <span class="i">NFKC</span><span class="s">(</span><span class="i">$string</span><span class="s">)</span><span class="s">)</span> <span class="s">{</span>
+	<span class="c"># $string is exactly normalized in NFKC;</span>
+    <span class="s">}</span> else <span class="s">{</span>
+	<span class="c"># $string is not normalized in NFKC;</span>
+    <span class="s">}</span></pre>
+<a name="Character-Data"></a><h2>Character Data</h2>
+<p>These functions are interface of character data used internally.
+If you want only to get Unicode normalization forms, you don't need
+call them yourself.</p>
+<ul>
+<li><a name="'0x24canonical_decomposition-0x3d-getCanon(0x24code_point)'"></a><b><code class="inline"><span class="i">$canonical_decomposition</span> = <span class="i">getCanon</span><span class="s">(</span><span class="i">$code_point</span><span class="s">)</span></code>
+</b>
+<p>If the character is canonically decomposable (including Hangul Syllables),
+it returns the (full) canonical decomposition as a string.
+Otherwise it returns <code class="inline"><a class="l_k" href="../functions/undef.html">undef</a></code>.</p>
+<p><b>Note:</b> According to the Unicode standard, the canonical decomposition
+of the character that is not canonically decomposable is same as
+the character itself.</p>
+</li>
+<li><a name="'0x24compatibility_decomposition-0x3d-getCompat(0x24code_point)'"></a><b><code class="inline"><span class="i">$compatibility_decomposition</span> = <span class="i">getCompat</span><span class="s">(</span><span class="i">$code_point</span><span class="s">)</span></code>
+</b>
+<p>If the character is compatibility decomposable (including Hangul Syllables),
+it returns the (full) compatibility decomposition as a string.
+Otherwise it returns <code class="inline"><a class="l_k" href="../functions/undef.html">undef</a></code>.</p>
+<p><b>Note:</b> According to the Unicode standard, the compatibility decomposition
+of the character that is not compatibility decomposable is same as
+the character itself.</p>
+</li>
+<li><a name="'0x24code_point_composite-0x3d-getComposite(0x24code_point_here0x2c-0x24code_point_next)'"></a><b><code class="inline"><span class="i">$code_point_composite</span> = <span class="i">getComposite</span><span class="s">(</span><span class="i">$code_point_here</span><span class="cm">,</span> <span class="i">$code_point_next</span><span class="s">)</span></code>
+</b>
+<p>If two characters here and next (as code points) are composable
+(including Hangul Jamo/Syllables and Composition Exclusions),
+it returns the code point of the composite.</p>
+<p>If they are not composable, it returns <code class="inline"><a class="l_k" href="../functions/undef.html">undef</a></code>.</p>
+</li>
+<li><a name="'0x24combining_class-0x3d-getCombinClass(0x24code_point)'"></a><b><code class="inline"><span class="i">$combining_class</span> = <span class="i">getCombinClass</span><span class="s">(</span><span class="i">$code_point</span><span class="s">)</span></code>
+</b>
+<p>It returns the combining class (as an integer) of the character.</p>
+</li>
+<li><a name="'0x24may_be_composed_with_prev_char-0x3d-isComp2nd(0x24code_point)'"></a><b><code class="inline"><span class="i">$may_be_composed_with_prev_char</span> = <span class="i">isComp2nd</span><span class="s">(</span><span class="i">$code_point</span><span class="s">)</span></code>
+</b>
+<p>It returns a boolean whether the character of the specified codepoint
+may be composed with the previous one in a certain composition
+(including Hangul Compositions, but excluding
+Composition Exclusions and Non-Starter Decompositions).</p>
+</li>
+<li><a name="'0x24is_exclusion-0x3d-isExclusion(0x24code_point)'"></a><b><code class="inline"><span class="i">$is_exclusion</span> = <span class="i">isExclusion</span><span class="s">(</span><span class="i">$code_point</span><span class="s">)</span></code>
+</b>
+<p>It returns a boolean whether the code point is a composition exclusion.</p>
+</li>
+<li><a name="'0x24is_singleton-0x3d-isSingleton(0x24code_point)'"></a><b><code class="inline"><span class="i">$is_singleton</span> = <span class="i">isSingleton</span><span class="s">(</span><span class="i">$code_point</span><span class="s">)</span></code>
+</b>
+<p>It returns a boolean whether the code point is a singleton</p>
+</li>
+<li><a name="'0x24is_non_starter_decomposition-0x3d-isNonStDecomp(0x24code_point)'"></a><b><code class="inline"><span class="i">$is_non_starter_decomposition</span> = <span class="i">isNonStDecomp</span><span class="s">(</span><span class="i">$code_point</span><span class="s">)</span></code>
+</b>
+<p>It returns a boolean whether the code point has Non-Starter Decomposition.</p>
+</li>
+<li><a name="'0x24is_Full_Composition_Exclusion-0x3d-isComp_Ex(0x24code_point)'"></a><b><code class="inline"><span class="i">$is_Full_Composition_Exclusion</span> = <span class="i">isComp_Ex</span><span class="s">(</span><span class="i">$code_point</span><span class="s">)</span></code>
+</b>
+<p>It returns a boolean of the derived property Comp_Ex
+(Full_Composition_Exclusion). This property is generated from
+Composition Exclusions + Singletons + Non-Starter Decompositions.</p>
+</li>
+<li><a name="'0x24NFD_is_NO-0x3d-isNFD_NO(0x24code_point)'"></a><b><code class="inline"><span class="i">$NFD_is_NO</span> = <span class="i">isNFD_NO</span><span class="s">(</span><span class="i">$code_point</span><span class="s">)</span></code>
+</b>
+<p>It returns a boolean of the derived property NFD_NO
+(NFD_Quick_Check=No).</p>
+</li>
+<li><a name="'0x24NFC_is_NO-0x3d-isNFC_NO(0x24code_point)'"></a><b><code class="inline"><span class="i">$NFC_is_NO</span> = <span class="i">isNFC_NO</span><span class="s">(</span><span class="i">$code_point</span><span class="s">)</span></code>
+</b>
+<p>It returns a boolean of the derived property NFC_NO
+(NFC_Quick_Check=No).</p>
+</li>
+<li><a name="'0x24NFC_is_MAYBE-0x3d-isNFC_MAYBE(0x24code_point)'"></a><b><code class="inline"><span class="i">$NFC_is_MAYBE</span> = <span class="i">isNFC_MAYBE</span><span class="s">(</span><span class="i">$code_point</span><span class="s">)</span></code>
+</b>
+<p>It returns a boolean of the derived property NFC_MAYBE
+(NFC_Quick_Check=Maybe).</p>
+</li>
+<li><a name="'0x24NFKD_is_NO-0x3d-isNFKD_NO(0x24code_point)'"></a><b><code class="inline"><span class="i">$NFKD_is_NO</span> = <span class="i">isNFKD_NO</span><span class="s">(</span><span class="i">$code_point</span><span class="s">)</span></code>
+</b>
+<p>It returns a boolean of the derived property NFKD_NO
+(NFKD_Quick_Check=No).</p>
+</li>
+<li><a name="'0x24NFKC_is_NO-0x3d-isNFKC_NO(0x24code_point)'"></a><b><code class="inline"><span class="i">$NFKC_is_NO</span> = <span class="i">isNFKC_NO</span><span class="s">(</span><span class="i">$code_point</span><span class="s">)</span></code>
+</b>
+<p>It returns a boolean of the derived property NFKC_NO
+(NFKC_Quick_Check=No).</p>
+</li>
+<li><a name="'0x24NFKC_is_MAYBE-0x3d-isNFKC_MAYBE(0x24code_point)'"></a><b><code class="inline"><span class="i">$NFKC_is_MAYBE</span> = <span class="i">isNFKC_MAYBE</span><span class="s">(</span><span class="i">$code_point</span><span class="s">)</span></code>
+</b>
+<p>It returns a boolean of the derived property NFKC_MAYBE
+(NFKC_Quick_Check=Maybe).</p>
+</li>
+</ul>
+<a name="EXPORT"></a><h1>EXPORT</h1>
+<p><code class="inline"><span class="w">NFC</span></code>
+, <code class="inline"><span class="w">NFD</span></code>
+, <code class="inline"><span class="w">NFKC</span></code>
+, <code class="inline"><span class="w">NFKD</span></code>
+: by default.</p>
+<p><code class="inline"><span class="w">normalize</span></code>
+ and other some functions: on request.</p>
+<a name="CAVEATS"></a><h1>CAVEATS</h1>
+<ul>
+<li><a name="Perl's-version-vs.-Unicode-version"></a><b>Perl's version vs. Unicode version</b>
+<p>Since this module refers to perl core's Unicode database in the directory
+<i>/lib/unicore</i> (or formerly <i>/lib/unicode</i>), the Unicode version of
+normalization implemented by this module depends on your perl's version.</p>
+<pre class="verbatim">    perl's version     implemented Unicode version
+       5.6.1              3.0.1
+       5.7.2              3.1.0
+       5.7.3              3.1.1 (normalization is same as 3.1.0)
+       5.8.0              3.2.0
+     5.8.1-5.8.3          4.0.0
+     5.8.4-5.8.6          4.0.1 (normalization is same as 4.0.0)
+     5.8.7-5.8.8          4.1.0</pre></li>
+<li><a name="Correction-of-decomposition-mapping"></a><b>Correction of decomposition mapping</b>
+<p>In older Unicode versions, a small number of characters (all of which are
+CJK compatibility ideographs as far as they have been found) may have
+an erroneous decomposition mapping (see <i>NormalizationCorrections.txt</i>).
+Anyhow, this module will neither refer to <i>NormalizationCorrections.txt</i>
+nor provide any specific version of normalization. Therefore this module
+running on an older perl with an older Unicode database may use
+the erroneous decomposition mapping blindly conforming to the Unicode database.</p>
+</li>
+<li><a name="Revised-definition-of-canonical-composition"></a><b>Revised definition of canonical composition</b>
+<p>In Unicode 4.1.0, the definition D2 of canonical composition (which
+affects NFC and NFKC) has been changed (see Public Review Issue #29
+and recent UAX #15). This module has used the newer definition
+since the version 0.07 (Oct 31, 2001).
+This module will not support the normalization according to the older
+definition, even if the Unicode version implemented by perl is
+lower than 4.1.0.</p>
+</li>
+</ul>
+<a name="AUTHOR"></a><h1>AUTHOR</h1>
+<p>SADAHIRO Tomoyuki &lt;SADAHIRO@cpan.org&gt;</p>
+<p>Copyright(C) 2001-2007, SADAHIRO Tomoyuki. Japan. All rights reserved.</p>
+<p>This module is free software; you can redistribute it
+and/or modify it under the same terms as Perl itself.</p>
+<a name="SEE-ALSO"></a><h1>SEE ALSO</h1>
+<ul>
+<li><a name="http0x3a0x2f0x2fwww.unicode.org0x2freports0x2ftr150x2f"></a><b><a href="http://www.unicode.org/reports/tr15/">http://www.unicode.org/reports/tr15/</a></b>
+<p>Unicode Normalization Forms - UAX #15</p>
+</li>
+<li><a name="http0x3a0x2f0x2fwww.unicode.org0x2fPublic0x2fUNIDATA0x2fCompositionExclusions.txt"></a><b><a href="http://www.unicode.org/Public/UNIDATA/CompositionExclusions.txt">http://www.unicode.org/Public/UNIDATA/CompositionExclusions.txt</a></b>
+<p>Composition Exclusion Table</p>
+</li>
+<li><a name="http0x3a0x2f0x2fwww.unicode.org0x2fPublic0x2fUNIDATA0x2fDerivedNormalizationProps.txt"></a><b><a href="http://www.unicode.org/Public/UNIDATA/DerivedNormalizationProps.txt">http://www.unicode.org/Public/UNIDATA/DerivedNormalizationProps.txt</a></b>
+<p>Derived Normalization Properties</p>
+</li>
+<li><a name="http0x3a0x2f0x2fwww.unicode.org0x2fPublic0x2fUNIDATA0x2fNormalizationCorrections.txt"></a><b><a href="http://www.unicode.org/Public/UNIDATA/NormalizationCorrections.txt">http://www.unicode.org/Public/UNIDATA/NormalizationCorrections.txt</a></b>
+<p>Normalization Corrections</p>
+</li>
+<li><a name="http0x3a0x2f0x2fwww.unicode.org0x2freview0x2fpr-29.html"></a><b><a href="http://www.unicode.org/review/pr-29.html">http://www.unicode.org/review/pr-29.html</a></b>
+<p>Public Review Issue #29: Normalization Issue</p>
+</li>
+<li><a name="http0x3a0x2f0x2fwww.unicode.org0x2fnotes0x2ftn50x2f"></a><b><a href="http://www.unicode.org/notes/tn5/">http://www.unicode.org/notes/tn5/</a></b>
+<p>Canonical Equivalence in Applications - UTN #5</p>
+</li>
+</ul>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../close_purple.gif';" onmouseout="rightCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('Unicode::Normalize','Unicode/Normalize.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

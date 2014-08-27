@@ -1,0 +1,207 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>MIME::Base64 - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 1;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../close_purple.gif';" onmouseout="leftCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../index-overview.html">Overview</a></li>
+        <li><a href="../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../index-faq.html">FAQs</a></li>
+        <li><a href="../index-history.html">History / Changes</a></li>
+        <li><a href="../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../index-language.html">Language</a></li>
+        <li><a href="../index-functions.html">Functions</a></li>
+        <li><a href="../perlop.html">Operators</a></li>
+        <li><a href="../perlvar.html">Special variables</a></li>
+        <li><a href="../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../index-modules-A.html">Core modules</a></li>
+        <li><a href="../index-utilities.html">Utilities</a></li>
+        <li><a href="../index-internals.html">Internals</a></li>
+        <li><a href="../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../index.html">Home</a> &gt; <a href="../index-modules-A.html">Core modules</a> &gt; <a href="../index-modules-M.html">M</a> &gt; MIME::Base64</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">MIME::Base64</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><li><a href="#DIAGNOSTICS">DIAGNOSTICS</a><li><a href="#EXAMPLES">EXAMPLES</a><li><a href="#COPYRIGHT">COPYRIGHT</a><li><a href="#SEE-ALSO">SEE ALSO</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>MIME::Base64 - Encoding and decoding of base64 strings</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim"> <a class="l_k" href="../functions/use.html">use</a> <span class="w">MIME::Base64</span><span class="sc">;</span></pre>
+<pre class="verbatim"> <span class="i">$encoded</span> = <span class="i">encode_base64</span><span class="s">(</span><span class="q">&#39;Aladdin:open sesame&#39;</span><span class="s">)</span><span class="sc">;</span>
+ <span class="i">$decoded</span> = <span class="i">decode_base64</span><span class="s">(</span><span class="i">$encoded</span><span class="s">)</span><span class="sc">;</span></pre>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p>This module provides functions to encode and decode strings into and from the
+base64 encoding specified in RFC 2045 - <i>MIME (Multipurpose Internet
+Mail Extensions)</i>. The base64 encoding is designed to represent
+arbitrary sequences of octets in a form that need not be humanly
+readable. A 65-character subset ([A-Za-z0-9+/=]) of US-ASCII is used,
+enabling 6 bits to be represented per printable character.</p>
+<p>The following functions are provided:</p>
+<ul>
+<li><a name="encode_base64(0x24str)"></a><b>encode_base64($str)</b>
+</li>
+<li><a name="encode_base64(0x24str0x2c-0x24eol)0x3b"></a><b>encode_base64($str, $eol);</b>
+<p>Encode data by calling the encode_base64() function.  The first
+argument is the string to encode.  The second argument is the
+line-ending sequence to use.  It is optional and defaults to "\n".  The
+returned encoded string is broken into lines of no more than 76
+characters each and it will end with $eol unless it is empty.  Pass an
+empty string as second argument if you do not want the encoded string
+to be broken into lines.</p>
+</li>
+<li><a name="decode_base64(0x24str)"></a><b>decode_base64($str)</b>
+<p>Decode a base64 string by calling the decode_base64() function.  This
+function takes a single argument which is the string to decode and
+returns the decoded data.</p>
+<p>Any character not part of the 65-character base64 subset is
+silently ignored.  Characters occurring after a '=' padding character
+are never decoded.</p>
+<p>If the length of the string to decode, after ignoring
+non-base64 chars, is not a multiple of 4 or if padding occurs too early,
+then a warning is generated if perl is running under <code class="inline">-w</code>
+.</p>
+</li>
+</ul>
+<p>If you prefer not to import these routines into your namespace, you can
+call them as:</p>
+<pre class="verbatim">    <a class="l_k" href="../functions/use.html">use</a> <span class="w">MIME::Base64</span> <span class="s">(</span><span class="s">)</span><span class="sc">;</span>
+    <span class="i">$encoded</span> = <span class="i">MIME::Base64::encode</span><span class="s">(</span><span class="i">$decoded</span><span class="s">)</span><span class="sc">;</span>
+    <span class="i">$decoded</span> = <span class="i">MIME::Base64::decode</span><span class="s">(</span><span class="i">$encoded</span><span class="s">)</span><span class="sc">;</span></pre>
+<a name="DIAGNOSTICS"></a><h1>DIAGNOSTICS</h1>
+<p>The following warnings can be generated if perl is invoked with the
+<code class="inline">-w</code>
+ switch:</p>
+<ul>
+<li><a name="Premature-end-of-base64-data"></a><b>Premature end of base64 data</b>
+<p>The number of characters to decode is not a multiple of 4.  Legal
+base64 data should be padded with one or two "=" characters to make
+its length a multiple of 4.  The decoded result will be the same
+whether the padding is present or not.</p>
+</li>
+<li><a name="Premature-padding-of-base64-data"></a><b>Premature padding of base64 data</b>
+<p>The '=' padding character occurs as the first or second character
+in a base64 quartet.</p>
+</li>
+</ul>
+<p>The following exception can be raised:</p>
+<ul>
+<li><a name="Wide-character-in-subroutine-entry"></a><b>Wide character in subroutine entry</b>
+<p>The string passed to encode_base64() contains characters with code
+above 255.  The base64 encoding is only defined for single-byte
+characters.  Use the Encode module to select the byte encoding you
+want.</p>
+</li>
+</ul>
+<a name="EXAMPLES"></a><h1>EXAMPLES</h1>
+<p>If you want to encode a large file, you should encode it in chunks
+that are a multiple of 57 bytes.  This ensures that the base64 lines
+line up and that you do not end up with padding in the middle. 57
+bytes of data fills one complete base64 line (76 == 57*4/3):</p>
+<pre class="verbatim">   <a class="l_k" href="../functions/use.html">use</a> <span class="w">MIME::Base64</span> <span class="q">qw(encode_base64)</span><span class="sc">;</span></pre>
+<pre class="verbatim">   <a class="l_k" href="../functions/open.html">open</a><span class="s">(</span><span class="w">FILE</span><span class="cm">,</span> <span class="q">&quot;/var/log/wtmp&quot;</span><span class="s">)</span> or <a class="l_k" href="../functions/die.html">die</a> <span class="q">&quot;$!&quot;</span><span class="sc">;</span>
+   while <span class="s">(</span><a class="l_k" href="../functions/read.html">read</a><span class="s">(</span><span class="w">FILE</span><span class="cm">,</span> <span class="i">$buf</span><span class="cm">,</span> <span class="n">60</span>*<span class="n">57</span><span class="s">)</span><span class="s">)</span> <span class="s">{</span>
+       <a class="l_k" href="../functions/print.html">print</a> <span class="i">encode_base64</span><span class="s">(</span><span class="i">$buf</span><span class="s">)</span><span class="sc">;</span>
+   <span class="s">}</span></pre>
+<p>or if you know you have enough memory</p>
+<pre class="verbatim">   <a class="l_k" href="../functions/use.html">use</a> <span class="w">MIME::Base64</span> <span class="q">qw(encode_base64)</span><span class="sc">;</span>
+   <a class="l_k" href="../functions/local.html">local</a><span class="s">(</span><span class="i">$/</span><span class="s">)</span> = <a class="l_k" href="../functions/undef.html">undef</a><span class="sc">;</span>  <span class="c"># slurp</span>
+   <a class="l_k" href="../functions/print.html">print</a> <span class="i">encode_base64</span><span class="s">(</span><span class="q">&lt;STDIN&gt;</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>The same approach as a command line:</p>
+<pre class="verbatim">   <span class="w">perl</span> -<span class="w">MMIME::Base64</span> -<span class="n">0777</span> -ne <span class="q">&#39;print encode_base64($_)&#39;</span> &lt;<span class="w">file</span></pre>
+<p>Decoding does not need slurp mode if every line contains a multiple
+of four base64 chars:</p>
+<pre class="verbatim">   <span class="w">perl</span> -<span class="w">MMIME::Base64</span> -ne <span class="q">&#39;print decode_base64($_)&#39;</span> &lt;<span class="w">file</span></pre>
+<p>Perl v5.8 and better allow extended Unicode characters in strings.
+Such strings cannot be encoded directly, as the base64
+encoding is only defined for single-byte characters.  The solution is
+to use the Encode module to select the byte encoding you want.  For
+example:</p>
+<pre class="verbatim">    <a class="l_k" href="../functions/use.html">use</a> <span class="w">MIME::Base64</span> <span class="q">qw(encode_base64)</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Encode</span> <span class="q">qw(encode)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="i">$encoded</span> = <span class="i">encode_base64</span><span class="s">(</span><span class="i">encode</span><span class="s">(</span><span class="q">&quot;UTF-8&quot;</span><span class="cm">,</span> <span class="q">&quot;\x{FFFF}\n&quot;</span><span class="s">)</span><span class="s">)</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/print.html">print</a> <span class="i">$encoded</span><span class="sc">;</span></pre>
+<a name="COPYRIGHT"></a><h1>COPYRIGHT</h1>
+<p>Copyright 1995-1999, 2001-2004 Gisle Aas.</p>
+<p>This library is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.</p>
+<p>Distantly based on LWP::Base64 written by Martijn Koster
+&lt;m.koster@nexor.co.uk&gt; and Joerg Reichelt &lt;j.reichelt@nexor.co.uk&gt; and
+code posted to comp.lang.perl &lt;3pd2lp$6gf@wsinti07.win.tue.nl&gt; by Hans
+Mulder &lt;hansm@wsinti07.win.tue.nl&gt;</p>
+<p>The XS implementation uses code from metamail.  Copyright 1991 Bell
+Communications Research, Inc. (Bellcore)</p>
+<a name="SEE-ALSO"></a><h1>SEE ALSO</h1>
+<p><a href="../MIME/QuotedPrint.html">MIME::QuotedPrint</a></p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../close_purple.gif';" onmouseout="rightCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('MIME::Base64','MIME/Base64.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

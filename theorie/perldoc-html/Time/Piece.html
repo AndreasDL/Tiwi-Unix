@@ -1,0 +1,229 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>Time::Piece - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 1;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../close_purple.gif';" onmouseout="leftCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../index-overview.html">Overview</a></li>
+        <li><a href="../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../index-faq.html">FAQs</a></li>
+        <li><a href="../index-history.html">History / Changes</a></li>
+        <li><a href="../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../index-language.html">Language</a></li>
+        <li><a href="../index-functions.html">Functions</a></li>
+        <li><a href="../perlop.html">Operators</a></li>
+        <li><a href="../perlvar.html">Special variables</a></li>
+        <li><a href="../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../index-modules-A.html">Core modules</a></li>
+        <li><a href="../index-utilities.html">Utilities</a></li>
+        <li><a href="../index-internals.html">Internals</a></li>
+        <li><a href="../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../index.html">Home</a> &gt; <a href="../index-modules-A.html">Core modules</a> &gt; <a href="../index-modules-T.html">T</a> &gt; Time::Piece</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">Time::Piece</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><li><a href="#USAGE">USAGE</a><ul><li><a href="#Local-Locales">Local Locales</a><li><a href="#Date-Calculations">Date Calculations</a><li><a href="#Date-Comparisons">Date Comparisons</a><li><a href="#Date-Parsing">Date Parsing</a><li><a href="#YYYY-MM-DDThh0x3amm0x3ass">YYYY-MM-DDThh:mm:ss</a><li><a href="#Week-Number">Week Number</a><li><a href="#Global-Overriding">Global Overriding</a></ul><li><a href="#AUTHOR">AUTHOR</a><li><a href="#License">License</a><li><a href="#SEE-ALSO">SEE ALSO</a><li><a href="#BUGS">BUGS</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>Time::Piece - Object Oriented time objects</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Time::Piece</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <a class="l_k" href="../functions/my.html">my</a> <span class="i">$t</span> = <a class="l_k" href="../functions/localtime.html">localtime</a><span class="sc">;</span>
+    <a class="l_k" href="../functions/print.html">print</a> <span class="q">&quot;Time is $t\n&quot;</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/print.html">print</a> <span class="q">&quot;Year is &quot;</span><span class="cm">,</span> <span class="i">$t</span><span class="i">-&gt;year</span><span class="cm">,</span> <span class="q">&quot;\n&quot;</span><span class="sc">;</span></pre>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p>This module replaces the standard localtime and gmtime functions with
+implementations that return objects. It does so in a backwards
+compatible manner, so that using localtime/gmtime in the way documented
+in perlfunc will still return what you expect.</p>
+<p>The module actually implements most of an interface described by
+Larry Wall on the perl5-porters mailing list here:
+<a href="http://www.xray.mpe.mpg.de/mailing-lists/perl5-porters/2000-01/msg00241.html">http://www.xray.mpe.mpg.de/mailing-lists/perl5-porters/2000-01/msg00241.html</a></p>
+<a name="USAGE"></a><h1>USAGE</h1>
+<p>After importing this module, when you use localtime or gmtime in a scalar
+context, rather than getting an ordinary scalar string representing the
+date and time, you get a Time::Piece object, whose stringification happens
+to produce the same effect as the localtime and gmtime functions. There is 
+also a new() constructor provided, which is the same as localtime(), except
+when passed a Time::Piece object, in which case it's a copy constructor. The
+following methods are available on the object:</p>
+<pre class="verbatim">    $t-&gt;sec                 # also available as $t-&gt;second
+    $t-&gt;min                 # also available as $t-&gt;minute
+    $t-&gt;hour                # 24 hour
+    $t-&gt;mday                # also available as $t-&gt;day_of_month
+    $t-&gt;mon                 # 1 = January
+    $t-&gt;_mon                # 0 = January
+    $t-&gt;monname             # Feb
+    $t-&gt;month               # same as $t-&gt;monname
+    $t-&gt;fullmonth           # February
+    $t-&gt;year                # based at 0 (year 0 AD is, of course 1 BC)
+    $t-&gt;_year               # year minus 1900
+    $t-&gt;yy                  # 2 digit year
+    $t-&gt;wday                # 1 = Sunday
+    $t-&gt;_wday               # 0 = Sunday
+    $t-&gt;day_of_week         # 0 = Sunday
+    $t-&gt;wdayname            # Tue
+    $t-&gt;day                 # same as wdayname
+    $t-&gt;fullday             # Tuesday
+    $t-&gt;yday                # also available as $t-&gt;day_of_year, 0 = Jan 01
+    $t-&gt;isdst               # also available as $t-&gt;daylight_savings</pre><pre class="verbatim">    $t-&gt;hms                 # 12:34:56
+    $t-&gt;hms(".")            # 12.34.56
+    $t-&gt;time                # same as $t-&gt;hms</pre><pre class="verbatim">    $t-&gt;ymd                 # 2000-02-29
+    $t-&gt;date                # same as $t-&gt;ymd
+    $t-&gt;mdy                 # 02-29-2000
+    $t-&gt;mdy("/")            # 02/29/2000
+    $t-&gt;dmy                 # 29-02-2000
+    $t-&gt;dmy(".")            # 29.02.2000
+    $t-&gt;datetime            # 2000-02-29T12:34:56 (ISO 8601)
+    $t-&gt;cdate               # Tue Feb 29 12:34:56 2000
+    "$t"                    # same as $t-&gt;cdate</pre><pre class="verbatim">    $t-&gt;epoch               # seconds since the epoch
+    $t-&gt;tzoffset            # timezone offset in a Time::Seconds object</pre><pre class="verbatim">    $t-&gt;julian_day          # number of days since Julian period began
+    $t-&gt;mjd                 # modified Julian date (JD-2400000.5 days)</pre><pre class="verbatim">    <span class="i">$t</span><span class="i">-&gt;week</span>                <span class="c"># week number (ISO 8601)</span></pre>
+<pre class="verbatim">    $t-&gt;is_leap_year        # true if it its
+    $t-&gt;month_last_day      # 28-31</pre><pre class="verbatim">    $t-&gt;time_separator($s)  # set the default separator (default ":")
+    $t-&gt;date_separator($s)  # set the default separator (default "-")
+    $t-&gt;day_list(@days)     # set the default weekdays
+    $t-&gt;mon_list(@days)     # set the default months</pre><pre class="verbatim">    $t-&gt;strftime(FORMAT)    # same as POSIX::strftime (without the overhead
+                            # of the full POSIX extension)
+    $t-&gt;strftime()          # "Tue, 29 Feb 2000 12:34:56 GMT"</pre><pre class="verbatim">    <span class="w">Time::Piece</span><span class="w">-&gt;strptime</span><span class="s">(</span><span class="w">STRING</span><span class="cm">,</span> <span class="w">FORMAT</span><span class="s">)</span>
+                            <span class="c"># see strptime man page. Creates a new</span>
+                            <span class="c"># Time::Piece object</span></pre>
+<a name="Local-Locales"></a><h2>Local Locales</h2>
+<p>Both wdayname (day) and monname (month) allow passing in a list to use
+to index the name of the days against. This can be useful if you need
+to implement some form of localisation without actually installing or
+using locales.</p>
+<pre class="verbatim">  <a class="l_k" href="../functions/my.html">my</a> <span class="i">@days</span> = <span class="q">qw( Dimanche Lundi Merdi Mercredi Jeudi Vendredi Samedi )</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <a class="l_k" href="../functions/my.html">my</a> <span class="i">$french_day</span> = <a class="l_k" href="../functions/localtime.html">localtime</a><span class="i">-&gt;day</span><span class="s">(</span><span class="i">@days</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>These settings can be overriden globally too:</p>
+<pre class="verbatim">  <span class="i">Time::Piece::day_list</span><span class="s">(</span><span class="i">@days</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Or for months:</p>
+<pre class="verbatim">  <span class="i">Time::Piece::mon_list</span><span class="s">(</span><span class="i">@months</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>And locally for months:</p>
+<pre class="verbatim">  <a class="l_k" href="../functions/print.html">print</a> <a class="l_k" href="../functions/localtime.html">localtime</a><span class="i">-&gt;month</span><span class="s">(</span><span class="i">@months</span><span class="s">)</span><span class="sc">;</span></pre>
+<a name="Date-Calculations"></a><h2>Date Calculations</h2>
+<p>It's possible to use simple addition and subtraction of objects:</p>
+<pre class="verbatim">    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Time::Seconds</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <a class="l_k" href="../functions/my.html">my</a> <span class="i">$seconds</span> = <span class="i">$t1</span> - <span class="i">$t2</span><span class="sc">;</span>
+    <span class="i">$t1</span> += <span class="w">ONE_DAY</span><span class="sc">;</span> <span class="c"># add 1 day (constant from Time::Seconds)</span></pre>
+<p>The following are valid ($t1 and $t2 are Time::Piece objects):</p>
+<pre class="verbatim">    <span class="i">$t1</span> - <span class="i">$t2</span><span class="sc">;</span> <span class="c"># returns Time::Seconds object</span>
+    <span class="i">$t1</span> - <span class="n">42</span><span class="sc">;</span> <span class="c"># returns Time::Piece object</span>
+    <span class="i">$t1</span> + <span class="n">533</span><span class="sc">;</span> <span class="c"># returns Time::Piece object</span></pre>
+<p>However adding a Time::Piece object to another Time::Piece object
+will cause a runtime error.</p>
+<p>Note that the first of the above returns a Time::Seconds object, so
+while examining the object will print the number of seconds (because
+of the overloading), you can also get the number of minutes, hours,
+days, weeks and years in that delta, using the Time::Seconds API.</p>
+<a name="Date-Comparisons"></a><h2>Date Comparisons</h2>
+<p>Date comparisons are also possible, using the full suite of "&lt;", "&gt;",
+"&lt;=", "&gt;=", "&lt;=&gt;", "==" and "!=".</p>
+<a name="Date-Parsing"></a><h2>Date Parsing</h2>
+<p>Time::Piece links to your C library's strptime() function, allowing
+you incredibly flexible date parsing routines. For example:</p>
+<pre class="verbatim">  <a class="l_k" href="../functions/my.html">my</a> <span class="i">$t</span> = <span class="w">Time::Piece</span><span class="w">-&gt;strptime</span><span class="s">(</span><span class="q">&quot;Sun 3rd Nov, 1943&quot;</span><span class="cm">,</span>
+                                <span class="q">&quot;%A %drd %b, %Y&quot;</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <a class="l_k" href="../functions/print.html">print</a> <span class="i">$t</span><span class="i">-&gt;strftime</span><span class="s">(</span><span class="q">&quot;%a, %d %b %Y&quot;</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Outputs:</p>
+<pre class="verbatim">  Wed, 03 Nov 1943</pre><p>(see, it's even smart enough to fix my obvious date bug)</p>
+<p>For more information see "man strptime", which should be on all unix
+systems.</p>
+<a name="YYYY-MM-DDThh0x3amm0x3ass"></a><h2>YYYY-MM-DDThh:mm:ss</h2>
+<p>The ISO 8601 standard defines the date format to be YYYY-MM-DD, and
+the time format to be hh:mm:ss (24 hour clock), and if combined, they
+should be concatenated with date first and with a capital 'T' in front
+of the time.</p>
+<a name="Week-Number"></a><h2>Week Number</h2>
+<p>The <i>week number</i> may be an unknown concept to some readers.  The ISO
+8601 standard defines that weeks begin on a Monday and week 1 of the
+year is the week that includes both January 4th and the first Thursday
+of the year.  In other words, if the first Monday of January is the
+2nd, 3rd, or 4th, the preceding days of the January are part of the
+last week of the preceding year.  Week numbers range from 1 to 53.</p>
+<a name="Global-Overriding"></a><h2>Global Overriding</h2>
+<p>Finally, it's possible to override localtime and gmtime everywhere, by
+including the ':override' tag in the import list:</p>
+<pre class="verbatim">    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Time::Piece</span> <span class="q">':override'</span><span class="sc">;</span></pre>
+<a name="AUTHOR"></a><h1>AUTHOR</h1>
+<p>Matt Sergeant, matt@sergeant.org
+Jarkko Hietaniemi, jhi@iki.fi (while creating Time::Piece for core perl)</p>
+<a name="License"></a><h1>License</h1>
+<p>This module is free software, you may distribute it under the same terms
+as Perl.</p>
+<a name="SEE-ALSO"></a><h1>SEE ALSO</h1>
+<p>The excellent Calendar FAQ at <a href="http://www.tondering.dk/claus/calendar.html">http://www.tondering.dk/claus/calendar.html</a></p>
+<a name="BUGS"></a><h1>BUGS</h1>
+<p>The test harness leaves much to be desired. Patches welcome.</p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../close_purple.gif';" onmouseout="rightCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('Time::Piece','Time/Piece.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

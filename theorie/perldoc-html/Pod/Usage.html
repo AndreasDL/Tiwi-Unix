@@ -1,0 +1,427 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>Pod::Usage - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 1;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../close_purple.gif';" onmouseout="leftCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../index-overview.html">Overview</a></li>
+        <li><a href="../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../index-faq.html">FAQs</a></li>
+        <li><a href="../index-history.html">History / Changes</a></li>
+        <li><a href="../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../index-language.html">Language</a></li>
+        <li><a href="../index-functions.html">Functions</a></li>
+        <li><a href="../perlop.html">Operators</a></li>
+        <li><a href="../perlvar.html">Special variables</a></li>
+        <li><a href="../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../index-modules-A.html">Core modules</a></li>
+        <li><a href="../index-utilities.html">Utilities</a></li>
+        <li><a href="../index-internals.html">Internals</a></li>
+        <li><a href="../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../index.html">Home</a> &gt; <a href="../index-modules-A.html">Core modules</a> &gt; <a href="../index-modules-P.html">P</a> &gt; Pod::Usage</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">Pod::Usage</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#ARGUMENTS">ARGUMENTS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><li><a href="#EXAMPLES">EXAMPLES</a><ul><li><a href="#Recommended-Use">Recommended Use</a></ul><li><a href="#CAVEATS">CAVEATS</a><li><a href="#AUTHOR">AUTHOR</a><li><a href="#ACKNOWLEDGMENTS">ACKNOWLEDGMENTS</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>Pod::Usage, pod2usage() - print a usage message from embedded pod documentation</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">  <a class="l_k" href="../functions/use.html">use</a> <span class="w">Pod::Usage</span></pre>
+<pre class="verbatim">  <a class="l_k" href="../functions/my.html">my</a> <span class="i">$message_text</span>  = <span class="q">&quot;This text precedes the usage message.&quot;</span><span class="sc">;</span>
+  <a class="l_k" href="../functions/my.html">my</a> <span class="i">$exit_status</span>   = <span class="n">2</span><span class="sc">;</span>          <span class="c">## The exit status to use</span>
+  <a class="l_k" href="../functions/my.html">my</a> <span class="i">$verbose_level</span> = <span class="n">0</span><span class="sc">;</span>          <span class="c">## The verbose level to use</span>
+  <a class="l_k" href="../functions/my.html">my</a> <span class="i">$filehandle</span>    = \<span class="i">*STDERR</span><span class="sc">;</span>   <span class="c">## The filehandle to write to</span></pre>
+<pre class="verbatim">  <span class="i">pod2usage</span><span class="s">(</span><span class="i">$message_text</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <span class="i">pod2usage</span><span class="s">(</span><span class="i">$exit_status</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <span class="i">pod2usage</span><span class="s">(</span> <span class="s">{</span> -<span class="w">message</span> <span class="cm">=&gt;</span> <span class="i">$message_text</span> <span class="cm">,</span>
+               -<span class="w">exitval</span> <span class="cm">=&gt;</span> <span class="i">$exit_status</span>  <span class="cm">,</span>  
+               -<span class="w">verbose</span> <span class="cm">=&gt;</span> <span class="i">$verbose_level</span><span class="cm">,</span>  
+               -<span class="w">output</span>  <span class="cm">=&gt;</span> <span class="i">$filehandle</span> <span class="s">}</span> <span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <span class="i">pod2usage</span><span class="s">(</span>   -<span class="w">msg</span>     <span class="cm">=&gt;</span> <span class="i">$message_text</span> <span class="cm">,</span>
+               -<span class="w">exitval</span> <span class="cm">=&gt;</span> <span class="i">$exit_status</span>  <span class="cm">,</span>  
+               -<span class="w">verbose</span> <span class="cm">=&gt;</span> <span class="i">$verbose_level</span><span class="cm">,</span>  
+               -<span class="w">output</span>  <span class="cm">=&gt;</span> <span class="i">$filehandle</span>   <span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <span class="i">pod2usage</span><span class="s">(</span>   -<span class="w">verbose</span> <span class="cm">=&gt;</span> <span class="n">2</span><span class="cm">,</span>
+               -<span class="w">noperldoc</span> <span class="cm">=&gt;</span> <span class="n">1</span>  <span class="s">)</span></pre>
+<a name="ARGUMENTS"></a><h1>ARGUMENTS</h1>
+<p><b>pod2usage</b> should be given either a single argument, or a list of
+arguments corresponding to an associative array (a "hash"). When a single
+argument is given, it should correspond to exactly one of the following:</p>
+<ul>
+<li>
+<p>A string containing the text of a message to print <i>before</i> printing
+the usage message</p>
+</li>
+<li>
+<p>A numeric value corresponding to the desired exit status</p>
+</li>
+<li>
+<p>A reference to a hash</p>
+</li>
+</ul>
+<p>If more than one argument is given then the entire argument list is
+assumed to be a hash.  If a hash is supplied (either as a reference or
+as a list) it should contain one or more elements with the following
+keys:</p>
+<ul>
+<li><a name="'-message'"></a><b><code class="inline">-<span class="w">message</span></code>
+</b>
+</li>
+<li><a name="'-msg'"></a><b><code class="inline">-<span class="w">msg</span></code>
+</b>
+<p>The text of a message to print immediately prior to printing the
+program's usage message.</p>
+</li>
+<li><a name="'-exitval'"></a><b><code class="inline">-<span class="w">exitval</span></code>
+</b>
+<p>The desired exit status to pass to the <b>exit()</b> function.
+This should be an integer, or else the string "NOEXIT" to
+indicate that control should simply be returned without
+terminating the invoking process.</p>
+</li>
+<li><a name="'-verbose'"></a><b><code class="inline">-<span class="w">verbose</span></code>
+</b>
+<p>The desired level of "verboseness" to use when printing the usage
+message. If the corresponding value is 0, then only the "SYNOPSIS"
+section of the pod documentation is printed. If the corresponding value
+is 1, then the "SYNOPSIS" section, along with any section entitled
+"OPTIONS", "ARGUMENTS", or "OPTIONS AND ARGUMENTS" is printed.  If the
+corresponding value is 2 or more then the entire manpage is printed.</p>
+<p>The special verbosity level 99 requires to also specify the -sections
+parameter; then these sections are extracted (see <a href="../Pod/Select.html">Pod::Select</a>)
+and printed.</p>
+</li>
+<li><a name="'-sections'"></a><b><code class="inline">-<span class="w">sections</span></code>
+</b>
+<p>A string representing a selection list for sections to be printed
+when -verbose is set to 99, e.g. <code class="inline"><span class="q">&quot;NAME|SYNOPSIS|DESCRIPTION|VERSION&quot;</span></code>
+.</p>
+</li>
+<li><a name="'-output'"></a><b><code class="inline">-<span class="w">output</span></code>
+</b>
+<p>A reference to a filehandle, or the pathname of a file to which the
+usage message should be written. The default is <code class="inline">\<span class="i">*STDERR</span></code>
+ unless the
+exit value is less than 2 (in which case the default is <code class="inline">\<span class="i">*STDOUT</span></code>
+).</p>
+</li>
+<li><a name="'-input'"></a><b><code class="inline">-<span class="w">input</span></code>
+</b>
+<p>A reference to a filehandle, or the pathname of a file from which the
+invoking script's pod documentation should be read.  It defaults to the
+file indicated by <code class="inline"><span class="i">$0</span></code>
+ (<code class="inline"><span class="i">$PROGRAM_NAME</span></code>
+ for users of <i>English.pm</i>).</p>
+</li>
+<li><a name="'-pathlist'"></a><b><code class="inline">-<span class="w">pathlist</span></code>
+</b>
+<p>A list of directory paths. If the input file does not exist, then it
+will be searched for in the given directory list (in the order the
+directories appear in the list). It defaults to the list of directories
+implied by <code class="inline"><span class="i">$ENV</span>{<span class="w">PATH</span>}</code>
+. The list may be specified either by a reference
+to an array, or by a string of directory paths which use the same path
+separator as <code class="inline"><span class="i">$ENV</span>{<span class="w">PATH</span>}</code>
+ on your system (e.g., <code class="inline"><span class="j">:</span></code>
+ for Unix, <code class="inline"><span class="sc">;</span></code>
+ for
+MSWin32 and DOS).</p>
+</li>
+<li><a name="'-noperldoc'"></a><b><code class="inline">-<span class="w">noperldoc</span></code>
+</b>
+<p>By default, Pod::Usage will call <a href="../perldoc.html">perldoc</a> when -verbose &gt;= 2 is
+specified. This does not work well e.g. if the script was packed
+with <a href="http://search.cpan.org/perldoc/PAR">PAR</a>. The -noperldoc option suppresses the external call to
+<a href="../perldoc.html">perldoc</a> and uses the simple text formatter (<a href="../Pod/Text.html">Pod::Text</a>) to 
+output the POD.</p>
+</li>
+</ul>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p><b>pod2usage</b> will print a usage message for the invoking script (using
+its embedded pod documentation) and then exit the script with the
+desired exit status. The usage message printed may have any one of three
+levels of "verboseness": If the verbose level is 0, then only a synopsis
+is printed. If the verbose level is 1, then the synopsis is printed
+along with a description (if present) of the command line options and
+arguments. If the verbose level is 2, then the entire manual page is
+printed.</p>
+<p>Unless they are explicitly specified, the default values for the exit
+status, verbose level, and output stream to use are determined as
+follows:</p>
+<ul>
+<li>
+<p>If neither the exit status nor the verbose level is specified, then the
+default is to use an exit status of 2 with a verbose level of 0.</p>
+</li>
+<li>
+<p>If an exit status <i>is</i> specified but the verbose level is <i>not</i>, then the
+verbose level will default to 1 if the exit status is less than 2 and
+will default to 0 otherwise.</p>
+</li>
+<li>
+<p>If an exit status is <i>not</i> specified but verbose level <i>is</i> given, then
+the exit status will default to 2 if the verbose level is 0 and will
+default to 1 otherwise.</p>
+</li>
+<li>
+<p>If the exit status used is less than 2, then output is printed on
+<code class="inline"><span class="w">STDOUT</span></code>
+.  Otherwise output is printed on <code class="inline"><span class="w">STDERR</span></code>
+.</p>
+</li>
+</ul>
+<p>Although the above may seem a bit confusing at first, it generally does
+"the right thing" in most situations.  This determination of the default
+values to use is based upon the following typical Unix conventions:</p>
+<ul>
+<li>
+<p>An exit status of 0 implies "success". For example, <b>diff(1)</b> exits
+with a status of 0 if the two files have the same contents.</p>
+</li>
+<li>
+<p>An exit status of 1 implies possibly abnormal, but non-defective, program
+termination.  For example, <b>grep(1)</b> exits with a status of 1 if
+it did <i>not</i> find a matching line for the given regular expression.</p>
+</li>
+<li>
+<p>An exit status of 2 or more implies a fatal error. For example, <b>ls(1)</b>
+exits with a status of 2 if you specify an illegal (unknown) option on
+the command line.</p>
+</li>
+<li>
+<p>Usage messages issued as a result of bad command-line syntax should go
+to <code class="inline"><span class="w">STDERR</span></code>
+.  However, usage messages issued due to an explicit request
+to print usage (like specifying <b>-help</b> on the command line) should go
+to <code class="inline"><span class="w">STDOUT</span></code>
+, just in case the user wants to pipe the output to a pager
+(such as <b>more(1)</b>).</p>
+</li>
+<li>
+<p>If program usage has been explicitly requested by the user, it is often
+desirable to exit with a status of 1 (as opposed to 0) after issuing
+the user-requested usage message.  It is also desirable to give a
+more verbose description of program usage in this case.</p>
+</li>
+</ul>
+<p><b>pod2usage</b> doesn't force the above conventions upon you, but it will
+use them by default if you don't expressly tell it to do otherwise.  The
+ability of <b>pod2usage()</b> to accept a single number or a string makes it
+convenient to use as an innocent looking error message handling function:</p>
+<pre class="verbatim">    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Pod::Usage</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Getopt::Long</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="c">## Parse options</span>
+    <span class="i">GetOptions</span><span class="s">(</span><span class="q">&quot;help&quot;</span><span class="cm">,</span> <span class="q">&quot;man&quot;</span><span class="cm">,</span> <span class="q">&quot;flag1&quot;</span><span class="s">)</span>  ||  <span class="i">pod2usage</span><span class="s">(</span><span class="n">2</span><span class="s">)</span><span class="sc">;</span>
+    <span class="i">pod2usage</span><span class="s">(</span><span class="n">1</span><span class="s">)</span>  if <span class="s">(</span><span class="i">$opt_help</span><span class="s">)</span><span class="sc">;</span>
+    <span class="i">pod2usage</span><span class="s">(</span>-<span class="w">verbose</span> <span class="cm">=&gt;</span> <span class="n">2</span><span class="s">)</span>  if <span class="s">(</span><span class="i">$opt_man</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="c">## Check for too many filenames</span>
+    <span class="i">pod2usage</span><span class="s">(</span><span class="q">&quot;$0: Too many files given.\n&quot;</span><span class="s">)</span>  if <span class="s">(</span><span class="i">@ARGV</span> &gt; <span class="n">1</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Some user's however may feel that the above "economy of expression" is
+not particularly readable nor consistent and may instead choose to do
+something more like the following:</p>
+<pre class="verbatim">    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Pod::Usage</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Getopt::Long</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="c">## Parse options</span>
+    <span class="i">GetOptions</span><span class="s">(</span><span class="q">&quot;help&quot;</span><span class="cm">,</span> <span class="q">&quot;man&quot;</span><span class="cm">,</span> <span class="q">&quot;flag1&quot;</span><span class="s">)</span>  ||  <span class="i">pod2usage</span><span class="s">(</span>-<span class="w">verbose</span> <span class="cm">=&gt;</span> <span class="n">0</span><span class="s">)</span><span class="sc">;</span>
+    <span class="i">pod2usage</span><span class="s">(</span>-<span class="w">verbose</span> <span class="cm">=&gt;</span> <span class="n">1</span><span class="s">)</span>  if <span class="s">(</span><span class="i">$opt_help</span><span class="s">)</span><span class="sc">;</span>
+    <span class="i">pod2usage</span><span class="s">(</span>-<span class="w">verbose</span> <span class="cm">=&gt;</span> <span class="n">2</span><span class="s">)</span>  if <span class="s">(</span><span class="i">$opt_man</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="c">## Check for too many filenames</span>
+    <span class="i">pod2usage</span><span class="s">(</span>-<span class="w">verbose</span> <span class="cm">=&gt;</span> <span class="n">2</span><span class="cm">,</span> -<span class="w">message</span> <span class="cm">=&gt;</span> <span class="q">&quot;$0: Too many files given.\n&quot;</span><span class="s">)</span>
+        if <span class="s">(</span><span class="i">@ARGV</span> &gt; <span class="n">1</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>As with all things in Perl, <i>there's more than one way to do it</i>, and
+<b>pod2usage()</b> adheres to this philosophy.  If you are interested in
+seeing a number of different ways to invoke <b>pod2usage</b> (although by no
+means exhaustive), please refer to <a href="#EXAMPLES">"EXAMPLES"</a>.</p>
+<a name="EXAMPLES"></a><h1>EXAMPLES</h1>
+<p>Each of the following invocations of <code class="inline"><span class="i">pod2usage</span><span class="s">(</span><span class="s">)</span></code>
+ will print just the
+"SYNOPSIS" section to <code class="inline"><span class="w">STDERR</span></code>
+ and will exit with a status of 2:</p>
+<pre class="verbatim">    <span class="i">pod2usage</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="i">pod2usage</span><span class="s">(</span><span class="n">2</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="i">pod2usage</span><span class="s">(</span>-<span class="w">verbose</span> <span class="cm">=&gt;</span> <span class="n">0</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="i">pod2usage</span><span class="s">(</span>-<span class="w">exitval</span> <span class="cm">=&gt;</span> <span class="n">2</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="i">pod2usage</span><span class="s">(</span><span class="s">{</span>-<span class="w">exitval</span> <span class="cm">=&gt;</span> <span class="n">2</span><span class="cm">,</span> -<span class="w">output</span> <span class="cm">=&gt;</span> \<span class="i">*STDERR</span><span class="s">}</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="i">pod2usage</span><span class="s">(</span><span class="s">{</span>-<span class="w">verbose</span> <span class="cm">=&gt;</span> <span class="n">0</span><span class="cm">,</span> -<span class="w">output</span>  <span class="cm">=&gt;</span> \<span class="i">*STDERR</span><span class="s">}</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="i">pod2usage</span><span class="s">(</span>-<span class="w">exitval</span> <span class="cm">=&gt;</span> <span class="n">2</span><span class="cm">,</span> -<span class="w">verbose</span> <span class="cm">=&gt;</span> <span class="n">0</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="i">pod2usage</span><span class="s">(</span>-<span class="w">exitval</span> <span class="cm">=&gt;</span> <span class="n">2</span><span class="cm">,</span> -<span class="w">verbose</span> <span class="cm">=&gt;</span> <span class="n">0</span><span class="cm">,</span> -<span class="w">output</span> <span class="cm">=&gt;</span> \<span class="i">*STDERR</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Each of the following invocations of <code class="inline"><span class="i">pod2usage</span><span class="s">(</span><span class="s">)</span></code>
+ will print a message
+of "Syntax error." (followed by a newline) to <code class="inline"><span class="w">STDERR</span></code>
+, immediately
+followed by just the "SYNOPSIS" section (also printed to <code class="inline"><span class="w">STDERR</span></code>
+) and
+will exit with a status of 2:</p>
+<pre class="verbatim">    <span class="i">pod2usage</span><span class="s">(</span><span class="q">&quot;Syntax error.&quot;</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="i">pod2usage</span><span class="s">(</span>-<span class="w">message</span> <span class="cm">=&gt;</span> <span class="q">&quot;Syntax error.&quot;</span><span class="cm">,</span> -<span class="w">verbose</span> <span class="cm">=&gt;</span> <span class="n">0</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="i">pod2usage</span><span class="s">(</span>-<span class="w">msg</span>  <span class="cm">=&gt;</span> <span class="q">&quot;Syntax error.&quot;</span><span class="cm">,</span> -<span class="w">exitval</span> <span class="cm">=&gt;</span> <span class="n">2</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="i">pod2usage</span><span class="s">(</span><span class="s">{</span>-<span class="w">msg</span> <span class="cm">=&gt;</span> <span class="q">&quot;Syntax error.&quot;</span><span class="cm">,</span> -<span class="w">exitval</span> <span class="cm">=&gt;</span> <span class="n">2</span><span class="cm">,</span> -<span class="w">output</span> <span class="cm">=&gt;</span> \<span class="i">*STDERR</span><span class="s">}</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="i">pod2usage</span><span class="s">(</span><span class="s">{</span>-<span class="w">msg</span> <span class="cm">=&gt;</span> <span class="q">&quot;Syntax error.&quot;</span><span class="cm">,</span> -<span class="w">verbose</span> <span class="cm">=&gt;</span> <span class="n">0</span><span class="cm">,</span> -<span class="w">output</span> <span class="cm">=&gt;</span> \<span class="i">*STDERR</span><span class="s">}</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="i">pod2usage</span><span class="s">(</span>-<span class="w">msg</span>  <span class="cm">=&gt;</span> <span class="q">&quot;Syntax error.&quot;</span><span class="cm">,</span> -<span class="w">exitval</span> <span class="cm">=&gt;</span> <span class="n">2</span><span class="cm">,</span> -<span class="w">verbose</span> <span class="cm">=&gt;</span> <span class="n">0</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="i">pod2usage</span><span class="s">(</span>-<span class="w">message</span> <span class="cm">=&gt;</span> <span class="q">&quot;Syntax error.&quot;</span><span class="cm">,</span>
+              -<span class="w">exitval</span> <span class="cm">=&gt;</span> <span class="n">2</span><span class="cm">,</span>
+              -<span class="w">verbose</span> <span class="cm">=&gt;</span> <span class="n">0</span><span class="cm">,</span>
+              -<span class="w">output</span>  <span class="cm">=&gt;</span> \<span class="i">*STDERR</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Each of the following invocations of <code class="inline"><span class="i">pod2usage</span><span class="s">(</span><span class="s">)</span></code>
+ will print the
+"SYNOPSIS" section and any "OPTIONS" and/or "ARGUMENTS" sections to
+<code class="inline"><span class="w">STDOUT</span></code>
+ and will exit with a status of 1:</p>
+<pre class="verbatim">    <span class="i">pod2usage</span><span class="s">(</span><span class="n">1</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="i">pod2usage</span><span class="s">(</span>-<span class="w">verbose</span> <span class="cm">=&gt;</span> <span class="n">1</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="i">pod2usage</span><span class="s">(</span>-<span class="w">exitval</span> <span class="cm">=&gt;</span> <span class="n">1</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="i">pod2usage</span><span class="s">(</span><span class="s">{</span>-<span class="w">exitval</span> <span class="cm">=&gt;</span> <span class="n">1</span><span class="cm">,</span> -<span class="w">output</span> <span class="cm">=&gt;</span> \<span class="i">*STDOUT</span><span class="s">}</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="i">pod2usage</span><span class="s">(</span><span class="s">{</span>-<span class="w">verbose</span> <span class="cm">=&gt;</span> <span class="n">1</span><span class="cm">,</span> -<span class="w">output</span> <span class="cm">=&gt;</span> \<span class="i">*STDOUT</span><span class="s">}</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="i">pod2usage</span><span class="s">(</span>-<span class="w">exitval</span> <span class="cm">=&gt;</span> <span class="n">1</span><span class="cm">,</span> -<span class="w">verbose</span> <span class="cm">=&gt;</span> <span class="n">1</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    pod2usage(-exitval =&gt; 1, -verbose =&gt; 1, -output =&gt; \*STDOUT});</pre><p>Each of the following invocations of <code class="inline"><span class="i">pod2usage</span><span class="s">(</span><span class="s">)</span></code>
+ will print the
+entire manual page to <code class="inline"><span class="w">STDOUT</span></code>
+ and will exit with a status of 1:</p>
+<pre class="verbatim">    <span class="i">pod2usage</span><span class="s">(</span>-<span class="w">verbose</span>  <span class="cm">=&gt;</span> <span class="n">2</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="i">pod2usage</span><span class="s">(</span><span class="s">{</span>-<span class="w">verbose</span> <span class="cm">=&gt;</span> <span class="n">2</span><span class="cm">,</span> -<span class="w">output</span> <span class="cm">=&gt;</span> \<span class="i">*STDOUT</span><span class="s">}</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="i">pod2usage</span><span class="s">(</span>-<span class="w">exitval</span>  <span class="cm">=&gt;</span> <span class="n">1</span><span class="cm">,</span> -<span class="w">verbose</span> <span class="cm">=&gt;</span> <span class="n">2</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="i">pod2usage</span><span class="s">(</span><span class="s">{</span>-<span class="w">exitval</span> <span class="cm">=&gt;</span> <span class="n">1</span><span class="cm">,</span> -<span class="w">verbose</span> <span class="cm">=&gt;</span> <span class="n">2</span><span class="cm">,</span> -<span class="w">output</span> <span class="cm">=&gt;</span> \<span class="i">*STDOUT</span><span class="s">}</span><span class="s">)</span><span class="sc">;</span></pre>
+<a name="Recommended-Use"></a><h2>Recommended Use</h2>
+<p>Most scripts should print some type of usage message to <code class="inline"><span class="w">STDERR</span></code>
+ when a
+command line syntax error is detected. They should also provide an
+option (usually <code class="inline">-<span class="w">H</span></code>
+ or <code class="inline">-<span class="w">help</span></code>
+) to print a (possibly more verbose)
+usage message to <code class="inline"><span class="w">STDOUT</span></code>
+. Some scripts may even wish to go so far as to
+provide a means of printing their complete documentation to <code class="inline"><span class="w">STDOUT</span></code>
+
+(perhaps by allowing a <code class="inline">-<span class="w">man</span></code>
+ option). The following complete example
+uses <b>Pod::Usage</b> in combination with <b>Getopt::Long</b> to do all of these
+things:</p>
+<pre class="verbatim">    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Getopt::Long</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Pod::Usage</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <a class="l_k" href="../functions/my.html">my</a> <span class="i">$man</span> = <span class="n">0</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/my.html">my</a> <span class="i">$help</span> = <span class="n">0</span><span class="sc">;</span>
+    <span class="c">## Parse options and print usage if there is a syntax error,</span>
+    <span class="c">## or if usage was explicitly requested.</span>
+    <span class="i">GetOptions</span><span class="s">(</span><span class="q">&#39;help|?&#39;</span> <span class="cm">=&gt;</span> \<span class="i">$help</span><span class="cm">,</span> <span class="w">man</span> <span class="cm">=&gt;</span> \<span class="i">$man</span><span class="s">)</span> or <span class="i">pod2usage</span><span class="s">(</span><span class="n">2</span><span class="s">)</span><span class="sc">;</span>
+    <span class="i">pod2usage</span><span class="s">(</span><span class="n">1</span><span class="s">)</span> if <span class="i">$help</span><span class="sc">;</span>
+    <span class="i">pod2usage</span><span class="s">(</span>-<span class="w">verbose</span> <span class="cm">=&gt;</span> <span class="n">2</span><span class="s">)</span> if <span class="i">$man</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="c">## If no arguments were given, then allow STDIN to be used only</span>
+    <span class="c">## if it&#39;s not connected to a terminal (otherwise print usage)</span>
+    <span class="i">pod2usage</span><span class="s">(</span><span class="q">&quot;$0: No files given.&quot;</span><span class="s">)</span>  if <span class="s">(</span><span class="s">(</span><span class="i">@ARGV</span> == <span class="n">0</span><span class="s">)</span> &amp;&amp; <span class="s">(</span>-t <span class="w">STDIN</span><span class="s">)</span><span class="s">)</span><span class="sc">;</span>
+<a name="__END__"></a>    __END__</pre>
+<pre class="verbatim">    =<span class="w">head1</span> <span class="w">NAME</span></pre>
+<pre class="verbatim">    <span class="w">sample</span> - <span class="w">Using</span> <span class="w">GetOpt::Long</span> and <span class="w">Pod::Usage</span></pre>
+<pre class="verbatim">    =<span class="w">head1</span> <span class="w">SYNOPSIS</span></pre>
+<pre class="verbatim">    <span class="w">sample</span> <span class="s">[</span><span class="w">options</span><span class="s">]</span> <span class="s">[</span><span class="w">file</span> ...<span class="s">]</span></pre>
+<pre class="verbatim">     <span class="j">Options:</span>
+       -<span class="w">help</span>            <span class="w">brief</span> <span class="w">help</span> <span class="w">message</span>
+       -<span class="w">man</span>             <span class="w">full</span> <span class="w">documentation</span></pre>
+<pre class="verbatim">    =<span class="w">head1</span> <span class="w">OPTIONS</span></pre>
+<pre class="verbatim">    =<span class="w">over</span> <span class="n">8</span></pre>
+<pre class="verbatim">    =<span class="w">item</span> <span class="w">B</span><span class="q">&lt;-help&gt;</span></pre>
+<pre class="verbatim">    <span class="w">Print</span> <span class="w">a</span> <span class="w">brief</span> <span class="w">help</span> <span class="w">message</span> and <span class="w">exits</span>.</pre>
+<pre class="verbatim">    =<span class="w">item</span> <span class="w">B</span><span class="q">&lt;-man&gt;</span></pre>
+<pre class="verbatim">    <span class="w">Prints</span> <span class="w">the</span> <span class="w">manual</span> <span class="w">page</span> and <span class="w">exits</span>.</pre>
+<pre class="verbatim">    =<span class="w">back</span></pre>
+<pre class="verbatim">    =<span class="w">head1</span> <span class="w">DESCRIPTION</span></pre>
+<pre class="verbatim">    B&lt;This program&gt; will read the given input file(s) and do something
+    useful with the contents thereof.</pre><pre class="verbatim">    =<span class="w">cut</span></pre>
+<a name="CAVEATS"></a><h1>CAVEATS</h1>
+<p>By default, <b>pod2usage()</b> will use <code class="inline"><span class="i">$0</span></code>
+ as the path to the pod input
+file.  Unfortunately, not all systems on which Perl runs will set <code class="inline"><span class="i">$0</span></code>
+
+properly (although if <code class="inline"><span class="i">$0</span></code>
+ isn't found, <b>pod2usage()</b> will search
+<code class="inline"><span class="i">$ENV</span>{<span class="w">PATH</span>}</code>
+ or else the list specified by the <code class="inline">-<span class="w">pathlist</span></code>
+ option).
+If this is the case for your system, you may need to explicitly specify
+the path to the pod docs for the invoking script using something
+similar to the following:</p>
+<pre class="verbatim">    <span class="i">pod2usage</span><span class="s">(</span>-<span class="w">exitval</span> <span class="cm">=&gt;</span> <span class="n">2</span><span class="cm">,</span> -<span class="w">input</span> <span class="cm">=&gt;</span> <span class="q">&quot;/path/to/your/pod/docs&quot;</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>In the pathological case that a script is called via a relative path
+<i>and</i> the script itself changes the current working directory
+(see <a href="../functions/chdir.html">chdir</a>) <i>before</i> calling pod2usage, Pod::Usage will
+fail even on robust platforms. Don't do that.</p>
+<a name="AUTHOR"></a><h1>AUTHOR</h1>
+<p>Please report bugs using <a href="http://rt.cpan.org">http://rt.cpan.org</a>.</p>
+<p>Brad Appleton &lt;bradapp@enteract.com&gt;</p>
+<p>Based on code for <b>Pod::Text::pod2text()</b> written by
+Tom Christiansen &lt;tchrist@mox.perl.com&gt;</p>
+<a name="ACKNOWLEDGMENTS"></a><h1>ACKNOWLEDGMENTS</h1>
+<p>Steven McDougall &lt;swmcd@world.std.com&gt; for his help and patience
+with re-writing this manpage.</p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../close_purple.gif';" onmouseout="rightCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('Pod::Usage','Pod/Usage.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

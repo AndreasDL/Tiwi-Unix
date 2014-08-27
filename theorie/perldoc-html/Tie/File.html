@@ -1,0 +1,663 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>Tie::File - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 1;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../close_purple.gif';" onmouseout="leftCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../index-overview.html">Overview</a></li>
+        <li><a href="../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../index-faq.html">FAQs</a></li>
+        <li><a href="../index-history.html">History / Changes</a></li>
+        <li><a href="../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../index-language.html">Language</a></li>
+        <li><a href="../index-functions.html">Functions</a></li>
+        <li><a href="../perlop.html">Operators</a></li>
+        <li><a href="../perlvar.html">Special variables</a></li>
+        <li><a href="../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../index-modules-A.html">Core modules</a></li>
+        <li><a href="../index-utilities.html">Utilities</a></li>
+        <li><a href="../index-internals.html">Internals</a></li>
+        <li><a href="../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../index.html">Home</a> &gt; <a href="../index-modules-A.html">Core modules</a> &gt; <a href="../index-modules-T.html">T</a> &gt; Tie::File</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">Tie::File</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><ul><li><a href="#'recsep'"><code class="inline"><span class="w">recsep</span></code>
+</a><li><a href="#'autochomp'"><code class="inline"><span class="w">autochomp</span></code>
+</a><li><a href="#'mode'"><code class="inline"><span class="w">mode</span></code>
+</a><li><a href="#'memory'"><code class="inline"><span class="w">memory</span></code>
+</a><li><a href="#'dw_size'"><code class="inline"><span class="w">dw_size</span></code>
+</a><li><a href="#Option-Format">Option Format</a></ul><li><a href="#Public-Methods">Public Methods</a><ul><li><a href="#'flock'"><code class="inline"><a class="l_k" href="../functions/flock.html">flock</a></code></a><li><a href="#'autochomp'"><code class="inline"><span class="w">autochomp</span></code>
+</a><li><a href="#'defer'0x2c-'flush'0x2c-'discard'0x2c-and-'autodefer'"><code class="inline"><span class="w">defer</span></code>
+, <code class="inline"><span class="w">flush</span></code>
+, <code class="inline"><span class="w">discard</span></code>
+, and <code class="inline"><span class="w">autodefer</span></code>
+</a><li><a href="#'offset'"><code class="inline"><span class="w">offset</span></code>
+</a></ul><li><a href="#Tying-to-an-already-opened-filehandle">Tying to an already-opened filehandle</a><li><a href="#Deferred-Writing">Deferred Writing</a><ul><li><a href="#Autodeferring">Autodeferring</a></ul><li><a href="#CONCURRENT-ACCESS-TO-FILES">CONCURRENT ACCESS TO FILES</a><li><a href="#CAVEATS">CAVEATS</a><li><a href="#SUBCLASSING">SUBCLASSING</a><li><a href="#WHAT-ABOUT-'DB_File'0x3f">WHAT ABOUT <code class="inline"><span class="w">DB_File</span></code>
+?</a><li><a href="#AUTHOR">AUTHOR</a><li><a href="#LICENSE">LICENSE</a><li><a href="#WARRANTY">WARRANTY</a><li><a href="#THANKS">THANKS</a><li><a href="#TODO">TODO</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>Tie::File - Access the lines of a disk file via a Perl array</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">	<span class="c"># This file documents Tie::File version 0.97</span>
+	<a class="l_k" href="../functions/use.html">use</a> <span class="w">Tie::File</span><span class="sc">;</span></pre>
+<pre class="verbatim">	<a class="l_k" href="../functions/tie.html">tie</a> <span class="i">@array</span><span class="cm">,</span> <span class="q">&#39;Tie::File&#39;</span><span class="cm">,</span> <span class="w">filename</span> or <a class="l_k" href="../functions/die.html">die</a> ...<span class="sc">;</span></pre>
+<pre class="verbatim">	<span class="i">$array</span>[<span class="n">13</span>] = <span class="q">&#39;blah&#39;</span><span class="sc">;</span>     <span class="c"># line 13 of the file is now &#39;blah&#39;</span>
+	<a class="l_k" href="../functions/print.html">print</a> <span class="i">$array</span>[<span class="n">42</span>]<span class="sc">;</span>        <span class="c"># display line 42 of the file</span></pre>
+<pre class="verbatim">	<span class="i">$n_recs</span> = <span class="i">@array</span><span class="sc">;</span>        <span class="c"># how many records are in the file?</span>
+	<span class="i">$#array</span> -= <span class="n">2</span><span class="sc">;</span>            <span class="c"># chop two records off the end</span></pre>
+<pre class="verbatim">	for <span class="s">(</span><span class="i">@array</span><span class="s">)</span> <span class="s">{</span>
+	  <span class="q">s/PERL/Perl/g</span><span class="sc">;</span>         <span class="c"># Replace PERL with Perl everywhere in the file</span>
+	<span class="s">}</span></pre>
+<pre class="verbatim">	<span class="c"># These are just like regular push, pop, unshift, shift, and splice</span>
+	<span class="c"># Except that they modify the file in the way you would expect</span></pre>
+<pre class="verbatim">	<a class="l_k" href="../functions/push.html">push</a> <span class="i">@array</span><span class="cm">,</span> <span class="w">new</span> <span class="w">recs</span>...<span class="sc">;</span>
+	<a class="l_k" href="../functions/my.html">my</a> <span class="i">$r1</span> = <a class="l_k" href="../functions/pop.html">pop</a> <span class="i">@array</span><span class="sc">;</span>
+	<a class="l_k" href="../functions/unshift.html">unshift</a> <span class="i">@array</span><span class="cm">,</span> <span class="w">new</span> <span class="w">recs</span>...<span class="sc">;</span>
+	<a class="l_k" href="../functions/my.html">my</a> <span class="i">$r2</span> = <a class="l_k" href="../functions/shift.html">shift</a> <span class="i">@array</span><span class="sc">;</span>
+	<span class="i">@old_recs</span> = <a class="l_k" href="../functions/splice.html">splice</a> <span class="i">@array</span><span class="cm">,</span> <span class="n">3</span><span class="cm">,</span> <span class="n">7</span><span class="cm">,</span> <span class="w">new</span> <span class="w">recs</span>...<span class="sc">;</span></pre>
+<pre class="verbatim">	<a class="l_k" href="../functions/untie.html">untie</a> <span class="i">@array</span><span class="sc">;</span>            <span class="c"># all finished</span></pre>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p><code class="inline"><span class="w">Tie::File</span></code>
+ represents a regular text file as a Perl array.  Each
+element in the array corresponds to a record in the file.  The first
+line of the file is element 0 of the array; the second line is element
+1, and so on.</p>
+<p>The file is <i>not</i> loaded into memory, so this will work even for
+gigantic files.</p>
+<p>Changes to the array are reflected in the file immediately.</p>
+<p>Lazy people and beginners may now stop reading the manual.</p>
+<a name="'recsep'"></a><h2><code class="inline"><span class="w">recsep</span></code>
+</h2>
+<p>What is a 'record'?  By default, the meaning is the same as for the
+<code class="inline"><span class="q">&lt;...&gt;</span></code>
+ operator: It's a string terminated by <code class="inline"><span class="i">$/</span></code>
+, which is
+probably <code class="inline"><span class="q">&quot;\n&quot;</span></code>
+.  (Minor exception: on DOS and Win32 systems, a
+'record' is a string terminated by <code class="inline"><span class="q">&quot;\r\n&quot;</span></code>
+.)  You may change the
+definition of "record" by supplying the <code class="inline"><span class="w">recsep</span></code>
+ option in the <code class="inline"><a class="l_k" href="../functions/tie.html">tie</a></code>
+call:</p>
+<pre class="verbatim">	<a class="l_k" href="../functions/tie.html">tie</a> <span class="i">@array</span><span class="cm">,</span> <span class="q">&#39;Tie::File&#39;</span><span class="cm">,</span> <span class="i">$file</span><span class="cm">,</span> <span class="w">recsep</span> <span class="cm">=&gt;</span> <span class="q">&#39;es&#39;</span><span class="sc">;</span></pre>
+<p>This says that records are delimited by the string <code class="inline"><span class="w">es</span></code>
+.  If the file
+contained the following data:</p>
+<pre class="verbatim">	<span class="w">Curse</span> <span class="w">these</span> <span class="w">pesky</span> <span class="w">flies</span>!\<span class="w">n</span></pre>
+<p>then the <code class="inline"><span class="i">@array</span></code>
+ would appear to have four elements:</p>
+<pre class="verbatim">	"Curse th"
+	"e p"
+	"ky fli"
+	"!\n"</pre><p>An undefined value is not permitted as a record separator.  Perl's
+special "paragraph mode" semantics (à la <code class="inline"><span class="i">$/</span> = <span class="q">&quot;&quot;</span></code>
+) are not
+emulated.</p>
+<p>Records read from the tied array do not have the record separator
+string on the end; this is to allow</p>
+<pre class="verbatim">	<span class="i">$array</span>[<span class="n">17</span>] .= <span class="q">&quot;extra&quot;</span><span class="sc">;</span></pre>
+<p>to work as expected.</p>
+<p>(See <a href="#autochomp">"autochomp"</a>, below.)  Records stored into the array will have
+the record separator string appended before they are written to the
+file, if they don't have one already.  For example, if the record
+separator string is <code class="inline"><span class="q">&quot;\n&quot;</span></code>
+, then the following two lines do exactly
+the same thing:</p>
+<pre class="verbatim">	<span class="i">$array</span>[<span class="n">17</span>] = <span class="q">&quot;Cherry pie&quot;</span><span class="sc">;</span>
+	<span class="i">$array</span>[<span class="n">17</span>] = <span class="q">&quot;Cherry pie\n&quot;</span><span class="sc">;</span></pre>
+<p>The result is that the contents of line 17 of the file will be
+replaced with "Cherry pie"; a newline character will separate line 17
+from line 18.  This means that this code will do nothing:</p>
+<pre class="verbatim">	<a class="l_k" href="../functions/chomp.html">chomp</a> <span class="i">$array</span>[<span class="n">17</span>]<span class="sc">;</span></pre>
+<p>Because the <code class="inline"><a class="l_k" href="../functions/chomp.html">chomp</a></code>ed value will have the separator reattached when
+it is written back to the file.  There is no way to create a file
+whose trailing record separator string is missing.</p>
+<p>Inserting records that <i>contain</i> the record separator string is not
+supported by this module.  It will probably produce a reasonable
+result, but what this result will be may change in a future version.
+Use 'splice' to insert records or to replace one record with several.</p>
+<a name="'autochomp'"></a><h2><code class="inline"><span class="w">autochomp</span></code>
+</h2>
+<p>Normally, array elements have the record separator removed, so that if
+the file contains the text</p>
+<pre class="verbatim">	<span class="w">Gold</span>
+	<span class="w">Frankincense</span>
+	<span class="w">Myrrh</span></pre>
+<p>the tied array will appear to contain <code class="inline"><span class="s">(</span><span class="q">&quot;Gold&quot;</span><span class="cm">,</span> <span class="q">&quot;Frankincense&quot;</span><span class="cm">,</span>
+<span class="q">&quot;Myrrh&quot;</span><span class="s">)</span></code>
+.  If you set <code class="inline"><span class="w">autochomp</span></code>
+ to a false value, the record
+separator will not be removed.  If the file above was tied with</p>
+<pre class="verbatim">	<a class="l_k" href="../functions/tie.html">tie</a> <span class="i">@gifts</span><span class="cm">,</span> <span class="q">&quot;Tie::File&quot;</span><span class="cm">,</span> <span class="i">$gifts</span><span class="cm">,</span> <span class="w">autochomp</span> <span class="cm">=&gt;</span> <span class="n">0</span><span class="sc">;</span></pre>
+<p>then the array <code class="inline"><span class="i">@gifts</span></code>
+ would appear to contain <code class="inline"><span class="s">(</span><span class="q">&quot;Gold\n&quot;</span><span class="cm">,</span>
+<span class="q">&quot;Frankincense\n&quot;</span><span class="cm">,</span> <span class="q">&quot;Myrrh\n&quot;</span><span class="s">)</span></code>
+, or (on Win32 systems) <code class="inline"><span class="s">(</span><span class="q">&quot;Gold\r\n&quot;</span><span class="cm">,</span>
+<span class="q">&quot;Frankincense\r\n&quot;</span><span class="cm">,</span> <span class="q">&quot;Myrrh\r\n&quot;</span><span class="s">)</span></code>
+.</p>
+<a name="'mode'"></a><h2><code class="inline"><span class="w">mode</span></code>
+</h2>
+<p>Normally, the specified file will be opened for read and write access,
+and will be created if it does not exist.  (That is, the flags
+<code class="inline"><span class="w">O_RDWR</span> | <span class="w">O_CREAT</span></code>
+ are supplied in the <code class="inline"><a class="l_k" href="../functions/open.html">open</a></code> call.)  If you want to
+change this, you may supply alternative flags in the <code class="inline"><span class="w">mode</span></code>
+ option.
+See <a href="../Fcntl.html">Fcntl</a> for a listing of available flags.
+For example:</p>
+<pre class="verbatim">	<span class="c"># open the file if it exists, but fail if it does not exist</span>
+	<a class="l_k" href="../functions/use.html">use</a> <span class="w">Fcntl</span> <span class="q">&#39;O_RDWR&#39;</span><span class="sc">;</span>
+	<a class="l_k" href="../functions/tie.html">tie</a> <span class="i">@array</span><span class="cm">,</span> <span class="q">&#39;Tie::File&#39;</span><span class="cm">,</span> <span class="i">$file</span><span class="cm">,</span> <span class="w">mode</span> <span class="cm">=&gt;</span> <span class="w">O_RDWR</span><span class="sc">;</span></pre>
+<pre class="verbatim">	<span class="c"># create the file if it does not exist</span>
+	<a class="l_k" href="../functions/use.html">use</a> <span class="w">Fcntl</span> <span class="q">&#39;O_RDWR&#39;</span><span class="cm">,</span> <span class="q">&#39;O_CREAT&#39;</span><span class="sc">;</span>
+	<a class="l_k" href="../functions/tie.html">tie</a> <span class="i">@array</span><span class="cm">,</span> <span class="q">&#39;Tie::File&#39;</span><span class="cm">,</span> <span class="i">$file</span><span class="cm">,</span> <span class="w">mode</span> <span class="cm">=&gt;</span> <span class="w">O_RDWR</span> | <span class="w">O_CREAT</span><span class="sc">;</span></pre>
+<pre class="verbatim">	<span class="c"># open an existing file in read-only mode</span>
+	<a class="l_k" href="../functions/use.html">use</a> <span class="w">Fcntl</span> <span class="q">&#39;O_RDONLY&#39;</span><span class="sc">;</span>
+	<a class="l_k" href="../functions/tie.html">tie</a> <span class="i">@array</span><span class="cm">,</span> <span class="q">&#39;Tie::File&#39;</span><span class="cm">,</span> <span class="i">$file</span><span class="cm">,</span> <span class="w">mode</span> <span class="cm">=&gt;</span> <span class="w">O_RDONLY</span><span class="sc">;</span></pre>
+<p>Opening the data file in write-only or append mode is not supported.</p>
+<a name="'memory'"></a><h2><code class="inline"><span class="w">memory</span></code>
+</h2>
+<p>This is an upper limit on the amount of memory that <code class="inline"><span class="w">Tie::File</span></code>
+ will
+consume at any time while managing the file.  This is used for two
+things: managing the <i>read cache</i> and managing the <i>deferred write
+buffer</i>.</p>
+<p>Records read in from the file are cached, to avoid having to re-read
+them repeatedly.  If you read the same record twice, the first time it
+will be stored in memory, and the second time it will be fetched from
+the <i>read cache</i>.  The amount of data in the read cache will not
+exceed the value you specified for <code class="inline"><span class="w">memory</span></code>
+.  If <code class="inline"><span class="w">Tie::File</span></code>
+ wants
+to cache a new record, but the read cache is full, it will make room
+by expiring the least-recently visited records from the read cache.</p>
+<p>The default memory limit is 2Mib.  You can adjust the maximum read
+cache size by supplying the <code class="inline"><span class="w">memory</span></code>
+ option.  The argument is the
+desired cache size, in bytes.</p>
+<pre class="verbatim">	<span class="c"># I have a lot of memory, so use a large cache to speed up access</span>
+	<a class="l_k" href="../functions/tie.html">tie</a> <span class="i">@array</span><span class="cm">,</span> <span class="q">&#39;Tie::File&#39;</span><span class="cm">,</span> <span class="i">$file</span><span class="cm">,</span> <span class="w">memory</span> <span class="cm">=&gt;</span> <span class="n">20_000_000</span><span class="sc">;</span></pre>
+<p>Setting the memory limit to 0 will inhibit caching; records will be
+fetched from disk every time you examine them.</p>
+<p>The <code class="inline"><span class="w">memory</span></code>
+ value is not an absolute or exact limit on the memory
+used.  <code class="inline"><span class="w">Tie::File</span></code>
+ objects contains some structures besides the read
+cache and the deferred write buffer, whose sizes are not charged
+against <code class="inline"><span class="w">memory</span></code>
+.</p>
+<p>The cache itself consumes about 310 bytes per cached record, so if
+your file has many short records, you may want to decrease the cache
+memory limit, or else the cache overhead may exceed the size of the
+cached data.</p>
+<a name="'dw_size'"></a><h2><code class="inline"><span class="w">dw_size</span></code>
+</h2>
+<p>(This is an advanced feature.  Skip this section on first reading.)</p>
+<p>If you use deferred writing (See <a href="#Deferred-Writing">"Deferred Writing"</a>, below) then
+data you write into the array will not be written directly to the
+file; instead, it will be saved in the <i>deferred write buffer</i> to be
+written out later.  Data in the deferred write buffer is also charged
+against the memory limit you set with the <code class="inline"><span class="w">memory</span></code>
+ option.</p>
+<p>You may set the <code class="inline"><span class="w">dw_size</span></code>
+ option to limit the amount of data that can
+be saved in the deferred write buffer.  This limit may not exceed the
+total memory limit.  For example, if you set <code class="inline"><span class="w">dw_size</span></code>
+ to 1000 and
+<code class="inline"><span class="w">memory</span></code>
+ to 2500, that means that no more than 1000 bytes of deferred
+writes will be saved up.  The space available for the read cache will
+vary, but it will always be at least 1500 bytes (if the deferred write
+buffer is full) and it could grow as large as 2500 bytes (if the
+deferred write buffer is empty.)</p>
+<p>If you don't specify a <code class="inline"><span class="w">dw_size</span></code>
+, it defaults to the entire memory
+limit.</p>
+<a name="Option-Format"></a><h2>Option Format</h2>
+<p><code class="inline">-<span class="w">mode</span></code>
+ is a synonym for <code class="inline"><span class="w">mode</span></code>
+.  <code class="inline">-<span class="w">recsep</span></code>
+ is a synonym for
+<code class="inline"><span class="w">recsep</span></code>
+.  <code class="inline">-<span class="w">memory</span></code>
+ is a synonym for <code class="inline"><span class="w">memory</span></code>
+.  You get the
+idea.</p>
+<a name="Public-Methods"></a><h1>Public Methods</h1>
+<p>The <code class="inline"><a class="l_k" href="../functions/tie.html">tie</a></code> call returns an object, say <code class="inline"><span class="i">$o</span></code>
+.  You may call</p>
+<pre class="verbatim">	<span class="i">$rec</span> = <span class="i">$o</span><span class="i">-&gt;FETCH</span><span class="s">(</span><span class="i">$n</span><span class="s">)</span><span class="sc">;</span>
+	<span class="i">$o</span><span class="i">-&gt;STORE</span><span class="s">(</span><span class="i">$n</span><span class="cm">,</span> <span class="i">$rec</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>to fetch or store the record at line <code class="inline"><span class="i">$n</span></code>
+, respectively; similarly
+the other tied array methods.  (See <a href="../perltie.html">perltie</a> for details.)  You may
+also call the following methods on this object:</p>
+<a name="'flock'"></a><h2><code class="inline"><a class="l_k" href="../functions/flock.html">flock</a></code></h2>
+<pre class="verbatim">	<span class="i">$o</span><span class="i">-&gt;flock</span><span class="s">(</span><span class="w">MODE</span><span class="s">)</span></pre>
+<p>will lock the tied file.  <code class="inline"><span class="w">MODE</span></code>
+ has the same meaning as the second
+argument to the Perl built-in <code class="inline"><a class="l_k" href="../functions/flock.html">flock</a></code> function; for example
+<code class="inline"><span class="w">LOCK_SH</span></code>
+ or <code class="inline"><span class="w">LOCK_EX</span> | <span class="w">LOCK_NB</span></code>
+.  (These constants are provided by
+the <code class="inline"><a class="l_k" href="../functions/use.html">use</a> <span class="w">Fcntl</span> <span class="q">&#39;:flock&#39;</span></code>
+ declaration.)</p>
+<p><code class="inline"><span class="w">MODE</span></code>
+ is optional; the default is <code class="inline"><span class="w">LOCK_EX</span></code>
+.</p>
+<p><code class="inline"><span class="w">Tie::File</span></code>
+ maintains an internal table of the byte offset of each
+record it has seen in the file.</p>
+<p>When you use <code class="inline"><a class="l_k" href="../functions/flock.html">flock</a></code> to lock the file, <code class="inline"><span class="w">Tie::File</span></code>
+ assumes that the
+read cache is no longer trustworthy, because another process might
+have modified the file since the last time it was read.  Therefore, a
+successful call to <code class="inline"><a class="l_k" href="../functions/flock.html">flock</a></code> discards the contents of the read cache
+and the internal record offset table.</p>
+<p><code class="inline"><span class="w">Tie::File</span></code>
+ promises that the following sequence of operations will
+be safe:</p>
+<pre class="verbatim">	<a class="l_k" href="../functions/my.html">my</a> <span class="i">$o</span> = <a class="l_k" href="../functions/tie.html">tie</a> <span class="i">@array</span><span class="cm">,</span> <span class="q">&quot;Tie::File&quot;</span><span class="cm">,</span> <span class="i">$filename</span><span class="sc">;</span>
+	<span class="i">$o</span><span class="i">-&gt;flock</span><span class="sc">;</span></pre>
+<p>In particular, <code class="inline"><span class="w">Tie::File</span></code>
+ will <i>not</i> read or write the file during
+the <code class="inline"><a class="l_k" href="../functions/tie.html">tie</a></code> call.  (Exception: Using <code class="inline"><span class="w">mode</span> <span class="cm">=&gt;</span> <span class="w">O_TRUNC</span></code>
+ will, of
+course, erase the file during the <code class="inline"><a class="l_k" href="../functions/tie.html">tie</a></code> call.  If you want to do this
+safely, then open the file without <code class="inline"><span class="w">O_TRUNC</span></code>
+, lock the file, and use
+<code class="inline"><span class="i">@array</span> = <span class="s">(</span><span class="s">)</span></code>
+.)</p>
+<p>The best way to unlock a file is to discard the object and untie the
+array.  It is probably unsafe to unlock the file without also untying
+it, because if you do, changes may remain unwritten inside the object.
+That is why there is no shortcut for unlocking.  If you really want to
+unlock the file prematurely, you know what to do; if you don't know
+what to do, then don't do it.</p>
+<p>All the usual warnings about file locking apply here.  In particular,
+note that file locking in Perl is <b>advisory</b>, which means that
+holding a lock will not prevent anyone else from reading, writing, or
+erasing the file; it only prevents them from getting another lock at
+the same time.  Locks are analogous to green traffic lights: If you
+have a green light, that does not prevent the idiot coming the other
+way from plowing into you sideways; it merely guarantees to you that
+the idiot does not also have a green light at the same time.</p>
+<a name="'autochomp'"></a><h2><code class="inline"><span class="w">autochomp</span></code>
+</h2>
+<pre class="verbatim">	<a class="l_k" href="../functions/my.html">my</a> <span class="i">$old_value</span> = <span class="i">$o</span><span class="i">-&gt;autochomp</span><span class="s">(</span><span class="n">0</span><span class="s">)</span><span class="sc">;</span>    <span class="c"># disable autochomp option</span>
+	<a class="l_k" href="../functions/my.html">my</a> <span class="i">$old_value</span> = <span class="i">$o</span><span class="i">-&gt;autochomp</span><span class="s">(</span><span class="n">1</span><span class="s">)</span><span class="sc">;</span>    <span class="c">#  enable autochomp option</span></pre>
+<pre class="verbatim">	<a class="l_k" href="../functions/my.html">my</a> <span class="i">$ac</span> = <span class="i">$o</span><span class="i">-&gt;autochomp</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span>   <span class="c"># recover current value</span></pre>
+<p>See <a href="#autochomp">"autochomp"</a>, above.</p>
+<a name="'defer'0x2c-'flush'0x2c-'discard'0x2c-and-'autodefer'"></a><h2><code class="inline"><span class="w">defer</span></code>
+, <code class="inline"><span class="w">flush</span></code>
+, <code class="inline"><span class="w">discard</span></code>
+, and <code class="inline"><span class="w">autodefer</span></code>
+</h2>
+<p>See <a href="#Deferred-Writing">"Deferred Writing"</a>, below.</p>
+<a name="'offset'"></a><h2><code class="inline"><span class="w">offset</span></code>
+</h2>
+<pre class="verbatim">	<span class="i">$off</span> = <span class="i">$o</span><span class="i">-&gt;offset</span><span class="s">(</span><span class="i">$n</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>This method returns the byte offset of the start of the <code class="inline"><span class="i">$n</span></code>
+th record
+in the file.  If there is no such record, it returns an undefined
+value.</p>
+<a name="Tying-to-an-already-opened-filehandle"></a><h1>Tying to an already-opened filehandle</h1>
+<p>If <code class="inline"><span class="i">$fh</span></code>
+ is a filehandle, such as is returned by <code class="inline"><span class="w">IO::File</span></code>
+ or one
+of the other <code class="inline"><span class="w">IO</span></code>
+ modules, you may use:</p>
+<pre class="verbatim">	<a class="l_k" href="../functions/tie.html">tie</a> <span class="i">@array</span><span class="cm">,</span> <span class="q">&#39;Tie::File&#39;</span><span class="cm">,</span> <span class="i">$fh</span><span class="cm">,</span> ...<span class="sc">;</span></pre>
+<p>Similarly if you opened that handle <code class="inline"><span class="w">FH</span></code>
+ with regular <code class="inline"><a class="l_k" href="../functions/open.html">open</a></code> or
+<code class="inline"><a class="l_k" href="../functions/sysopen.html">sysopen</a></code>, you may use:</p>
+<pre class="verbatim">	<a class="l_k" href="../functions/tie.html">tie</a> <span class="i">@array</span><span class="cm">,</span> <span class="q">&#39;Tie::File&#39;</span><span class="cm">,</span> \<span class="i">*FH</span><span class="cm">,</span> ...<span class="sc">;</span></pre>
+<p>Handles that were opened write-only won't work.  Handles that were
+opened read-only will work as long as you don't try to modify the
+array.  Handles must be attached to seekable sources of data---that
+means no pipes or sockets.  If <code class="inline"><span class="w">Tie::File</span></code>
+ can detect that you
+supplied a non-seekable handle, the <code class="inline"><a class="l_k" href="../functions/tie.html">tie</a></code> call will throw an
+exception.  (On Unix systems, it can detect this.)</p>
+<p>Note that Tie::File will only close any filehandles that it opened
+internally.  If you passed it a filehandle as above, you "own" the
+filehandle, and are responsible for closing it after you have untied
+the @array.</p>
+<a name="Deferred-Writing"></a><h1>Deferred Writing</h1>
+<p>(This is an advanced feature.  Skip this section on first reading.)</p>
+<p>Normally, modifying a <code class="inline"><span class="w">Tie::File</span></code>
+ array writes to the underlying file
+immediately.  Every assignment like <code class="inline"><span class="i">$a</span>[<span class="n">3</span>] = ...</code>
+ rewrites as much of
+the file as is necessary; typically, everything from line 3 through
+the end will need to be rewritten.  This is the simplest and most
+transparent behavior.  Performance even for large files is reasonably
+good.</p>
+<p>However, under some circumstances, this behavior may be excessively
+slow.  For example, suppose you have a million-record file, and you
+want to do:</p>
+<pre class="verbatim">	for <span class="s">(</span><span class="i">@FILE</span><span class="s">)</span> <span class="s">{</span>
+	  <span class="i">$_</span> = <span class="q">&quot;&gt; $_&quot;</span><span class="sc">;</span>
+	<span class="s">}</span></pre>
+<p>The first time through the loop, you will rewrite the entire file,
+from line 0 through the end.  The second time through the loop, you
+will rewrite the entire file from line 1 through the end.  The third
+time through the loop, you will rewrite the entire file from line 2 to
+the end.  And so on.</p>
+<p>If the performance in such cases is unacceptable, you may defer the
+actual writing, and then have it done all at once.  The following loop
+will perform much better for large files:</p>
+<pre class="verbatim">	<span class="s">(</span><a class="l_k" href="../functions/tied.html">tied</a> <span class="i">@a</span><span class="s">)</span><span class="i">-&gt;defer</span><span class="sc">;</span>
+	for <span class="s">(</span><span class="i">@a</span><span class="s">)</span> <span class="s">{</span>
+	  <span class="i">$_</span> = <span class="q">&quot;&gt; $_&quot;</span><span class="sc">;</span>
+	<span class="s">}</span>
+	<span class="s">(</span><a class="l_k" href="../functions/tied.html">tied</a> <span class="i">@a</span><span class="s">)</span><span class="i">-&gt;flush</span><span class="sc">;</span></pre>
+<p>If <code class="inline"><span class="w">Tie::File</span></code>
+'s memory limit is large enough, all the writing will
+done in memory.  Then, when you call <code class="inline"><span class="i">-&gt;flush</span></code>
+, the entire file
+will be rewritten in a single pass.</p>
+<p>(Actually, the preceding discussion is something of a fib.  You don't
+need to enable deferred writing to get good performance for this
+common case, because <code class="inline"><span class="w">Tie::File</span></code>
+ will do it for you automatically
+unless you specifically tell it not to.  See <a href="#autodeferring">"autodeferring"</a>,
+below.)</p>
+<p>Calling <code class="inline"><span class="i">-&gt;flush</span></code>
+ returns the array to immediate-write mode.  If
+you wish to discard the deferred writes, you may call <code class="inline"><span class="i">-&gt;discard</span></code>
+
+instead of <code class="inline"><span class="i">-&gt;flush</span></code>
+.  Note that in some cases, some of the data
+will have been written already, and it will be too late for
+<code class="inline"><span class="i">-&gt;discard</span></code>
+ to discard all the changes.  Support for
+<code class="inline"><span class="i">-&gt;discard</span></code>
+ may be withdrawn in a future version of <code class="inline"><span class="w">Tie::File</span></code>
+.</p>
+<p>Deferred writes are cached in memory up to the limit specified by the
+<code class="inline"><span class="w">dw_size</span></code>
+ option (see above).  If the deferred-write buffer is full
+and you try to write still more deferred data, the buffer will be
+flushed.  All buffered data will be written immediately, the buffer
+will be emptied, and the now-empty space will be used for future
+deferred writes.</p>
+<p>If the deferred-write buffer isn't yet full, but the total size of the
+buffer and the read cache would exceed the <code class="inline"><span class="w">memory</span></code>
+ limit, the oldest
+records will be expired from the read cache until the total size is
+under the limit.</p>
+<p><code class="inline"><a class="l_k" href="../functions/push.html">push</a></code>, <code class="inline"><a class="l_k" href="../functions/pop.html">pop</a></code>, <code class="inline"><a class="l_k" href="../functions/shift.html">shift</a></code>, <code class="inline"><a class="l_k" href="../functions/unshift.html">unshift</a></code>, and <code class="inline"><a class="l_k" href="../functions/splice.html">splice</a></code> cannot be
+deferred.  When you perform one of these operations, any deferred data
+is written to the file and the operation is performed immediately.
+This may change in a future version.</p>
+<p>If you resize the array with deferred writing enabled, the file will
+be resized immediately, but deferred records will not be written.
+This has a surprising consequence: <code class="inline"><span class="i">@a</span> = <span class="s">(</span>...<span class="s">)</span></code>
+ erases the file
+immediately, but the writing of the actual data is deferred.  This
+might be a bug.  If it is a bug, it will be fixed in a future version.</p>
+<a name="Autodeferring"></a><h2>Autodeferring</h2>
+<p><code class="inline"><span class="w">Tie::File</span></code>
+ tries to guess when deferred writing might be helpful,
+and to turn it on and off automatically.</p>
+<pre class="verbatim">	for <span class="s">(</span><span class="i">@a</span><span class="s">)</span> <span class="s">{</span>
+	  <span class="i">$_</span> = <span class="q">&quot;&gt; $_&quot;</span><span class="sc">;</span>
+	<span class="s">}</span></pre>
+<p>In this example, only the first two assignments will be done
+immediately; after this, all the changes to the file will be deferred
+up to the user-specified memory limit.</p>
+<p>You should usually be able to ignore this and just use the module
+without thinking about deferring.  However, special applications may
+require fine control over which writes are deferred, or may require
+that all writes be immediate.  To disable the autodeferment feature,
+use</p>
+<pre class="verbatim">	<span class="s">(</span><a class="l_k" href="../functions/tied.html">tied</a> <span class="i">@o</span><span class="s">)</span><span class="i">-&gt;autodefer</span><span class="s">(</span><span class="n">0</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>or</p>
+<pre class="verbatim">       	<a class="l_k" href="../functions/tie.html">tie</a> <span class="i">@array</span><span class="cm">,</span> <span class="q">&#39;Tie::File&#39;</span><span class="cm">,</span> <span class="i">$file</span><span class="cm">,</span> <span class="w">autodefer</span> <span class="cm">=&gt;</span> <span class="n">0</span><span class="sc">;</span></pre>
+<p>Similarly, <code class="inline"><span class="i">-&gt;autodefer</span><span class="s">(</span><span class="n">1</span><span class="s">)</span></code>
+ re-enables autodeferment, and 
+<code class="inline"><span class="i">-&gt;autodefer</span><span class="s">(</span><span class="s">)</span></code>
+ recovers the current value of the autodefer setting.</p>
+<a name="CONCURRENT-ACCESS-TO-FILES"></a><h1>CONCURRENT ACCESS TO FILES</h1>
+<p>Caching and deferred writing are inappropriate if you want the same
+file to be accessed simultaneously from more than one process.  Other
+optimizations performed internally by this module are also
+incompatible with concurrent access.  A future version of this module will
+support a <code class="inline"><span class="w">concurrent</span> <span class="cm">=&gt;</span> <span class="n">1</span></code>
+ option that enables safe concurrent access.</p>
+<p>Previous versions of this documentation suggested using <code class="inline"><span class="w">memory</span>
+<span class="cm">=&gt;</span> <span class="n">0</span></code>
+ for safe concurrent access.  This was mistaken.  Tie::File
+will not support safe concurrent access before version 0.98.</p>
+<a name="CAVEATS"></a><h1>CAVEATS</h1>
+<p>(That's Latin for 'warnings'.)</p>
+<ul>
+<li>
+<p>Reasonable effort was made to make this module efficient.  Nevertheless,
+changing the size of a record in the middle of a large file will
+always be fairly slow, because everything after the new record must be
+moved.</p>
+</li>
+<li>
+<p>The behavior of tied arrays is not precisely the same as for regular
+arrays.  For example:</p>
+<pre class="verbatim">	<span class="c"># This DOES print &quot;How unusual!&quot;</span>
+	<a class="l_k" href="../functions/undef.html">undef</a> <span class="i">$a</span>[<span class="n">10</span>]<span class="sc">;</span>  <a class="l_k" href="../functions/print.html">print</a> <span class="q">&quot;How unusual!\n&quot;</span> if <a class="l_k" href="../functions/defined.html">defined</a> <span class="i">$a</span>[<span class="n">10</span>]<span class="sc">;</span></pre>
+<p><code class="inline"><a class="l_k" href="../functions/undef.html">undef</a></code>-ing a <code class="inline"><span class="w">Tie::File</span></code>
+ array element just blanks out the
+corresponding record in the file.  When you read it back again, you'll
+get the empty string, so the supposedly-<code class="inline"><a class="l_k" href="../functions/undef.html">undef</a></code>'ed value will be
+defined.  Similarly, if you have <code class="inline"><span class="w">autochomp</span></code>
+ disabled, then</p>
+<pre class="verbatim">	<span class="c"># This DOES print &quot;How unusual!&quot; if &#39;autochomp&#39; is disabled</span>
+	<a class="l_k" href="../functions/undef.html">undef</a> <span class="i">$a</span>[<span class="n">10</span>]<span class="sc">;</span>
+        <a class="l_k" href="../functions/print.html">print</a> <span class="q">&quot;How unusual!\n&quot;</span> if <span class="i">$a</span>[<span class="n">10</span>]<span class="sc">;</span></pre>
+<p>Because when <code class="inline"><span class="w">autochomp</span></code>
+ is disabled, <code class="inline"><span class="i">$a</span>[<span class="n">10</span>]</code>
+ will read back as
+<code class="inline"><span class="q">&quot;\n&quot;</span></code>
+ (or whatever the record separator string is.)</p>
+<p>There are other minor differences, particularly regarding <code class="inline"><a class="l_k" href="../functions/exists.html">exists</a></code>
+and <code class="inline"><a class="l_k" href="../functions/delete.html">delete</a></code>, but in general, the correspondence is extremely close.</p>
+</li>
+<li>
+<p>I have supposed that since this module is concerned with file I/O,
+almost all normal use of it will be heavily I/O bound.  This means
+that the time to maintain complicated data structures inside the
+module will be dominated by the time to actually perform the I/O.
+When there was an opportunity to spend CPU time to avoid doing I/O, I
+usually tried to take it.</p>
+</li>
+<li>
+<p>You might be tempted to think that deferred writing is like
+transactions, with <code class="inline"><span class="w">flush</span></code>
+ as <code class="inline"><span class="w">commit</span></code>
+ and <code class="inline"><span class="w">discard</span></code>
+ as
+<code class="inline"><span class="w">rollback</span></code>
+, but it isn't, so don't.</p>
+</li>
+<li>
+<p>There is a large memory overhead for each record offset and for each
+cache entry: about 310 bytes per cached data record, and about 21 bytes per offset table entry.</p>
+<p>The per-record overhead will limit the maximum number of records you
+can access per file. Note that <i>accessing</i> the length of the array
+via <code class="inline"><span class="i">$x</span> = <a class="l_k" href="../functions/scalar.html">scalar</a> <span class="i">@tied_file</span></code>
+ accesses <b>all</b> records and stores their
+offsets.  The same for <code class="inline">foreach <span class="s">(</span><span class="i">@tied_file</span><span class="s">)</span></code>
+, even if you exit the
+loop early.</p>
+</li>
+</ul>
+<a name="SUBCLASSING"></a><h1>SUBCLASSING</h1>
+<p>This version promises absolutely nothing about the internals, which
+may change without notice.  A future version of the module will have a
+well-defined and stable subclassing API.</p>
+<a name="WHAT-ABOUT-'DB_File'0x3f"></a><h1>WHAT ABOUT <code class="inline"><span class="w">DB_File</span></code>
+?</h1>
+<p>People sometimes point out that <a href="../DB_File.html">DB_File</a> will do something similar,
+and ask why <code class="inline"><span class="w">Tie::File</span></code>
+ module is necessary.</p>
+<p>There are a number of reasons that you might prefer <code class="inline"><span class="w">Tie::File</span></code>
+.
+A list is available at <code class="inline">&lt;a href="http://perl.plover.com/TieFile/why-not-DB_File"&gt;http://perl.plover.com/TieFile/why-not-DB_File&lt;/a&gt;</code>.</p>
+<a name="AUTHOR"></a><h1>AUTHOR</h1>
+<p>Mark Jason Dominus</p>
+<p>To contact the author, send email to: <code class="inline"><span class="w">mjd</span>-<span class="w">perl</span>-<span class="w">tiefile</span>+<span class="i">@plover</span>.<span class="w">com</span></code>
+</p>
+<p>To receive an announcement whenever a new version of this module is
+released, send a blank email message to
+<code class="inline"><span class="w">mjd</span>-<span class="w">perl</span>-<span class="w">tiefile</span>-<span class="w">subscribe</span><span class="i">@plover</span>.<span class="w">com</span></code>
+.</p>
+<p>The most recent version of this module, including documentation and
+any news of importance, will be available at</p>
+<pre class="verbatim">	http://perl.plover.com/TieFile/</pre><a name="LICENSE"></a><h1>LICENSE</h1>
+<p><code class="inline"><span class="w">Tie::File</span></code>
+ version 0.97 is copyright (C) 2003 Mark Jason Dominus.</p>
+<p>This library is free software; you may redistribute it and/or modify
+it under the same terms as Perl itself.</p>
+<p>These terms are your choice of any of (1) the Perl Artistic Licence,
+or (2) version 2 of the GNU General Public License as published by the
+Free Software Foundation, or (3) any later version of the GNU General
+Public License.</p>
+<p>This library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+<p>You should have received a copy of the GNU General Public License
+along with this library program; it should be in the file <code class="inline"><span class="w">COPYING</span></code>
+.
+If not, write to the Free Software Foundation, Inc., 51 Franklin Street,
+Fifth Floor, Boston, MA  02110-1301, USA</p>
+<p>For licensing inquiries, contact the author at:</p>
+<pre class="verbatim">	Mark Jason Dominus
+	255 S. Warnock St.
+	Philadelphia, PA 19107</pre><a name="WARRANTY"></a><h1>WARRANTY</h1>
+<p><code class="inline"><span class="w">Tie::File</span></code>
+ version 0.97 comes with ABSOLUTELY NO WARRANTY.
+For details, see the license.</p>
+<a name="THANKS"></a><h1>THANKS</h1>
+<p>Gigantic thanks to Jarkko Hietaniemi, for agreeing to put this in the
+core when I hadn't written it yet, and for generally being helpful,
+supportive, and competent.  (Usually the rule is "choose any one.")
+Also big thanks to Abhijit Menon-Sen for all of the same things.</p>
+<p>Special thanks to Craig Berry and Peter Prymmer (for VMS portability
+help), Randy Kobes (for Win32 portability help), Clinton Pierce and
+Autrijus Tang (for heroic eleventh-hour Win32 testing above and beyond
+the call of duty), Michael G Schwern (for testing advice), and the
+rest of the CPAN testers (for testing generally).</p>
+<p>Special thanks to Tels for suggesting several speed and memory
+optimizations.</p>
+<p>Additional thanks to:
+Edward Avis /
+Mattia Barbon /
+Tom Christiansen /
+Gerrit Haase /
+Gurusamy Sarathy /
+Jarkko Hietaniemi (again) /
+Nikola Knezevic /
+John Kominetz /
+Nick Ing-Simmons /
+Tassilo von Parseval /
+H. Dieter Pearcey /
+Slaven Rezic /
+Eric Roode /
+Peter Scott /
+Peter Somu /
+Autrijus Tang (again) /
+Tels (again) /
+Juerd Waalboer</p>
+<a name="TODO"></a><h1>TODO</h1>
+<p>More tests.  (Stuff I didn't think of yet.)</p>
+<p>Paragraph mode?</p>
+<p>Fixed-length mode.  Leave-blanks mode.</p>
+<p>Maybe an autolocking mode?</p>
+<p>For many common uses of the module, the read cache is a liability.
+For example, a program that inserts a single record, or that scans the
+file once, will have a cache hit rate of zero.  This suggests a major
+optimization: The cache should be initially disabled.  Here's a hybrid
+approach: Initially, the cache is disabled, but the cache code
+maintains statistics about how high the hit rate would be *if* it were
+enabled.  When it sees the hit rate get high enough, it enables
+itself.  The STAT comments in this code are the beginning of an
+implementation of this.</p>
+<p>Record locking with fcntl()?  Then the module might support an undo
+log and get real transactions.  What a tour de force that would be.</p>
+<p>Keeping track of the highest cached record. This would allow reads-in-a-row
+to skip the cache lookup faster (if reading from 1..N with empty cache at
+start, the last cached value will be always N-1).</p>
+<p>More tests.</p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../close_purple.gif';" onmouseout="rightCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('Tie::File','Tie/File.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

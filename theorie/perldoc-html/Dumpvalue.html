@@ -1,0 +1,246 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>Dumpvalue - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 0;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='close_purple.gif';" onmouseout="leftCloseIcon.src='close_blue.gif';"><img src="close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="index-overview.html">Overview</a></li>
+        <li><a href="index-tutorials.html">Tutorials</a></li>
+        <li><a href="index-faq.html">FAQs</a></li>
+        <li><a href="index-history.html">History / Changes</a></li>
+        <li><a href="index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="index-language.html">Language</a></li>
+        <li><a href="index-functions.html">Functions</a></li>
+        <li><a href="perlop.html">Operators</a></li>
+        <li><a href="perlvar.html">Special variables</a></li>
+        <li><a href="index-pragmas.html">Pragmas</a></li>
+        <li><a href="index-modules-A.html">Core modules</a></li>
+        <li><a href="index-utilities.html">Utilities</a></li>
+        <li><a href="index-internals.html">Internals</a></li>
+        <li><a href="index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="index.html">Home</a> &gt; <a href="index-modules-A.html">Core modules</a> &gt; <a href="index-modules-D.html">D</a> &gt; Dumpvalue</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">Dumpvalue</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><ul><li><a href="#Creation">Creation</a><li><a href="#Methods">Methods</a></ul></ul><a name="NAME"></a><h1>NAME</h1>
+<p>Dumpvalue - provides screen dump of Perl data.</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">  <a class="l_k" href="functions/use.html">use</a> <span class="w">Dumpvalue</span><span class="sc">;</span>
+  <a class="l_k" href="functions/my.html">my</a> <span class="i">$dumper</span> = <span class="w">new</span> <span class="w">Dumpvalue</span><span class="sc">;</span>
+  <span class="i">$dumper</span><span class="i">-&gt;set</span><span class="s">(</span><span class="w">globPrint</span> <span class="cm">=&gt;</span> <span class="n">1</span><span class="s">)</span><span class="sc">;</span>
+  <span class="i">$dumper</span><span class="i">-&gt;dumpValue</span><span class="s">(</span>\<span class="i">*::</span><span class="s">)</span><span class="sc">;</span>
+  <span class="i">$dumper</span><span class="i">-&gt;dumpvars</span><span class="s">(</span><span class="q">&#39;main&#39;</span><span class="s">)</span><span class="sc">;</span>
+  <a class="l_k" href="functions/my.html">my</a> <span class="i">$dump</span> = <span class="i">$dumper</span><span class="i">-&gt;stringify</span><span class="s">(</span><span class="i">$some_value</span><span class="s">)</span><span class="sc">;</span></pre>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<a name="Creation"></a><h2>Creation</h2>
+<p>A new dumper is created by a call</p>
+<pre class="verbatim">  <span class="i">$d</span> = <span class="w">new</span> <span class="i">Dumpvalue</span><span class="s">(</span><span class="w">option1</span> <span class="cm">=&gt;</span> <span class="w">value1</span><span class="cm">,</span> <span class="w">option2</span> <span class="cm">=&gt;</span> <span class="w">value2</span><span class="s">)</span></pre>
+<p>Recognized options:</p>
+<ul>
+<li><a name="'arrayDepth'0x2c-'hashDepth'"></a><b><code class="inline"><span class="w">arrayDepth</span></code>
+, <code class="inline"><span class="w">hashDepth</span></code>
+</b>
+<p>Print only first N elements of arrays and hashes.  If false, prints all the
+elements.</p>
+</li>
+<li><a name="'compactDump'0x2c-'veryCompact'"></a><b><code class="inline"><span class="w">compactDump</span></code>
+, <code class="inline"><span class="w">veryCompact</span></code>
+</b>
+<p>Change style of array and hash dump.  If true, short array
+may be printed on one line.</p>
+</li>
+<li><a name="'globPrint'"></a><b><code class="inline"><span class="w">globPrint</span></code>
+</b>
+<p>Whether to print contents of globs.</p>
+</li>
+<li><a name="'dumpDBFiles'"></a><b><code class="inline"><span class="w">dumpDBFiles</span></code>
+</b>
+<p>Dump arrays holding contents of debugged files.</p>
+</li>
+<li><a name="'dumpPackages'"></a><b><code class="inline"><span class="w">dumpPackages</span></code>
+</b>
+<p>Dump symbol tables of packages.</p>
+</li>
+<li><a name="'dumpReused'"></a><b><code class="inline"><span class="w">dumpReused</span></code>
+</b>
+<p>Dump contents of "reused" addresses.</p>
+</li>
+<li><a name="'tick'0x2c-'quoteHighBit'0x2c-'printUndef'"></a><b><code class="inline"><span class="w">tick</span></code>
+, <code class="inline"><span class="w">quoteHighBit</span></code>
+, <code class="inline"><span class="w">printUndef</span></code>
+</b>
+<p>Change style of string dump.  Default value of <code class="inline"><span class="w">tick</span></code>
+ is <code class="inline"><span class="w">auto</span></code>
+, one
+can enable either double-quotish dump, or single-quotish by setting it
+to <code class="inline">"</code> or <code class="inline">'</code>.  By default, characters with high bit set are printed
+<i>as is</i>.  If <code class="inline"><span class="w">quoteHighBit</span></code>
+ is set, they will be quoted.</p>
+</li>
+<li><a name="'usageOnly'"></a><b><code class="inline"><span class="w">usageOnly</span></code>
+</b>
+<p>rudimentally per-package memory usage dump.  If set,
+<code class="inline"><span class="w">dumpvars</span></code>
+ calculates total size of strings in variables in the package.</p>
+</li>
+<li><a name="unctrl"></a><b>unctrl</b>
+<p>Changes the style of printout of strings.  Possible values are
+<code class="inline"><span class="w">unctrl</span></code>
+ and <code class="inline"><span class="w">quote</span></code>
+.</p>
+</li>
+<li><a name="subdump"></a><b>subdump</b>
+<p>Whether to try to find the subroutine name given the reference.</p>
+</li>
+<li><a name="bareStringify"></a><b>bareStringify</b>
+<p>Whether to write the non-overloaded form of the stringify-overloaded objects.</p>
+</li>
+<li><a name="quoteHighBit"></a><b>quoteHighBit</b>
+<p>Whether to print chars with high bit set in binary or "as is".</p>
+</li>
+<li><a name="stopDbSignal"></a><b>stopDbSignal</b>
+<p>Whether to abort printing if debugger signal flag is raised.</p>
+</li>
+</ul>
+<p>Later in the life of the object the methods may be queries with get()
+method and set() method (which accept multiple arguments).</p>
+<a name="Methods"></a><h2>Methods</h2>
+<ul>
+<li><a name="dumpValue"></a><b>dumpValue</b>
+<pre class="verbatim">  <span class="i">$dumper</span><span class="i">-&gt;dumpValue</span><span class="s">(</span><span class="i">$value</span><span class="s">)</span><span class="sc">;</span>
+  <span class="i">$dumper</span><span class="i">-&gt;dumpValue</span><span class="s">(</span><span class="s">[</span><span class="i">$value1</span><span class="cm">,</span> <span class="i">$value2</span><span class="s">]</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Prints a dump to the currently selected filehandle.</p>
+</li>
+<li><a name="dumpValues"></a><b>dumpValues</b>
+<pre class="verbatim">  <span class="i">$dumper</span><span class="i">-&gt;dumpValues</span><span class="s">(</span><span class="i">$value1</span><span class="cm">,</span> <span class="i">$value2</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Same as <code class="inline"> <span class="i">$dumper</span>-</code>
+dumpValue([$value1, $value2]); &gt;.</p>
+</li>
+<li><a name="stringify"></a><b>stringify</b>
+<pre class="verbatim">  <a class="l_k" href="functions/my.html">my</a> <span class="i">$dump</span> = <span class="i">$dumper</span><span class="i">-&gt;stringify</span><span class="s">(</span><span class="i">$value</span> [<span class="cm">,</span><span class="i">$noticks</span>] <span class="s">)</span><span class="sc">;</span></pre>
+<p>Returns the dump of a single scalar without printing. If the second
+argument is true, the return value does not contain enclosing ticks.
+Does not handle data structures.</p>
+</li>
+<li><a name="dumpvars"></a><b>dumpvars</b>
+<pre class="verbatim">  <span class="i">$dumper</span><span class="i">-&gt;dumpvars</span><span class="s">(</span><span class="q">&#39;my_package&#39;</span><span class="s">)</span><span class="sc">;</span>
+  <span class="i">$dumper</span><span class="i">-&gt;dumpvars</span><span class="s">(</span><span class="q">&#39;my_package&#39;</span><span class="cm">,</span> <span class="q">&#39;foo&#39;</span><span class="cm">,</span> <span class="q">&#39;~bar$&#39;</span><span class="cm">,</span> <span class="q">&#39;!......&#39;</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>The optional arguments are considered as literal strings unless they
+start with <code class="inline">~</code>
+ or <code class="inline">!</code>
+, in which case they are interpreted as regular
+expressions (possibly negated).</p>
+<p>The second example prints entries with names <code class="inline"><span class="w">foo</span></code>
+, and also entries
+with names which ends on <code class="inline"><span class="w">bar</span></code>
+, or are shorter than 5 chars.</p>
+</li>
+<li><a name="set_quote"></a><b>set_quote</b>
+<pre class="verbatim">  <span class="i">$d</span><span class="i">-&gt;set_quote</span><span class="s">(</span><span class="q">&#39;&quot;&#39;</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Sets <code class="inline"><span class="w">tick</span></code>
+ and <code class="inline"><span class="w">unctrl</span></code>
+ options to suitable values for printout with the
+given quote char.  Possible values are <code class="inline"><span class="w">auto</span></code>
+, <code class="inline">'</code> and <code class="inline">"</code>.</p>
+</li>
+<li><a name="set_unctrl"></a><b>set_unctrl</b>
+<pre class="verbatim">  <span class="i">$d</span><span class="i">-&gt;set_unctrl</span><span class="s">(</span><span class="q">&#39;unctrl&#39;</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Sets <code class="inline"><span class="w">unctrl</span></code>
+ option with checking for an invalid argument.
+Possible values are <code class="inline"><span class="w">unctrl</span></code>
+ and <code class="inline"><span class="w">quote</span></code>
+.</p>
+</li>
+<li><a name="compactDump"></a><b>compactDump</b>
+<pre class="verbatim">  <span class="i">$d</span><span class="i">-&gt;compactDump</span><span class="s">(</span><span class="n">1</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Sets <code class="inline"><span class="w">compactDump</span></code>
+ option.  If the value is 1, sets to a reasonable
+big number.</p>
+</li>
+<li><a name="veryCompact"></a><b>veryCompact</b>
+<pre class="verbatim">  <span class="i">$d</span><span class="i">-&gt;veryCompact</span><span class="s">(</span><span class="n">1</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Sets <code class="inline"><span class="w">compactDump</span></code>
+ and <code class="inline"><span class="w">veryCompact</span></code>
+ options simultaneously.</p>
+</li>
+<li><a name="set"></a><b>set</b>
+<pre class="verbatim">  <span class="i">$d</span><span class="i">-&gt;set</span><span class="s">(</span><span class="w">option1</span> <span class="cm">=&gt;</span> <span class="w">value1</span><span class="cm">,</span> <span class="w">option2</span> <span class="cm">=&gt;</span> <span class="w">value2</span><span class="s">)</span><span class="sc">;</span></pre>
+</li>
+<li><a name="get"></a><b>get</b>
+<pre class="verbatim">  <span class="i">@values</span> = <span class="i">$d</span><span class="i">-&gt;get</span><span class="s">(</span><span class="q">&#39;option1&#39;</span><span class="cm">,</span> <span class="q">&#39;option2&#39;</span><span class="s">)</span><span class="sc">;</span></pre>
+</li>
+</ul>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='close_purple.gif';" onmouseout="rightCloseIcon.src='close_blue.gif';"><img src="close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('Dumpvalue','Dumpvalue.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

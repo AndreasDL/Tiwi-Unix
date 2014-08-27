@@ -1,0 +1,442 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>Math::Trig - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 1;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../close_purple.gif';" onmouseout="leftCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../index-overview.html">Overview</a></li>
+        <li><a href="../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../index-faq.html">FAQs</a></li>
+        <li><a href="../index-history.html">History / Changes</a></li>
+        <li><a href="../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../index-language.html">Language</a></li>
+        <li><a href="../index-functions.html">Functions</a></li>
+        <li><a href="../perlop.html">Operators</a></li>
+        <li><a href="../perlvar.html">Special variables</a></li>
+        <li><a href="../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../index-modules-A.html">Core modules</a></li>
+        <li><a href="../index-utilities.html">Utilities</a></li>
+        <li><a href="../index-internals.html">Internals</a></li>
+        <li><a href="../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../index.html">Home</a> &gt; <a href="../index-modules-A.html">Core modules</a> &gt; <a href="../index-modules-M.html">M</a> &gt; Math::Trig</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">Math::Trig</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><li><a href="#TRIGONOMETRIC-FUNCTIONS">TRIGONOMETRIC FUNCTIONS</a><ul><li><a href="#ERRORS-DUE-TO-DIVISION-BY-ZERO">ERRORS DUE TO DIVISION BY ZERO</a><li><a href="#SIMPLE-(REAL)-ARGUMENTS0x2c-COMPLEX-RESULTS">SIMPLE (REAL) ARGUMENTS, COMPLEX RESULTS</a></ul><li><a href="#PLANE-ANGLE-CONVERSIONS">PLANE ANGLE CONVERSIONS</a><li><a href="#RADIAL-COORDINATE-CONVERSIONS">RADIAL COORDINATE CONVERSIONS</a><ul><li><a href="#COORDINATE-SYSTEMS">COORDINATE SYSTEMS</a><li><a href="#3-D-ANGLE-CONVERSIONS">3-D ANGLE CONVERSIONS</a></ul><li><a href="#GREAT-CIRCLE-DISTANCES-AND-DIRECTIONS">GREAT CIRCLE DISTANCES AND DIRECTIONS</a><ul><li><a href="#great_circle_distance">great_circle_distance</a><li><a href="#great_circle_direction">great_circle_direction</a><li><a href="#great_circle_bearing">great_circle_bearing</a><li><a href="#great_circle_destination">great_circle_destination</a><li><a href="#great_circle_midpoint">great_circle_midpoint</a><li><a href="#great_circle_waypoint">great_circle_waypoint</a></ul><li><a href="#EXAMPLES">EXAMPLES</a><ul><li><a href="#CAVEAT-FOR-GREAT-CIRCLE-FORMULAS">CAVEAT FOR GREAT CIRCLE FORMULAS</a></ul><li><a href="#BUGS">BUGS</a><li><a href="#AUTHORS">AUTHORS</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>Math::Trig - trigonometric functions</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Math::Trig</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="i">$x</span> = <span class="i">tan</span><span class="s">(</span><span class="n">0.9</span><span class="s">)</span><span class="sc">;</span>
+    <span class="i">$y</span> = <span class="i">acos</span><span class="s">(</span><span class="n">3.7</span><span class="s">)</span><span class="sc">;</span>
+    <span class="i">$z</span> = <span class="i">asin</span><span class="s">(</span><span class="n">2.4</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="i">$halfpi</span> = <span class="w">pi</span>/<span class="n">2</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="i">$rad</span> = <span class="i">deg2rad</span><span class="s">(</span><span class="n">120</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="c"># Import constants pi2, pip2, pip4 (2*pi, pi/2, pi/4).</span>
+    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Math::Trig</span> <span class="q">':pi'</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="c"># Import the conversions between cartesian/spherical/cylindrical.</span>
+    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Math::Trig</span> <span class="q">':radial'</span><span class="sc">;</span></pre>
+<pre class="verbatim">        <span class="c"># Import the great circle formulas.</span>
+    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Math::Trig</span> <span class="q">':great_circle'</span><span class="sc">;</span></pre>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p><code class="inline"><span class="w">Math::Trig</span></code>
+ defines many trigonometric functions not defined by the
+core Perl which defines only the <code class="inline"><a class="l_k" href="../functions/sin.html">sin()</a></code> and <code class="inline"><a class="l_k" href="../functions/cos.html">cos()</a></code>.  The constant
+<b>pi</b> is also defined as are a few convenience functions for angle
+conversions, and <i>great circle formulas</i> for spherical movement.</p>
+<a name="TRIGONOMETRIC-FUNCTIONS"></a><h1>TRIGONOMETRIC FUNCTIONS</h1>
+<p>The tangent</p>
+<ul>
+<li><a name="*tan*"></a><b><b>tan</b></b>
+</li>
+</ul>
+<p>The cofunctions of the sine, cosine, and tangent (cosec/csc and cotan/cot
+are aliases)</p>
+<p><b>csc</b>, <b>cosec</b>, <b>sec</b>, <b>sec</b>, <b>cot</b>, <b>cotan</b></p>
+<p>The arcus (also known as the inverse) functions of the sine, cosine,
+and tangent</p>
+<p><b>asin</b>, <b>acos</b>, <b>atan</b></p>
+<p>The principal value of the arc tangent of y/x</p>
+<p><b>atan2</b>(y, x)</p>
+<p>The arcus cofunctions of the sine, cosine, and tangent (acosec/acsc
+and acotan/acot are aliases).  Note that atan2(0, 0) is not well-defined.</p>
+<p><b>acsc</b>, <b>acosec</b>, <b>asec</b>, <b>acot</b>, <b>acotan</b></p>
+<p>The hyperbolic sine, cosine, and tangent</p>
+<p><b>sinh</b>, <b>cosh</b>, <b>tanh</b></p>
+<p>The cofunctions of the hyperbolic sine, cosine, and tangent (cosech/csch
+and cotanh/coth are aliases)</p>
+<p><b>csch</b>, <b>cosech</b>, <b>sech</b>, <b>coth</b>, <b>cotanh</b></p>
+<p>The arcus (also known as the inverse) functions of the hyperbolic
+sine, cosine, and tangent</p>
+<p><b>asinh</b>, <b>acosh</b>, <b>atanh</b></p>
+<p>The arcus cofunctions of the hyperbolic sine, cosine, and tangent
+(acsch/acosech and acoth/acotanh are aliases)</p>
+<p><b>acsch</b>, <b>acosech</b>, <b>asech</b>, <b>acoth</b>, <b>acotanh</b></p>
+<p>The trigonometric constant <b>pi</b> and some of handy multiples
+of it are also defined.</p>
+<p><b>pi, pi2, pi4, pip2, pip4</b></p>
+<a name="ERRORS-DUE-TO-DIVISION-BY-ZERO"></a><h2>ERRORS DUE TO DIVISION BY ZERO</h2>
+<p>The following functions</p>
+<pre class="verbatim">    <span class="w">acoth</span>
+    <span class="w">acsc</span>
+    <span class="w">acsch</span>
+    <span class="w">asec</span>
+    <span class="w">asech</span>
+    <span class="w">atanh</span>
+    <span class="w">cot</span>
+    <span class="w">coth</span>
+    <span class="w">csc</span>
+    <span class="w">csch</span>
+    <span class="w">sec</span>
+    <span class="w">sech</span>
+    <span class="w">tan</span>
+    <span class="w">tanh</span></pre>
+<p>cannot be computed for all arguments because that would mean dividing
+by zero or taking logarithm of zero. These situations cause fatal
+runtime errors looking like this</p>
+<pre class="verbatim">    cot(0): Division by zero.
+    (Because in the definition of cot(0), the divisor sin(0) is 0)
+    Died at ...</pre><p>or</p>
+<pre class="verbatim">    atanh(-1): Logarithm of zero.
+    Died at...</pre><p>For the <code class="inline"><span class="w">csc</span></code>
+, <code class="inline"><span class="w">cot</span></code>
+, <code class="inline"><span class="w">asec</span></code>
+, <code class="inline"><span class="w">acsc</span></code>
+, <code class="inline"><span class="w">acot</span></code>
+, <code class="inline"><span class="w">csch</span></code>
+, <code class="inline"><span class="w">coth</span></code>
+,
+<code class="inline"><span class="w">asech</span></code>
+, <code class="inline"><span class="w">acsch</span></code>
+, the argument cannot be <code class="inline"><span class="n">0</span></code>
+ (zero).  For the
+<code class="inline"><span class="w">atanh</span></code>
+, <code class="inline"><span class="w">acoth</span></code>
+, the argument cannot be <code class="inline"><span class="n">1</span></code>
+ (one).  For the
+<code class="inline"><span class="w">atanh</span></code>
+, <code class="inline"><span class="w">acoth</span></code>
+, the argument cannot be <code class="inline"><span class="n">-1</span></code>
+ (minus one).  For the
+<code class="inline"><span class="w">tan</span></code>
+, <code class="inline"><span class="w">sec</span></code>
+, <code class="inline"><span class="w">tanh</span></code>
+, <code class="inline"><span class="w">sech</span></code>
+, the argument cannot be <i>pi/2 + k *
+pi</i>, where <i>k</i> is any integer.</p>
+<p>Note that atan2(0, 0) is not well-defined.</p>
+<a name="SIMPLE-(REAL)-ARGUMENTS0x2c-COMPLEX-RESULTS"></a><h2>SIMPLE (REAL) ARGUMENTS, COMPLEX RESULTS</h2>
+<p>Please note that some of the trigonometric functions can break out
+from the <b>real axis</b> into the <b>complex plane</b>. For example
+<code class="inline"><span class="i">asin</span><span class="s">(</span><span class="n">2</span><span class="s">)</span></code>
+ has no definition for plain real numbers but it has
+definition for complex numbers.</p>
+<p>In Perl terms this means that supplying the usual Perl numbers (also
+known as scalars, please see <a href="../perldata.html">perldata</a>) as input for the
+trigonometric functions might produce as output results that no more
+are simple real numbers: instead they are complex numbers.</p>
+<p>The <code class="inline"><span class="w">Math::Trig</span></code>
+ handles this by using the <code class="inline"><span class="w">Math::Complex</span></code>
+ package
+which knows how to handle complex numbers, please see <a href="../Math/Complex.html">Math::Complex</a>
+for more information. In practice you need not to worry about getting
+complex numbers as results because the <code class="inline"><span class="w">Math::Complex</span></code>
+ takes care of
+details like for example how to display complex numbers. For example:</p>
+<pre class="verbatim">    <a class="l_k" href="../functions/print.html">print</a> <span class="i">asin</span><span class="s">(</span><span class="n">2</span><span class="s">)</span><span class="cm">,</span> <span class="q">&quot;\n&quot;</span><span class="sc">;</span></pre>
+<p>should produce something like this (take or leave few last decimals):</p>
+<pre class="verbatim">    1.5707963267949-1.31695789692482i</pre><p>That is, a complex number with the real part of approximately <code class="inline"><span class="n">1.571</span></code>
+
+and the imaginary part of approximately <code class="inline"><span class="n">-1.317</span></code>
+.</p>
+<a name="PLANE-ANGLE-CONVERSIONS"></a><h1>PLANE ANGLE CONVERSIONS</h1>
+<p>(Plane, 2-dimensional) angles may be converted with the following functions.</p>
+<ul>
+<li><a name="deg2rad"></a><b>deg2rad</b>
+<pre class="verbatim">    <span class="i">$radians</span>  = <span class="i">deg2rad</span><span class="s">(</span><span class="i">$degrees</span><span class="s">)</span><span class="sc">;</span></pre>
+</li>
+<li><a name="grad2rad"></a><b>grad2rad</b>
+<pre class="verbatim">    <span class="i">$radians</span>  = <span class="i">grad2rad</span><span class="s">(</span><span class="i">$gradians</span><span class="s">)</span><span class="sc">;</span></pre>
+</li>
+<li><a name="rad2deg"></a><b>rad2deg</b>
+<pre class="verbatim">    <span class="i">$degrees</span>  = <span class="i">rad2deg</span><span class="s">(</span><span class="i">$radians</span><span class="s">)</span><span class="sc">;</span></pre>
+</li>
+<li><a name="grad2deg"></a><b>grad2deg</b>
+<pre class="verbatim">    <span class="i">$degrees</span>  = <span class="i">grad2deg</span><span class="s">(</span><span class="i">$gradians</span><span class="s">)</span><span class="sc">;</span></pre>
+</li>
+<li><a name="deg2grad"></a><b>deg2grad</b>
+<pre class="verbatim">    <span class="i">$gradians</span> = <span class="i">deg2grad</span><span class="s">(</span><span class="i">$degrees</span><span class="s">)</span><span class="sc">;</span></pre>
+</li>
+<li><a name="rad2grad"></a><b>rad2grad</b>
+<pre class="verbatim">    <span class="i">$gradians</span> = <span class="i">rad2grad</span><span class="s">(</span><span class="i">$radians</span><span class="s">)</span><span class="sc">;</span></pre>
+</li>
+</ul>
+<p>The full circle is 2 <i>pi</i> radians or <i>360</i> degrees or <i>400</i> gradians.
+The result is by default wrapped to be inside the [0, {2pi,360,400}[ circle.
+If you don't want this, supply a true second argument:</p>
+<pre class="verbatim">    <span class="i">$zillions_of_radians</span>  = <span class="i">deg2rad</span><span class="s">(</span><span class="i">$zillions_of_degrees</span><span class="cm">,</span> <span class="n">1</span><span class="s">)</span><span class="sc">;</span>
+    <span class="i">$negative_degrees</span>     = <span class="i">rad2deg</span><span class="s">(</span><span class="i">$negative_radians</span><span class="cm">,</span> <span class="n">1</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>You can also do the wrapping explicitly by rad2rad(), deg2deg(), and
+grad2grad().</p>
+<ul>
+<li><a name="rad2rad"></a><b>rad2rad</b>
+<pre class="verbatim">    <span class="i">$radians_wrapped_by_2pi</span> = <span class="i">rad2rad</span><span class="s">(</span><span class="i">$radians</span><span class="s">)</span><span class="sc">;</span></pre>
+</li>
+<li><a name="deg2deg"></a><b>deg2deg</b>
+<pre class="verbatim">    <span class="i">$degrees_wrapped_by_360</span> = <span class="i">deg2deg</span><span class="s">(</span><span class="i">$degrees</span><span class="s">)</span><span class="sc">;</span></pre>
+</li>
+<li><a name="grad2grad"></a><b>grad2grad</b>
+<pre class="verbatim">    <span class="i">$gradians_wrapped_by_400</span> = <span class="i">grad2grad</span><span class="s">(</span><span class="i">$gradians</span><span class="s">)</span><span class="sc">;</span></pre>
+</li>
+</ul>
+<a name="RADIAL-COORDINATE-CONVERSIONS"></a><h1>RADIAL COORDINATE CONVERSIONS</h1>
+<p><b>Radial coordinate systems</b> are the <b>spherical</b> and the <b>cylindrical</b>
+systems, explained shortly in more detail.</p>
+<p>You can import radial coordinate conversion functions by using the
+<code class="inline"><span class="j">:</span><span class="w">radial</span></code>
+ tag:</p>
+<pre class="verbatim">    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Math::Trig</span> <span class="q">&#39;:radial&#39;</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="s">(</span><span class="i">$rho</span><span class="cm">,</span> <span class="i">$theta</span><span class="cm">,</span> <span class="i">$z</span><span class="s">)</span>     = <span class="i">cartesian_to_cylindrical</span><span class="s">(</span><span class="i">$x</span><span class="cm">,</span> <span class="i">$y</span><span class="cm">,</span> <span class="i">$z</span><span class="s">)</span><span class="sc">;</span>
+    <span class="s">(</span><span class="i">$rho</span><span class="cm">,</span> <span class="i">$theta</span><span class="cm">,</span> <span class="i">$phi</span><span class="s">)</span>   = <span class="i">cartesian_to_spherical</span><span class="s">(</span><span class="i">$x</span><span class="cm">,</span> <span class="i">$y</span><span class="cm">,</span> <span class="i">$z</span><span class="s">)</span><span class="sc">;</span>
+    <span class="s">(</span><span class="i">$x</span><span class="cm">,</span> <span class="i">$y</span><span class="cm">,</span> <span class="i">$z</span><span class="s">)</span>           = <span class="i">cylindrical_to_cartesian</span><span class="s">(</span><span class="i">$rho</span><span class="cm">,</span> <span class="i">$theta</span><span class="cm">,</span> <span class="i">$z</span><span class="s">)</span><span class="sc">;</span>
+    <span class="s">(</span><span class="i">$rho_s</span><span class="cm">,</span> <span class="i">$theta</span><span class="cm">,</span> <span class="i">$phi</span><span class="s">)</span> = <span class="i">cylindrical_to_spherical</span><span class="s">(</span><span class="i">$rho_c</span><span class="cm">,</span> <span class="i">$theta</span><span class="cm">,</span> <span class="i">$z</span><span class="s">)</span><span class="sc">;</span>
+    <span class="s">(</span><span class="i">$x</span><span class="cm">,</span> <span class="i">$y</span><span class="cm">,</span> <span class="i">$z</span><span class="s">)</span>           = <span class="i">spherical_to_cartesian</span><span class="s">(</span><span class="i">$rho</span><span class="cm">,</span> <span class="i">$theta</span><span class="cm">,</span> <span class="i">$phi</span><span class="s">)</span><span class="sc">;</span>
+    <span class="s">(</span><span class="i">$rho_c</span><span class="cm">,</span> <span class="i">$theta</span><span class="cm">,</span> <span class="i">$z</span><span class="s">)</span>   = <span class="i">spherical_to_cylindrical</span><span class="s">(</span><span class="i">$rho_s</span><span class="cm">,</span> <span class="i">$theta</span><span class="cm">,</span> <span class="i">$phi</span><span class="s">)</span><span class="sc">;</span></pre>
+<p><b>All angles are in radians</b>.</p>
+<a name="COORDINATE-SYSTEMS"></a><h2>COORDINATE SYSTEMS</h2>
+<p><b>Cartesian</b> coordinates are the usual rectangular <i>(x, y, z)</i>-coordinates.</p>
+<p>Spherical coordinates, <i>(rho, theta, pi)</i>, are three-dimensional
+coordinates which define a point in three-dimensional space.  They are
+based on a sphere surface.  The radius of the sphere is <b>rho</b>, also
+known as the <i>radial</i> coordinate.  The angle in the <i>xy</i>-plane
+(around the <i>z</i>-axis) is <b>theta</b>, also known as the <i>azimuthal</i>
+coordinate.  The angle from the <i>z</i>-axis is <b>phi</b>, also known as the
+<i>polar</i> coordinate.  The North Pole is therefore <i>0, 0, rho</i>, and
+the Gulf of Guinea (think of the missing big chunk of Africa) <i>0,
+pi/2, rho</i>.  In geographical terms <i>phi</i> is latitude (northward
+positive, southward negative) and <i>theta</i> is longitude (eastward
+positive, westward negative).</p>
+<p><b>BEWARE</b>: some texts define <i>theta</i> and <i>phi</i> the other way round,
+some texts define the <i>phi</i> to start from the horizontal plane, some
+texts use <i>r</i> in place of <i>rho</i>.</p>
+<p>Cylindrical coordinates, <i>(rho, theta, z)</i>, are three-dimensional
+coordinates which define a point in three-dimensional space.  They are
+based on a cylinder surface.  The radius of the cylinder is <b>rho</b>,
+also known as the <i>radial</i> coordinate.  The angle in the <i>xy</i>-plane
+(around the <i>z</i>-axis) is <b>theta</b>, also known as the <i>azimuthal</i>
+coordinate.  The third coordinate is the <i>z</i>, pointing up from the
+<b>theta</b>-plane.</p>
+<a name="3-D-ANGLE-CONVERSIONS"></a><h2>3-D ANGLE CONVERSIONS</h2>
+<p>Conversions to and from spherical and cylindrical coordinates are
+available.  Please notice that the conversions are not necessarily
+reversible because of the equalities like <i>pi</i> angles being equal to
+<i>-pi</i> angles.</p>
+<ul>
+<li><a name="cartesian_to_cylindrical"></a><b>cartesian_to_cylindrical</b>
+<pre class="verbatim">    <span class="s">(</span><span class="i">$rho</span><span class="cm">,</span> <span class="i">$theta</span><span class="cm">,</span> <span class="i">$z</span><span class="s">)</span> = <span class="i">cartesian_to_cylindrical</span><span class="s">(</span><span class="i">$x</span><span class="cm">,</span> <span class="i">$y</span><span class="cm">,</span> <span class="i">$z</span><span class="s">)</span><span class="sc">;</span></pre>
+</li>
+<li><a name="cartesian_to_spherical"></a><b>cartesian_to_spherical</b>
+<pre class="verbatim">    <span class="s">(</span><span class="i">$rho</span><span class="cm">,</span> <span class="i">$theta</span><span class="cm">,</span> <span class="i">$phi</span><span class="s">)</span> = <span class="i">cartesian_to_spherical</span><span class="s">(</span><span class="i">$x</span><span class="cm">,</span> <span class="i">$y</span><span class="cm">,</span> <span class="i">$z</span><span class="s">)</span><span class="sc">;</span></pre>
+</li>
+<li><a name="cylindrical_to_cartesian"></a><b>cylindrical_to_cartesian</b>
+<pre class="verbatim">    <span class="s">(</span><span class="i">$x</span><span class="cm">,</span> <span class="i">$y</span><span class="cm">,</span> <span class="i">$z</span><span class="s">)</span> = <span class="i">cylindrical_to_cartesian</span><span class="s">(</span><span class="i">$rho</span><span class="cm">,</span> <span class="i">$theta</span><span class="cm">,</span> <span class="i">$z</span><span class="s">)</span><span class="sc">;</span></pre>
+</li>
+<li><a name="cylindrical_to_spherical"></a><b>cylindrical_to_spherical</b>
+<pre class="verbatim">    <span class="s">(</span><span class="i">$rho_s</span><span class="cm">,</span> <span class="i">$theta</span><span class="cm">,</span> <span class="i">$phi</span><span class="s">)</span> = <span class="i">cylindrical_to_spherical</span><span class="s">(</span><span class="i">$rho_c</span><span class="cm">,</span> <span class="i">$theta</span><span class="cm">,</span> <span class="i">$z</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Notice that when <code class="inline"><span class="i">$z</span></code>
+ is not 0 <code class="inline"><span class="i">$rho_s</span></code>
+ is not equal to <code class="inline"><span class="i">$rho_c</span></code>
+.</p>
+</li>
+<li><a name="spherical_to_cartesian"></a><b>spherical_to_cartesian</b>
+<pre class="verbatim">    <span class="s">(</span><span class="i">$x</span><span class="cm">,</span> <span class="i">$y</span><span class="cm">,</span> <span class="i">$z</span><span class="s">)</span> = <span class="i">spherical_to_cartesian</span><span class="s">(</span><span class="i">$rho</span><span class="cm">,</span> <span class="i">$theta</span><span class="cm">,</span> <span class="i">$phi</span><span class="s">)</span><span class="sc">;</span></pre>
+</li>
+<li><a name="spherical_to_cylindrical"></a><b>spherical_to_cylindrical</b>
+<pre class="verbatim">    <span class="s">(</span><span class="i">$rho_c</span><span class="cm">,</span> <span class="i">$theta</span><span class="cm">,</span> <span class="i">$z</span><span class="s">)</span> = <span class="i">spherical_to_cylindrical</span><span class="s">(</span><span class="i">$rho_s</span><span class="cm">,</span> <span class="i">$theta</span><span class="cm">,</span> <span class="i">$phi</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Notice that when <code class="inline"><span class="i">$z</span></code>
+ is not 0 <code class="inline"><span class="i">$rho_c</span></code>
+ is not equal to <code class="inline"><span class="i">$rho_s</span></code>
+.</p>
+</li>
+</ul>
+<a name="GREAT-CIRCLE-DISTANCES-AND-DIRECTIONS"></a><h1>GREAT CIRCLE DISTANCES AND DIRECTIONS</h1>
+<p>A great circle is section of a circle that contains the circle
+diameter: the shortest distance between two (non-antipodal) points on
+the spherical surface goes along the great circle connecting those two
+points.</p>
+<a name="great_circle_distance"></a><h2>great_circle_distance</h2>
+<p>You can compute spherical distances, called <b>great circle distances</b>,
+by importing the great_circle_distance() function:</p>
+<pre class="verbatim">  <a class="l_k" href="../functions/use.html">use</a> <span class="w">Math::Trig</span> <span class="q">&#39;great_circle_distance&#39;</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <span class="i">$distance</span> = <span class="i">great_circle_distance</span><span class="s">(</span><span class="i">$theta0</span><span class="cm">,</span> <span class="i">$phi0</span><span class="cm">,</span> <span class="i">$theta1</span><span class="cm">,</span> <span class="i">$phi1</span><span class="cm">,</span> <span class="s">[</span><span class="cm">,</span> <span class="i">$rho</span><span class="s">]</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>The <i>great circle distance</i> is the shortest distance between two
+points on a sphere.  The distance is in <code class="inline"><span class="i">$rho</span></code>
+ units.  The <code class="inline"><span class="i">$rho</span></code>
+ is
+optional, it defaults to 1 (the unit sphere), therefore the distance
+defaults to radians.</p>
+<p>If you think geographically the <i>theta</i> are longitudes: zero at the
+Greenwhich meridian, eastward positive, westward negative--and the
+<i>phi</i> are latitudes: zero at the North Pole, northward positive,
+southward negative.  <b>NOTE</b>: this formula thinks in mathematics, not
+geographically: the <i>phi</i> zero is at the North Pole, not at the
+Equator on the west coast of Africa (Bay of Guinea).  You need to
+subtract your geographical coordinates from <i>pi/2</i> (also known as 90
+degrees).</p>
+<pre class="verbatim">  <span class="i">$distance</span> = <span class="i">great_circle_distance</span><span class="s">(</span><span class="i">$lon0</span><span class="cm">,</span> <span class="w">pi</span>/<span class="n">2</span> - <span class="i">$lat0</span><span class="cm">,</span>
+                                    <span class="i">$lon1</span><span class="cm">,</span> <span class="w">pi</span>/<span class="n">2</span> - <span class="i">$lat1</span><span class="cm">,</span> <span class="i">$rho</span><span class="s">)</span><span class="sc">;</span></pre>
+<a name="great_circle_direction"></a><h2>great_circle_direction</h2>
+<p>The direction you must follow the great circle (also known as <i>bearing</i>)
+can be computed by the great_circle_direction() function:</p>
+<pre class="verbatim">  <a class="l_k" href="../functions/use.html">use</a> <span class="w">Math::Trig</span> <span class="q">&#39;great_circle_direction&#39;</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <span class="i">$direction</span> = <span class="i">great_circle_direction</span><span class="s">(</span><span class="i">$theta0</span><span class="cm">,</span> <span class="i">$phi0</span><span class="cm">,</span> <span class="i">$theta1</span><span class="cm">,</span> <span class="i">$phi1</span><span class="s">)</span><span class="sc">;</span></pre>
+<a name="great_circle_bearing"></a><h2>great_circle_bearing</h2>
+<p>Alias 'great_circle_bearing' for 'great_circle_direction' is also available.</p>
+<pre class="verbatim">  <a class="l_k" href="../functions/use.html">use</a> <span class="w">Math::Trig</span> <span class="q">'great_circle_bearing'</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <span class="i">$direction</span> = <span class="i">great_circle_bearing</span><span class="s">(</span><span class="i">$theta0</span><span class="cm">,</span> <span class="i">$phi0</span><span class="cm">,</span> <span class="i">$theta1</span><span class="cm">,</span> <span class="i">$phi1</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>The result of great_circle_direction is in radians, zero indicating
+straight north, pi or -pi straight south, pi/2 straight west, and
+-pi/2 straight east.</p>
+<p>You can inversely compute the destination if you know the
+starting point, direction, and distance:</p>
+<a name="great_circle_destination"></a><h2>great_circle_destination</h2>
+<pre class="verbatim">  <a class="l_k" href="../functions/use.html">use</a> <span class="w">Math::Trig</span> <span class="q">&#39;great_circle_destination&#39;</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <span class="c"># thetad and phid are the destination coordinates,</span>
+  <span class="c"># dird is the final direction at the destination.</span></pre>
+<pre class="verbatim">  <span class="s">(</span><span class="i">$thetad</span><span class="cm">,</span> <span class="i">$phid</span><span class="cm">,</span> <span class="i">$dird</span><span class="s">)</span> =
+    <span class="i">great_circle_destination</span><span class="s">(</span><span class="i">$theta</span><span class="cm">,</span> <span class="i">$phi</span><span class="cm">,</span> <span class="i">$direction</span><span class="cm">,</span> <span class="i">$distance</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>or the midpoint if you know the end points:</p>
+<a name="great_circle_midpoint"></a><h2>great_circle_midpoint</h2>
+<pre class="verbatim">  <a class="l_k" href="../functions/use.html">use</a> <span class="w">Math::Trig</span> <span class="q">&#39;great_circle_midpoint&#39;</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <span class="s">(</span><span class="i">$thetam</span><span class="cm">,</span> <span class="i">$phim</span><span class="s">)</span> =
+    <span class="i">great_circle_midpoint</span><span class="s">(</span><span class="i">$theta0</span><span class="cm">,</span> <span class="i">$phi0</span><span class="cm">,</span> <span class="i">$theta1</span><span class="cm">,</span> <span class="i">$phi1</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>The great_circle_midpoint() is just a special case of</p>
+<a name="great_circle_waypoint"></a><h2>great_circle_waypoint</h2>
+<pre class="verbatim">  <a class="l_k" href="../functions/use.html">use</a> <span class="w">Math::Trig</span> <span class="q">&#39;great_circle_waypoint&#39;</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <span class="s">(</span><span class="i">$thetai</span><span class="cm">,</span> <span class="i">$phii</span><span class="s">)</span> =
+    <span class="i">great_circle_waypoint</span><span class="s">(</span><span class="i">$theta0</span><span class="cm">,</span> <span class="i">$phi0</span><span class="cm">,</span> <span class="i">$theta1</span><span class="cm">,</span> <span class="i">$phi1</span><span class="cm">,</span> <span class="i">$way</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Where the $way is a value from zero ($theta0, $phi0) to one ($theta1,
+$phi1).  Note that antipodal points (where their distance is <i>pi</i>
+radians) do not have waypoints between them (they would have an an
+"equator" between them), and therefore <code class="inline"><a class="l_k" href="../functions/undef.html">undef</a></code> is returned for
+antipodal points.  If the points are the same and the distance
+therefore zero and all waypoints therefore identical, the first point
+(either point) is returned.</p>
+<p>The thetas, phis, direction, and distance in the above are all in radians.</p>
+<p>You can import all the great circle formulas by</p>
+<pre class="verbatim">  <a class="l_k" href="../functions/use.html">use</a> <span class="w">Math::Trig</span> <span class="q">&#39;:great_circle&#39;</span><span class="sc">;</span></pre>
+<p>Notice that the resulting directions might be somewhat surprising if
+you are looking at a flat worldmap: in such map projections the great
+circles quite often do not look like the shortest routes-- but for
+example the shortest possible routes from Europe or North America to
+Asia do often cross the polar regions.</p>
+<a name="EXAMPLES"></a><h1>EXAMPLES</h1>
+<p>To calculate the distance between London (51.3N 0.5W) and Tokyo
+(35.7N 139.8E) in kilometers:</p>
+<pre class="verbatim">    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Math::Trig</span> <span class="q">qw(great_circle_distance deg2rad)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="c"># Notice the 90 - latitude: phi zero is at the North Pole.</span>
+<a name="NESW"></a>    sub <span class="m">NESW</span> <span class="s">{</span> <span class="i">deg2rad</span><span class="s">(</span><span class="i">$_</span>[<span class="n">0</span>]<span class="s">)</span><span class="cm">,</span> <span class="i">deg2rad</span><span class="s">(</span><span class="n">90</span> - <span class="i">$_</span>[<span class="n">1</span>]<span class="s">)</span> <span class="s">}</span>
+    <a class="l_k" href="../functions/my.html">my</a> <span class="i">@L</span> = <span class="i">NESW</span><span class="s">(</span> <span class="n">-0.5</span><span class="cm">,</span> <span class="n">51.3</span><span class="s">)</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/my.html">my</a> <span class="i">@T</span> = <span class="i">NESW</span><span class="s">(</span><span class="n">139.8</span><span class="cm">,</span> <span class="n">35.7</span><span class="s">)</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/my.html">my</a> <span class="i">$km</span> = <span class="i">great_circle_distance</span><span class="s">(</span><span class="i">@L</span><span class="cm">,</span> <span class="i">@T</span><span class="cm">,</span> <span class="n">6378</span><span class="s">)</span><span class="sc">;</span> <span class="c"># About 9600 km.</span></pre>
+<p>The direction you would have to go from London to Tokyo (in radians,
+straight north being zero, straight east being pi/2).</p>
+<pre class="verbatim">    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Math::Trig</span> <span class="q">qw(great_circle_direction)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <a class="l_k" href="../functions/my.html">my</a> <span class="i">$rad</span> = <span class="i">great_circle_direction</span><span class="s">(</span><span class="i">@L</span><span class="cm">,</span> <span class="i">@T</span><span class="s">)</span><span class="sc">;</span> <span class="c"># About 0.547 or 0.174 pi.</span></pre>
+<p>The midpoint between London and Tokyo being</p>
+<pre class="verbatim">    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Math::Trig</span> <span class="q">qw(great_circle_midpoint)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <a class="l_k" href="../functions/my.html">my</a> <span class="i">@M</span> = <span class="i">great_circle_midpoint</span><span class="s">(</span><span class="i">@L</span><span class="cm">,</span> <span class="i">@T</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>or about 89.16N 68.93E, practically at the North Pole.</p>
+<a name="CAVEAT-FOR-GREAT-CIRCLE-FORMULAS"></a><h2>CAVEAT FOR GREAT CIRCLE FORMULAS</h2>
+<p>The answers may be off by few percentages because of the irregular
+(slightly aspherical) form of the Earth.  The errors are at worst
+about 0.55%, but generally below 0.3%.</p>
+<a name="BUGS"></a><h1>BUGS</h1>
+<p>Saying <code class="inline"><a class="l_k" href="../functions/use.html">use</a> <span class="w">Math::Trig</span><span class="sc">;</span></code>
+ exports many mathematical routines in the
+caller environment and even overrides some (<code class="inline"><a class="l_k" href="../functions/sin.html">sin</a></code>, <code class="inline"><a class="l_k" href="../functions/cos.html">cos</a></code>).  This is
+construed as a feature by the Authors, actually... ;-)</p>
+<p>The code is not optimized for speed, especially because we use
+<code class="inline"><span class="w">Math::Complex</span></code>
+ and thus go quite near complex numbers while doing
+the computations even when the arguments are not. This, however,
+cannot be completely avoided if we want things like <code class="inline"><span class="i">asin</span><span class="s">(</span><span class="n">2</span><span class="s">)</span></code>
+ to give
+an answer instead of giving a fatal runtime error.</p>
+<p>Do not attempt navigation using these formulas.</p>
+<a name="AUTHORS"></a><h1>AUTHORS</h1>
+<p>Jarkko Hietaniemi &lt;<i>jhi!at!iki.fi</i>&gt; and 
+Raphael Manfredi &lt;<i>Raphael_Manfredi!at!pobox.com</i>&gt;.</p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../close_purple.gif';" onmouseout="rightCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('Math::Trig','Math/Trig.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

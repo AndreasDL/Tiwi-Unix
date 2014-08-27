@@ -1,0 +1,758 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>IO::Uncompress::AnyInflate - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 2;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../../close_purple.gif';" onmouseout="leftCloseIcon.src='../../close_blue.gif';"><img src="../../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../../index-overview.html">Overview</a></li>
+        <li><a href="../../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../../index-faq.html">FAQs</a></li>
+        <li><a href="../../index-history.html">History / Changes</a></li>
+        <li><a href="../../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../../index-language.html">Language</a></li>
+        <li><a href="../../index-functions.html">Functions</a></li>
+        <li><a href="../../perlop.html">Operators</a></li>
+        <li><a href="../../perlvar.html">Special variables</a></li>
+        <li><a href="../../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../../index-modules-A.html">Core modules</a></li>
+        <li><a href="../../index-utilities.html">Utilities</a></li>
+        <li><a href="../../index-internals.html">Internals</a></li>
+        <li><a href="../../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../../index.html">Home</a> &gt; <a href="../../index-modules-A.html">Core modules</a> &gt; <a href="../../index-modules-I.html">I</a> &gt; IO::Uncompress::AnyInflate</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">IO::Uncompress::AnyInflate</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><li><a href="#Functional-Interface">Functional Interface</a><ul><li><a href="#anyinflate-0x24input-0x3d0x3e-0x24output-0x5b0x2c-OPTS0x5d">anyinflate $input =&gt; $output [, OPTS]</a><li><a href="#Notes">Notes</a><li><a href="#Optional-Parameters">Optional Parameters</a><li><a href="#Examples">Examples</a></ul><li><a href="#OO-Interface">OO Interface</a><ul><li><a href="#Constructor">Constructor</a><li><a href="#Constructor-Options">Constructor Options</a><li><a href="#Examples">Examples</a></ul><li><a href="#Methods">Methods</a><ul><li><a href="#read">read</a><li><a href="#read">read</a><li><a href="#getline">getline</a><li><a href="#getc">getc</a><li><a href="#ungetc">ungetc</a><li><a href="#inflateSync">inflateSync</a><li><a href="#getHeaderInfo">getHeaderInfo</a><li><a href="#tell">tell</a><li><a href="#eof">eof</a><li><a href="#seek">seek</a><li><a href="#binmode">binmode</a><li><a href="#opened">opened</a><li><a href="#autoflush">autoflush</a><li><a href="#input_line_number">input_line_number</a><li><a href="#fileno">fileno</a><li><a href="#close">close</a><li><a href="#nextStream">nextStream</a><li><a href="#trailingData">trailingData</a></ul><li><a href="#Importing">Importing</a><li><a href="#EXAMPLES">EXAMPLES</a><li><a href="#SEE-ALSO">SEE ALSO</a><li><a href="#AUTHOR">AUTHOR</a><li><a href="#MODIFICATION-HISTORY">MODIFICATION HISTORY</a><li><a href="#COPYRIGHT-AND-LICENSE">COPYRIGHT AND LICENSE</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>IO::Uncompress::AnyInflate - Uncompress zlib-based (zip, gzip) file/buffer</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">    <a class="l_k" href="../../functions/use.html">use</a> <span class="w">IO::Uncompress::AnyInflate</span> <span class="q">qw(anyinflate $AnyInflateError)</span> <span class="sc">;</span></pre>
+<pre class="verbatim">    <a class="l_k" href="../../functions/my.html">my</a> <span class="i">$status</span> = <span class="w">anyinflate</span> <span class="i">$input</span> <span class="cm">=&gt;</span> <span class="i">$output</span> [<span class="cm">,</span><span class="w">OPTS</span>]
+        or <a class="l_k" href="../../functions/die.html">die</a> <span class="q">&quot;anyinflate failed: $AnyInflateError\n&quot;</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <a class="l_k" href="../../functions/my.html">my</a> <span class="i">$z</span> = <span class="w">new</span> <span class="w">IO::Uncompress::AnyInflate</span> <span class="i">$input</span> [<span class="w">OPTS</span>] 
+        or <a class="l_k" href="../../functions/die.html">die</a> <span class="q">&quot;anyinflate failed: $AnyInflateError\n&quot;</span><span class="sc">;</span></pre>
+<pre class="verbatim">    $status = $z-&gt;read($buffer)
+    $status = $z-&gt;read($buffer, $length)
+    $status = $z-&gt;read($buffer, $length, $offset)
+    $line = $z-&gt;getline()
+    $char = $z-&gt;getc()
+    $char = $z-&gt;ungetc()
+    $char = $z-&gt;opened()</pre><pre class="verbatim">    <span class="i">$status</span> = <span class="i">$z</span><span class="i">-&gt;inflateSync</span><span class="s">(</span><span class="s">)</span></pre>
+<pre class="verbatim">    $data = $z-&gt;trailingData()
+    $status = $z-&gt;nextStream()
+    $data = $z-&gt;getHeaderInfo()
+    $z-&gt;tell()
+    $z-&gt;seek($position, $whence)
+    $z-&gt;binmode()
+    $z-&gt;fileno()
+    $z-&gt;eof()
+    $z-&gt;close()</pre><pre class="verbatim">    <span class="i">$AnyInflateError</span> <span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="c"># IO::File mode</span></pre>
+<pre class="verbatim">    <span class="q">&lt;$z&gt;</span>
+    <a class="l_k" href="../../functions/read.html">read</a><span class="s">(</span><span class="i">$z</span><span class="cm">,</span> <span class="i">$buffer</span><span class="s">)</span><span class="sc">;</span>
+    <a class="l_k" href="../../functions/read.html">read</a><span class="s">(</span><span class="i">$z</span><span class="cm">,</span> <span class="i">$buffer</span><span class="cm">,</span> <span class="i">$length</span><span class="s">)</span><span class="sc">;</span>
+    <a class="l_k" href="../../functions/read.html">read</a><span class="s">(</span><span class="i">$z</span><span class="cm">,</span> <span class="i">$buffer</span><span class="cm">,</span> <span class="i">$length</span><span class="cm">,</span> <span class="i">$offset</span><span class="s">)</span><span class="sc">;</span>
+    <a class="l_k" href="../../functions/tell.html">tell</a><span class="s">(</span><span class="i">$z</span><span class="s">)</span>
+    <a class="l_k" href="../../functions/seek.html">seek</a><span class="s">(</span><span class="i">$z</span><span class="cm">,</span> <span class="i">$position</span><span class="cm">,</span> <span class="i">$whence</span><span class="s">)</span>
+    <a class="l_k" href="../../functions/binmode.html">binmode</a><span class="s">(</span><span class="i">$z</span><span class="s">)</span>
+    <a class="l_k" href="../../functions/fileno.html">fileno</a><span class="s">(</span><span class="i">$z</span><span class="s">)</span>
+    <a class="l_k" href="../../functions/eof.html">eof</a><span class="s">(</span><span class="i">$z</span><span class="s">)</span>
+    <a class="l_k" href="../../functions/close.html">close</a><span class="s">(</span><span class="i">$z</span><span class="s">)</span></pre>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p>This module provides a Perl interface that allows the reading of
+files/buffers that have been compressed in a number of formats that use the
+zlib compression library.</p>
+<p>The formats supported are</p>
+<ul>
+<li><a name="RFC-1950"></a><b>RFC 1950</b>
+</li>
+<li><a name="RFC-1951-(optionally)"></a><b>RFC 1951 (optionally)</b>
+</li>
+<li><a name="gzip-(RFC-1952)"></a><b>gzip (RFC 1952)</b>
+</li>
+<li><a name="zip"></a><b>zip</b>
+</li>
+</ul>
+<p>The module will auto-detect which, if any, of the supported
+compression formats is being used.</p>
+<a name="Functional-Interface"></a><h1>Functional Interface</h1>
+<p>A top-level function, <code class="inline"><span class="w">anyinflate</span></code>
+, is provided to carry out
+"one-shot" uncompression between buffers and/or files. For finer
+control over the uncompression process, see the <a href="#OO-Interface">"OO Interface"</a>
+section.</p>
+<pre class="verbatim">    <a class="l_k" href="../../functions/use.html">use</a> <span class="w">IO::Uncompress::AnyInflate</span> <span class="q">qw(anyinflate $AnyInflateError)</span> <span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="w">anyinflate</span> <span class="i">$input</span> <span class="cm">=&gt;</span> <span class="i">$output</span> [<span class="cm">,</span><span class="w">OPTS</span>] 
+        or <a class="l_k" href="../../functions/die.html">die</a> <span class="q">&quot;anyinflate failed: $AnyInflateError\n&quot;</span><span class="sc">;</span></pre>
+<p>The functional interface needs Perl5.005 or better.</p>
+<a name="anyinflate-0x24input-0x3d0x3e-0x24output-0x5b0x2c-OPTS0x5d"></a><h2>anyinflate $input =&gt; $output [, OPTS]</h2>
+<p><code class="inline"><span class="w">anyinflate</span></code>
+ expects at least two parameters, <code class="inline"><span class="i">$input</span></code>
+ and <code class="inline"><span class="i">$output</span></code>
+.</p>
+<h3>The <code class="inline"><span class="i">$input</span></code>
+ parameter</h3>
+<p>The parameter, <code class="inline"><span class="i">$input</span></code>
+, is used to define the source of
+the compressed data.</p>
+<p>It can take one of the following forms:</p>
+<ul>
+<li><a name="A-filename"></a><b>A filename</b>
+<p>If the <code class="inline"><span class="i">$input</span></code>
+ parameter is a simple scalar, it is assumed to be a
+filename. This file will be opened for reading and the input data
+will be read from it.</p>
+</li>
+<li><a name="A-filehandle"></a><b>A filehandle</b>
+<p>If the <code class="inline"><span class="i">$input</span></code>
+ parameter is a filehandle, the input data will be
+read from it.
+The string '-' can be used as an alias for standard input.</p>
+</li>
+<li><a name="A-scalar-reference"></a><b>A scalar reference</b>
+<p>If <code class="inline"><span class="i">$input</span></code>
+ is a scalar reference, the input data will be read
+from <code class="inline"><span class="i">$$input</span></code>
+.</p>
+</li>
+<li><a name="An-array-reference"></a><b>An array reference</b>
+<p>If <code class="inline"><span class="i">$input</span></code>
+ is an array reference, each element in the array must be a
+filename.</p>
+<p>The input data will be read from each file in turn.</p>
+<p>The complete array will be walked to ensure that it only
+contains valid filenames before any data is uncompressed.</p>
+</li>
+<li><a name="An-Input-FileGlob-string"></a><b>An Input FileGlob string</b>
+<p>If <code class="inline"><span class="i">$input</span></code>
+ is a string that is delimited by the characters "&lt;" and "&gt;"
+<code class="inline"><span class="w">anyinflate</span></code>
+ will assume that it is an <i>input fileglob string</i>. The
+input is the list of files that match the fileglob.</p>
+<p>If the fileglob does not match any files ...</p>
+<p>See <a href="../../File/GlobMapper.html">File::GlobMapper</a> for more details.</p>
+</li>
+</ul>
+<p>If the <code class="inline"><span class="i">$input</span></code>
+ parameter is any other type, <code class="inline"><a class="l_k" href="../../functions/undef.html">undef</a></code> will be returned.</p>
+<h3>The <code class="inline"><span class="i">$output</span></code>
+ parameter</h3>
+<p>The parameter <code class="inline"><span class="i">$output</span></code>
+ is used to control the destination of the
+uncompressed data. This parameter can take one of these forms.</p>
+<ul>
+<li><a name="A-filename"></a><b>A filename</b>
+<p>If the <code class="inline"><span class="i">$output</span></code>
+ parameter is a simple scalar, it is assumed to be a
+filename.  This file will be opened for writing and the uncompressed
+data will be written to it.</p>
+</li>
+<li><a name="A-filehandle"></a><b>A filehandle</b>
+<p>If the <code class="inline"><span class="i">$output</span></code>
+ parameter is a filehandle, the uncompressed data
+will be written to it.
+The string '-' can be used as an alias for standard output.</p>
+</li>
+<li><a name="A-scalar-reference"></a><b>A scalar reference</b>
+<p>If <code class="inline"><span class="i">$output</span></code>
+ is a scalar reference, the uncompressed data will be
+stored in <code class="inline"><span class="i">$$output</span></code>
+.</p>
+</li>
+<li><a name="An-Array-Reference"></a><b>An Array Reference</b>
+<p>If <code class="inline"><span class="i">$output</span></code>
+ is an array reference, the uncompressed data will be
+pushed onto the array.</p>
+</li>
+<li><a name="An-Output-FileGlob"></a><b>An Output FileGlob</b>
+<p>If <code class="inline"><span class="i">$output</span></code>
+ is a string that is delimited by the characters "&lt;" and "&gt;"
+<code class="inline"><span class="w">anyinflate</span></code>
+ will assume that it is an <i>output fileglob string</i>. The
+output is the list of files that match the fileglob.</p>
+<p>When <code class="inline"><span class="i">$output</span></code>
+ is an fileglob string, <code class="inline"><span class="i">$input</span></code>
+ must also be a fileglob
+string. Anything else is an error.</p>
+</li>
+</ul>
+<p>If the <code class="inline"><span class="i">$output</span></code>
+ parameter is any other type, <code class="inline"><a class="l_k" href="../../functions/undef.html">undef</a></code> will be returned.</p>
+<a name="Notes"></a><h2>Notes</h2>
+<p>When <code class="inline"><span class="i">$input</span></code>
+ maps to multiple compressed files/buffers and <code class="inline"><span class="i">$output</span></code>
+ is
+a single file/buffer, after uncompression <code class="inline"><span class="i">$output</span></code>
+ will contain a
+concatenation of all the uncompressed data from each of the input
+files/buffers.</p>
+<a name="Optional-Parameters"></a><h2>Optional Parameters</h2>
+<p>Unless specified below, the optional parameters for <code class="inline"><span class="w">anyinflate</span></code>
+,
+<code class="inline"><span class="w">OPTS</span></code>
+, are the same as those used with the OO interface defined in the
+<a href="#Constructor-Options">"Constructor Options"</a> section below.</p>
+<ul>
+<li><a name="'AutoClose-0x3d0x3e-00x7c1'"></a><b><code class="inline"><span class="w">AutoClose</span> <span class="cm">=&gt;</span> <span class="n">0</span>|<span class="n">1</span></code>
+</b>
+<p>This option applies to any input or output data streams to 
+<code class="inline"><span class="w">anyinflate</span></code>
+ that are filehandles.</p>
+<p>If <code class="inline"><span class="w">AutoClose</span></code>
+ is specified, and the value is true, it will result in all
+input and/or output filehandles being closed once <code class="inline"><span class="w">anyinflate</span></code>
+ has
+completed.</p>
+<p>This parameter defaults to 0.</p>
+</li>
+<li><a name="'BinModeOut-0x3d0x3e-00x7c1'"></a><b><code class="inline"><span class="w">BinModeOut</span> <span class="cm">=&gt;</span> <span class="n">0</span>|<span class="n">1</span></code>
+</b>
+<p>When writing to a file or filehandle, set <code class="inline"><a class="l_k" href="../../functions/binmode.html">binmode</a></code> before writing to the
+file.</p>
+<p>Defaults to 0.</p>
+</li>
+<li><a name="'Append-0x3d0x3e-00x7c1'"></a><b><code class="inline"><span class="w">Append</span> <span class="cm">=&gt;</span> <span class="n">0</span>|<span class="n">1</span></code>
+</b>
+<p>TODO</p>
+</li>
+<li><a name="'MultiStream-0x3d0x3e-00x7c1'"></a><b><code class="inline"><span class="w">MultiStream</span> <span class="cm">=&gt;</span> <span class="n">0</span>|<span class="n">1</span></code>
+</b>
+<p>If the input file/buffer contains multiple compressed data streams, this
+option will uncompress the whole lot as a single data stream.</p>
+<p>Defaults to 0.</p>
+</li>
+<li><a name="'TrailingData-0x3d0x3e-0x24scalar'"></a><b><code class="inline"><span class="w">TrailingData</span> <span class="cm">=&gt;</span> <span class="i">$scalar</span></code>
+</b>
+<p>Returns the data, if any, that is present immediately after the compressed
+data stream once uncompression is complete.</p>
+<p>This option can be used when there is useful information immediately
+following the compressed data stream, and you don't know the length of the
+compressed data stream.</p>
+<p>If the input is a buffer, <code class="inline"><span class="w">trailingData</span></code>
+ will return everything from the
+end of the compressed data stream to the end of the buffer.</p>
+<p>If the input is a filehandle, <code class="inline"><span class="w">trailingData</span></code>
+ will return the data that is
+left in the filehandle input buffer once the end of the compressed data
+stream has been reached. You can then use the filehandle to read the rest
+of the input file.</p>
+<p>Don't bother using <code class="inline"><span class="w">trailingData</span></code>
+ if the input is a filename.</p>
+<p>If you know the length of the compressed data stream before you start
+uncompressing, you can avoid having to use <code class="inline"><span class="w">trailingData</span></code>
+ by setting the
+<code class="inline"><span class="w">InputLength</span></code>
+ option.</p>
+</li>
+</ul>
+<a name="Examples"></a><h2>Examples</h2>
+<p>To read the contents of the file <code class="inline"><span class="w">file1</span>.<span class="w">txt</span>.<span class="w">Compressed</span></code>
+ and write the
+compressed data to the file <code class="inline"><span class="w">file1</span>.<span class="w">txt</span></code>
+.</p>
+<pre class="verbatim">    <a class="l_k" href="../../functions/use.html">use</a> <span class="w">strict</span> <span class="sc">;</span>
+    <a class="l_k" href="../../functions/use.html">use</a> <span class="w">warnings</span> <span class="sc">;</span>
+    <a class="l_k" href="../../functions/use.html">use</a> <span class="w">IO::Uncompress::AnyInflate</span> <span class="q">qw(anyinflate $AnyInflateError)</span> <span class="sc">;</span></pre>
+<pre class="verbatim">    <a class="l_k" href="../../functions/my.html">my</a> <span class="i">$input</span> = <span class="q">&quot;file1.txt.Compressed&quot;</span><span class="sc">;</span>
+    <a class="l_k" href="../../functions/my.html">my</a> <span class="i">$output</span> = <span class="q">&quot;file1.txt&quot;</span><span class="sc">;</span>
+    <span class="w">anyinflate</span> <span class="i">$input</span> <span class="cm">=&gt;</span> <span class="i">$output</span>
+        or <a class="l_k" href="../../functions/die.html">die</a> <span class="q">&quot;anyinflate failed: $AnyInflateError\n&quot;</span><span class="sc">;</span></pre>
+<p>To read from an existing Perl filehandle, <code class="inline"><span class="i">$input</span></code>
+, and write the
+uncompressed data to a buffer, <code class="inline"><span class="i">$buffer</span></code>
+.</p>
+<pre class="verbatim">    <a class="l_k" href="../../functions/use.html">use</a> <span class="w">strict</span> <span class="sc">;</span>
+    <a class="l_k" href="../../functions/use.html">use</a> <span class="w">warnings</span> <span class="sc">;</span>
+    <a class="l_k" href="../../functions/use.html">use</a> <span class="w">IO::Uncompress::AnyInflate</span> <span class="q">qw(anyinflate $AnyInflateError)</span> <span class="sc">;</span>
+    <a class="l_k" href="../../functions/use.html">use</a> <span class="w">IO::File</span> <span class="sc">;</span></pre>
+<pre class="verbatim">    <a class="l_k" href="../../functions/my.html">my</a> <span class="i">$input</span> = <span class="w">new</span> <span class="w">IO::File</span> <span class="q">&quot;&lt;file1.txt.Compressed&quot;</span>
+        or <a class="l_k" href="../../functions/die.html">die</a> <span class="q">&quot;Cannot open 'file1.txt.Compressed': $!\n&quot;</span> <span class="sc">;</span>
+    <a class="l_k" href="../../functions/my.html">my</a> <span class="i">$buffer</span> <span class="sc">;</span>
+    <span class="w">anyinflate</span> <span class="i">$input</span> <span class="cm">=&gt;</span> \<span class="i">$buffer</span> 
+        or <a class="l_k" href="../../functions/die.html">die</a> <span class="q">&quot;anyinflate failed: $AnyInflateError\n&quot;</span><span class="sc">;</span></pre>
+<p>To uncompress all files in the directory "/my/home" that match "*.txt.Compressed" and store the compressed data in the same directory</p>
+<pre class="verbatim">    <a class="l_k" href="../../functions/use.html">use</a> <span class="w">strict</span> <span class="sc">;</span>
+    <a class="l_k" href="../../functions/use.html">use</a> <span class="w">warnings</span> <span class="sc">;</span>
+    <a class="l_k" href="../../functions/use.html">use</a> <span class="w">IO::Uncompress::AnyInflate</span> <span class="q">qw(anyinflate $AnyInflateError)</span> <span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="w">anyinflate</span> <span class="q">'&lt;/my/home/*.txt.Compressed&gt;'</span> <span class="cm">=&gt;</span> <span class="q">'&lt;/my/home/#1.txt&gt;'</span>
+        or <a class="l_k" href="../../functions/die.html">die</a> <span class="q">&quot;anyinflate failed: $AnyInflateError\n&quot;</span><span class="sc">;</span></pre>
+<p>and if you want to compress each file one at a time, this will do the trick</p>
+<pre class="verbatim">    <a class="l_k" href="../../functions/use.html">use</a> <span class="w">strict</span> <span class="sc">;</span>
+    <a class="l_k" href="../../functions/use.html">use</a> <span class="w">warnings</span> <span class="sc">;</span>
+    <a class="l_k" href="../../functions/use.html">use</a> <span class="w">IO::Uncompress::AnyInflate</span> <span class="q">qw(anyinflate $AnyInflateError)</span> <span class="sc">;</span></pre>
+<pre class="verbatim">    for <a class="l_k" href="../../functions/my.html">my</a> <span class="i">$input</span> <span class="s">(</span> <a class="l_k" href="../../functions/glob.html">glob</a> <span class="q">&quot;/my/home/*.txt.Compressed&quot;</span> <span class="s">)</span>
+    <span class="s">{</span>
+        <a class="l_k" href="../../functions/my.html">my</a> <span class="i">$output</span> = <span class="i">$input</span><span class="sc">;</span>
+        <span class="i">$output</span> =~ <span class="q">s/.Compressed//</span> <span class="sc">;</span>
+        <span class="w">anyinflate</span> <span class="i">$input</span> <span class="cm">=&gt;</span> <span class="i">$output</span> 
+            or <a class="l_k" href="../../functions/die.html">die</a> <span class="q">&quot;Error compressing '$input': $AnyInflateError\n&quot;</span><span class="sc">;</span>
+    <span class="s">}</span></pre>
+<a name="OO-Interface"></a><h1>OO Interface</h1>
+<a name="Constructor"></a><h2>Constructor</h2>
+<p>The format of the constructor for IO::Uncompress::AnyInflate is shown below</p>
+<pre class="verbatim">    <a class="l_k" href="../../functions/my.html">my</a> <span class="i">$z</span> = <span class="w">new</span> <span class="w">IO::Uncompress::AnyInflate</span> <span class="i">$input</span> [<span class="w">OPTS</span>]
+        or <a class="l_k" href="../../functions/die.html">die</a> <span class="q">&quot;IO::Uncompress::AnyInflate failed: $AnyInflateError\n&quot;</span><span class="sc">;</span></pre>
+<p>Returns an <code class="inline"><span class="w">IO::Uncompress::AnyInflate</span></code>
+ object on success and undef on failure.
+The variable <code class="inline"><span class="i">$AnyInflateError</span></code>
+ will contain an error message on failure.</p>
+<p>If you are running Perl 5.005 or better the object, <code class="inline"><span class="i">$z</span></code>
+, returned from
+IO::Uncompress::AnyInflate can be used exactly like an <a href="../../IO/File.html">IO::File</a> filehandle.
+This means that all normal input file operations can be carried out with
+<code class="inline"><span class="i">$z</span></code>
+.  For example, to read a line from a compressed file/buffer you can
+use either of these forms</p>
+<pre class="verbatim">    <span class="i">$line</span> = <span class="i">$z</span><span class="i">-&gt;getline</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span>
+    <span class="i">$line</span> = <span class="q">&lt;$z&gt;</span><span class="sc">;</span></pre>
+<p>The mandatory parameter <code class="inline"><span class="i">$input</span></code>
+ is used to determine the source of the
+compressed data. This parameter can take one of three forms.</p>
+<ul>
+<li><a name="A-filename"></a><b>A filename</b>
+<p>If the <code class="inline"><span class="i">$input</span></code>
+ parameter is a scalar, it is assumed to be a filename. This
+file will be opened for reading and the compressed data will be read from it.</p>
+</li>
+<li><a name="A-filehandle"></a><b>A filehandle</b>
+<p>If the <code class="inline"><span class="i">$input</span></code>
+ parameter is a filehandle, the compressed data will be
+read from it.
+The string '-' can be used as an alias for standard input.</p>
+</li>
+<li><a name="A-scalar-reference"></a><b>A scalar reference</b>
+<p>If <code class="inline"><span class="i">$input</span></code>
+ is a scalar reference, the compressed data will be read from
+<code class="inline"><span class="i">$$output</span></code>
+.</p>
+</li>
+</ul>
+<a name="Constructor-Options"></a><h2>Constructor Options</h2>
+<p>The option names defined below are case insensitive and can be optionally
+prefixed by a '-'.  So all of the following are valid</p>
+<pre class="verbatim">    -<span class="w">AutoClose</span>
+    -<span class="w">autoclose</span>
+    <span class="w">AUTOCLOSE</span>
+    <span class="w">autoclose</span></pre>
+<p>OPTS is a combination of the following options:</p>
+<ul>
+<li><a name="'AutoClose-0x3d0x3e-00x7c1'"></a><b><code class="inline"><span class="w">AutoClose</span> <span class="cm">=&gt;</span> <span class="n">0</span>|<span class="n">1</span></code>
+</b>
+<p>This option is only valid when the <code class="inline"><span class="i">$input</span></code>
+ parameter is a filehandle. If
+specified, and the value is true, it will result in the file being closed once
+either the <code class="inline"><a class="l_k" href="../../functions/close.html">close</a></code> method is called or the IO::Uncompress::AnyInflate object is
+destroyed.</p>
+<p>This parameter defaults to 0.</p>
+</li>
+<li><a name="'MultiStream-0x3d0x3e-00x7c1'"></a><b><code class="inline"><span class="w">MultiStream</span> <span class="cm">=&gt;</span> <span class="n">0</span>|<span class="n">1</span></code>
+</b>
+<p>Allows multiple concatenated compressed streams to be treated as a single
+compressed stream. Decompression will stop once either the end of the
+file/buffer is reached, an error is encountered (premature eof, corrupt
+compressed data) or the end of a stream is not immediately followed by the
+start of another stream.</p>
+<p>This parameter defaults to 0.</p>
+</li>
+<li><a name="'Prime-0x3d0x3e-0x24string'"></a><b><code class="inline"><span class="w">Prime</span> <span class="cm">=&gt;</span> <span class="i">$string</span></code>
+</b>
+<p>This option will uncompress the contents of <code class="inline"><span class="i">$string</span></code>
+ before processing the
+input file/buffer.</p>
+<p>This option can be useful when the compressed data is embedded in another
+file/data structure and it is not possible to work out where the compressed
+data begins without having to read the first few bytes. If this is the
+case, the uncompression can be <i>primed</i> with these bytes using this
+option.</p>
+</li>
+<li><a name="'Transparent-0x3d0x3e-00x7c1'"></a><b><code class="inline"><span class="w">Transparent</span> <span class="cm">=&gt;</span> <span class="n">0</span>|<span class="n">1</span></code>
+</b>
+<p>If this option is set and the input file/buffer is not compressed data,
+the module will allow reading of it anyway.</p>
+<p>In addition, if the input file/buffer does contain compressed data and
+there is non-compressed data immediately following it, setting this option
+will make this module treat the whole file/bufffer as a single data stream.</p>
+<p>This option defaults to 1.</p>
+</li>
+<li><a name="'BlockSize-0x3d0x3e-0x24num'"></a><b><code class="inline"><span class="w">BlockSize</span> <span class="cm">=&gt;</span> <span class="i">$num</span></code>
+</b>
+<p>When reading the compressed input data, IO::Uncompress::AnyInflate will read it in
+blocks of <code class="inline"><span class="i">$num</span></code>
+ bytes.</p>
+<p>This option defaults to 4096.</p>
+</li>
+<li><a name="'InputLength-0x3d0x3e-0x24size'"></a><b><code class="inline"><span class="w">InputLength</span> <span class="cm">=&gt;</span> <span class="i">$size</span></code>
+</b>
+<p>When present this option will limit the number of compressed bytes read
+from the input file/buffer to <code class="inline"><span class="i">$size</span></code>
+. This option can be used in the
+situation where there is useful data directly after the compressed data
+stream and you know beforehand the exact length of the compressed data
+stream.</p>
+<p>This option is mostly used when reading from a filehandle, in which case
+the file pointer will be left pointing to the first byte directly after the
+compressed data stream.</p>
+<p>This option defaults to off.</p>
+</li>
+<li><a name="'Append-0x3d0x3e-00x7c1'"></a><b><code class="inline"><span class="w">Append</span> <span class="cm">=&gt;</span> <span class="n">0</span>|<span class="n">1</span></code>
+</b>
+<p>This option controls what the <code class="inline"><a class="l_k" href="../../functions/read.html">read</a></code> method does with uncompressed data.</p>
+<p>If set to 1, all uncompressed data will be appended to the output parameter
+of the <code class="inline"><a class="l_k" href="../../functions/read.html">read</a></code> method.</p>
+<p>If set to 0, the contents of the output parameter of the <code class="inline"><a class="l_k" href="../../functions/read.html">read</a></code> method
+will be overwritten by the uncompressed data.</p>
+<p>Defaults to 0.</p>
+</li>
+<li><a name="'Strict-0x3d0x3e-00x7c1'"></a><b><code class="inline"><span class="w">Strict</span> <span class="cm">=&gt;</span> <span class="n">0</span>|<span class="n">1</span></code>
+</b>
+<p>This option controls whether the extra checks defined below are used when
+carrying out the decompression. When Strict is on, the extra tests are
+carried out, when Strict is off they are not.</p>
+<p>The default for this option is off.</p>
+<p>If the input is an RFC 1950 data stream, the following will be checked:</p>
+<ol>
+<li>
+<p>The ADLER32 checksum field must be present.</p>
+</li>
+<li>
+<p>The value of the ADLER32 field read must match the adler32 value of the
+uncompressed data actually contained in the file.</p>
+</li>
+</ol>
+<p>If the input is a gzip (RFC 1952) data stream, the following will be checked:</p>
+<ol>
+<li>
+<p>If the FHCRC bit is set in the gzip FLG header byte, the CRC16 bytes in the
+header must match the crc16 value of the gzip header actually read.</p>
+</li>
+<li>
+<p>If the gzip header contains a name field (FNAME) it consists solely of ISO
+8859-1 characters.</p>
+</li>
+<li>
+<p>If the gzip header contains a comment field (FCOMMENT) it consists solely
+of ISO 8859-1 characters plus line-feed.</p>
+</li>
+<li>
+<p>If the gzip FEXTRA header field is present it must conform to the sub-field
+structure as defined in RFC 1952.</p>
+</li>
+<li>
+<p>The CRC32 and ISIZE trailer fields must be present.</p>
+</li>
+<li>
+<p>The value of the CRC32 field read must match the crc32 value of the
+uncompressed data actually contained in the gzip file.</p>
+</li>
+<li>
+<p>The value of the ISIZE fields read must match the length of the
+uncompressed data actually read from the file.</p>
+</li>
+</ol>
+</li>
+<li><a name="'RawInflate-0x3d0x3e-00x7c1'"></a><b><code class="inline"><span class="w">RawInflate</span> <span class="cm">=&gt;</span> <span class="n">0</span>|<span class="n">1</span></code>
+</b>
+<p>When auto-detecting the compressed format, try to test for raw-deflate (RFC
+1951) content using the <code class="inline"><span class="w">IO::Uncompress::RawInflate</span></code>
+ module.</p>
+<p>The reason this is not default behaviour is because RFC 1951 content can
+only be detected by attempting to uncompress it. This process is error
+prone and can result is false positives.</p>
+<p>Defaults to 0.</p>
+</li>
+<li><a name="'ParseExtra-0x3d0x3e-00x7c1'-If-the-gzip-FEXTRA-header-field-is-present-and-this-option-is-set0x2c-it-will-force-the-module-to-check-that-it-conforms-to-the-sub-field-structure-as-defined-in-RFC-1952."></a><b><code class="inline"><span class="w">ParseExtra</span> <span class="cm">=&gt;</span> <span class="n">0</span>|<span class="n">1</span></code>
+
+If the gzip FEXTRA header field is present and this option is set, it will
+force the module to check that it conforms to the sub-field structure as
+defined in RFC 1952.</b>
+<p>If the <code class="inline"><span class="w">Strict</span></code>
+ is on it will automatically enable this option.</p>
+<p>Defaults to 0.</p>
+</li>
+</ul>
+<a name="Examples"></a><h2>Examples</h2>
+<p>TODO</p>
+<a name="Methods"></a><h1>Methods</h1>
+<a name="read"></a><h2>read</h2>
+<p>Usage is</p>
+<pre class="verbatim">    <span class="i">$status</span> = <span class="i">$z</span><span class="i">-&gt;read</span><span class="s">(</span><span class="i">$buffer</span><span class="s">)</span></pre>
+<p>Reads a block of compressed data (the size the the compressed block is
+determined by the <code class="inline"><span class="w">Buffer</span></code>
+ option in the constructor), uncompresses it and
+writes any uncompressed data into <code class="inline"><span class="i">$buffer</span></code>
+. If the <code class="inline"><span class="w">Append</span></code>
+ parameter is
+set in the constructor, the uncompressed data will be appended to the
+<code class="inline"><span class="i">$buffer</span></code>
+ parameter. Otherwise <code class="inline"><span class="i">$buffer</span></code>
+ will be overwritten.</p>
+<p>Returns the number of uncompressed bytes written to <code class="inline"><span class="i">$buffer</span></code>
+, zero if eof
+or a negative number on error.</p>
+<a name="read"></a><h2>read</h2>
+<p>Usage is</p>
+<pre class="verbatim">    $status = $z-&gt;read($buffer, $length)
+    $status = $z-&gt;read($buffer, $length, $offset)</pre><pre class="verbatim">    $status = read($z, $buffer, $length)
+    $status = read($z, $buffer, $length, $offset)</pre><p>Attempt to read <code class="inline"><span class="i">$length</span></code>
+ bytes of uncompressed data into <code class="inline"><span class="i">$buffer</span></code>
+.</p>
+<p>The main difference between this form of the <code class="inline"><a class="l_k" href="../../functions/read.html">read</a></code> method and the
+previous one, is that this one will attempt to return <i>exactly</i> <code class="inline"><span class="i">$length</span></code>
+
+bytes. The only circumstances that this function will not is if end-of-file
+or an IO error is encountered.</p>
+<p>Returns the number of uncompressed bytes written to <code class="inline"><span class="i">$buffer</span></code>
+, zero if eof
+or a negative number on error.</p>
+<a name="getline"></a><h2>getline</h2>
+<p>Usage is</p>
+<pre class="verbatim">    $line = $z-&gt;getline()
+    $line = &lt;$z&gt;</pre><p>Reads a single line.</p>
+<p>This method fully supports the use of of the variable <code class="inline"><span class="i">$/</span></code>
+ (or
+<code class="inline"><span class="i">$INPUT_RECORD_SEPARATOR</span></code>
+ or <code class="inline"><span class="i">$RS</span></code>
+ when <code class="inline"><span class="w">English</span></code>
+ is in use) to
+determine what constitutes an end of line. Paragraph mode, record mode and
+file slurp mode are all supported.</p>
+<a name="getc"></a><h2>getc</h2>
+<p>Usage is</p>
+<pre class="verbatim">    <span class="i">$char</span> = <span class="i">$z</span><span class="i">-&gt;getc</span><span class="s">(</span><span class="s">)</span></pre>
+<p>Read a single character.</p>
+<a name="ungetc"></a><h2>ungetc</h2>
+<p>Usage is</p>
+<pre class="verbatim">    <span class="i">$char</span> = <span class="i">$z</span><span class="i">-&gt;ungetc</span><span class="s">(</span><span class="i">$string</span><span class="s">)</span></pre>
+<a name="inflateSync"></a><h2>inflateSync</h2>
+<p>Usage is</p>
+<pre class="verbatim">    <span class="i">$status</span> = <span class="i">$z</span><span class="i">-&gt;inflateSync</span><span class="s">(</span><span class="s">)</span></pre>
+<p>TODO</p>
+<a name="getHeaderInfo"></a><h2>getHeaderInfo</h2>
+<p>Usage is</p>
+<pre class="verbatim">    <span class="i">$hdr</span>  = <span class="i">$z</span><span class="i">-&gt;getHeaderInfo</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span>
+    <span class="i">@hdrs</span> = <span class="i">$z</span><span class="i">-&gt;getHeaderInfo</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>This method returns either a hash reference (in scalar context) or a list
+or hash references (in array context) that contains information about each
+of the header fields in the compressed data stream(s).</p>
+<a name="tell"></a><h2>tell</h2>
+<p>Usage is</p>
+<pre class="verbatim">    <span class="i">$z</span><span class="i">-&gt;tell</span><span class="s">(</span><span class="s">)</span>
+    <a class="l_k" href="../../functions/tell.html">tell</a> <span class="i">$z</span></pre>
+<p>Returns the uncompressed file offset.</p>
+<a name="eof"></a><h2>eof</h2>
+<p>Usage is</p>
+<pre class="verbatim">    <span class="i">$z</span><span class="i">-&gt;eof</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span>
+    <a class="l_k" href="../../functions/eof.html">eof</a><span class="s">(</span><span class="i">$z</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Returns true if the end of the compressed input stream has been reached.</p>
+<a name="seek"></a><h2>seek</h2>
+<pre class="verbatim">    <span class="i">$z</span><span class="i">-&gt;seek</span><span class="s">(</span><span class="i">$position</span><span class="cm">,</span> <span class="i">$whence</span><span class="s">)</span><span class="sc">;</span>
+    <a class="l_k" href="../../functions/seek.html">seek</a><span class="s">(</span><span class="i">$z</span><span class="cm">,</span> <span class="i">$position</span><span class="cm">,</span> <span class="i">$whence</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Provides a sub-set of the <code class="inline"><a class="l_k" href="../../functions/seek.html">seek</a></code> functionality, with the restriction
+that it is only legal to seek forward in the input file/buffer.
+It is a fatal error to attempt to seek backward.</p>
+<p>The <code class="inline"><span class="i">$whence</span></code>
+ parameter takes one the usual values, namely SEEK_SET,
+SEEK_CUR or SEEK_END.</p>
+<p>Returns 1 on success, 0 on failure.</p>
+<a name="binmode"></a><h2>binmode</h2>
+<p>Usage is</p>
+<pre class="verbatim">    <span class="i">$z</span><span class="i">-&gt;binmode</span>
+    <a class="l_k" href="../../functions/binmode.html">binmode</a> <span class="i">$z</span> <span class="sc">;</span></pre>
+<p>This is a noop provided for completeness.</p>
+<a name="opened"></a><h2>opened</h2>
+<pre class="verbatim">    <span class="i">$z</span><span class="i">-&gt;opened</span><span class="s">(</span><span class="s">)</span></pre>
+<p>Returns true if the object currently refers to a opened file/buffer.</p>
+<a name="autoflush"></a><h2>autoflush</h2>
+<pre class="verbatim">    <a class="l_k" href="../../functions/my.html">my</a> <span class="i">$prev</span> = <span class="i">$z</span><span class="i">-&gt;autoflush</span><span class="s">(</span><span class="s">)</span>
+    <a class="l_k" href="../../functions/my.html">my</a> <span class="i">$prev</span> = <span class="i">$z</span><span class="i">-&gt;autoflush</span><span class="s">(</span><span class="w">EXPR</span><span class="s">)</span></pre>
+<p>If the <code class="inline"><span class="i">$z</span></code>
+ object is associated with a file or a filehandle, this method
+returns the current autoflush setting for the underlying filehandle. If
+<code class="inline"><span class="w">EXPR</span></code>
+ is present, and is non-zero, it will enable flushing after every
+write/print operation.</p>
+<p>If <code class="inline"><span class="i">$z</span></code>
+ is associated with a buffer, this method has no effect and always
+returns <code class="inline"><a class="l_k" href="../../functions/undef.html">undef</a></code>.</p>
+<p><b>Note</b> that the special variable <code class="inline"><span class="i">$|</span></code>
+ <b>cannot</b> be used to set or
+retrieve the autoflush setting.</p>
+<a name="input_line_number"></a><h2>input_line_number</h2>
+<pre class="verbatim">    $z-&gt;input_line_number()
+    $z-&gt;input_line_number(EXPR)</pre><p>Returns the current uncompressed line number. If <code class="inline"><span class="w">EXPR</span></code>
+ is present it has
+the effect of setting the line number. Note that setting the line number
+does not change the current position within the file/buffer being read.</p>
+<p>The contents of <code class="inline"><span class="i">$/</span></code>
+ are used to to determine what constitutes a line
+terminator.</p>
+<a name="fileno"></a><h2>fileno</h2>
+<pre class="verbatim">    <span class="i">$z</span><span class="i">-&gt;fileno</span><span class="s">(</span><span class="s">)</span>
+    <a class="l_k" href="../../functions/fileno.html">fileno</a><span class="s">(</span><span class="i">$z</span><span class="s">)</span></pre>
+<p>If the <code class="inline"><span class="i">$z</span></code>
+ object is associated with a file or a filehandle, this method
+will return the underlying file descriptor.</p>
+<p>If the <code class="inline"><span class="i">$z</span></code>
+ object is is associated with a buffer, this method will
+return undef.</p>
+<a name="close"></a><h2>close</h2>
+<pre class="verbatim">    <span class="i">$z</span><span class="i">-&gt;close</span><span class="s">(</span><span class="s">)</span> <span class="sc">;</span>
+    <a class="l_k" href="../../functions/close.html">close</a> <span class="i">$z</span> <span class="sc">;</span></pre>
+<p>Closes the output file/buffer.</p>
+<p>For most versions of Perl this method will be automatically invoked if
+the IO::Uncompress::AnyInflate object is destroyed (either explicitly or by the
+variable with the reference to the object going out of scope). The
+exceptions are Perl versions 5.005 through 5.00504 and 5.8.0. In
+these cases, the <code class="inline"><a class="l_k" href="../../functions/close.html">close</a></code> method will be called automatically, but
+not until global destruction of all live objects when the program is
+terminating.</p>
+<p>Therefore, if you want your scripts to be able to run on all versions
+of Perl, you should call <code class="inline"><a class="l_k" href="../../functions/close.html">close</a></code> explicitly and not rely on automatic
+closing.</p>
+<p>Returns true on success, otherwise 0.</p>
+<p>If the <code class="inline"><span class="w">AutoClose</span></code>
+ option has been enabled when the IO::Uncompress::AnyInflate
+object was created, and the object is associated with a file, the
+underlying file will also be closed.</p>
+<a name="nextStream"></a><h2>nextStream</h2>
+<p>Usage is</p>
+<pre class="verbatim">    <a class="l_k" href="../../functions/my.html">my</a> <span class="i">$status</span> = <span class="i">$z</span><span class="i">-&gt;nextStream</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Skips to the next compressed data stream in the input file/buffer. If a new
+compressed data stream is found, the eof marker will be cleared and <code class="inline"><span class="i">$.</span></code>
+
+will be reset to 0.</p>
+<p>Returns 1 if a new stream was found, 0 if none was found, and -1 if an
+error was encountered.</p>
+<a name="trailingData"></a><h2>trailingData</h2>
+<p>Usage is</p>
+<pre class="verbatim">    <a class="l_k" href="../../functions/my.html">my</a> <span class="i">$data</span> = <span class="i">$z</span><span class="i">-&gt;trailingData</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Returns the data, if any, that is present immediately after the compressed
+data stream once uncompression is complete. It only makes sense to call
+this method once the end of the compressed data stream has been
+encountered.</p>
+<p>This option can be used when there is useful information immediately
+following the compressed data stream, and you don't know the length of the
+compressed data stream.</p>
+<p>If the input is a buffer, <code class="inline"><span class="w">trailingData</span></code>
+ will return everything from the
+end of the compressed data stream to the end of the buffer.</p>
+<p>If the input is a filehandle, <code class="inline"><span class="w">trailingData</span></code>
+ will return the data that is
+left in the filehandle input buffer once the end of the compressed data
+stream has been reached. You can then use the filehandle to read the rest
+of the input file.</p>
+<p>Don't bother using <code class="inline"><span class="w">trailingData</span></code>
+ if the input is a filename.</p>
+<p>If you know the length of the compressed data stream before you start
+uncompressing, you can avoid having to use <code class="inline"><span class="w">trailingData</span></code>
+ by setting the
+<code class="inline"><span class="w">InputLength</span></code>
+ option in the constructor.</p>
+<a name="Importing"></a><h1>Importing</h1>
+<p>No symbolic constants are required by this IO::Uncompress::AnyInflate at present.</p>
+<ul>
+<li><a name="0x3aall"></a><b>:all</b>
+<p>Imports <code class="inline"><span class="w">anyinflate</span></code>
+ and <code class="inline"><span class="i">$AnyInflateError</span></code>
+.
+Same as doing this</p>
+<pre class="verbatim">    <a class="l_k" href="../../functions/use.html">use</a> <span class="w">IO::Uncompress::AnyInflate</span> <span class="q">qw(anyinflate $AnyInflateError)</span> <span class="sc">;</span></pre>
+</li>
+</ul>
+<a name="EXAMPLES"></a><h1>EXAMPLES</h1>
+<a name="SEE-ALSO"></a><h1>SEE ALSO</h1>
+<p><a href="../../Compress/Zlib.html">Compress::Zlib</a>, <a href="../../IO/Compress/Gzip.html">IO::Compress::Gzip</a>, <a href="../../IO/Uncompress/Gunzip.html">IO::Uncompress::Gunzip</a>, <a href="../../IO/Compress/Deflate.html">IO::Compress::Deflate</a>, <a href="../../IO/Uncompress/Inflate.html">IO::Uncompress::Inflate</a>, <a href="../../IO/Compress/RawDeflate.html">IO::Compress::RawDeflate</a>, <a href="../../IO/Uncompress/RawInflate.html">IO::Uncompress::RawInflate</a>, <a href="http://search.cpan.org/perldoc/IO::Compress::Bzip2">IO::Compress::Bzip2</a>, <a href="http://search.cpan.org/perldoc/IO::Uncompress::Bunzip2">IO::Uncompress::Bunzip2</a>, <a href="http://search.cpan.org/perldoc/IO::Compress::Lzop">IO::Compress::Lzop</a>, <a href="http://search.cpan.org/perldoc/IO::Uncompress::UnLzop">IO::Uncompress::UnLzop</a>, <a href="http://search.cpan.org/perldoc/IO::Compress::Lzf">IO::Compress::Lzf</a>, <a href="http://search.cpan.org/perldoc/IO::Uncompress::UnLzf">IO::Uncompress::UnLzf</a>, <a href="../../IO/Uncompress/AnyUncompress.html">IO::Uncompress::AnyUncompress</a></p>
+<p><a href="http://search.cpan.org/perldoc/Compress::Zlib::FAQ">Compress::Zlib::FAQ</a></p>
+<p><a href="../../File/GlobMapper.html">File::GlobMapper</a>, <a href="http://search.cpan.org/perldoc/Archive::Zip">Archive::Zip</a>,
+<a href="../../Archive/Tar.html">Archive::Tar</a>,
+<a href="../../IO/Zlib.html">IO::Zlib</a></p>
+<p>For RFC 1950, 1951 and 1952 see 
+<i><a href="http://www.faqs.org/rfcs/rfc1950.html">http://www.faqs.org/rfcs/rfc1950.html</a></i>,
+<i><a href="http://www.faqs.org/rfcs/rfc1951.html">http://www.faqs.org/rfcs/rfc1951.html</a></i> and
+<i><a href="http://www.faqs.org/rfcs/rfc1952.html">http://www.faqs.org/rfcs/rfc1952.html</a></i></p>
+<p>The <i>zlib</i> compression library was written by Jean-loup Gailly
+<i>gzip@prep.ai.mit.edu</i> and Mark Adler <i>madler@alumni.caltech.edu</i>.</p>
+<p>The primary site for the <i>zlib</i> compression library is
+<i><a href="http://www.zlib.org">http://www.zlib.org</a></i>.</p>
+<p>The primary site for gzip is <i><a href="http://www.gzip.org">http://www.gzip.org</a></i>.</p>
+<a name="AUTHOR"></a><h1>AUTHOR</h1>
+<p>This module was written by Paul Marquess, <i>pmqs@cpan.org</i>.</p>
+<a name="MODIFICATION-HISTORY"></a><h1>MODIFICATION HISTORY</h1>
+<p>See the Changes file.</p>
+<a name="COPYRIGHT-AND-LICENSE"></a><h1>COPYRIGHT AND LICENSE</h1>
+<p>Copyright (c) 2005-2007 Paul Marquess. All rights reserved.</p>
+<p>This program is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.</p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../../close_purple.gif';" onmouseout="rightCloseIcon.src='../../close_blue.gif';"><img src="../../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('IO::Uncompress::AnyInflate','IO/Uncompress/AnyInflate.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

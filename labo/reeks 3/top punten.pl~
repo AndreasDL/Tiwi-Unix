@@ -1,0 +1,6 @@
+#top 5 maken van punten lijst
+
+open(lijst,"<lijst.csv");
+while(<lijst>){
+	print $_ , '\n';
+}

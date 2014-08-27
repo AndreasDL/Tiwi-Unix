@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>Tie::RefHash - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 1;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../close_purple.gif';" onmouseout="leftCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../index-overview.html">Overview</a></li>
+        <li><a href="../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../index-faq.html">FAQs</a></li>
+        <li><a href="../index-history.html">History / Changes</a></li>
+        <li><a href="../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../index-language.html">Language</a></li>
+        <li><a href="../index-functions.html">Functions</a></li>
+        <li><a href="../perlop.html">Operators</a></li>
+        <li><a href="../perlvar.html">Special variables</a></li>
+        <li><a href="../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../index-modules-A.html">Core modules</a></li>
+        <li><a href="../index-utilities.html">Utilities</a></li>
+        <li><a href="../index-internals.html">Internals</a></li>
+        <li><a href="../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../index.html">Home</a> &gt; <a href="../index-modules-A.html">Core modules</a> &gt; <a href="../index-modules-T.html">T</a> &gt; Tie::RefHash</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">Tie::RefHash</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><li><a href="#EXAMPLE">EXAMPLE</a><li><a href="#THREAD-SUPPORT">THREAD SUPPORT</a><li><a href="#STORABLE-SUPPORT">STORABLE SUPPORT</a><li><a href="#RELIC-SUPPORT">RELIC SUPPORT</a><li><a href="#MAINTAINER">MAINTAINER</a><li><a href="#AUTHOR">AUTHOR</a><li><a href="#SEE-ALSO">SEE ALSO</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>Tie::RefHash - use references as hash keys</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">    <a class="l_k" href="../functions/require.html">require</a> <span class="n">5.004</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Tie::RefHash</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/tie.html">tie</a> <span class="w">HASHVARIABLE</span><span class="cm">,</span> <span class="q">&#39;Tie::RefHash&#39;</span><span class="cm">,</span> <span class="w">LIST</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/tie.html">tie</a> <span class="w">HASHVARIABLE</span><span class="cm">,</span> <span class="q">&#39;Tie::RefHash::Nestable&#39;</span><span class="cm">,</span> <span class="w">LIST</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <a class="l_k" href="../functions/untie.html">untie</a> <span class="w">HASHVARIABLE</span><span class="sc">;</span></pre>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p>This module provides the ability to use references as hash keys if you
+first <code class="inline"><a class="l_k" href="../functions/tie.html">tie</a></code> the hash variable to this module.  Normally, only the
+keys of the tied hash itself are preserved as references; to use
+references as keys in hashes-of-hashes, use Tie::RefHash::Nestable,
+included as part of Tie::RefHash.</p>
+<p>It is implemented using the standard perl TIEHASH interface.  Please
+see the <code class="inline"><a class="l_k" href="../functions/tie.html">tie</a></code> entry in perlfunc(1) and perltie(1) for more information.</p>
+<p>The Nestable version works by looking for hash references being stored
+and converting them to tied hashes so that they too can have
+references as keys.  This will happen without warning whenever you
+store a reference to one of your own hashes in the tied hash.</p>
+<a name="EXAMPLE"></a><h1>EXAMPLE</h1>
+<pre class="verbatim">    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Tie::RefHash</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/tie.html">tie</a> <span class="i">%h</span><span class="cm">,</span> <span class="q">&#39;Tie::RefHash&#39;</span><span class="sc">;</span>
+    <span class="i">$a</span> = <span class="s">[</span><span class="s">]</span><span class="sc">;</span>
+    <span class="i">$b</span> = <span class="s">{</span><span class="s">}</span><span class="sc">;</span>
+    <span class="i">$c</span> = \<span class="i">*main</span><span class="sc">;</span>
+    <span class="i">$d</span> = \<span class="q">&quot;gunk&quot;</span><span class="sc">;</span>
+    <span class="i">$e</span> = <a class="l_k" href="../functions/sub.html">sub</a> <span class="s">{</span> <span class="q">&#39;foo&#39;</span> <span class="s">}</span><span class="sc">;</span>
+    <span class="i">%h</span> = <span class="s">(</span><span class="i">$a</span> <span class="cm">=&gt;</span> <span class="n">1</span><span class="cm">,</span> <span class="i">$b</span> <span class="cm">=&gt;</span> <span class="n">2</span><span class="cm">,</span> <span class="i">$c</span> <span class="cm">=&gt;</span> <span class="n">3</span><span class="cm">,</span> <span class="i">$d</span> <span class="cm">=&gt;</span> <span class="n">4</span><span class="cm">,</span> <span class="i">$e</span> <span class="cm">=&gt;</span> <span class="n">5</span><span class="s">)</span><span class="sc">;</span>
+    <span class="i">$a</span>-&gt;[<span class="n">0</span>] = <span class="q">&#39;foo&#39;</span><span class="sc">;</span>
+    <span class="i">$b</span>-&gt;{<span class="w">foo</span>} = <span class="q">&#39;bar&#39;</span><span class="sc">;</span>
+    for <span class="s">(</span><a class="l_k" href="../functions/keys.html">keys</a> <span class="i">%h</span><span class="s">)</span> <span class="s">{</span>
+       <a class="l_k" href="../functions/print.html">print</a> <a class="l_k" href="../functions/ref.html">ref</a><span class="s">(</span><span class="i">$_</span><span class="s">)</span><span class="cm">,</span> <span class="q">&quot;\n&quot;</span><span class="sc">;</span>
+    <span class="s">}</span></pre>
+<pre class="verbatim">    <a class="l_k" href="../functions/tie.html">tie</a> <span class="i">%h</span><span class="cm">,</span> <span class="q">&#39;Tie::RefHash::Nestable&#39;</span><span class="sc">;</span>
+    <span class="i">$h</span>{<span class="i">$a</span>}-&gt;{<span class="i">$b</span>} = <span class="n">1</span><span class="sc">;</span>
+    for <span class="s">(</span><a class="l_k" href="../functions/keys.html">keys</a> <span class="i">%h</span><span class="cm">,</span> <a class="l_k" href="../functions/keys.html">keys</a> <span class="i">%</span>{<span class="i">$h</span>{<span class="i">$a</span>}}<span class="s">)</span> <span class="s">{</span>
+       <a class="l_k" href="../functions/print.html">print</a> <a class="l_k" href="../functions/ref.html">ref</a><span class="s">(</span><span class="i">$_</span><span class="s">)</span><span class="cm">,</span> <span class="q">&quot;\n&quot;</span><span class="sc">;</span>
+    <span class="s">}</span></pre>
+<a name="THREAD-SUPPORT"></a><h1>THREAD SUPPORT</h1>
+<p><a href="../Tie/RefHash.html">Tie::RefHash</a> fully supports threading using the <code class="inline"><span class="w">CLONE</span></code>
+ method.</p>
+<a name="STORABLE-SUPPORT"></a><h1>STORABLE SUPPORT</h1>
+<p><a href="../Storable.html">Storable</a> hooks are provided for semantically correct serialization and
+cloning of tied refhashes.</p>
+<a name="RELIC-SUPPORT"></a><h1>RELIC SUPPORT</h1>
+<p>This version of Tie::RefHash seems to no longer work with 5.004. This has not
+been throughly investigated. Patches welcome ;-)</p>
+<a name="MAINTAINER"></a><h1>MAINTAINER</h1>
+<p>Yuval Kogman &lt;nothingmuch@woobling.org&gt;</p>
+<a name="AUTHOR"></a><h1>AUTHOR</h1>
+<p>Gurusamy Sarathy        gsar@activestate.com</p>
+<p>'Nestable' by Ed Avis   ed@membled.com</p>
+<a name="SEE-ALSO"></a><h1>SEE ALSO</h1>
+<p>perl(1), perlfunc(1), perltie(1)</p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../close_purple.gif';" onmouseout="rightCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('Tie::RefHash','Tie/RefHash.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

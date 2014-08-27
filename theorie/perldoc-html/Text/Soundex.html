@@ -1,0 +1,212 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>Text::Soundex - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 1;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../close_purple.gif';" onmouseout="leftCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../index-overview.html">Overview</a></li>
+        <li><a href="../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../index-faq.html">FAQs</a></li>
+        <li><a href="../index-history.html">History / Changes</a></li>
+        <li><a href="../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../index-language.html">Language</a></li>
+        <li><a href="../index-functions.html">Functions</a></li>
+        <li><a href="../perlop.html">Operators</a></li>
+        <li><a href="../perlvar.html">Special variables</a></li>
+        <li><a href="../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../index-modules-A.html">Core modules</a></li>
+        <li><a href="../index-utilities.html">Utilities</a></li>
+        <li><a href="../index-internals.html">Internals</a></li>
+        <li><a href="../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../index.html">Home</a> &gt; <a href="../index-modules-A.html">Core modules</a> &gt; <a href="../index-modules-T.html">T</a> &gt; Text::Soundex</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">Text::Soundex</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><li><a href="#EXAMPLES">EXAMPLES</a><li><a href="#LIMITATIONS">LIMITATIONS</a><li><a href="#MAINTAINER">MAINTAINER</a><li><a href="#HISTORY">HISTORY</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>Text::Soundex - Implementation of the soundex algorithm.</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">  <a class="l_k" href="../functions/use.html">use</a> <span class="w">Text::Soundex</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <span class="c"># Original algorithm.</span>
+  <span class="i">$code</span> = <span class="i">soundex</span><span class="s">(</span><span class="i">$name</span><span class="s">)</span><span class="sc">;</span>    <span class="c"># Get the soundex code for a name.</span>
+  <span class="i">@codes</span> = <span class="i">soundex</span><span class="s">(</span><span class="i">@names</span><span class="s">)</span><span class="sc">;</span>  <span class="c"># Get the list of codes for a list of names.</span></pre>
+<pre class="verbatim">  <span class="c"># American Soundex variant (NARA) - Used for US census data.</span>
+  <span class="i">$code</span> = <span class="i">soundex_nara</span><span class="s">(</span><span class="i">$name</span><span class="s">)</span><span class="sc">;</span>    <span class="c"># Get the soundex code for a name.</span>
+  <span class="i">@codes</span> = <span class="i">soundex_nara</span><span class="s">(</span><span class="i">@names</span><span class="s">)</span><span class="sc">;</span>  <span class="c"># Get the list of codes for a list of names.</span></pre>
+<pre class="verbatim">  <span class="c"># Redefine the value that soundex() will return if the input string</span>
+  <span class="c"># contains no identifiable sounds within it.</span>
+  <span class="i">$Text::Soundex::nocode</span> = <span class="q">'Z000'</span><span class="sc">;</span></pre>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p>Soundex is a phonetic algorithm for indexing names by sound, as
+pronounced in English. The goal is for names with the same
+pronunciation to be encoded to the same representation so that they
+can be matched despite minor differences in spelling. Soundex is the
+most widely known of all phonetic algorithms and is often used
+(incorrectly) as a synonym for "phonetic algorithm". Improvements to
+Soundex are the basis for many modern phonetic algorithms. (Wikipedia,
+2007)</p>
+<p>This module implements the original soundex algorithm developed by
+Robert Russell and Margaret Odell, patented in 1918 and 1922, as well
+as a variation called "American Soundex" used for US census data, and
+current maintained by the National Archives and Records Administration
+(NARA).</p>
+<p>The soundex algorithm may be recognized from Donald Knuth's
+<b>The Art of Computer Programming</b>. The algorithm described by
+Knuth is the NARA algorithm.</p>
+<p>The value returned for strings which have no soundex encoding is
+defined using <code class="inline"><span class="i">$Text::Soundex::nocode</span></code>
+. The default value is <code class="inline"><a class="l_k" href="../functions/undef.html">undef</a></code>,
+however values such as <code class="inline"><span class="q">'Z000'</span></code>
+ are commonly used alternatives.</p>
+<p>For backward compatibility with older versions of this module the
+<code class="inline"><span class="i">$Text::Soundex::nocode</span></code>
+ is exported into the caller's namespace as
+<code class="inline"><span class="i">$soundex_nocode</span></code>
+.</p>
+<p>In scalar context, <code class="inline"><span class="i">soundex</span><span class="s">(</span><span class="s">)</span></code>
+ returns the soundex code of its first
+argument. In list context, a list is returned in which each element is the
+soundex code for the corresponding argument passed to <code class="inline"><span class="i">soundex</span><span class="s">(</span><span class="s">)</span></code>
+. For
+example, the following code assigns @codes the value <code class="inline"><span class="s">(</span><span class="q">&#39;M200&#39;</span><span class="cm">,</span> <span class="q">&#39;S320&#39;</span><span class="s">)</span></code>
+:</p>
+<pre class="verbatim">   <span class="i">@codes</span> = <span class="w">soundex</span> <span class="q">qw(Mike Stok)</span><span class="sc">;</span></pre>
+<p>To use <code class="inline"><span class="w">Text::Soundex</span></code>
+ to generate codes that can be used to search one
+of the publically available US Censuses, a variant of the soundex
+algorithm must be used:</p>
+<pre class="verbatim">    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Text::Soundex</span><span class="sc">;</span>
+    <span class="i">$code</span> = <span class="i">soundex_nara</span><span class="s">(</span><span class="i">$name</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>An example of where these algorithm differ follows:</p>
+<pre class="verbatim">    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Text::Soundex</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/print.html">print</a> <span class="i">soundex</span><span class="s">(</span><span class="q">&quot;Ashcraft&quot;</span><span class="s">)</span><span class="cm">,</span> <span class="q">&quot;\n&quot;</span><span class="sc">;</span>       <span class="c"># prints: A226</span>
+    <a class="l_k" href="../functions/print.html">print</a> <span class="i">soundex_nara</span><span class="s">(</span><span class="q">&quot;Ashcraft&quot;</span><span class="s">)</span><span class="cm">,</span> <span class="q">&quot;\n&quot;</span><span class="sc">;</span>  <span class="c"># prints: A261</span></pre>
+<a name="EXAMPLES"></a><h1>EXAMPLES</h1>
+<p>Donald Knuth's examples of names and the soundex codes they map to
+are listed below:</p>
+<pre class="verbatim">  <span class="w">Euler</span><span class="cm">,</span> <span class="w">Ellery</span> <span class="w">-&gt; E460</span>
+  <span class="w">Gauss</span><span class="cm">,</span> <span class="w">Ghosh</span> <span class="w">-&gt; G200</span>
+  <span class="w">Hilbert</span><span class="cm">,</span> <span class="w">Heilbronn</span> <span class="w">-&gt; H416</span>
+  <span class="w">Knuth</span><span class="cm">,</span> <span class="w">Kant</span> <span class="w">-&gt; K530</span>
+  <span class="w">Lloyd</span><span class="cm">,</span> <span class="w">Ladd</span> <span class="w">-&gt; L300</span>
+  <span class="w">Lukasiewicz</span><span class="cm">,</span> <span class="w">Lissajous</span> <span class="w">-&gt; L222</span></pre>
+<p>so:</p>
+<pre class="verbatim">  <span class="i">$code</span> = <span class="w">soundex</span> <span class="q">'Knuth'</span><span class="sc">;</span>         <span class="c"># $code contains 'K530'</span>
+  <span class="i">@list</span> = <span class="w">soundex</span> <span class="q">qw(Lloyd Gauss)</span><span class="sc">;</span> <span class="c"># @list contains 'L300', 'G200'</span></pre>
+<a name="LIMITATIONS"></a><h1>LIMITATIONS</h1>
+<p>As the soundex algorithm was originally used a <b>long</b> time ago in the US
+it considers only the English alphabet and pronunciation. In particular,
+non-ASCII characters will be ignored. The recommended method of dealing
+with characters that have accents, or other unicode characters, is to use
+the Text::Unidecode module available from CPAN. Either use the module
+explicitly:</p>
+<pre class="verbatim">    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Text::Soundex</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Text::Unidecode</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <a class="l_k" href="../functions/print.html">print</a> <span class="i">soundex</span><span class="s">(</span><span class="i">unidecode</span><span class="s">(</span><span class="q">&quot;Fran\xE7ais&quot;</span><span class="s">)</span><span class="s">)</span><span class="cm">,</span> <span class="q">&quot;\n&quot;</span><span class="sc">;</span> <span class="c"># Prints &quot;F652\n&quot;</span></pre>
+<p>Or use the convenient wrapper routine:</p>
+<pre class="verbatim">    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Text::Soundex</span> <span class="q">'soundex_unicode'</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <a class="l_k" href="../functions/print.html">print</a> <span class="i">soundex_unicode</span><span class="s">(</span><span class="q">&quot;Fran\xE7ais&quot;</span><span class="s">)</span><span class="cm">,</span> <span class="q">&quot;\n&quot;</span><span class="sc">;</span>    <span class="c"># Prints &quot;F652\n&quot;</span></pre>
+<p>Since the soundex algorithm maps a large space (strings of arbitrary
+length) onto a small space (single letter plus 3 digits) no inference
+can be made about the similarity of two strings which end up with the
+same soundex code.  For example, both <code class="inline"><span class="w">Hilbert</span></code>
+ and <code class="inline"><span class="w">Heilbronn</span></code>
+ end
+up with a soundex code of <code class="inline"><span class="w">H416</span></code>
+.</p>
+<a name="MAINTAINER"></a><h1>MAINTAINER</h1>
+<p>This module is currently maintain by Mark Mielke (<code class="inline"><span class="w">mark</span><span class="i">@mielke</span>.<span class="w">cc</span></code>
+).</p>
+<a name="HISTORY"></a><h1>HISTORY</h1>
+<p>Version 3 is a significant update to provide support for versions of
+Perl later than Perl 5.004. Specifically, the XS version of the
+soundex() subroutine understands strings that are encoded using UTF-8
+(unicode strings).</p>
+<p>Version 2 of this module was a re-write by Mark Mielke (<code class="inline"><span class="w">mark</span><span class="i">@mielke</span>.<span class="w">cc</span></code>
+)
+to improve the speed of the subroutines. The XS version of the soundex()
+subroutine was introduced in 2.00.</p>
+<p>Version 1 of this module was written by Mike Stok (<code class="inline"><span class="w">mike</span><span class="i">@stok</span>.<span class="w">co</span>.<span class="w">uk</span></code>
+)
+and was included into the Perl core library set.</p>
+<p>Dave Carlsen (<code class="inline"><span class="w">dcarlsen</span><span class="i">@csranet</span>.<span class="w">com</span></code>
+) made the request for the NARA
+algorithm to be included. The NARA soundex page can be viewed at:
+<code class="inline">&lt;a href="http://www.nara.gov/genealogy/soundex/soundex.html"&gt;http://www.nara.gov/genealogy/soundex/soundex.html&lt;/a&gt;</code></p>
+<p>Ian Phillips (<code class="inline"><span class="w">ian</span><span class="i">@pipex</span>.<span class="w">net</span></code>
+) and Rich Pinder (<code class="inline"><span class="w">rpinder</span><span class="i">@hsc</span>.<span class="w">usc</span>.<span class="w">edu</span></code>
+)
+supplied ideas and spotted mistakes for v1.x.</p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../close_purple.gif';" onmouseout="rightCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('Text::Soundex','Text/Soundex.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

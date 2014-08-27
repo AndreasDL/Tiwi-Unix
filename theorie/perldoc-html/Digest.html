@@ -1,0 +1,295 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>Digest - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 0;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='close_purple.gif';" onmouseout="leftCloseIcon.src='close_blue.gif';"><img src="close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="index-overview.html">Overview</a></li>
+        <li><a href="index-tutorials.html">Tutorials</a></li>
+        <li><a href="index-faq.html">FAQs</a></li>
+        <li><a href="index-history.html">History / Changes</a></li>
+        <li><a href="index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="index-language.html">Language</a></li>
+        <li><a href="index-functions.html">Functions</a></li>
+        <li><a href="perlop.html">Operators</a></li>
+        <li><a href="perlvar.html">Special variables</a></li>
+        <li><a href="index-pragmas.html">Pragmas</a></li>
+        <li><a href="index-modules-A.html">Core modules</a></li>
+        <li><a href="index-utilities.html">Utilities</a></li>
+        <li><a href="index-internals.html">Internals</a></li>
+        <li><a href="index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="index.html">Home</a> &gt; <a href="index-modules-A.html">Core modules</a> &gt; <a href="index-modules-D.html">D</a> &gt; Digest</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">Digest</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><li><a href="#OO-INTERFACE">OO INTERFACE</a><li><a href="#Digest-speed">Digest speed</a><li><a href="#SEE-ALSO">SEE ALSO</a><li><a href="#AUTHOR">AUTHOR</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>Digest - Modules that calculate message digests</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">  <span class="i">$md5</span>  = <span class="w">Digest</span><span class="w">-&gt;new</span><span class="s">(</span><span class="q">&quot;MD5&quot;</span><span class="s">)</span><span class="sc">;</span>
+  <span class="i">$sha1</span> = <span class="w">Digest</span><span class="w">-&gt;new</span><span class="s">(</span><span class="q">&quot;SHA-1&quot;</span><span class="s">)</span><span class="sc">;</span>
+  <span class="i">$sha256</span> = <span class="w">Digest</span><span class="w">-&gt;new</span><span class="s">(</span><span class="q">&quot;SHA-256&quot;</span><span class="s">)</span><span class="sc">;</span>
+  <span class="i">$sha384</span> = <span class="w">Digest</span><span class="w">-&gt;new</span><span class="s">(</span><span class="q">&quot;SHA-384&quot;</span><span class="s">)</span><span class="sc">;</span>
+  <span class="i">$sha512</span> = <span class="w">Digest</span><span class="w">-&gt;new</span><span class="s">(</span><span class="q">&quot;SHA-512&quot;</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <span class="i">$hmac</span> = <span class="w">Digest</span><span class="w">-&gt;HMAC_MD5</span><span class="s">(</span><span class="i">$key</span><span class="s">)</span><span class="sc">;</span></pre>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p>The <code class="inline"><span class="w">Digest::</span></code>
+ modules calculate digests, also called "fingerprints"
+or "hashes", of some data, called a message.  The digest is (usually)
+some small/fixed size string.  The actual size of the digest depend of
+the algorithm used.  The message is simply a sequence of arbitrary
+bytes or bits.</p>
+<p>An important property of the digest algorithms is that the digest is
+<i>likely</i> to change if the message change in some way.  Another
+property is that digest functions are one-way functions, that is it
+should be <i>hard</i> to find a message that correspond to some given
+digest.  Algorithms differ in how "likely" and how "hard", as well as
+how efficient they are to compute.</p>
+<p>Note that the properties of the algorithms change over time, as the
+algorithms are analyzed and machines grow faster.  If your application
+for instance depends on it being "impossible" to generate the same
+digest for a different message it is wise to make it easy to plug in
+stronger algorithms as the one used grow weaker.  Using the interface
+documented here should make it easy to change algorithms later.</p>
+<p>All <code class="inline"><span class="w">Digest::</span></code>
+ modules provide the same programming interface.  A
+functional interface for simple use, as well as an object oriented
+interface that can handle messages of arbitrary length and which can
+read files directly.</p>
+<p>The digest can be delivered in three formats:</p>
+<ul>
+<li><a name="_binary_"></a><b><i>binary</i></b>
+<p>This is the most compact form, but it is not well suited for printing
+or embedding in places that can't handle arbitrary data.</p>
+</li>
+<li><a name="_hex_"></a><b><i>hex</i></b>
+<p>A twice as long string of lowercase hexadecimal digits.</p>
+</li>
+<li><a name="_base64_"></a><b><i>base64</i></b>
+<p>A string of portable printable characters.  This is the base64 encoded
+representation of the digest with any trailing padding removed.  The
+string will be about 30% longer than the binary version.
+<a href="MIME/Base64.html">MIME::Base64</a> tells you more about this encoding.</p>
+</li>
+</ul>
+<p>The functional interface is simply importable functions with the same
+name as the algorithm.  The functions take the message as argument and
+return the digest.  Example:</p>
+<pre class="verbatim">  <a class="l_k" href="functions/use.html">use</a> <span class="w">Digest::MD5</span> <span class="q">qw(md5)</span><span class="sc">;</span>
+  <span class="i">$digest</span> = <span class="i">md5</span><span class="s">(</span><span class="i">$message</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>There are also versions of the functions with "_hex" or "_base64"
+appended to the name, which returns the digest in the indicated form.</p>
+<a name="OO-INTERFACE"></a><h1>OO INTERFACE</h1>
+<p>The following methods are available for all <code class="inline"><span class="w">Digest::</span></code>
+ modules:</p>
+<ul>
+<li><a name="0x24ctx-0x3d-Digest-0x3eXXX(0x24arg0x2c...)"></a><b>$ctx = Digest-&gt;XXX($arg,...)</b>
+</li>
+<li><a name="0x24ctx-0x3d-Digest-0x3enew(XXX-0x3d0x3e-0x24arg0x2c...)"></a><b>$ctx = Digest-&gt;new(XXX =&gt; $arg,...)</b>
+</li>
+<li><a name="0x24ctx-0x3d-Digest0x3a0x3aXXX-0x3enew(0x24arg0x2c...)"></a><b>$ctx = Digest::XXX-&gt;new($arg,...)</b>
+<p>The constructor returns some object that encapsulate the state of the
+message-digest algorithm.  You can add data to the object and finally
+ask for the digest.  The "XXX" should of course be replaced by the proper
+name of the digest algorithm you want to use.</p>
+<p>The two first forms are simply syntactic sugar which automatically
+load the right module on first use.  The second form allow you to use
+algorithm names which contains letters which are not legal perl
+identifiers, e.g. "SHA-1".  If no implementation for the given algorithm
+can be found, then an exception is raised.</p>
+<p>If new() is called as an instance method (i.e. $ctx-&gt;new) it will just
+reset the state the object to the state of a newly created object.  No
+new object is created in this case, and the return value is the
+reference to the object (i.e. $ctx).</p>
+</li>
+<li><a name="0x24other_ctx-0x3d-0x24ctx-0x3eclone"></a><b>$other_ctx = $ctx-&gt;clone</b>
+<p>The clone method creates a copy of the digest state object and returns
+a reference to the copy.</p>
+</li>
+<li><a name="0x24ctx-0x3ereset"></a><b>$ctx-&gt;reset</b>
+<p>This is just an alias for $ctx-&gt;new.</p>
+</li>
+<li><a name="0x24ctx-0x3eadd(-0x24data-)"></a><b>$ctx-&gt;add( $data )</b>
+</li>
+<li><a name="0x24ctx-0x3eadd(-0x24chunk10x2c-0x24chunk20x2c-...-)"></a><b>$ctx-&gt;add( $chunk1, $chunk2, ... )</b>
+<p>The string value of the $data provided as argument is appended to the
+message we calculate the digest for.  The return value is the $ctx
+object itself.</p>
+<p>If more arguments are provided then they are all appended to the
+message, thus all these lines will have the same effect on the state
+of the $ctx object:</p>
+<pre class="verbatim">  <span class="i">$ctx</span><span class="i">-&gt;add</span><span class="s">(</span><span class="q">&quot;a&quot;</span><span class="s">)</span><span class="sc">;</span> <span class="i">$ctx</span><span class="i">-&gt;add</span><span class="s">(</span><span class="q">&quot;b&quot;</span><span class="s">)</span><span class="sc">;</span> <span class="i">$ctx</span><span class="i">-&gt;add</span><span class="s">(</span><span class="q">&quot;c&quot;</span><span class="s">)</span><span class="sc">;</span>
+  <span class="i">$ctx</span><span class="i">-&gt;add</span><span class="s">(</span><span class="q">&quot;a&quot;</span><span class="s">)</span><span class="i">-&gt;add</span><span class="s">(</span><span class="q">&quot;b&quot;</span><span class="s">)</span><span class="i">-&gt;add</span><span class="s">(</span><span class="q">&quot;c&quot;</span><span class="s">)</span><span class="sc">;</span>
+  <span class="i">$ctx</span><span class="i">-&gt;add</span><span class="s">(</span><span class="q">&quot;a&quot;</span><span class="cm">,</span> <span class="q">&quot;b&quot;</span><span class="cm">,</span> <span class="q">&quot;c&quot;</span><span class="s">)</span><span class="sc">;</span>
+  <span class="i">$ctx</span><span class="i">-&gt;add</span><span class="s">(</span><span class="q">&quot;abc&quot;</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Most algorithms are only defined for strings of bytes and this method
+might therefore croak if the provided arguments contain chars with
+ordinal number above 255.</p>
+</li>
+<li><a name="0x24ctx-0x3eaddfile(-0x24io_handle-)"></a><b>$ctx-&gt;addfile( $io_handle )</b>
+<p>The $io_handle is read until EOF and the content is appended to the
+message we calculate the digest for.  The return value is the $ctx
+object itself.</p>
+<p>The addfile() method will croak() if it fails reading data for some
+reason.  If it croaks it is unpredictable what the state of the $ctx
+object will be in. The addfile() method might have been able to read
+the file partially before it failed.  It is probably wise to discard
+or reset the $ctx object if this occurs.</p>
+<p>In most cases you want to make sure that the $io_handle is in
+"binmode" before you pass it as argument to the addfile() method.</p>
+</li>
+<li><a name="0x24ctx-0x3eadd_bits(-0x24data0x2c-0x24nbits-)"></a><b>$ctx-&gt;add_bits( $data, $nbits )</b>
+</li>
+<li><a name="0x24ctx-0x3eadd_bits(-0x24bitstring-)"></a><b>$ctx-&gt;add_bits( $bitstring )</b>
+<p>The add_bits() method is an alternative to add() that allow partial
+bytes to be appended to the message.  Most users should just ignore
+this method as partial bytes is very unlikely to be of any practical
+use.</p>
+<p>The two argument form of add_bits() will add the first $nbits bits
+from $data.  For the last potentially partial byte only the high order
+<code class="inline"><span class="i">$nbits</span> % <span class="n">8</span></code>
+ bits are used.  If $nbits is greater than <code class="inline"><a class="l_k" href="functions/length.html">length</a><span class="s">(</span><span class="i">$data</span><span class="s">)</span> * <span class="n">8</span></code>
+, then this method would do the same as <code class="inline"><span class="i">$ctx</span><span class="i">-&gt;add</span><span class="s">(</span><span class="i">$data</span><span class="s">)</span></code>
+.</p>
+<p>The one argument form of add_bits() takes a $bitstring of "1" and "0"
+chars as argument.  It's a shorthand for <code class="inline"><span class="i">$ctx</span><span class="i">-&gt;add_bits</span><span class="s">(</span><a class="l_k" href="functions/pack.html">pack</a><span class="s">(</span><span class="q">&quot;B*&quot;</span><span class="cm">,</span>
+<span class="i">$bitstring</span><span class="s">)</span><span class="cm">,</span> <a class="l_k" href="functions/length.html">length</a><span class="s">(</span><span class="i">$bitstring</span><span class="s">)</span><span class="s">)</span></code>
+.</p>
+<p>The return value is the $ctx object itself.</p>
+<p>This example shows two calls that should have the same effect:</p>
+<pre class="verbatim">   <span class="i">$ctx</span><span class="i">-&gt;add_bits</span><span class="s">(</span><span class="q">&quot;111100001010&quot;</span><span class="s">)</span><span class="sc">;</span>
+   <span class="i">$ctx</span><span class="i">-&gt;add_bits</span><span class="s">(</span><span class="q">&quot;\xF0\xA0&quot;</span><span class="cm">,</span> <span class="n">12</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Most digest algorithms are byte based and for these it is not possible
+to add bits that are not a multiple of 8, and the add_bits() method
+will croak if you try.</p>
+</li>
+<li><a name="0x24ctx-0x3edigest"></a><b>$ctx-&gt;digest</b>
+<p>Return the binary digest for the message.</p>
+<p>Note that the <code class="inline"><span class="w">digest</span></code>
+ operation is effectively a destructive,
+read-once operation. Once it has been performed, the $ctx object is
+automatically <code class="inline"><a class="l_k" href="functions/reset.html">reset</a></code> and can be used to calculate another digest
+value.  Call $ctx-&gt;clone-&gt;digest if you want to calculate the digest
+without resetting the digest state.</p>
+</li>
+<li><a name="0x24ctx-0x3ehexdigest"></a><b>$ctx-&gt;hexdigest</b>
+<p>Same as $ctx-&gt;digest, but will return the digest in hexadecimal form.</p>
+</li>
+<li><a name="0x24ctx-0x3eb64digest"></a><b>$ctx-&gt;b64digest</b>
+<p>Same as $ctx-&gt;digest, but will return the digest as a base64 encoded
+string.</p>
+</li>
+</ul>
+<a name="Digest-speed"></a><h1>Digest speed</h1>
+<p>This table should give some indication on the relative speed of
+different algorithms.  It is sorted by throughput based on a benchmark
+done with of some implementations of this API:</p>
+<pre class="verbatim"> Algorithm      Size    Implementation                  MB/s</pre><pre class="verbatim"> MD4            128     Digest::MD4 v1.3               165.0
+ MD5            128     Digest::MD5 v2.33               98.8
+ SHA-256        256     Digest::SHA2 v1.1.0             66.7
+ SHA-1          160     Digest::SHA v4.3.1              58.9
+ SHA-1          160     Digest::SHA1 v2.10              48.8
+ SHA-256        256     Digest::SHA v4.3.1              41.3
+ Haval-256      256     Digest::Haval256 v1.0.4         39.8
+ SHA-384        384     Digest::SHA2 v1.1.0             19.6
+ SHA-512        512     Digest::SHA2 v1.1.0             19.3
+ SHA-384        384     Digest::SHA v4.3.1              19.2
+ SHA-512        512     Digest::SHA v4.3.1              19.2
+ Whirlpool      512     Digest::Whirlpool v1.0.2        13.0
+ MD2            128     Digest::MD2 v2.03                9.5</pre><pre class="verbatim"> Adler-32        32     Digest::Adler32 v0.03            1.3
+ CRC-16          16     Digest::CRC v0.05                1.1
+ CRC-32          32     Digest::CRC v0.05                1.1
+ MD5            128     Digest::Perl::MD5 v1.5           1.0
+ CRC-CCITT       16     Digest::CRC v0.05                0.8</pre><p>These numbers was achieved Apr 2004 with ActivePerl-5.8.3 running
+under Linux on a P4 2.8 GHz CPU.  The last 5 entries differ by being
+pure perl implementations of the algorithms, which explains why they
+are so slow.</p>
+<a name="SEE-ALSO"></a><h1>SEE ALSO</h1>
+<p><a href="http://search.cpan.org/perldoc/Digest::Adler32">Digest::Adler32</a>, <a href="http://search.cpan.org/perldoc/Digest::CRC">Digest::CRC</a>, <a href="http://search.cpan.org/perldoc/Digest::Haval256">Digest::Haval256</a>,
+<a href="http://search.cpan.org/perldoc/Digest::HMAC">Digest::HMAC</a>, <a href="http://search.cpan.org/perldoc/Digest::MD2">Digest::MD2</a>, <a href="http://search.cpan.org/perldoc/Digest::MD4">Digest::MD4</a>, <a href="Digest/MD5.html">Digest::MD5</a>,
+<a href="Digest/SHA.html">Digest::SHA</a>, <a href="http://search.cpan.org/perldoc/Digest::SHA1">Digest::SHA1</a>, <a href="http://search.cpan.org/perldoc/Digest::SHA2">Digest::SHA2</a>, <a href="http://search.cpan.org/perldoc/Digest::Whirlpool">Digest::Whirlpool</a></p>
+<p>New digest implementations should consider subclassing from <a href="Digest/base.html">Digest::base</a>.</p>
+<p><a href="MIME/Base64.html">MIME::Base64</a></p>
+<p><a href="http://en.wikipedia.org/wiki/Cryptographic_hash_function">http://en.wikipedia.org/wiki/Cryptographic_hash_function</a></p>
+<a name="AUTHOR"></a><h1>AUTHOR</h1>
+<p>Gisle Aas &lt;gisle@aas.no&gt;</p>
+<p>The <code class="inline"><span class="w">Digest::</span></code>
+ interface is based on the interface originally
+developed by Neil Winton for his <code class="inline"><span class="w">MD5</span></code>
+ module.</p>
+<p>This library is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.</p>
+<pre class="verbatim">    Copyright 1998-2006 Gisle Aas.
+    Copyright 1995,1996 Neil Winton.</pre></div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='close_purple.gif';" onmouseout="rightCloseIcon.src='close_blue.gif';"><img src="close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('Digest','Digest.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

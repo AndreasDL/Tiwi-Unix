@@ -1,0 +1,223 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>User::pwent - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 1;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../close_purple.gif';" onmouseout="leftCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../index-overview.html">Overview</a></li>
+        <li><a href="../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../index-faq.html">FAQs</a></li>
+        <li><a href="../index-history.html">History / Changes</a></li>
+        <li><a href="../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../index-language.html">Language</a></li>
+        <li><a href="../index-functions.html">Functions</a></li>
+        <li><a href="../perlop.html">Operators</a></li>
+        <li><a href="../perlvar.html">Special variables</a></li>
+        <li><a href="../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../index-modules-A.html">Core modules</a></li>
+        <li><a href="../index-utilities.html">Utilities</a></li>
+        <li><a href="../index-internals.html">Internals</a></li>
+        <li><a href="../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../index.html">Home</a> &gt; <a href="../index-modules-A.html">Core modules</a> &gt; <a href="../index-modules-U.html">U</a> &gt; User::pwent</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">User::pwent</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><ul><li><a href="#System-Specifics">System Specifics</a></ul><li><a href="#NOTE">NOTE</a><li><a href="#AUTHOR">AUTHOR</a><li><a href="#HISTORY">HISTORY</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>User::pwent - by-name interface to Perl's built-in getpw*() functions</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim"> <a class="l_k" href="../functions/use.html">use</a> <span class="w">User::pwent</span><span class="sc">;</span>
+ <span class="i">$pw</span> = <a class="l_k" href="../functions/getpwnam.html">getpwnam</a><span class="s">(</span><span class="q">&#39;daemon&#39;</span><span class="s">)</span>       || <a class="l_k" href="../functions/die.html">die</a> <span class="q">&quot;No daemon user&quot;</span><span class="sc">;</span>
+ if <span class="s">(</span> <span class="i">$pw</span><span class="i">-&gt;uid</span> == <span class="n">1</span> &amp;&amp; <span class="i">$pw</span><span class="i">-&gt;dir</span> =~ <span class="q">m#^/(bin|tmp)?\z#s</span> <span class="s">)</span> <span class="s">{</span>
+     <a class="l_k" href="../functions/print.html">print</a> <span class="q">&quot;gid 1 on root dir&quot;</span><span class="sc">;</span>
+ <span class="s">}</span></pre>
+<pre class="verbatim"> <span class="i">$real_shell</span> = <span class="i">$pw</span><span class="i">-&gt;shell</span> || <span class="q">&#39;/bin/sh&#39;</span><span class="sc">;</span></pre>
+<pre class="verbatim"> for <span class="s">(</span><span class="s">(</span><span class="i">$fullname</span><span class="cm">,</span> <span class="i">$office</span><span class="cm">,</span> <span class="i">$workphone</span><span class="cm">,</span> <span class="i">$homephone</span><span class="s">)</span> =
+        <a class="l_k" href="../functions/split.html">split</a> <span class="q">/\s*,\s*/</span><span class="cm">,</span> <span class="i">$pw</span><span class="i">-&gt;gecos</span><span class="s">)</span>
+ <span class="s">{</span>
+    <span class="q">s/&amp;/ucfirst(lc($pw-&gt;name))/ge</span><span class="sc">;</span>
+ <span class="s">}</span></pre>
+<pre class="verbatim"> <a class="l_k" href="../functions/use.html">use</a> <span class="w">User::pwent</span> <span class="q">qw(:FIELDS)</span><span class="sc">;</span>
+ <a class="l_k" href="../functions/getpwnam.html">getpwnam</a><span class="s">(</span><span class="q">&#39;daemon&#39;</span><span class="s">)</span>             || <a class="l_k" href="../functions/die.html">die</a> <span class="q">&quot;No daemon user&quot;</span><span class="sc">;</span>
+ if <span class="s">(</span> <span class="i">$pw_uid</span> == <span class="n">1</span> &amp;&amp; <span class="i">$pw_dir</span> =~ <span class="q">m#^/(bin|tmp)?\z#s</span> <span class="s">)</span> <span class="s">{</span>
+     <a class="l_k" href="../functions/print.html">print</a> <span class="q">&quot;gid 1 on root dir&quot;</span><span class="sc">;</span>
+ <span class="s">}</span></pre>
+<pre class="verbatim"> <span class="i">$pw</span> = <span class="i">getpw</span><span class="s">(</span><span class="i">$whoever</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim"> use User::pwent qw/:DEFAULT pw_has/;
+ if (pw_has(qw[gecos expire quota])) { .... }
+ if (pw_has("name uid gid passwd"))  { .... }
+ print "Your struct pwd has: ", scalar pw_has(), "\n";</pre><a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p>This module's default exports override the core getpwent(), getpwuid(),
+and getpwnam() functions, replacing them with versions that return
+<code class="inline"><span class="w">User::pwent</span></code>
+ objects.  This object has methods that return the
+similarly named structure field name from the C's passwd structure
+from <i>pwd.h</i>, stripped of their leading "pw_" parts, namely <code class="inline"><span class="w">name</span></code>
+,
+<code class="inline"><span class="w">passwd</span></code>
+, <code class="inline"><span class="w">uid</span></code>
+, <code class="inline"><span class="w">gid</span></code>
+, <code class="inline"><span class="w">change</span></code>
+, <code class="inline"><span class="w">age</span></code>
+, <code class="inline"><span class="w">quota</span></code>
+, <code class="inline"><span class="w">comment</span></code>
+,
+<code class="inline"><span class="w">class</span></code>
+, <code class="inline"><span class="w">gecos</span></code>
+, <code class="inline"><span class="w">dir</span></code>
+, <code class="inline"><span class="w">shell</span></code>
+, and <code class="inline"><span class="w">expire</span></code>
+.  The <code class="inline"><span class="w">passwd</span></code>
+,
+<code class="inline"><span class="w">gecos</span></code>
+, and <code class="inline"><span class="w">shell</span></code>
+ fields are tainted when running in taint mode.</p>
+<p>You may also import all the structure fields directly into your
+namespace as regular variables using the :FIELDS import tag.  (Note
+that this still overrides your core functions.)  Access these fields
+as variables named with a preceding <code class="inline"><span class="w">pw_</span></code>
+ in front their method
+names.  Thus, <code class="inline"><span class="i">$passwd_obj</span><span class="i">-&gt;shell</span></code>
+ corresponds to $pw_shell
+if you import the fields.</p>
+<p>The getpw() function is a simple front-end that forwards
+a numeric argument to getpwuid() and the rest to getpwnam().</p>
+<p>To access this functionality without the core overrides, pass the
+<code class="inline"><a class="l_k" href="../functions/use.html">use</a></code> an empty import list, and then access function functions
+with their full qualified names.  The built-ins are always still
+available via the <code class="inline"><span class="w">CORE::</span></code>
+ pseudo-package.</p>
+<a name="System-Specifics"></a><h2>System Specifics</h2>
+<p>Perl believes that no machine ever has more than one of <code class="inline"><span class="w">change</span></code>
+,
+<code class="inline"><span class="w">age</span></code>
+, or <code class="inline"><span class="w">quota</span></code>
+ implemented, nor more than one of either
+<code class="inline"><span class="w">comment</span></code>
+ or <code class="inline"><span class="w">class</span></code>
+.  Some machines do not support <code class="inline"><span class="w">expire</span></code>
+,
+<code class="inline"><span class="w">gecos</span></code>
+, or allegedly, <code class="inline"><span class="w">passwd</span></code>
+.  You may call these methods
+no matter what machine you're on, but they return <code class="inline"><a class="l_k" href="../functions/undef.html">undef</a></code> if
+unimplemented.</p>
+<p>You may ask whether one of these was implemented on the system Perl
+was built on by asking the importable <code class="inline"><span class="w">pw_has</span></code>
+ function about them.
+This function returns true if all parameters are supported fields
+on the build platform, false if one or more were not, and raises
+an exception if you asked about a field that Perl never knows how
+to provide.  Parameters may be in a space-separated string, or as
+separate arguments.  If you pass no parameters, the function returns
+the list of <code class="inline"><span class="w">struct</span> <span class="w">pwd</span></code>
+ fields supported by your build platform's
+C library, as a list in list context, or a space-separated string
+in scalar context.  Note that just because your C library had
+a field doesn't necessarily mean that it's fully implemented on
+that system.</p>
+<p>Interpretation of the <code class="inline"><span class="w">gecos</span></code>
+ field varies between systems, but
+traditionally holds 4 comma-separated fields containing the user's
+full name, office location, work phone number, and home phone number.
+An <code class="inline"><span class="i">&amp;</span></code>
+ in the gecos field should be replaced by the user's properly
+capitalized login <code class="inline"><span class="w">name</span></code>
+.  The <code class="inline"><span class="w">shell</span></code>
+ field, if blank, must be
+assumed to be <i>/bin/sh</i>.  Perl does not do this for you.  The
+<code class="inline"><span class="w">passwd</span></code>
+ is one-way hashed garble, not clear text, and may not be
+unhashed save by brute-force guessing.  Secure systems use more a
+more secure hashing than DES.  On systems supporting shadow password
+systems, Perl automatically returns the shadow password entry when
+called by a suitably empowered user, even if your underlying
+vendor-provided C library was too short-sighted to realize it should
+do this.</p>
+<p>See passwd(5) and getpwent(3) for details.</p>
+<a name="NOTE"></a><h1>NOTE</h1>
+<p>While this class is currently implemented using the Class::Struct
+module to build a struct-like class, you shouldn't rely upon this.</p>
+<a name="AUTHOR"></a><h1>AUTHOR</h1>
+<p>Tom Christiansen</p>
+<a name="HISTORY"></a><h1>HISTORY</h1>
+<ul>
+<li><a name="March-18th0x2c-2000"></a><b>March 18th, 2000</b>
+<p>Reworked internals to support better interface to dodgey fields
+than normal Perl function provides.  Added pw_has() field.  Improved
+documentation.</p>
+</li>
+</ul>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../close_purple.gif';" onmouseout="rightCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('User::pwent','User/pwent.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

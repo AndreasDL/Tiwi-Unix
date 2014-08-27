@@ -1,0 +1,246 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>Time::Local - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 1;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../close_purple.gif';" onmouseout="leftCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../index-overview.html">Overview</a></li>
+        <li><a href="../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../index-faq.html">FAQs</a></li>
+        <li><a href="../index-history.html">History / Changes</a></li>
+        <li><a href="../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../index-language.html">Language</a></li>
+        <li><a href="../index-functions.html">Functions</a></li>
+        <li><a href="../perlop.html">Operators</a></li>
+        <li><a href="../perlvar.html">Special variables</a></li>
+        <li><a href="../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../index-modules-A.html">Core modules</a></li>
+        <li><a href="../index-utilities.html">Utilities</a></li>
+        <li><a href="../index-internals.html">Internals</a></li>
+        <li><a href="../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../index.html">Home</a> &gt; <a href="../index-modules-A.html">Core modules</a> &gt; <a href="../index-modules-T.html">T</a> &gt; Time::Local</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">Time::Local</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><li><a href="#FUNCTIONS">FUNCTIONS</a><ul><li><a href="#'timelocal()'-and-'timegm()'"><code class="inline"><span class="i">timelocal</span><span class="s">(</span><span class="s">)</span></code>
+ and <code class="inline"><span class="i">timegm</span><span class="s">(</span><span class="s">)</span></code>
+</a><li><a href="#'timelocal_nocheck()'-and-'timegm_nocheck()'"><code class="inline"><span class="i">timelocal_nocheck</span><span class="s">(</span><span class="s">)</span></code>
+ and <code class="inline"><span class="i">timegm_nocheck</span><span class="s">(</span><span class="s">)</span></code>
+</a><li><a href="#Year-Value-Interpretation">Year Value Interpretation</a><li><a href="#Limits-of-time_t">Limits of time_t</a><li><a href="#Ambiguous-Local-Times-(DST)">Ambiguous Local Times (DST)</a><li><a href="#Non-Existent-Local-Times-(DST)">Non-Existent Local Times (DST)</a><li><a href="#Negative-Epoch-Values">Negative Epoch Values</a></ul><li><a href="#IMPLEMENTATION">IMPLEMENTATION</a><li><a href="#BUGS">BUGS</a><li><a href="#SUPPORT">SUPPORT</a><li><a href="#COPYRIGHT">COPYRIGHT</a><li><a href="#AUTHOR">AUTHOR</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>Time::Local - efficiently compute time from local and GMT time</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">    <span class="i">$time</span> = <span class="i">timelocal</span><span class="s">(</span><span class="i">$sec</span><span class="cm">,</span><span class="i">$min</span><span class="cm">,</span><span class="i">$hour</span><span class="cm">,</span><span class="i">$mday</span><span class="cm">,</span><span class="i">$mon</span><span class="cm">,</span><span class="i">$year</span><span class="s">)</span><span class="sc">;</span>
+    <span class="i">$time</span> = <span class="i">timegm</span><span class="s">(</span><span class="i">$sec</span><span class="cm">,</span><span class="i">$min</span><span class="cm">,</span><span class="i">$hour</span><span class="cm">,</span><span class="i">$mday</span><span class="cm">,</span><span class="i">$mon</span><span class="cm">,</span><span class="i">$year</span><span class="s">)</span><span class="sc">;</span></pre>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p>This module provides functions that are the inverse of built-in perl
+functions <code class="inline"><a class="l_k" href="../functions/localtime.html">localtime()</a></code> and <code class="inline"><a class="l_k" href="../functions/gmtime.html">gmtime()</a></code>. They accept a date as a
+six-element array, and return the corresponding <code class="inline"><a class="l_k" href="../functions/time.html">time(2)</a></code> value in
+seconds since the system epoch (Midnight, January 1, 1970 GMT on Unix,
+for example). This value can be positive or negative, though POSIX
+only requires support for positive values, so dates before the
+system's epoch may not work on all operating systems.</p>
+<p>It is worth drawing particular attention to the expected ranges for
+the values provided. The value for the day of the month is the actual
+day (ie 1..31), while the month is the number of months since January
+(0..11). This is consistent with the values returned from
+<code class="inline"><a class="l_k" href="../functions/localtime.html">localtime()</a></code> and <code class="inline"><a class="l_k" href="../functions/gmtime.html">gmtime()</a></code>.</p>
+<a name="FUNCTIONS"></a><h1>FUNCTIONS</h1>
+<a name="'timelocal()'-and-'timegm()'"></a><h2><code class="inline"><span class="i">timelocal</span><span class="s">(</span><span class="s">)</span></code>
+ and <code class="inline"><span class="i">timegm</span><span class="s">(</span><span class="s">)</span></code>
+</h2>
+<p>This module exports two functions by default, <code class="inline"><span class="i">timelocal</span><span class="s">(</span><span class="s">)</span></code>
+ and
+<code class="inline"><span class="i">timegm</span><span class="s">(</span><span class="s">)</span></code>
+.</p>
+<p>The <code class="inline"><span class="i">timelocal</span><span class="s">(</span><span class="s">)</span></code>
+ and <code class="inline"><span class="i">timegm</span><span class="s">(</span><span class="s">)</span></code>
+ functions perform range checking on
+the input $sec, $min, $hour, $mday, and $mon values by default.</p>
+<a name="'timelocal_nocheck()'-and-'timegm_nocheck()'"></a><h2><code class="inline"><span class="i">timelocal_nocheck</span><span class="s">(</span><span class="s">)</span></code>
+ and <code class="inline"><span class="i">timegm_nocheck</span><span class="s">(</span><span class="s">)</span></code>
+</h2>
+<p>If you are working with data you know to be valid, you can speed your
+code up by using the "nocheck" variants, <code class="inline"><span class="i">timelocal_nocheck</span><span class="s">(</span><span class="s">)</span></code>
+ and
+<code class="inline"><span class="i">timegm_nocheck</span><span class="s">(</span><span class="s">)</span></code>
+. These variants must be explicitly imported.</p>
+<pre class="verbatim">    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Time::Local</span> <span class="q">'timelocal_nocheck'</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="c"># The 365th day of 1999</span>
+    <a class="l_k" href="../functions/print.html">print</a> <a class="l_k" href="../functions/scalar.html">scalar</a> <a class="l_k" href="../functions/localtime.html">localtime</a> <span class="w">timelocal_nocheck</span> <span class="n">0</span><span class="cm">,</span><span class="n">0</span><span class="cm">,</span><span class="n">0</span><span class="cm">,</span><span class="n">365</span><span class="cm">,</span><span class="n">0</span><span class="cm">,</span><span class="n">99</span><span class="sc">;</span></pre>
+<p>If you supply data which is not valid (month 27, second 1,000) the
+results will be unpredictable (so don't do that).</p>
+<a name="Year-Value-Interpretation"></a><h2>Year Value Interpretation</h2>
+<p>Strictly speaking, the year should be specified in a form consistent
+with <code class="inline"><a class="l_k" href="../functions/localtime.html">localtime()</a></code>, i.e. the offset from 1900. In order to make the
+interpretation of the year easier for humans, however, who are more
+accustomed to seeing years as two-digit or four-digit values, the
+following conventions are followed:</p>
+<ul>
+<li>
+<p>Years greater than 999 are interpreted as being the actual year,
+rather than the offset from 1900. Thus, 1964 would indicate the year
+Martin Luther King won the Nobel prize, not the year 3864.</p>
+</li>
+<li>
+<p>Years in the range 100..999 are interpreted as offset from 1900, so
+that 112 indicates 2012. This rule also applies to years less than
+zero (but see note below regarding date range).</p>
+</li>
+<li>
+<p>Years in the range 0..99 are interpreted as shorthand for years in the
+rolling "current century," defined as 50 years on either side of the
+current year. Thus, today, in 1999, 0 would refer to 2000, and 45 to
+2045, but 55 would refer to 1955. Twenty years from now, 55 would
+instead refer to 2055. This is messy, but matches the way people
+currently think about two digit dates. Whenever possible, use an
+absolute four digit year instead.</p>
+</li>
+</ul>
+<p>The scheme above allows interpretation of a wide range of dates,
+particularly if 4-digit years are used.</p>
+<a name="Limits-of-time_t"></a><h2>Limits of time_t</h2>
+<p>The range of dates that can be actually be handled depends on the size
+of <code class="inline"><span class="w">time_t</span></code>
+ (usually a signed integer) on the given
+platform. Currently, this is 32 bits for most systems, yielding an
+approximate range from Dec 1901 to Jan 2038.</p>
+<p>Both <code class="inline"><span class="i">timelocal</span><span class="s">(</span><span class="s">)</span></code>
+ and <code class="inline"><span class="i">timegm</span><span class="s">(</span><span class="s">)</span></code>
+ croak if given dates outside the
+supported range.</p>
+<a name="Ambiguous-Local-Times-(DST)"></a><h2>Ambiguous Local Times (DST)</h2>
+<p>Because of DST changes, there are many time zones where the same local
+time occurs for two different GMT times on the same day. For example,
+in the "Europe/Paris" time zone, the local time of 2001-10-28 02:30:00
+can represent either 2001-10-28 00:30:00 GMT, <b>or</b> 2001-10-28
+01:30:00 GMT.</p>
+<p>When given an ambiguous local time, the timelocal() function should
+always return the epoch for the <i>earlier</i> of the two possible GMT
+times.</p>
+<a name="Non-Existent-Local-Times-(DST)"></a><h2>Non-Existent Local Times (DST)</h2>
+<p>When a DST change causes a locale clock to skip one hour forward,
+there will be an hour's worth of local times that don't exist. Again,
+for the "Europe/Paris" time zone, the local clock jumped from
+2001-03-25 01:59:59 to 2001-03-25 03:00:00.</p>
+<p>If the <code class="inline"><span class="i">timelocal</span><span class="s">(</span><span class="s">)</span></code>
+ function is given a non-existent local time, it
+will simply return an epoch value for the time one hour later.</p>
+<a name="Negative-Epoch-Values"></a><h2>Negative Epoch Values</h2>
+<p>Negative epoch (<code class="inline"><span class="w">time_t</span></code>
+) values are not officially supported by the
+POSIX standards, so this module's tests do not test them. On some
+systems, they are known not to work. These include MacOS (pre-OSX) and
+Win32.</p>
+<p>On systems which do support negative epoch values, this module should
+be able to cope with dates before the start of the epoch, down the
+minimum value of time_t for the system.</p>
+<a name="IMPLEMENTATION"></a><h1>IMPLEMENTATION</h1>
+<p>These routines are quite efficient and yet are always guaranteed to
+agree with <code class="inline"><a class="l_k" href="../functions/localtime.html">localtime()</a></code> and <code class="inline"><a class="l_k" href="../functions/gmtime.html">gmtime()</a></code>. We manage this by caching
+the start times of any months we've seen before. If we know the start
+time of the month, we can always calculate any time within the month.
+The start times are calculated using a mathematical formula. Unlike
+other algorithms that do multiple calls to <code class="inline"><a class="l_k" href="../functions/gmtime.html">gmtime()</a></code>.</p>
+<p>The <code class="inline"><span class="i">timelocal</span><span class="s">(</span><span class="s">)</span></code>
+ function is implemented using the same cache. We
+just assume that we're translating a GMT time, and then fudge it when
+we're done for the timezone and daylight savings arguments. Note that
+the timezone is evaluated for each date because countries occasionally
+change their official timezones. Assuming that <code class="inline"><a class="l_k" href="../functions/localtime.html">localtime()</a></code> corrects
+for these changes, this routine will also be correct.</p>
+<a name="BUGS"></a><h1>BUGS</h1>
+<p>The whole scheme for interpreting two-digit years can be considered a
+bug.</p>
+<a name="SUPPORT"></a><h1>SUPPORT</h1>
+<p>Support for this module is provided via the datetime@perl.org email
+list. See <a href="http://lists.perl.org/">http://lists.perl.org/</a> for more details.</p>
+<p>Please submit bugs to the CPAN RT system at
+<a href="http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Time-Local">http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Time-Local</a> or via email
+at bug-time-local@rt.cpan.org.</p>
+<a name="COPYRIGHT"></a><h1>COPYRIGHT</h1>
+<p>Copyright (c) 1997-2003 Graham Barr, 2003-2007 David Rolsky.  All
+rights reserved.  This program is free software; you can redistribute
+it and/or modify it under the same terms as Perl itself.</p>
+<p>The full text of the license can be found in the LICENSE file included
+with this module.</p>
+<a name="AUTHOR"></a><h1>AUTHOR</h1>
+<p>This module is based on a Perl 4 library, timelocal.pl, that was
+included with Perl 4.036, and was most likely written by Tom
+Christiansen.</p>
+<p>The current version was written by Graham Barr.</p>
+<p>It is now being maintained separately from the Perl core by Dave
+Rolsky, &lt;autarch@urth.org&gt;.</p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../close_purple.gif';" onmouseout="rightCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('Time::Local','Time/Local.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

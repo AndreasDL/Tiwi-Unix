@@ -1,0 +1,170 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>Module::Build::ModuleInfo - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 2;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../../close_purple.gif';" onmouseout="leftCloseIcon.src='../../close_blue.gif';"><img src="../../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../../index-overview.html">Overview</a></li>
+        <li><a href="../../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../../index-faq.html">FAQs</a></li>
+        <li><a href="../../index-history.html">History / Changes</a></li>
+        <li><a href="../../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../../index-language.html">Language</a></li>
+        <li><a href="../../index-functions.html">Functions</a></li>
+        <li><a href="../../perlop.html">Operators</a></li>
+        <li><a href="../../perlvar.html">Special variables</a></li>
+        <li><a href="../../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../../index-modules-A.html">Core modules</a></li>
+        <li><a href="../../index-utilities.html">Utilities</a></li>
+        <li><a href="../../index-internals.html">Internals</a></li>
+        <li><a href="../../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../../index.html">Home</a> &gt; <a href="../../index-modules-A.html">Core modules</a> &gt; <a href="../../index-modules-M.html">M</a> &gt; Module::Build::ModuleInfo</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">Module::Build::ModuleInfo</div><ul><li><a href="#NAME">NAME</a><li><a href="#DESCRIPTION">DESCRIPTION</a><li><a href="#AUTHOR">AUTHOR</a><li><a href="#COPYRIGHT">COPYRIGHT</a><li><a href="#SEE-ALSO">SEE ALSO</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>ModuleInfo - Gather package and POD information from a perl module files</p>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<ul>
+<li><a name="new_from_file(0x24filename0x2c-collect_pod-0x3d0x3e-1)"></a><b>new_from_file($filename, collect_pod =&gt; 1)</b>
+<p>Construct a ModuleInfo object given the path to a file. Takes an optional
+arguement <code class="inline"><span class="w">collect_pod</span></code>
+ which is a boolean that determines whether
+POD data is collected and stored for reference. POD data is not
+collected by default. POD headings are always collected.</p>
+</li>
+<li><a name="new_from_module(0x24module0x2c-collect_pod-0x3d0x3e-10x2c-inc-0x3d0x3e-0x5c0x40dirs)"></a><b>new_from_module($module, collect_pod =&gt; 1, inc =&gt; \@dirs)</b>
+<p>Construct a ModuleInfo object given a module or package name. In addition
+to accepting the <code class="inline"><span class="w">collect_pod</span></code>
+ argument as described above, this
+method accepts a <code class="inline"><span class="w">inc</span></code>
+ arguemnt which is a reference to an array of
+of directories to search for the module. If none are given, the
+default is @INC.</p>
+</li>
+<li><a name="name()"></a><b>name()</b>
+<p>Returns the name of the package represented by this module. If there
+are more than one packages, it makes a best guess based on the
+filename. If it's a script (i.e. not a *.pm) the package name is
+'main'.</p>
+</li>
+<li><a name="version(0x24package)"></a><b>version($package)</b>
+<p>Returns the version as defined by the $VERSION variable for the
+package as returned by the <code class="inline"><span class="w">name</span></code>
+ method if no arguments are
+given. If given the name of a package it will attempt to return the
+version of that package if it is specified in the file.</p>
+</li>
+<li><a name="filename()"></a><b>filename()</b>
+<p>Returns the absolute path to the file.</p>
+</li>
+<li><a name="packages_inside()"></a><b>packages_inside()</b>
+<p>Returns a list of packages.</p>
+</li>
+<li><a name="pod_inside()"></a><b>pod_inside()</b>
+<p>Returns a list of POD sections.</p>
+</li>
+<li><a name="contains_pod()"></a><b>contains_pod()</b>
+<p>Returns true if there is any POD in the file.</p>
+</li>
+<li><a name="pod(0x24section)"></a><b>pod($section)</b>
+<p>Returns the POD data in the given section.</p>
+</li>
+<li><a name="find_module_by_name(0x24module0x2c-0x5c0x40dirs)"></a><b>find_module_by_name($module, \@dirs)</b>
+<p>Returns the path to a module given the module or package name. A list
+of directories can be passed in as an optional paramater, otherwise
+@INC is searched.</p>
+<p>Can be called as either an object or a class method.</p>
+</li>
+<li><a name="find_module_dir_by_name(0x24module0x2c-0x5c0x40dirs)"></a><b>find_module_dir_by_name($module, \@dirs)</b>
+<p>Returns the entry in <code class="inline"><span class="i">@dirs</span></code>
+ (or <code class="inline"><span class="i">@INC</span></code>
+ by default) that contains
+the module <code class="inline"><span class="i">$module</span></code>
+. A list of directories can be passed in as an
+optional paramater, otherwise @INC is searched.</p>
+<p>Can be called as either an object or a class method.</p>
+</li>
+</ul>
+<a name="AUTHOR"></a><h1>AUTHOR</h1>
+<p>Ken Williams &lt;kwilliams@cpan.org&gt;, Randy W. Sims &lt;RandyS@ThePierianSpring.org&gt;</p>
+<a name="COPYRIGHT"></a><h1>COPYRIGHT</h1>
+<p>Copyright (c) 2001-2006 Ken Williams.  All rights reserved.</p>
+<p>This library is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.</p>
+<a name="SEE-ALSO"></a><h1>SEE ALSO</h1>
+<p>perl(1), <a href="../../Module/Build.html">Module::Build</a>(3)</p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../../close_purple.gif';" onmouseout="rightCloseIcon.src='../../close_blue.gif';"><img src="../../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('Module::Build::ModuleInfo','Module/Build/ModuleInfo.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

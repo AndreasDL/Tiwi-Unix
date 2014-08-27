@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>Pod::Simple::DumpAsXML - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 2;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../../close_purple.gif';" onmouseout="leftCloseIcon.src='../../close_blue.gif';"><img src="../../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../../index-overview.html">Overview</a></li>
+        <li><a href="../../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../../index-faq.html">FAQs</a></li>
+        <li><a href="../../index-history.html">History / Changes</a></li>
+        <li><a href="../../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../../index-language.html">Language</a></li>
+        <li><a href="../../index-functions.html">Functions</a></li>
+        <li><a href="../../perlop.html">Operators</a></li>
+        <li><a href="../../perlvar.html">Special variables</a></li>
+        <li><a href="../../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../../index-modules-A.html">Core modules</a></li>
+        <li><a href="../../index-utilities.html">Utilities</a></li>
+        <li><a href="../../index-internals.html">Internals</a></li>
+        <li><a href="../../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../../index.html">Home</a> &gt; <a href="../../index-modules-A.html">Core modules</a> &gt; <a href="../../index-modules-P.html">P</a> &gt; Pod::Simple::DumpAsXML</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">Pod::Simple::DumpAsXML</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><li><a href="#SEE-ALSO">SEE ALSO</a><li><a href="#COPYRIGHT-AND-DISCLAIMERS">COPYRIGHT AND DISCLAIMERS</a><li><a href="#AUTHOR">AUTHOR</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>Pod::Simple::DumpAsXML -- turn Pod into XML</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">  <span class="w">perl</span> -<span class="w">MPod::Simple::DumpAsXML</span> -e \
+   <span class="q">&quot;exit Pod::Simple::DumpAsXML-&gt;filter(shift)-&gt;any_errata_seen&quot;</span> \
+   <span class="w">thingy</span>.<span class="w">pod</span></pre>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p>Pod::Simple::DumpAsXML is a subclass of <a href="../../Pod/Simple.html">Pod::Simple</a> that parses Pod
+and turns it into indented and wrapped XML.  This class is of
+interest to people writing Pod formatters based on Pod::Simple.</p>
+<p>Pod::Simple::DumpAsXML inherits methods from
+<a href="../../Pod/Simple.html">Pod::Simple</a>.</p>
+<a name="SEE-ALSO"></a><h1>SEE ALSO</h1>
+<p><a href="../../Pod/Simple/XMLOutStream.html">Pod::Simple::XMLOutStream</a> is rather like this class.
+Pod::Simple::XMLOutStream's output is space-padded in a way
+that's better for sending to an XML processor (that is, it has
+no ignoreable whitespace). But
+Pod::Simple::DumpAsXML's output is much more human-readable, being
+(more-or-less) one token per line, with line-wrapping.</p>
+<p><a href="../../Pod/Simple/DumpAsText.html">Pod::Simple::DumpAsText</a> is rather like this class,
+except that it doesn't dump with XML syntax.  Try them and see
+which one you like best!</p>
+<p><a href="../../Pod/Simple.html">Pod::Simple</a>, <a href="../../Pod/Simple/DumpAsXML.html">Pod::Simple::DumpAsXML</a></p>
+<p>The older libraries <a href="http://search.cpan.org/perldoc/Pod::PXML">Pod::PXML</a>, <a href="http://search.cpan.org/perldoc/Pod::XML">Pod::XML</a>, <a href="http://search.cpan.org/perldoc/Pod::SAX">Pod::SAX</a></p>
+<a name="COPYRIGHT-AND-DISCLAIMERS"></a><h1>COPYRIGHT AND DISCLAIMERS</h1>
+<p>Copyright (c) 2002 Sean M. Burke.  All rights reserved.</p>
+<p>This library is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.</p>
+<p>This program is distributed in the hope that it will be useful, but
+without any warranty; without even the implied warranty of
+merchantability or fitness for a particular purpose.</p>
+<a name="AUTHOR"></a><h1>AUTHOR</h1>
+<p>Sean M. Burke <code class="inline"><span class="w">sburke</span><span class="i">@cpan</span>.<span class="w">org</span></code>
+</p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../../close_purple.gif';" onmouseout="rightCloseIcon.src='../../close_blue.gif';"><img src="../../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('Pod::Simple::DumpAsXML','Pod/Simple/DumpAsXML.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

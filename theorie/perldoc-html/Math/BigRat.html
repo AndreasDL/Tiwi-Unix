@@ -1,0 +1,359 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>Math::BigRat - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 1;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../close_purple.gif';" onmouseout="leftCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../index-overview.html">Overview</a></li>
+        <li><a href="../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../index-faq.html">FAQs</a></li>
+        <li><a href="../index-history.html">History / Changes</a></li>
+        <li><a href="../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../index-language.html">Language</a></li>
+        <li><a href="../index-functions.html">Functions</a></li>
+        <li><a href="../perlop.html">Operators</a></li>
+        <li><a href="../perlvar.html">Special variables</a></li>
+        <li><a href="../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../index-modules-A.html">Core modules</a></li>
+        <li><a href="../index-utilities.html">Utilities</a></li>
+        <li><a href="../index-internals.html">Internals</a></li>
+        <li><a href="../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../index.html">Home</a> &gt; <a href="../index-modules-A.html">Core modules</a> &gt; <a href="../index-modules-M.html">M</a> &gt; Math::BigRat</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">Math::BigRat</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><ul><li><a href="#MATH-LIBRARY">MATH LIBRARY</a></ul><li><a href="#METHODS">METHODS</a><ul><li><a href="#new()">new()</a><li><a href="#numerator()">numerator()</a><li><a href="#denominator()">denominator()</a><li><a href="#parts()">parts()</a><li><a href="#numify()">numify()</a><li><a href="#as_int()0x2fas_number()">as_int()/as_number()</a><li><a href="#as_hex()">as_hex()</a><li><a href="#as_bin()">as_bin()</a><li><a href="#as_oct()">as_oct()</a><li><a href="#from_hex()0x2ffrom_bin()0x2ffrom_oct()">from_hex()/from_bin()/from_oct()</a><li><a href="#length()">length()</a><li><a href="#digit()">digit()</a><li><a href="#bnorm()">bnorm()</a><li><a href="#bfac()">bfac()</a><li><a href="#bround()0x2fround()0x2fbfround()">bround()/round()/bfround()</a><li><a href="#bmod()">bmod()</a><li><a href="#bneg()">bneg()</a><li><a href="#is_one()">is_one()</a><li><a href="#is_zero()">is_zero()</a><li><a href="#is_pos()0x2fis_positive()">is_pos()/is_positive()</a><li><a href="#is_neg()0x2fis_negative()">is_neg()/is_negative()</a><li><a href="#is_int()">is_int()</a><li><a href="#is_odd()">is_odd()</a><li><a href="#is_even()">is_even()</a><li><a href="#bceil()">bceil()</a><li><a href="#bfloor()">bfloor()</a><li><a href="#bsqrt()">bsqrt()</a><li><a href="#broot()">broot()</a><li><a href="#badd()0x2fbmul()0x2fbsub()0x2fbdiv()0x2fbdec()0x2fbinc()">badd()/bmul()/bsub()/bdiv()/bdec()/binc()</a><li><a href="#copy()">copy()</a><li><a href="#bstr()0x2fbsstr()">bstr()/bsstr()</a><li><a href="#bacmp()0x2fbcmp()">bacmp()/bcmp()</a><li><a href="#blsft()0x2fbrsft()">blsft()/brsft()</a><li><a href="#bpow()">bpow()</a><li><a href="#bexp()">bexp()</a><li><a href="#bnok()">bnok()</a><li><a href="#config()">config()</a></ul><li><a href="#BUGS">BUGS</a><li><a href="#LICENSE">LICENSE</a><li><a href="#SEE-ALSO">SEE ALSO</a><li><a href="#AUTHORS">AUTHORS</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>Math::BigRat - Arbitrary big rational numbers</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">	<a class="l_k" href="../functions/use.html">use</a> <span class="w">Math::BigRat</span><span class="sc">;</span></pre>
+<pre class="verbatim">	<a class="l_k" href="../functions/my.html">my</a> <span class="i">$x</span> = <span class="w">Math::BigRat</span><span class="w">-&gt;new</span><span class="s">(</span><span class="q">&#39;3/7&#39;</span><span class="s">)</span><span class="sc">;</span> <span class="i">$x</span> += <span class="q">&#39;5/9&#39;</span><span class="sc">;</span></pre>
+<pre class="verbatim">	print $x-&gt;bstr(),"\n";
+  	print $x ** 2,"\n";</pre><pre class="verbatim">	<a class="l_k" href="../functions/my.html">my</a> <span class="i">$y</span> = <span class="w">Math::BigRat</span><span class="w">-&gt;new</span><span class="s">(</span><span class="q">&#39;inf&#39;</span><span class="s">)</span><span class="sc">;</span>
+	<a class="l_k" href="../functions/print.html">print</a> <span class="q">&quot;$y &quot;</span><span class="cm">,</span> <span class="s">(</span><span class="i">$y</span><span class="i">-&gt;is_inf</span> ? <span class="q">&#39;is&#39;</span> <span class="co">:</span> <span class="q">&#39;is not&#39;</span><span class="s">)</span> <span class="cm">,</span> <span class="q">&quot; infinity\n&quot;</span><span class="sc">;</span></pre>
+<pre class="verbatim">	<a class="l_k" href="../functions/my.html">my</a> <span class="i">$z</span> = <span class="w">Math::BigRat</span><span class="w">-&gt;new</span><span class="s">(</span><span class="n">144</span><span class="s">)</span><span class="sc">;</span> <span class="i">$z</span><span class="i">-&gt;bsqrt</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span></pre>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p>Math::BigRat complements Math::BigInt and Math::BigFloat by providing support
+for arbitrary big rational numbers.</p>
+<a name="MATH-LIBRARY"></a><h2>MATH LIBRARY</h2>
+<p>You can change the underlying module that does the low-level
+math operations by using:</p>
+<pre class="verbatim">	<a class="l_k" href="../functions/use.html">use</a> <span class="w">Math::BigRat</span> <span class="w">try</span> <span class="cm">=&gt;</span> <span class="q">'GMP'</span><span class="sc">;</span></pre>
+<p>Note: This needs Math::BigInt::GMP installed.</p>
+<p>The following would first try to find Math::BigInt::Foo, then
+Math::BigInt::Bar, and when this also fails, revert to Math::BigInt::Calc:</p>
+<pre class="verbatim">	<a class="l_k" href="../functions/use.html">use</a> <span class="w">Math::BigRat</span> <span class="w">try</span> <span class="cm">=&gt;</span> <span class="q">'Foo,Math::BigInt::Bar'</span><span class="sc">;</span></pre>
+<p>If you want to get warned when the fallback occurs, replace "try" with
+"lib":</p>
+<pre class="verbatim">	<a class="l_k" href="../functions/use.html">use</a> <span class="w">Math::BigRat</span> <span class="w">lib</span> <span class="cm">=&gt;</span> <span class="q">&#39;Foo,Math::BigInt::Bar&#39;</span><span class="sc">;</span></pre>
+<p>If you want the code to die instead, replace "try" with
+"only":</p>
+<pre class="verbatim">	<a class="l_k" href="../functions/use.html">use</a> <span class="w">Math::BigRat</span> <span class="w">only</span> <span class="cm">=&gt;</span> <span class="q">'Foo,Math::BigInt::Bar'</span><span class="sc">;</span></pre>
+<a name="METHODS"></a><h1>METHODS</h1>
+<p>Any methods not listed here are derived from Math::BigFloat (or
+Math::BigInt), so make sure you check these two modules for further
+information.</p>
+<a name="new()"></a><h2>new()</h2>
+<pre class="verbatim">	<span class="i">$x</span> = <span class="w">Math::BigRat</span><span class="w">-&gt;new</span><span class="s">(</span><span class="q">&#39;1/3&#39;</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Create a new Math::BigRat object. Input can come in various forms:</p>
+<pre class="verbatim">	<span class="i">$x</span> = <span class="w">Math::BigRat</span><span class="w">-&gt;new</span><span class="s">(</span><span class="n">123</span><span class="s">)</span><span class="sc">;</span>				<span class="c"># scalars</span>
+	<span class="i">$x</span> = <span class="w">Math::BigRat</span><span class="w">-&gt;new</span><span class="s">(</span><span class="q">&#39;inf&#39;</span><span class="s">)</span><span class="sc">;</span>				<span class="c"># infinity</span>
+	<span class="i">$x</span> = <span class="w">Math::BigRat</span><span class="w">-&gt;new</span><span class="s">(</span><span class="q">&#39;123.3&#39;</span><span class="s">)</span><span class="sc">;</span>			<span class="c"># float</span>
+	<span class="i">$x</span> = <span class="w">Math::BigRat</span><span class="w">-&gt;new</span><span class="s">(</span><span class="q">&#39;1/3&#39;</span><span class="s">)</span><span class="sc">;</span>				<span class="c"># simple string</span>
+	<span class="i">$x</span> = <span class="w">Math::BigRat</span><span class="w">-&gt;new</span><span class="s">(</span><span class="q">&#39;1 / 3&#39;</span><span class="s">)</span><span class="sc">;</span>			<span class="c"># spaced</span>
+	<span class="i">$x</span> = <span class="w">Math::BigRat</span><span class="w">-&gt;new</span><span class="s">(</span><span class="q">&#39;1 / 0.1&#39;</span><span class="s">)</span><span class="sc">;</span>			<span class="c"># w/ floats</span>
+	<span class="i">$x</span> = <span class="w">Math::BigRat</span><span class="w">-&gt;new</span><span class="s">(</span><span class="w">Math::BigInt</span><span class="w">-&gt;new</span><span class="s">(</span><span class="n">3</span><span class="s">)</span><span class="s">)</span><span class="sc">;</span>		<span class="c"># BigInt</span>
+	<span class="i">$x</span> = <span class="w">Math::BigRat</span><span class="w">-&gt;new</span><span class="s">(</span><span class="w">Math::BigFloat</span><span class="w">-&gt;new</span><span class="s">(</span><span class="q">&#39;3.1&#39;</span><span class="s">)</span><span class="s">)</span><span class="sc">;</span>	<span class="c"># BigFloat</span>
+	<span class="i">$x</span> = <span class="w">Math::BigRat</span><span class="w">-&gt;new</span><span class="s">(</span><span class="w">Math::BigInt::Lite</span><span class="w">-&gt;new</span><span class="s">(</span><span class="q">&#39;2&#39;</span><span class="s">)</span><span class="s">)</span><span class="sc">;</span>	<span class="c"># BigLite</span></pre>
+<pre class="verbatim">	<span class="c"># You can also give D and N as different objects:</span>
+	<span class="i">$x</span> = <span class="w">Math::BigRat</span><span class="w">-&gt;new</span><span class="s">(</span>
+		<span class="w">Math::BigInt</span><span class="w">-&gt;new</span><span class="s">(</span><span class="n">-123</span><span class="s">)</span><span class="cm">,</span>
+		<span class="w">Math::BigInt</span><span class="w">-&gt;new</span><span class="s">(</span><span class="n">7</span><span class="s">)</span><span class="cm">,</span>
+		<span class="s">)</span><span class="sc">;</span>			<span class="c"># =&gt; -123/7</span></pre>
+<a name="numerator()"></a><h2>numerator()</h2>
+<pre class="verbatim">	<span class="i">$n</span> = <span class="i">$x</span><span class="i">-&gt;numerator</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Returns a copy of the numerator (the part above the line) as signed BigInt.</p>
+<a name="denominator()"></a><h2>denominator()</h2>
+<pre class="verbatim">	<span class="i">$d</span> = <span class="i">$x</span><span class="i">-&gt;denominator</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Returns a copy of the denominator (the part under the line) as positive BigInt.</p>
+<a name="parts()"></a><h2>parts()</h2>
+<pre class="verbatim">	<span class="s">(</span><span class="i">$n</span><span class="cm">,</span><span class="i">$d</span><span class="s">)</span> = <span class="i">$x</span><span class="i">-&gt;parts</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Return a list consisting of (signed) numerator and (unsigned) denominator as
+BigInts.</p>
+<a name="numify()"></a><h2>numify()</h2>
+<pre class="verbatim">	<a class="l_k" href="../functions/my.html">my</a> <span class="i">$y</span> = <span class="i">$x</span><span class="i">-&gt;numify</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Returns the object as a scalar. This will lose some data if the object
+cannot be represented by a normal Perl scalar (integer or float), so
+use as_int() instead.</p>
+<p>This routine is automatically used whenever a scalar is required:</p>
+<pre class="verbatim">	<a class="l_k" href="../functions/my.html">my</a> <span class="i">$x</span> = <span class="w">Math::BigRat</span><span class="w">-&gt;new</span><span class="s">(</span><span class="q">'3/1'</span><span class="s">)</span><span class="sc">;</span>
+	<span class="i">@array</span> = <span class="s">(</span><span class="n">1</span><span class="cm">,</span><span class="n">2</span><span class="cm">,</span><span class="n">3</span><span class="s">)</span><span class="sc">;</span>
+	<span class="i">$y</span> = <span class="i">$array</span>[<span class="i">$x</span>]<span class="sc">;</span>		<span class="c"># set $y to 3</span></pre>
+<a name="as_int()0x2fas_number()"></a><h2>as_int()/as_number()</h2>
+<pre class="verbatim">	<span class="i">$x</span> = <span class="w">Math::BigRat</span><span class="w">-&gt;new</span><span class="s">(</span><span class="q">&#39;13/7&#39;</span><span class="s">)</span><span class="sc">;</span>
+	<a class="l_k" href="../functions/print.html">print</a> <span class="i">$x</span><span class="i">-&gt;as_int</span><span class="s">(</span><span class="s">)</span><span class="cm">,</span><span class="q">&quot;\n&quot;</span><span class="sc">;</span>		<span class="c"># &#39;1&#39;</span></pre>
+<p>Returns a copy of the object as BigInt, truncated to an integer.</p>
+<p><code class="inline"><span class="i">as_number</span><span class="s">(</span><span class="s">)</span></code>
+ is an alias for <code class="inline"><span class="i">as_int</span><span class="s">(</span><span class="s">)</span></code>
+.</p>
+<a name="as_hex()"></a><h2>as_hex()</h2>
+<pre class="verbatim">	<span class="i">$x</span> = <span class="w">Math::BigRat</span><span class="w">-&gt;new</span><span class="s">(</span><span class="q">&#39;13&#39;</span><span class="s">)</span><span class="sc">;</span>
+	<a class="l_k" href="../functions/print.html">print</a> <span class="i">$x</span><span class="i">-&gt;as_hex</span><span class="s">(</span><span class="s">)</span><span class="cm">,</span><span class="q">&quot;\n&quot;</span><span class="sc">;</span>		<span class="c"># &#39;0xd&#39;</span></pre>
+<p>Returns the BigRat as hexadecimal string. Works only for integers.</p>
+<a name="as_bin()"></a><h2>as_bin()</h2>
+<pre class="verbatim">	<span class="i">$x</span> = <span class="w">Math::BigRat</span><span class="w">-&gt;new</span><span class="s">(</span><span class="q">&#39;13&#39;</span><span class="s">)</span><span class="sc">;</span>
+	<a class="l_k" href="../functions/print.html">print</a> <span class="i">$x</span><span class="i">-&gt;as_bin</span><span class="s">(</span><span class="s">)</span><span class="cm">,</span><span class="q">&quot;\n&quot;</span><span class="sc">;</span>		<span class="c"># &#39;0x1101&#39;</span></pre>
+<p>Returns the BigRat as binary string. Works only for integers.</p>
+<a name="as_oct()"></a><h2>as_oct()</h2>
+<pre class="verbatim">	<span class="i">$x</span> = <span class="w">Math::BigRat</span><span class="w">-&gt;new</span><span class="s">(</span><span class="q">'13'</span><span class="s">)</span><span class="sc">;</span>
+	<a class="l_k" href="../functions/print.html">print</a> <span class="i">$x</span><span class="i">-&gt;as_oct</span><span class="s">(</span><span class="s">)</span><span class="cm">,</span><span class="q">&quot;\n&quot;</span><span class="sc">;</span>		<span class="c"># '015'</span></pre>
+<p>Returns the BigRat as octal string. Works only for integers.</p>
+<a name="from_hex()0x2ffrom_bin()0x2ffrom_oct()"></a><h2>from_hex()/from_bin()/from_oct()</h2>
+<pre class="verbatim">	<a class="l_k" href="../functions/my.html">my</a> <span class="i">$h</span> = <span class="w">Math::BigRat</span><span class="w">-&gt;from_hex</span><span class="s">(</span><span class="q">'0x10'</span><span class="s">)</span><span class="sc">;</span>
+	<a class="l_k" href="../functions/my.html">my</a> <span class="i">$b</span> = <span class="w">Math::BigRat</span><span class="w">-&gt;from_bin</span><span class="s">(</span><span class="q">'0b10000000'</span><span class="s">)</span><span class="sc">;</span>
+	<a class="l_k" href="../functions/my.html">my</a> <span class="i">$o</span> = <span class="w">Math::BigRat</span><span class="w">-&gt;from_oct</span><span class="s">(</span><span class="q">'020'</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Create a BigRat from an hexadecimal, binary or octal number
+in string form.</p>
+<a name="length()"></a><h2>length()</h2>
+<pre class="verbatim">	<span class="i">$len</span> = <span class="i">$x</span><span class="i">-&gt;length</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Return the length of $x in digitis for integer values.</p>
+<a name="digit()"></a><h2>digit()</h2>
+<pre class="verbatim">	<a class="l_k" href="../functions/print.html">print</a> <span class="i">Math::BigRat</span><span class="i">-&gt;new</span><span class="s">(</span><span class="q">'123/1'</span><span class="s">)</span><span class="i">-&gt;digit</span><span class="s">(</span><span class="n">1</span><span class="s">)</span><span class="sc">;</span>	<span class="c"># 1</span>
+	<a class="l_k" href="../functions/print.html">print</a> <span class="i">Math::BigRat</span><span class="i">-&gt;new</span><span class="s">(</span><span class="q">'123/1'</span><span class="s">)</span><span class="i">-&gt;digit</span><span class="s">(</span><span class="n">-1</span><span class="s">)</span><span class="sc">;</span>	<span class="c"># 3</span></pre>
+<p>Return the N'ths digit from X when X is an integer value.</p>
+<a name="bnorm()"></a><h2>bnorm()</h2>
+<pre class="verbatim">	<span class="i">$x</span><span class="i">-&gt;bnorm</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Reduce the number to the shortest form. This routine is called
+automatically whenever it is needed.</p>
+<a name="bfac()"></a><h2>bfac()</h2>
+<pre class="verbatim">	<span class="i">$x</span><span class="i">-&gt;bfac</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Calculates the factorial of $x. For instance:</p>
+<pre class="verbatim">	<a class="l_k" href="../functions/print.html">print</a> <span class="i">Math::BigRat</span><span class="i">-&gt;new</span><span class="s">(</span><span class="q">&#39;3/1&#39;</span><span class="s">)</span><span class="i">-&gt;bfac</span><span class="s">(</span><span class="s">)</span><span class="cm">,</span><span class="q">&quot;\n&quot;</span><span class="sc">;</span>	<span class="c"># 1*2*3</span>
+	<a class="l_k" href="../functions/print.html">print</a> <span class="i">Math::BigRat</span><span class="i">-&gt;new</span><span class="s">(</span><span class="q">&#39;5/1&#39;</span><span class="s">)</span><span class="i">-&gt;bfac</span><span class="s">(</span><span class="s">)</span><span class="cm">,</span><span class="q">&quot;\n&quot;</span><span class="sc">;</span>	<span class="c"># 1*2*3*4*5</span></pre>
+<p>Works currently only for integers.</p>
+<a name="bround()0x2fround()0x2fbfround()"></a><h2>bround()/round()/bfround()</h2>
+<p>Are not yet implemented.</p>
+<a name="bmod()"></a><h2>bmod()</h2>
+<pre class="verbatim">	<a class="l_k" href="../functions/use.html">use</a> <span class="w">Math::BigRat</span><span class="sc">;</span>
+	<a class="l_k" href="../functions/my.html">my</a> <span class="i">$x</span> = <span class="w">Math::BigRat</span><span class="w">-&gt;new</span><span class="s">(</span><span class="q">&#39;7/4&#39;</span><span class="s">)</span><span class="sc">;</span>
+	<a class="l_k" href="../functions/my.html">my</a> <span class="i">$y</span> = <span class="w">Math::BigRat</span><span class="w">-&gt;new</span><span class="s">(</span><span class="q">&#39;4/3&#39;</span><span class="s">)</span><span class="sc">;</span>
+	<a class="l_k" href="../functions/print.html">print</a> <span class="i">$x</span><span class="i">-&gt;bmod</span><span class="s">(</span><span class="i">$y</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Set $x to the remainder of the division of $x by $y.</p>
+<a name="bneg()"></a><h2>bneg()</h2>
+<pre class="verbatim">	<span class="i">$x</span><span class="i">-&gt;bneg</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Used to negate the object in-place.</p>
+<a name="is_one()"></a><h2>is_one()</h2>
+<pre class="verbatim">	<a class="l_k" href="../functions/print.html">print</a> <span class="q">&quot;$x is 1\n&quot;</span> if <span class="i">$x</span><span class="i">-&gt;is_one</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Return true if $x is exactly one, otherwise false.</p>
+<a name="is_zero()"></a><h2>is_zero()</h2>
+<pre class="verbatim">	<a class="l_k" href="../functions/print.html">print</a> <span class="q">&quot;$x is 0\n&quot;</span> if <span class="i">$x</span><span class="i">-&gt;is_zero</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Return true if $x is exactly zero, otherwise false.</p>
+<a name="is_pos()0x2fis_positive()"></a><h2>is_pos()/is_positive()</h2>
+<pre class="verbatim">	<a class="l_k" href="../functions/print.html">print</a> <span class="q">&quot;$x is &gt;= 0\n&quot;</span> if <span class="i">$x</span><span class="i">-&gt;is_positive</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Return true if $x is positive (greater than or equal to zero), otherwise
+false. Please note that '+inf' is also positive, while 'NaN' and '-inf' aren't.</p>
+<p><code class="inline"><span class="i">is_positive</span><span class="s">(</span><span class="s">)</span></code>
+ is an alias for <code class="inline"><span class="i">is_pos</span><span class="s">(</span><span class="s">)</span></code>
+.</p>
+<a name="is_neg()0x2fis_negative()"></a><h2>is_neg()/is_negative()</h2>
+<pre class="verbatim">	<a class="l_k" href="../functions/print.html">print</a> <span class="q">&quot;$x is &lt; 0\n&quot;</span> if <span class="i">$x</span><span class="i">-&gt;is_negative</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Return true if $x is negative (smaller than zero), otherwise false. Please
+note that '-inf' is also negative, while 'NaN' and '+inf' aren't.</p>
+<p><code class="inline"><span class="i">is_negative</span><span class="s">(</span><span class="s">)</span></code>
+ is an alias for <code class="inline"><span class="i">is_neg</span><span class="s">(</span><span class="s">)</span></code>
+.</p>
+<a name="is_int()"></a><h2>is_int()</h2>
+<pre class="verbatim">	<a class="l_k" href="../functions/print.html">print</a> <span class="q">&quot;$x is an integer\n&quot;</span> if <span class="i">$x</span><span class="i">-&gt;is_int</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Return true if $x has a denominator of 1 (e.g. no fraction parts), otherwise
+false. Please note that '-inf', 'inf' and 'NaN' aren't integer.</p>
+<a name="is_odd()"></a><h2>is_odd()</h2>
+<pre class="verbatim">	<a class="l_k" href="../functions/print.html">print</a> <span class="q">&quot;$x is odd\n&quot;</span> if <span class="i">$x</span><span class="i">-&gt;is_odd</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Return true if $x is odd, otherwise false.</p>
+<a name="is_even()"></a><h2>is_even()</h2>
+<pre class="verbatim">	<a class="l_k" href="../functions/print.html">print</a> <span class="q">&quot;$x is even\n&quot;</span> if <span class="i">$x</span><span class="i">-&gt;is_even</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Return true if $x is even, otherwise false.</p>
+<a name="bceil()"></a><h2>bceil()</h2>
+<pre class="verbatim">	<span class="i">$x</span><span class="i">-&gt;bceil</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Set $x to the next bigger integer value (e.g. truncate the number to integer
+and then increment it by one).</p>
+<a name="bfloor()"></a><h2>bfloor()</h2>
+<pre class="verbatim">	<span class="i">$x</span><span class="i">-&gt;bfloor</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Truncate $x to an integer value.</p>
+<a name="bsqrt()"></a><h2>bsqrt()</h2>
+<pre class="verbatim">	<span class="i">$x</span><span class="i">-&gt;bsqrt</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Calculate the square root of $x.</p>
+<a name="broot()"></a><h2>broot()</h2>
+<pre class="verbatim">	<span class="i">$x</span><span class="i">-&gt;broot</span><span class="s">(</span><span class="i">$n</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Calculate the N'th root of $x.</p>
+<a name="badd()0x2fbmul()0x2fbsub()0x2fbdiv()0x2fbdec()0x2fbinc()"></a><h2>badd()/bmul()/bsub()/bdiv()/bdec()/binc()</h2>
+<p>Please see the documentation in <a href="../Math/BigInt.html">Math::BigInt</a>.</p>
+<a name="copy()"></a><h2>copy()</h2>
+<pre class="verbatim">	<a class="l_k" href="../functions/my.html">my</a> <span class="i">$z</span> = <span class="i">$x</span><span class="i">-&gt;copy</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Makes a deep copy of the object.</p>
+<p>Please see the documentation in <a href="../Math/BigInt.html">Math::BigInt</a> for further details.</p>
+<a name="bstr()0x2fbsstr()"></a><h2>bstr()/bsstr()</h2>
+<pre class="verbatim">	<a class="l_k" href="../functions/my.html">my</a> <span class="i">$x</span> = <span class="w">Math::BigInt</span><span class="w">-&gt;new</span><span class="s">(</span><span class="q">'8/4'</span><span class="s">)</span><span class="sc">;</span>
+	<a class="l_k" href="../functions/print.html">print</a> <span class="i">$x</span><span class="i">-&gt;bstr</span><span class="s">(</span><span class="s">)</span><span class="cm">,</span><span class="q">&quot;\n&quot;</span><span class="sc">;</span>			<span class="c"># prints 1/2</span>
+	<a class="l_k" href="../functions/print.html">print</a> <span class="i">$x</span><span class="i">-&gt;bsstr</span><span class="s">(</span><span class="s">)</span><span class="cm">,</span><span class="q">&quot;\n&quot;</span><span class="sc">;</span>			<span class="c"># prints 1/2</span></pre>
+<p>Return a string representating this object.</p>
+<a name="bacmp()0x2fbcmp()"></a><h2>bacmp()/bcmp()</h2>
+<p>Used to compare numbers.</p>
+<p>Please see the documentation in <a href="../Math/BigInt.html">Math::BigInt</a> for further details.</p>
+<a name="blsft()0x2fbrsft()"></a><h2>blsft()/brsft()</h2>
+<p>Used to shift numbers left/right.</p>
+<p>Please see the documentation in <a href="../Math/BigInt.html">Math::BigInt</a> for further details.</p>
+<a name="bpow()"></a><h2>bpow()</h2>
+<pre class="verbatim">	<span class="i">$x</span><span class="i">-&gt;bpow</span><span class="s">(</span><span class="i">$y</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Compute $x ** $y.</p>
+<p>Please see the documentation in <a href="../Math/BigInt.html">Math::BigInt</a> for further details.</p>
+<a name="bexp()"></a><h2>bexp()</h2>
+<pre class="verbatim">	<span class="i">$x</span><span class="i">-&gt;bexp</span><span class="s">(</span><span class="i">$accuracy</span><span class="s">)</span><span class="sc">;</span>		<span class="c"># calculate e ** X</span></pre>
+<p>Calculates two integers A and B so that A/B is equal to <code class="inline"><span class="w">e</span> ** <span class="i">$x</span></code>
+, where <code class="inline"><span class="w">e</span></code>
+ is
+Euler's number.</p>
+<p>This method was added in v0.20 of Math::BigRat (May 2007).</p>
+<p>See also <i>blog()</i>.</p>
+<a name="bnok()"></a><h2>bnok()</h2>
+<pre class="verbatim">	<span class="i">$x</span><span class="i">-&gt;bnok</span><span class="s">(</span><span class="i">$y</span><span class="s">)</span><span class="sc">;</span>		   <span class="c"># x over y (binomial coefficient n over k)</span></pre>
+<p>Calculates the binomial coefficient n over k, also called the "choose"
+function. The result is equivalent to:</p>
+<pre class="verbatim">	( n )      n!
+	| - |  = -------
+	( k )    k!(n-k)!</pre><p>This method was added in v0.20 of Math::BigRat (May 2007).</p>
+<a name="config()"></a><h2>config()</h2>
+<pre class="verbatim">        <a class="l_k" href="../functions/use.html">use</a> <span class="w">Data::Dumper</span><span class="sc">;</span></pre>
+<pre class="verbatim">        <a class="l_k" href="../functions/print.html">print</a> <span class="i">Dumper</span> <span class="s">(</span> <span class="w">Math::BigRat</span><span class="w">-&gt;config</span><span class="s">(</span><span class="s">)</span> <span class="s">)</span><span class="sc">;</span>
+        <a class="l_k" href="../functions/print.html">print</a> <span class="i">Math::BigRat</span><span class="i">-&gt;config</span><span class="s">(</span><span class="s">)</span>-&gt;{<span class="w">lib</span>}<span class="cm">,</span><span class="q">&quot;\n&quot;</span><span class="sc">;</span></pre>
+<p>Returns a hash containing the configuration, e.g. the version number, lib
+loaded etc. The following hash keys are currently filled in with the
+appropriate information.</p>
+<pre class="verbatim">        key             RO/RW   Description
+                                Example
+        ============================================================
+        lib             RO      Name of the Math library
+                                Math::BigInt::Calc
+        lib_version     RO      Version of 'lib'
+                                0.30
+        class           RO      The class of config you just called
+                                Math::BigRat
+        version         RO      version number of the class you used
+                                0.10
+        upgrade         RW      To which class numbers are upgraded
+                                undef
+        downgrade       RW      To which class numbers are downgraded
+                                undef
+        precision       RW      Global precision
+                                undef
+        accuracy        RW      Global accuracy
+                                undef
+        round_mode      RW      Global round mode
+                                even
+        div_scale       RW      Fallback accuracy for div
+                                40
+        trap_nan        RW      Trap creation of NaN (undef = no)
+                                undef
+        trap_inf        RW      Trap creation of +inf/-inf (undef = no)
+                                undef</pre><p>By passing a reference to a hash you may set the configuration values. This
+works only for values that a marked with a <code class="inline"><span class="w">RW</span></code>
+ above, anything else is
+read-only.</p>
+<a name="BUGS"></a><h1>BUGS</h1>
+<p>Some things are not yet implemented, or only implemented half-way:</p>
+<ul>
+<li><a name="inf-handling-(partial)"></a><b>inf handling (partial)</b>
+</li>
+<li><a name="NaN-handling-(partial)"></a><b>NaN handling (partial)</b>
+</li>
+<li><a name="rounding-(not-implemented-except-for-bceil0x2fbfloor)"></a><b>rounding (not implemented except for bceil/bfloor)</b>
+</li>
+<li><a name="0x24x-**-0x24y-where-0x24y-is-not-an-integer"></a><b>$x ** $y where $y is not an integer</b>
+</li>
+<li><a name="bmod()0x2c-blog()0x2c-bmodinv()-and-bmodpow()-(partial)"></a><b>bmod(), blog(), bmodinv() and bmodpow() (partial)</b>
+</li>
+</ul>
+<a name="LICENSE"></a><h1>LICENSE</h1>
+<p>This program is free software; you may redistribute it and/or modify it under
+the same terms as Perl itself.</p>
+<a name="SEE-ALSO"></a><h1>SEE ALSO</h1>
+<p><a href="../Math/BigFloat.html">Math::BigFloat</a> and <a href="http://search.cpan.org/perldoc/Math::Big">Math::Big</a> as well as <a href="http://search.cpan.org/perldoc/Math::BigInt::BitVect">Math::BigInt::BitVect</a>,
+<a href="http://search.cpan.org/perldoc/Math::BigInt::Pari">Math::BigInt::Pari</a> and  <a href="http://search.cpan.org/perldoc/Math::BigInt::GMP">Math::BigInt::GMP</a>.</p>
+<p>See <a href="http://search.cpan.org/search?dist=bignum">http://search.cpan.org/search?dist=bignum</a> for a way to use
+Math::BigRat.</p>
+<p>The package at <a href="http://search.cpan.org/search?dist=Math%3A%3ABigRat">http://search.cpan.org/search?dist=Math%3A%3ABigRat</a>
+may contain more documentation and examples as well as testcases.</p>
+<a name="AUTHORS"></a><h1>AUTHORS</h1>
+<p>(C) by Tels <a href="http://bloodgate.com/">http://bloodgate.com/</a> 2001 - 2007.</p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../close_purple.gif';" onmouseout="rightCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('Math::BigRat','Math/BigRat.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

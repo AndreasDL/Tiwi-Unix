@@ -1,0 +1,60 @@
+#oef 11
+set hoi.txt "hallo" "hoi" "andreas" "lille"
+naam=$1
+shift
+
+if [[ -f $naam ]]; then
+
+   tekst=$(cat $naam)
+   #echo tekst: $tekst
+
+   for woord in $*
+   do
+	if  `echo ${tekst} | grep "${woord}" 1>/dev/null 2>&1`
+	then 
+	   echo "$woord komt voor"
+	else
+	   echo "$woord komt niet voor"
+        fi
+   done
+
+else
+	echo $naam niet gevonden
+fi
+
+
+#oef 12
+set "1"
+groep=$1
+
+declare -A data
+
+while IFS=: read user pass uid gid full home shell
+do
+	#echo -e "$full :\tPseudo: $user UID: $uid GID: $gid Home: $home Shell: $shell"
+	data[ "${full}" ]="$gid"
+	echo $full ${data[ "$full" ]}
+	(( $gid == $groep )) && echo "$full" >t.txt
+
+done < /etc/passwd
+
+echo ${data[ "root" ]}
+
+
+#oef 13
+echo tr A-Z a-z
+
+#oef 14
+set a A aaAaA a b d s d dsdkfjam df qd a a a sd d d
+declare -A args
+for arg in $*
+do
+	args[ "$arg" ]="a"
+done
+#enkel afdrukken => de keys afdrukken
+for i in "${!args[@]}"
+do
+  echo "$i"
+done
+
+#oef 15

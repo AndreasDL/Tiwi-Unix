@@ -1,0 +1,2122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>perlre - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 0;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='close_purple.gif';" onmouseout="leftCloseIcon.src='close_blue.gif';"><img src="close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="index-overview.html">Overview</a></li>
+        <li><a href="index-tutorials.html">Tutorials</a></li>
+        <li><a href="index-faq.html">FAQs</a></li>
+        <li><a href="index-history.html">History / Changes</a></li>
+        <li><a href="index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="index-language.html">Language</a></li>
+        <li><a href="index-functions.html">Functions</a></li>
+        <li><a href="perlop.html">Operators</a></li>
+        <li><a href="perlvar.html">Special variables</a></li>
+        <li><a href="index-pragmas.html">Pragmas</a></li>
+        <li><a href="index-modules-A.html">Core modules</a></li>
+        <li><a href="index-utilities.html">Utilities</a></li>
+        <li><a href="index-internals.html">Internals</a></li>
+        <li><a href="index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="index.html">Home</a> &gt; <a href="index-language.html">Language reference</a> &gt; perlre</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">perlre</div><ul><li><a href="#NAME">NAME
+  </a><li><a href="#DESCRIPTION">DESCRIPTION</a><ul><li><a href="#Modifiers">Modifiers</a><li><a href="#Regular-Expressions">Regular Expressions</a><li><a href="#Extended-Patterns">Extended Patterns</a><li><a href="#Special-Backtracking-Control-Verbs">Special Backtracking Control Verbs</a><li><a href="#Backtracking">Backtracking
+ </a><li><a href="#Version-8-Regular-Expressions">Version 8 Regular Expressions
+  </a><li><a href="#Warning-on-0x5c1-Instead-of-0x241">Warning on \1 Instead of $1</a><li><a href="#Repeated-Patterns-Matching-a-Zero-length-Substring">Repeated Patterns Matching a Zero-length Substring</a><li><a href="#Combining-RE-Pieces">Combining RE Pieces</a><li><a href="#Creating-Custom-RE-Engines">Creating Custom RE Engines</a></ul><li><a href="#PCRE0x2fPython-Support">PCRE/Python Support</a><li><a href="#BUGS">BUGS</a><li><a href="#SEE-ALSO">SEE ALSO</a></ul><a name="NAME"></a><h1>NAME
+  </h1>
+<p>perlre - Perl regular expressions</p>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p>This page describes the syntax of regular expressions in Perl.</p>
+<p>If you haven't used regular expressions before, a quick-start
+introduction is available in <a href="perlrequick.html">perlrequick</a>, and a longer tutorial
+introduction is available in <a href="perlretut.html">perlretut</a>.</p>
+<p>For reference on how regular expressions are used in matching
+operations, plus various examples of the same, see discussions of
+<code class="inline"><a class="l_k" href="functions/m.html">m//</a></code>, <code class="inline"><a class="l_k" href="functions/s.html">s///</a></code>, <code class="inline"><a class="l_k" href="functions/qr.html">qr//</a></code> and <code class="inline"><span class="q">??</span></code>
+ in <a href="perlop.html#Regexp-Quote-Like-Operators">"Regexp Quote-Like Operators" in perlop</a>.</p>
+<a name="Modifiers"></a><h2>Modifiers</h2>
+<p>Matching operations can have various modifiers.  Modifiers
+that relate to the interpretation of the regular expression inside
+are listed below.  Modifiers that alter the way a regular expression
+is used by Perl are detailed in <a href="perlop.html#Regexp-Quote-Like-Operators">"Regexp Quote-Like Operators" in perlop</a> and
+<a href="perlop.html#Gory-details-of-parsing-quoted-constructs">"Gory details of parsing quoted constructs" in perlop</a>.</p>
+<ul>
+<li><a name="m"></a><b>m
+   </b>
+<p>Treat string as multiple lines.  That is, change "^" and "$" from matching
+the start or end of the string to matching the start or end of any
+line anywhere within the string.</p>
+</li>
+<li><a name="s"></a><b>s
+  
+</b>
+<p>Treat string as single line.  That is, change "." to match any character
+whatsoever, even a newline, which normally it would not match.</p>
+<p>Used together, as /ms, they let the "." match any character whatsoever,
+while still allowing "^" and "$" to match, respectively, just after
+and just before newlines within the string.</p>
+</li>
+<li><a name="i"></a><b>i
+  
+</b>
+<p>Do case-insensitive pattern matching.</p>
+<p>If <code class="inline"><a class="l_k" href="functions/use.html">use</a> <span class="w">locale</span></code>
+ is in effect, the case map is taken from the current
+locale.  See <a href="perllocale.html">perllocale</a>.</p>
+</li>
+<li><a name="x"></a><b>x
+</b>
+<p>Extend your pattern's legibility by permitting whitespace and comments.</p>
+</li>
+<li><a name="p"></a><b>p
+  </b>
+<p>Preserve the string matched such that ${^PREMATCH}, {$^MATCH}, and
+${^POSTMATCH} are available for use after matching.</p>
+</li>
+<li><a name="g-and-c"></a><b>g and c
+ </b>
+<p>Global matching, and keep the Current position after failed matching.
+Unlike i, m, s and x, these two flags affect the way the regex is used
+rather than the regex itself. See
+<a href="perlretut.html#Using-regular-expressions-in-Perl">"Using regular expressions in Perl" in perlretut</a> for further explanation
+of the g and c modifiers.</p>
+</li>
+</ul>
+<p>These are usually written as "the <code class="inline">/x</code> modifier", even though the delimiter
+in question might not really be a slash.  Any of these
+modifiers may also be embedded within the regular expression itself using
+the <code class="inline">(?...)</code> construct.  See below.</p>
+<p>The <code class="inline">/x</code> modifier itself needs a little more explanation.  It tells
+the regular expression parser to ignore whitespace that is neither
+backslashed nor within a character class.  You can use this to break up
+your regular expression into (slightly) more readable parts.  The <code class="inline"><span class="c">#</span></code>
+
+character is also treated as a metacharacter introducing a comment,
+just as in ordinary Perl code.  This also means that if you want real
+whitespace or <code class="inline"><span class="c">#</span></code>
+ characters in the pattern (outside a character
+class, where they are unaffected by <code class="inline">/x</code>), then you'll either have to
+escape them (using backslashes or <code class="inline">\<span class="w">Q</span>...\<span class="w">E</span></code>
+) or encode them using octal
+or hex escapes.  Taken together, these features go a long way towards
+making Perl's regular expressions more readable.  Note that you have to
+be careful not to include the pattern delimiter in the comment--perl has
+no way of knowing you did not intend to close the pattern early.  See
+the C-comment deletion code in <a href="perlop.html">perlop</a>.  Also note that anything inside
+a <code class="inline">\<span class="w">Q</span>...\<span class="w">E</span></code>
+ stays unaffected by <code class="inline">/x</code>.
+</p>
+<a name="Regular-Expressions"></a><h2>Regular Expressions</h2>
+<h3>Metacharacters</h3>
+<p>The patterns used in Perl pattern matching evolved from the ones supplied in
+the Version 8 regex routines.  (The routines are derived
+(distantly) from Henry Spencer's freely redistributable reimplementation
+of the V8 routines.)  See <a href="#Version-8-Regular-Expressions">"Version 8 Regular Expressions"</a> for
+details.</p>
+<p>In particular the following metacharacters have their standard <i>egrep</i>-ish
+meanings:
+
+        </p>
+<pre class="verbatim">    \	Quote the next metacharacter
+    ^	Match the beginning of the line
+    .	Match any character (except newline)
+    $	Match the end of the line (or before newline at the end)
+    |	Alternation
+    ()	Grouping
+    []	Character class</pre><p>By default, the "^" character is guaranteed to match only the
+beginning of the string, the "$" character only the end (or before the
+newline at the end), and Perl does certain optimizations with the
+assumption that the string contains only one line.  Embedded newlines
+will not be matched by "^" or "$".  You may, however, wish to treat a
+string as a multi-line buffer, such that the "^" will match after any
+newline within the string (except if the newline is the last character in
+the string), and "$" will match before any newline.  At the
+cost of a little more overhead, you can do this by using the /m modifier
+on the pattern match operator.  (Older programs did this by setting <code class="inline"><span class="i">$*</span></code>
+,
+but this practice has been removed in perl 5.9.)
+  </p>
+<p>To simplify multi-line substitutions, the "." character never matches a
+newline unless you use the <code class="inline">/s</code> modifier, which in effect tells Perl to pretend
+the string is a single line--even if it isn't.
+ </p>
+<h3>Quantifiers</h3>
+<p>The following standard quantifiers are recognized:
+       </p>
+<pre class="verbatim">    *	   Match 0 or more times
+    +	   Match 1 or more times
+    ?	   Match 1 or 0 times
+    {n}    Match exactly n times
+    {n,}   Match at least n times
+    {n,m}  Match at least n but not more than m times</pre><p>(If a curly bracket occurs in any other context, it is treated
+as a regular character.  In particular, the lower bound
+is not optional.)  The "*" quantifier is equivalent to <code class="inline"><span class="s">{</span><span class="n">0</span><span class="cm">,</span><span class="s">}</span></code>
+, the "+"
+quantifier to <code class="inline"><span class="s">{</span><span class="n">1</span><span class="cm">,</span><span class="s">}</span></code>
+, and the "?" quantifier to <code class="inline"><span class="s">{</span><span class="n">0</span><span class="cm">,</span><span class="n">1</span><span class="s">}</span></code>
+.  n and m are limited
+to integral values less than a preset limit defined when perl is built.
+This is usually 32766 on the most common platforms.  The actual limit can
+be seen in the error message generated by code such as this:</p>
+<pre class="verbatim">    <span class="i">$_</span> **= <span class="i">$_</span> <span class="cm">,</span> <span class="q">/ {$_} /</span> for <span class="n">2</span> .. <span class="n">42</span><span class="sc">;</span></pre>
+<p>By default, a quantified subpattern is "greedy", that is, it will match as
+many times as possible (given a particular starting location) while still
+allowing the rest of the pattern to match.  If you want it to match the
+minimum number of times possible, follow the quantifier with a "?".  Note
+that the meanings don't change, just the "greediness":
+  
+      </p>
+<pre class="verbatim">    *?     Match 0 or more times, not greedily
+    +?     Match 1 or more times, not greedily
+    ??     Match 0 or 1 time, not greedily
+    {n}?   Match exactly n times, not greedily
+    {n,}?  Match at least n times, not greedily
+    {n,m}? Match at least n but not more than m times, not greedily</pre><p>By default, when a quantified subpattern does not allow the rest of the
+overall pattern to match, Perl will backtrack. However, this behaviour is
+sometimes undesirable. Thus Perl provides the "possessive" quantifier form
+as well.</p>
+<pre class="verbatim">    *+     Match 0 or more times and give nothing back
+    ++     Match 1 or more times and give nothing back
+    ?+     Match 0 or 1 time and give nothing back
+    {n}+   Match exactly n times and give nothing back (redundant)
+    {n,}+  Match at least n times and give nothing back
+    {n,m}+ Match at least n but not more than m times and give nothing back</pre><p>For instance,</p>
+<pre class="verbatim">   <span class="q">'aaaa'</span> =~ <span class="q">/a++a/</span></pre>
+<p>will never match, as the <code class="inline"><span class="w">a</span>++</code>
+ will gobble up all the <code class="inline"><span class="w">a</span></code>
+'s in the
+string and won't leave any for the remaining part of the pattern. This
+feature can be extremely useful to give perl hints about where it
+shouldn't backtrack. For instance, the typical "match a double-quoted
+string" problem can be most efficiently performed when written as:</p>
+<pre class="verbatim">   <span class="q">/&quot;(?:[^&quot;\\]++|\\.)*+&quot;/</span></pre>
+<p>as we know that if the final quote does not match, backtracking will not
+help. See the independent subexpression <code class="inline">(?&gt;...)</code> for more details;
+possessive quantifiers are just syntactic sugar for that construct. For
+instance the above example could also be written as follows:</p>
+<pre class="verbatim">   <span class="q">/&quot;(?&gt;(?:(?&gt;[^&quot;\\]+)|\\.)*)&quot;/</span></pre>
+<h3>Escape sequences</h3>
+<p>Because patterns are processed as double quoted strings, the following
+also work:
+           
+   </p>
+<pre class="verbatim">    \t		tab                   (HT, TAB)
+    \n		newline               (LF, NL)
+    \r		return                (CR)
+    \f		form feed             (FF)
+    \a		alarm (bell)          (BEL)
+    \e		escape (think troff)  (ESC)
+    \033	octal char            (example: ESC)
+    \x1B	hex char              (example: ESC)
+    \x{263a}	long hex char         (example: Unicode SMILEY)
+    \cK		control char          (example: VT)
+    \N{name}	named Unicode character
+    \l		lowercase next char (think vi)
+    \u		uppercase next char (think vi)
+    \L		lowercase till \E (think vi)
+    \U		uppercase till \E (think vi)
+    \E		end case modification (think vi)
+    \Q		quote (disable) pattern metacharacters till \E</pre><p>If <code class="inline"><a class="l_k" href="functions/use.html">use</a> <span class="w">locale</span></code>
+ is in effect, the case map used by <code class="inline">\<span class="w">l</span></code>
+, <code class="inline">\<span class="w">L</span></code>
+, <code class="inline">\<span class="w">u</span></code>
+
+and <code class="inline">\<span class="w">U</span></code>
+ is taken from the current locale.  See <a href="perllocale.html">perllocale</a>.  For
+documentation of <code class="inline">\<span class="i">N</span><span class="s">{</span><span class="w">name</span><span class="s">}</span></code>
+, see <a href="charnames.html">charnames</a>.</p>
+<p>You cannot include a literal <code class="inline"><span class="i">$</span></code>
+ or <code class="inline"><span class="i">@</span></code>
+ within a <code class="inline">\<span class="w">Q</span></code>
+ sequence.
+An unescaped <code class="inline"><span class="i">$</span></code>
+ or <code class="inline"><span class="i">@</span></code>
+ interpolates the corresponding variable,
+while escaping will cause the literal string <code class="inline">\<span class="i">$</span></code>
+ to be matched.
+You'll need to write something like <code class="inline"><a class="l_k" href="functions/m.html">m/\Quser\E\@\Qhost/</a></code>.</p>
+<h3>Character Classes and other Special Escapes</h3>
+<p>In addition, Perl defines the following:
+         
+       
+   </p>
+<pre class="verbatim">    \w	     Match a "word" character (alphanumeric plus "_")
+    \W	     Match a non-"word" character
+    \s	     Match a whitespace character
+    \S	     Match a non-whitespace character
+    \d	     Match a digit character
+    \D	     Match a non-digit character
+    \pP	     Match P, named property.  Use \p{Prop} for longer names.
+    \PP	     Match non-P
+    \X	     Match eXtended Unicode "combining character sequence",
+             equivalent to (?:\PM\pM*)
+    \C	     Match a single C char (octet) even under Unicode.
+	     NOTE: breaks up characters into their UTF-8 bytes,
+	     so you may end up with malformed pieces of UTF-8.
+	     Unsupported in lookbehind.
+    \1       Backreference to a specific group.
+	     '1' may actually be any positive integer.
+    \g1      Backreference to a specific or previous group,
+    \g{-1}   number may be negative indicating a previous buffer and may
+             optionally be wrapped in curly brackets for safer parsing.
+    \g{name} Named backreference
+    \k&lt;name&gt; Named backreference
+    \K       Keep the stuff left of the \K, don't include it in $&amp;
+    \v       Vertical whitespace
+    \V       Not vertical whitespace
+    \h       Horizontal whitespace
+    \H       Not horizontal whitespace
+    \R       Linebreak</pre><p>A <code class="inline">\<span class="w">w</span></code>
+ matches a single alphanumeric character (an alphabetic
+character, or a decimal digit) or <code class="inline"><span class="w">_</span></code>
+, not a whole word.  Use <code class="inline">\<span class="w">w</span>+</code>
+
+to match a string of Perl-identifier characters (which isn't the same
+as matching an English word).  If <code class="inline"><a class="l_k" href="functions/use.html">use</a> <span class="w">locale</span></code>
+ is in effect, the list
+of alphabetic characters generated by <code class="inline">\<span class="w">w</span></code>
+ is taken from the current
+locale.  See <a href="perllocale.html">perllocale</a>.  You may use <code class="inline">\<span class="w">w</span></code>
+, <code class="inline">\<span class="w">W</span></code>
+, <code class="inline">\s</code>, <code class="inline">\<span class="w">S</span></code>
+,
+<code class="inline">\<span class="w">d</span></code>
+, and <code class="inline">\<span class="w">D</span></code>
+ within character classes, but they aren't usable
+as either end of a range. If any of them precedes or follows a "-",
+the "-" is understood literally. If Unicode is in effect, <code class="inline">\s</code> matches
+also "\x{85}", "\x{2028}", and "\x{2029}". See <a href="perlunicode.html">perlunicode</a> for more
+details about <code class="inline">\<span class="w">pP</span></code>
+, <code class="inline">\<span class="w">PP</span></code>
+, <code class="inline">\<span class="w">X</span></code>
+ and the possibility of defining
+your own <code class="inline">\<span class="w">p</span></code>
+ and <code class="inline">\<span class="w">P</span></code>
+ properties, and <a href="perluniintro.html">perluniintro</a> about Unicode
+in general.
+  </p>
+<p><code class="inline">\<span class="w">R</span></code>
+ will atomically match a linebreak, including the network line-ending
+"\x0D\x0A".  Specifically,  is exactly equivalent to</p>
+<pre class="verbatim">  <span class="s">(</span><span class="q">?&gt;\x0D\x0A?</span>|<span class="s">[</span>\<span class="w">x0A</span>-\<span class="w">x0C</span>\<span class="w">x85</span>\<span class="i">x</span><span class="s">{</span><span class="n">2028</span><span class="s">}</span>\<span class="i">x</span><span class="s">{</span><span class="n">2029</span><span class="s">}</span><span class="s">]</span><span class="s">)</span></pre>
+<p><b>Note:</b> <code class="inline">\<span class="w">R</span></code>
+ has no special meaning inside of a character class;
+use <code class="inline">\<span class="w">v</span></code>
+ instead (vertical whitespace).
+</p>
+<p>The POSIX character class syntax
+</p>
+<pre class="verbatim">    [:class:]</pre><p>is also available.  Note that the <code class="inline">[</code> and <code class="inline">]</code> brackets are <i>literal</i>;
+they must always be used within a character class expression.</p>
+<pre class="verbatim">    <span class="c"># this is correct:</span>
+    <span class="i">$string</span> =~ <span class="q">/[[:alpha:]]/</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="c"># this is not, and will generate a warning:</span>
+    <span class="i">$string</span> =~ <span class="q">/[:alpha:]/</span><span class="sc">;</span></pre>
+<p>The available classes and their backslash equivalents (if available) are
+as follows:
+
+      
+      </p>
+<pre class="verbatim">    alpha
+    alnum
+    ascii
+    blank		[1]
+    cntrl
+    digit       \d
+    graph
+    lower
+    print
+    punct
+    space       \s	[2]
+    upper
+    word        \w	[3]
+    xdigit</pre><ul>
+<li><a name="0x5b10x5d"></a><b>[1]</b>
+<p>A GNU extension equivalent to <code class="inline"><span class="s">[</span> \<span class="w">t</span><span class="s">]</span></code>
+, "all horizontal whitespace".</p>
+</li>
+<li><a name="0x5b20x5d"></a><b>[2]</b>
+<p>Not exactly equivalent to <code class="inline">\s</code> since the <code class="inline">[[:space:]]</code> includes
+also the (very rare) "vertical tabulator", "\cK" or chr(11) in ASCII.</p>
+</li>
+<li><a name="0x5b30x5d"></a><b>[3]</b>
+<p>A Perl extension, see above.</p>
+</li>
+</ul>
+<p>For example use <code class="inline">[:upper:]</code> to match all the uppercase characters.
+Note that the <code class="inline"><span class="s">[</span><span class="s">]</span></code>
+ are part of the <code class="inline"><span class="s">[</span><span class="w">::</span><span class="s">]</span></code>
+ construct, not part of the
+whole character class.  For example:</p>
+<pre class="verbatim">    [01[:alpha:]%]</pre><p>matches zero, one, any alphabetic character, and the percent sign.</p>
+<p>The following equivalences to Unicode \p{} constructs and equivalent
+backslash character classes (if available), will hold:
+  </p>
+<pre class="verbatim">    [[:...:]]	\p{...}		backslash</pre><pre class="verbatim">    alpha       IsAlpha
+    alnum       IsAlnum
+    ascii       IsASCII
+    blank
+    cntrl       IsCntrl
+    digit       IsDigit        \d
+    graph       IsGraph
+    lower       IsLower
+    print       IsPrint
+    punct       IsPunct
+    space       IsSpace
+                IsSpacePerl    \s
+    upper       IsUpper
+    word        IsWord
+    xdigit      IsXDigit</pre><p>For example <code class="inline">[[:lower:]]</code> and <code class="inline">\<span class="i">p</span><span class="s">{</span><span class="w">IsLower</span><span class="s">}</span></code>
+ are equivalent.</p>
+<p>If the <code class="inline"><span class="w">utf8</span></code>
+ pragma is not used but the <code class="inline"><span class="w">locale</span></code>
+ pragma is, the
+classes correlate with the usual isalpha(3) interface (except for
+"word" and "blank").</p>
+<p>The other named classes are:</p>
+<ul>
+<li><a name="cntrl"></a><b>cntrl
+</b>
+<p>Any control character.  Usually characters that don't produce output as
+such but instead control the terminal somehow: for example newline and
+backspace are control characters.  All characters with ord() less than
+32 are usually classified as control characters (assuming ASCII,
+the ISO Latin character sets, and Unicode), as is the character with
+the ord() value of 127 (<code class="inline"><span class="w">DEL</span></code>
+).</p>
+</li>
+<li><a name="graph"></a><b>graph
+</b>
+<p>Any alphanumeric or punctuation (special) character.</p>
+</li>
+<li><a name="print"></a><b>print
+</b>
+<p>Any alphanumeric or punctuation (special) character or the space character.</p>
+</li>
+<li><a name="punct"></a><b>punct
+</b>
+<p>Any punctuation (special) character.</p>
+</li>
+<li><a name="xdigit"></a><b>xdigit
+</b>
+<p>Any hexadecimal digit.  Though this may feel silly ([0-9A-Fa-f] would
+work just fine) it is included for completeness.</p>
+</li>
+</ul>
+<p>You can negate the [::] character classes by prefixing the class name
+with a '^'. This is a Perl extension.  For example:
+</p>
+<pre class="verbatim">    <span class="w">POSIX</span>         <span class="w">traditional</span>  <span class="w">Unicode</span></pre>
+<pre class="verbatim">    [[:^digit:]]    \D         \P{IsDigit}
+    [[:^space:]]    \S         \P{IsSpace}
+    [[:^word:]]	    \W         \P{IsWord}</pre><p>Perl respects the POSIX standard in that POSIX character classes are
+only supported within a character class.  The POSIX character classes
+[.cc.] and [=cc=] are recognized but <b>not</b> supported and trying to
+use them will cause an error.</p>
+<h3>Assertions</h3>
+<p>Perl defines the following zero-width assertions:
+  
+
+
+     </p>
+<pre class="verbatim">    \b	Match a word boundary
+    \B	Match except at a word boundary
+    \A	Match only at beginning of string
+    \Z	Match only at end of string, or before newline at the end
+    \z	Match only at end of string
+    \G	Match only at pos() (e.g. at the end-of-match position
+        of prior m//g)</pre><p>A word boundary (<code class="inline">\<span class="w">b</span></code>
+) is a spot between two characters
+that has a <code class="inline">\<span class="w">w</span></code>
+ on one side of it and a <code class="inline">\<span class="w">W</span></code>
+ on the other side
+of it (in either order), counting the imaginary characters off the
+beginning and end of the string as matching a <code class="inline">\<span class="w">W</span></code>
+.  (Within
+character classes <code class="inline">\<span class="w">b</span></code>
+ represents backspace rather than a word
+boundary, just as it normally does in any double-quoted string.)
+The <code class="inline">\<span class="w">A</span></code>
+ and <code class="inline">\<span class="w">Z</span></code>
+ are just like "^" and "$", except that they
+won't match multiple times when the <code class="inline">/m</code> modifier is used, while
+"^" and "$" will match at every internal line boundary.  To match
+the actual end of the string and not ignore an optional trailing
+newline, use <code class="inline">\<span class="w">z</span></code>
+.
+    </p>
+<p>The <code class="inline">\<span class="w">G</span></code>
+ assertion can be used to chain global matches (using
+<code class="inline"><a class="l_k" href="functions/m.html">m//g</a></code>), as described in <a href="perlop.html#Regexp-Quote-Like-Operators">"Regexp Quote-Like Operators" in perlop</a>.
+It is also useful when writing <code class="inline"><span class="w">lex</span></code>
+-like scanners, when you have
+several patterns that you want to match against consequent substrings
+of your string, see the previous reference.  The actual location
+where <code class="inline">\<span class="w">G</span></code>
+ will match can also be influenced by using <code class="inline"><a class="l_k" href="functions/pos.html">pos()</a></code> as
+an lvalue: see <a href="functions/pos.html">pos</a>. Note that the rule for zero-length
+matches is modified somewhat, in that contents to the left of <code class="inline">\<span class="w">G</span></code>
+ is
+not counted when determining the length of the match. Thus the following
+will not match forever:
+</p>
+<pre class="verbatim">    <span class="i">$str</span> = <span class="q">'ABC'</span><span class="sc">;</span>
+    <a class="l_k" href="functions/pos.html">pos</a><span class="s">(</span><span class="i">$str</span><span class="s">)</span> = <span class="n">1</span><span class="sc">;</span>
+    while <span class="s">(</span><span class="q">/.\G/g</span><span class="s">)</span> <span class="s">{</span>
+        <a class="l_k" href="functions/print.html">print</a> <span class="i">$&amp;</span><span class="sc">;</span>
+    <span class="s">}</span></pre>
+<p>It will print 'A' and then terminate, as it considers the match to
+be zero-width, and thus will not match at the same position twice in a
+row.</p>
+<p>It is worth noting that <code class="inline">\<span class="w">G</span></code>
+ improperly used can result in an infinite
+loop. Take care when using patterns that include <code class="inline">\<span class="w">G</span></code>
+ in an alternation.</p>
+<h3>Capture buffers</h3>
+<p>The bracketing construct <code class="inline"><span class="s">(</span> ... <span class="s">)</span></code>
+ creates capture buffers. To refer
+to the current contents of a buffer later on, within the same pattern,
+use \1 for the first, \2 for the second, and so on.
+Outside the match use "$" instead of "\".  (The
+\&lt;digit&gt; notation works in certain circumstances outside
+the match.  See the warning below about \1 vs $1 for details.)
+Referring back to another part of the match is called a
+<i>backreference</i>.
+ 
+ </p>
+<p>There is no limit to the number of captured substrings that you may
+use.  However Perl also uses \10, \11, etc. as aliases for \010,
+\011, etc.  (Recall that 0 means octal, so \011 is the character at
+number 9 in your coded character set; which would be the 10th character,
+a horizontal tab under ASCII.)  Perl resolves this
+ambiguity by interpreting \10 as a backreference only if at least 10
+left parentheses have opened before it.  Likewise \11 is a
+backreference only if at least 11 left parentheses have opened
+before it.  And so on.  \1 through \9 are always interpreted as
+backreferences.</p>
+<p>    
+In order to provide a safer and easier way to construct patterns using
+backreferences, Perl provides the <code class="inline">\<span class="i">g</span><span class="s">{</span><span class="w">N</span><span class="s">}</span></code>
+ notation (starting with perl
+5.10.0). The curly brackets are optional, however omitting them is less
+safe as the meaning of the pattern can be changed by text (such as digits)
+following it. When N is a positive integer the <code class="inline">\<span class="i">g</span><span class="s">{</span><span class="w">N</span><span class="s">}</span></code>
+ notation is
+exactly equivalent to using normal backreferences. When N is a negative
+integer then it is a relative backreference referring to the previous N'th
+capturing group. When the bracket form is used and N is not an integer, it
+is treated as a reference to a named buffer.</p>
+<p>Thus <code class="inline">\<span class="i">g</span><span class="s">{</span><span class="n">-1</span><span class="s">}</span></code>
+ refers to the last buffer, <code class="inline">\<span class="i">g</span><span class="s">{</span><span class="n">-2</span><span class="s">}</span></code>
+ refers to the
+buffer before that. For example:</p>
+<pre class="verbatim">        <span class="q">/</span>
+         <span class="q">         (Y)            # buffer 1</span>
+         <span class="q">         (              # buffer 2</span>
+            <span class="q">            (X)         # buffer 3</span>
+            <span class="q">            \g{-1}      # backref to buffer 3</span>
+            <span class="q">            \g{-3}      # backref to buffer 1</span>
+         <span class="q">         )</span>
+        <span class="q">        /x</span></pre>
+<p>and would match the same as <code class="inline"><span class="q">/(Y) ( (X) \3 \1 )/x</span></code>
+.</p>
+<p>Additionally, as of Perl 5.10.0 you may use named capture buffers and named
+backreferences. The notation is <code class="inline">(?&lt;name&gt;...)</code> to declare and <code class="inline">\<span class="w">k</span><span class="q">&lt;name&gt;</span></code>
+
+to reference. You may also use apostrophes instead of angle brackets to delimit the
+name; and you may use the bracketed <code class="inline">\<span class="i">g</span><span class="s">{</span><span class="w">name</span><span class="s">}</span></code>
+ backreference syntax.
+It's possible to refer to a named capture buffer by absolute and relative number as well.
+Outside the pattern, a named capture buffer is available via the <code class="inline"><span class="i">%+</span></code>
+ hash.
+When different buffers within the same pattern have the same name, <code class="inline"><span class="i">$+</span>{<span class="w">name</span>}</code>
+
+and <code class="inline">\<span class="w">k</span><span class="q">&lt;name&gt;</span></code>
+ refer to the leftmost defined group. (Thus it's possible
+to do things with named capture buffers that would otherwise require <code class="inline"><span class="s">(</span><span class="q">??</span><span class="s">{</span><span class="s">}</span><span class="s">)</span></code>
+
+code to accomplish.)
+ 
+  </p>
+<p>Examples:</p>
+<pre class="verbatim">    <span class="q">s/^([^ ]*) *([^ ]*)/$2 $1/</span><span class="sc">;</span>     <span class="c"># swap first two words</span></pre>
+<pre class="verbatim">    <span class="q">/(.)\1/</span>                         <span class="c"># find first doubled char</span>
+         and <a class="l_k" href="functions/print.html">print</a> <span class="q">&quot;'$1' is the first doubled character\n&quot;</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="q">/(?&lt;char&gt;.)\k&lt;char&gt;/</span>            <span class="c"># ... a different way</span>
+         and <a class="l_k" href="functions/print.html">print</a> <span class="q">&quot;'$+{char}' is the first doubled character\n&quot;</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="q">/(?'char'.)\1/</span>                  <span class="c"># ... mix and match</span>
+         and <a class="l_k" href="functions/print.html">print</a> <span class="q">&quot;'$1' is the first doubled character\n&quot;</span><span class="sc">;</span></pre>
+<pre class="verbatim">    if <span class="s">(</span><span class="q">/Time: (..):(..):(..)/</span><span class="s">)</span> <span class="s">{</span>   <span class="c"># parse out values</span>
+	<span class="i">$hours</span> = <span class="i">$1</span><span class="sc">;</span>
+	<span class="i">$minutes</span> = <span class="i">$2</span><span class="sc">;</span>
+	<span class="i">$seconds</span> = <span class="i">$3</span><span class="sc">;</span>
+    <span class="s">}</span></pre>
+<p>Several special variables also refer back to portions of the previous
+match.  <code class="inline"><span class="i">$+</span></code>
+ returns whatever the last bracket match matched.
+<code class="inline"><span class="i">$&amp;</span></code>
+ returns the entire matched string.  (At one point <code class="inline"><span class="i">$0</span></code>
+ did
+also, but now it returns the name of the program.)  <code class="inline"><span class="i">$`</span></code>
+ returns
+everything before the matched string.  <code class="inline"><span class="i">$&#39;</span></code>
+ returns everything
+after the matched string. And <code class="inline"><span class="i">$^N</span></code>
+ contains whatever was matched by
+the most-recently closed group (submatch). <code class="inline"><span class="i">$^N</span></code>
+ can be used in
+extended patterns (see below), for example to assign a submatch to a
+variable.
+    </p>
+<p>The numbered match variables ($1, $2, $3, etc.) and the related punctuation
+set (<code class="inline"><span class="i">$+</span></code>
+, <code class="inline"><span class="i">$&amp;</span></code>
+, <code class="inline"><span class="i">$`</span></code>
+, <code class="inline"><span class="i">$&#39;</span></code>
+, and <code class="inline"><span class="i">$^N</span></code>
+) are all dynamically scoped
+until the end of the enclosing block or until the next successful
+match, whichever comes first.  (See <a href="perlsyn.html#Compound-Statements">"Compound Statements" in perlsyn</a>.)
+    
+        </p>
+<p><b>NOTE</b>: Failed matches in Perl do not reset the match variables,
+which makes it easier to write code that tests for a series of more
+specific cases and remembers the best match.</p>
+<p><b>WARNING</b>: Once Perl sees that you need one of <code class="inline"><span class="i">$&amp;</span></code>
+, <code class="inline"><span class="i">$`</span></code>
+, or
+<code class="inline"><span class="i">$&#39;</span></code>
+ anywhere in the program, it has to provide them for every
+pattern match.  This may substantially slow your program.  Perl
+uses the same mechanism to produce $1, $2, etc, so you also pay a
+price for each pattern that contains capturing parentheses.  (To
+avoid this cost while retaining the grouping behaviour, use the
+extended regular expression <code class="inline">(?: ... )</code> instead.)  But if you never
+use <code class="inline"><span class="i">$&amp;</span></code>
+, <code class="inline"><span class="i">$`</span></code>
+ or <code class="inline"><span class="i">$&#39;</span></code>
+, then patterns <i>without</i> capturing
+parentheses will not be penalized.  So avoid <code class="inline"><span class="i">$&amp;</span></code>
+, <code class="inline"><span class="i">$&#39;</span></code>
+, and <code class="inline"><span class="i">$`</span></code>
+
+if you can, but if you can't (and some algorithms really appreciate
+them), once you've used them once, use them at will, because you've
+already paid the price.  As of 5.005, <code class="inline"><span class="i">$&amp;</span></code>
+ is not so costly as the
+other two.
+  </p>
+<p>As a workaround for this problem, Perl 5.10.0 introduces <code class="inline"><span class="i">$</span>{<span class="w">^PREMATCH</span>}</code>
+,
+<code class="inline"><span class="i">$</span>{<span class="w">^MATCH</span>}</code>
+ and <code class="inline"><span class="i">$</span>{<span class="w">^POSTMATCH</span>}</code>
+, which are equivalent to <code class="inline"><span class="i">$`</span></code>
+, <code class="inline"><span class="i">$&amp;</span></code>
+
+and <code class="inline"><span class="i">$&#39;</span></code>
+, <b>except</b> that they are only guaranteed to be defined after a
+successful match that was executed with the <code class="inline">/p</code> (preserve) modifier.
+The use of these variables incurs no global performance penalty, unlike
+their punctuation char equivalents, however at the trade-off that you
+have to tell perl when you want to use them.
+ </p>
+<p>Backslashed metacharacters in Perl are alphanumeric, such as <code class="inline">\<span class="w">b</span></code>
+,
+<code class="inline">\<span class="w">w</span></code>
+, <code class="inline">\<span class="w">n</span></code>
+.  Unlike some other regular expression languages, there
+are no backslashed symbols that aren't alphanumeric.  So anything
+that looks like \\, \(, \), \&lt;, \&gt;, \{, or \} is always
+interpreted as a literal character, not a metacharacter.  This was
+once used in a common idiom to disable or quote the special meanings
+of regular expression metacharacters in a string that you want to
+use for a pattern. Simply quote all non-"word" characters:</p>
+<pre class="verbatim">    <span class="i">$pattern</span> =~ <span class="q">s/(\W)/\\$1/g</span><span class="sc">;</span></pre>
+<p>(If <code class="inline"><a class="l_k" href="functions/use.html">use</a> <span class="w">locale</span></code>
+ is set, then this depends on the current locale.)
+Today it is more common to use the quotemeta() function or the <code class="inline">\<span class="w">Q</span></code>
+
+metaquoting escape sequence to disable all metacharacters' special
+meanings like this:</p>
+<pre class="verbatim">    <span class="q">/$unquoted\Q$quoted\E$unquoted/</span></pre>
+<p>Beware that if you put literal backslashes (those not inside
+interpolated variables) between <code class="inline">\<span class="w">Q</span></code>
+ and <code class="inline">\<span class="w">E</span></code>
+, double-quotish
+backslash interpolation may lead to confusing results.  If you
+<i>need</i> to use literal backslashes within <code class="inline">\<span class="w">Q</span>...\<span class="w">E</span></code>
+,
+consult <a href="perlop.html#Gory-details-of-parsing-quoted-constructs">"Gory details of parsing quoted constructs" in perlop</a>.</p>
+<a name="Extended-Patterns"></a><h2>Extended Patterns</h2>
+<p>Perl also defines a consistent extension syntax for features not
+found in standard tools like <b>awk</b> and <b>lex</b>.  The syntax is a
+pair of parentheses with a question mark as the first thing within
+the parentheses.  The character after the question mark indicates
+the extension.</p>
+<p>The stability of these extensions varies widely.  Some have been
+part of the core language for many years.  Others are experimental
+and may change without warning or be completely removed.  Check
+the documentation on an individual feature to verify its current
+status.</p>
+<p>A question mark was chosen for this and for the minimal-matching
+construct because 1) question marks are rare in older regular
+expressions, and 2) whenever you see one, you should stop and
+"question" exactly what is going on.  That's psychology...</p>
+<ul>
+<li><a name="'(0x3f0x23text)'"></a><b><code class="inline">(?#text)</code>
+</b>
+<p>A comment.  The text is ignored.  If the <code class="inline">/x</code> modifier enables
+whitespace formatting, a simple <code class="inline"><span class="c">#</span></code>
+ will suffice.  Note that Perl closes
+the comment as soon as it sees a <code class="inline">)</code>, so there is no way to put a literal
+<code class="inline">)</code> in the comment.</p>
+</li>
+<li><a name="'(0x3fpimsx-imsx)'"></a><b><code class="inline">(?pimsx-imsx)</code>
+</b>
+<p>One or more embedded pattern-match modifiers, to be turned on (or
+turned off, if preceded by <code class="inline">-</code>
+) for the remainder of the pattern or
+the remainder of the enclosing pattern group (if any). This is
+particularly useful for dynamic patterns, such as those read in from a
+configuration file, taken from an argument, or specified in a table
+somewhere.  Consider the case where some patterns want to be case
+sensitive and some do not:  The case insensitive ones merely need to
+include <code class="inline">(?i)</code> at the front of the pattern.  For example:</p>
+<pre class="verbatim">    <span class="i">$pattern</span> = <span class="q">&quot;foobar&quot;</span><span class="sc">;</span>
+    if <span class="s">(</span> <span class="q">/$pattern/i</span> <span class="s">)</span> <span class="s">{</span> <span class="s">}</span></pre>
+<pre class="verbatim">    <span class="c"># more flexible:</span></pre>
+<pre class="verbatim">    <span class="i">$pattern</span> = <span class="q">&quot;(?i)foobar&quot;</span><span class="sc">;</span>
+    if <span class="s">(</span> <span class="q">/$pattern/</span> <span class="s">)</span> <span class="s">{</span> <span class="s">}</span></pre>
+<p>These modifiers are restored at the end of the enclosing group. For example,</p>
+<pre class="verbatim">    ( (?i) blah ) \s+ \1</pre><p>will match <code class="inline"><span class="w">blah</span></code>
+ in any case, some spaces, and an exact (<i>including the case</i>!)
+repetition of the previous word, assuming the <code class="inline">/x</code> modifier, and no <code class="inline">/i</code>
+modifier outside this group.</p>
+<p>Note that the <code class="inline"><span class="w">p</span></code>
+ modifier is special in that it can only be enabled,
+not disabled, and that its presence anywhere in a pattern has a global
+effect. Thus <code class="inline">(?-p)</code> and <code class="inline">(?-p:...)</code> are meaningless and will warn
+when executed under <code class="inline"><a class="l_k" href="functions/use.html">use</a> <span class="w">warnings</span></code>
+.</p>
+</li>
+<li><a name="'(0x3f0x3apattern)'"></a><b><code class="inline">(?:pattern)</code>
+</b>
+</li>
+<li><a name="'(0x3fimsx-imsx0x3apattern)'"></a><b><code class="inline">(?imsx-imsx:pattern)</code></b>
+<p>This is for clustering, not capturing; it groups subexpressions like
+"()", but doesn't make backreferences as "()" does.  So</p>
+<pre class="verbatim">    <span class="i">@fields</span> = <a class="l_k" href="functions/split.html">split</a><span class="s">(</span><span class="q">/\b(?:a|b|c)\b/</span><span class="s">)</span></pre>
+<p>is like</p>
+<pre class="verbatim">    <span class="i">@fields</span> = <a class="l_k" href="functions/split.html">split</a><span class="s">(</span><span class="q">/\b(a|b|c)\b/</span><span class="s">)</span></pre>
+<p>but doesn't spit out extra fields.  It's also cheaper not to capture
+characters if you don't need to.</p>
+<p>Any letters between <code class="inline">?</code> and <code class="inline"><span class="j">:</span></code>
+ act as flags modifiers as with
+<code class="inline">(?imsx-imsx)</code>.  For example,</p>
+<pre class="verbatim">    <span class="q">/(?s-i:more.*than).*million/i</span></pre>
+<p>is equivalent to the more verbose</p>
+<pre class="verbatim">    <span class="q">/(?:(?s-i)more.*than).*million/i</span></pre>
+</li>
+<li><a name="'(0x3f0x7cpattern)'"></a><b><code class="inline">(?|pattern)</code>
+ </b>
+<p>This is the "branch reset" pattern, which has the special property
+that the capture buffers are numbered from the same starting point
+in each alternation branch. It is available starting from perl 5.10.0.</p>
+<p>Capture buffers are numbered from left to right, but inside this
+construct the numbering is restarted for each branch.</p>
+<p>The numbering within each branch will be as normal, and any buffers
+following this construct will be numbered as though the construct
+contained only one branch, that being the one with the most capture
+buffers in it.</p>
+<p>This construct will be useful when you want to capture one of a
+number of alternative matches.</p>
+<p>Consider the following pattern.  The numbers underneath show in
+which buffer the captured content will be stored.</p>
+<pre class="verbatim">    <span class="c"># before  ---------------branch-reset----------- after        </span>
+    <span class="q">/ ( a )  (?| x ( y ) z | (p (q) r) | (t) u (v) ) ( z ) /x</span>
+    <span class="c"># 1            2         2  3        2     3     4</span></pre>
+<p>Note: as of Perl 5.10.0, branch resets interfere with the contents of
+the <code class="inline"><span class="i">%+</span></code>
+ hash, that holds named captures. Consider using <code class="inline"><span class="i">%-</span></code>
+ instead.</p>
+</li>
+<li><a name="Look-Around-Assertions"></a><b>Look-Around Assertions
+   </b>
+<p>Look-around assertions are zero width patterns which match a specific
+pattern without including it in <code class="inline"><span class="i">$&amp;</span></code>
+. Positive assertions match when
+their subpattern matches, negative assertions match when their subpattern
+fails. Look-behind matches text up to the current match position,
+look-ahead matches text following the current match position.</p>
+<ul>
+<li><a name="'(0x3f0x3dpattern)'"></a><b><code class="inline">(?=pattern)</code>
+  </b>
+<p>A zero-width positive look-ahead assertion.  For example, <code class="inline"><span class="q">/\w+(?=\t)/</span></code>
+
+matches a word followed by a tab, without including the tab in <code class="inline"><span class="i">$&amp;</span></code>
+.</p>
+</li>
+<li><a name="'(0x3f!pattern)'"></a><b><code class="inline">(?!pattern)</code>
+  </b>
+<p>A zero-width negative look-ahead assertion.  For example <code class="inline"><span class="q">/foo(?!bar)/</span></code>
+
+matches any occurrence of "foo" that isn't followed by "bar".  Note
+however that look-ahead and look-behind are NOT the same thing.  You cannot
+use this for look-behind.</p>
+<p>If you are looking for a "bar" that isn't preceded by a "foo", <code class="inline"><span class="q">/(?!foo)bar/</span></code>
+
+will not do what you want.  That's because the <code class="inline">(?!foo)</code> is just saying that
+the next thing cannot be "foo"--and it's not, it's a "bar", so "foobar" will
+match.  You would have to do something like <code class="inline"><span class="q">/(?!foo)...bar/</span></code>
+ for that.   We
+say "like" because there's the case of your "bar" not having three characters
+before it.  You could cover that this way: <code class="inline"><span class="q">/(?:(?!foo)...|^.{0,2})bar/</span></code>
+.
+Sometimes it's still easier just to say:</p>
+<pre class="verbatim">    if <span class="s">(</span><span class="q">/bar/</span> &amp;&amp; <span class="i">$`</span> !~ <span class="q">/foo$/</span><span class="s">)</span></pre>
+<p>For look-behind see below.</p>
+</li>
+<li><a name="'(0x3f0x3c0x3dpattern)'-'0x5cK'"></a><b><code class="inline">(?&lt;=pattern)</code> <code class="inline">\<span class="w">K</span></code>
+
+   </b>
+<p>A zero-width positive look-behind assertion.  For example, <code class="inline"><span class="q">/(?&lt;=\t)\w+/</span></code>
+
+matches a word that follows a tab, without including the tab in <code class="inline"><span class="i">$&amp;</span></code>
+.
+Works only for fixed-width look-behind.</p>
+<p>There is a special form of this construct, called <code class="inline">\<span class="w">K</span></code>
+, which causes the
+regex engine to "keep" everything it had matched prior to the <code class="inline">\<span class="w">K</span></code>
+ and
+not include it in <code class="inline"><span class="i">$&amp;</span></code>
+. This effectively provides variable length
+look-behind. The use of <code class="inline">\<span class="w">K</span></code>
+ inside of another look-around assertion
+is allowed, but the behaviour is currently not well defined.</p>
+<p>For various reasons <code class="inline">\<span class="w">K</span></code>
+ may be significantly more efficient than the
+equivalent <code class="inline">(?&lt;=...)</code> construct, and it is especially useful in
+situations where you want to efficiently remove something following
+something else in a string. For instance</p>
+<pre class="verbatim">  <span class="q">s/(foo)bar/$1/g</span><span class="sc">;</span></pre>
+<p>can be rewritten as the much more efficient</p>
+<pre class="verbatim">  <span class="q">s/foo\Kbar//g</span><span class="sc">;</span></pre>
+</li>
+<li><a name="'(0x3f0x3c!pattern)'"></a><b><code class="inline">(?&lt;!pattern)</code>
+  </b>
+<p>A zero-width negative look-behind assertion.  For example <code class="inline"><span class="q">/(?&lt;!bar)foo/</span></code>
+
+matches any occurrence of "foo" that does not follow "bar".  Works
+only for fixed-width look-behind.</p>
+</li>
+</ul>
+</li>
+<li><a name="'(0x3f'NAME'pattern)'"></a><b><code class="inline">(?'NAME'pattern)</code></b>
+</li>
+<li><a name="'(0x3f0x3cNAME0x3epattern)'"></a><b><code class="inline">(?&lt;NAME&gt;pattern)</code>
+   </b>
+<p>A named capture buffer. Identical in every respect to normal capturing
+parentheses <code class="inline"><span class="s">(</span><span class="s">)</span></code>
+ but for the additional fact that <code class="inline"><span class="i">%+</span></code>
+ or <code class="inline"><span class="i">%-</span></code>
+ may be
+used after a successful match to refer to a named buffer. See <code class="inline"><span class="w">perlvar</span></code>
+
+for more details on the <code class="inline"><span class="i">%+</span></code>
+ and <code class="inline"><span class="i">%-</span></code>
+ hashes.</p>
+<p>If multiple distinct capture buffers have the same name then the
+$+{NAME} will refer to the leftmost defined buffer in the match.</p>
+<p>The forms <code class="inline">(?'NAME'pattern)</code> and <code class="inline">(?&lt;NAME&gt;pattern)</code> are equivalent.</p>
+<p><b>NOTE:</b> While the notation of this construct is the same as the similar
+function in .NET regexes, the behavior is not. In Perl the buffers are
+numbered sequentially regardless of being named or not. Thus in the
+pattern</p>
+<pre class="verbatim">  <span class="q">/(x)(?&lt;foo&gt;y)(z)/</span></pre>
+<p>$+{foo} will be the same as $2, and $3 will contain 'z' instead of
+the opposite which is what a .NET regex hacker might expect.</p>
+<p>Currently NAME is restricted to simple identifiers only.
+In other words, it must match <code class="inline"><span class="q">/^[_A-Za-z][_A-Za-z0-9]*\z/</span></code>
+ or
+its Unicode extension (see <a href="utf8.html">utf8</a>),
+though it isn't extended by the locale (see <a href="perllocale.html">perllocale</a>).</p>
+<p><b>NOTE:</b> In order to make things easier for programmers with experience
+with the Python or PCRE regex engines, the pattern <code class="inline">(?P&lt;NAME&gt;pattern)</code>
+may be used instead of <code class="inline">(?&lt;NAME&gt;pattern)</code>; however this form does not
+support the use of single quotes as a delimiter for the name.</p>
+</li>
+<li><a name="'0x5ck0x3cNAME0x3e'"></a><b><code class="inline">\<span class="w">k</span><span class="q">&lt;NAME&gt;</span></code>
+</b>
+</li>
+<li><a name="'0x5ck'NAME''"></a><b><code class="inline">\k'NAME'</code></b>
+<p>Named backreference. Similar to numeric backreferences, except that
+the group is designated by name and not number. If multiple groups
+have the same name then it refers to the leftmost defined group in
+the current match.</p>
+<p>It is an error to refer to a name not defined by a <code class="inline">(?&lt;NAME&gt;)</code>
+earlier in the pattern.</p>
+<p>Both forms are equivalent.</p>
+<p><b>NOTE:</b> In order to make things easier for programmers with experience
+with the Python or PCRE regex engines, the pattern <code class="inline">(?P=NAME)</code>
+may be used instead of <code class="inline">\<span class="w">k</span><span class="q">&lt;NAME&gt;</span></code>
+.</p>
+</li>
+<li><a name="'(0x3f0x7b-code-0x7d)'"></a><b><code class="inline">(?{ code })</code>
+   </b>
+<p><b>WARNING</b>: This extended regular expression feature is considered
+experimental, and may be changed without notice. Code executed that
+has side effects may not perform identically from version to version
+due to the effect of future optimisations in the regex engine.</p>
+<p>This zero-width assertion evaluates any embedded Perl code.  It
+always succeeds, and its <code class="inline"><span class="w">code</span></code>
+ is not interpolated.  Currently,
+the rules to determine where the <code class="inline"><span class="w">code</span></code>
+ ends are somewhat convoluted.</p>
+<p>This feature can be used together with the special variable <code class="inline"><span class="i">$^N</span></code>
+ to
+capture the results of submatches in variables without having to keep
+track of the number of nested parentheses. For example:</p>
+<pre class="verbatim">  <span class="i">$_</span> = <span class="q">&quot;The brown fox jumps over the lazy dog&quot;</span><span class="sc">;</span>
+  <span class="q">/the (\S+)(?{ $color = $^N }) (\S+)(?{ $animal = $^N })/i</span><span class="sc">;</span>
+  <a class="l_k" href="functions/print.html">print</a> <span class="q">&quot;color = $color, animal = $animal\n&quot;</span><span class="sc">;</span></pre>
+<p>Inside the <code class="inline">(?{...})</code> block, <code class="inline"><span class="i">$_</span></code>
+ refers to the string the regular
+expression is matching against. You can also use <code class="inline"><a class="l_k" href="functions/pos.html">pos()</a></code> to know what is
+the current position of matching within this string.</p>
+<p>The <code class="inline"><span class="w">code</span></code>
+ is properly scoped in the following sense: If the assertion
+is backtracked (compare <a href="#Backtracking">"Backtracking"</a>), all changes introduced after
+<code class="inline"><a class="l_k" href="functions/local.html">local</a></code>ization are undone, so that</p>
+<pre class="verbatim">  <span class="i">$_</span> = <span class="q">'a'</span> x <span class="n">8</span><span class="sc">;</span>
+  <span class="q">m&lt;</span>
+     <span class="q">     (?{ $cnt = 0 })			# Initialize $cnt.</span>
+     <span class="q">     (</span>
+       <span class="q">       a</span>
+       <span class="q">       (?{</span>
+           <span class="q">           local $cnt = $cnt + 1;	# Update $cnt, backtracking-safe.</span>
+       <span class="q">       })</span>
+     <span class="q">     )*</span>
+     <span class="q">     aaaa</span>
+     <span class="q">     (?{ $res = $cnt })			# On success copy to non-localized</span>
+					<span class="q">					# location.</span>
+   <span class="q">   &gt;x</span><span class="sc">;</span></pre>
+<p>will set <code class="inline"><span class="i">$res</span> = <span class="n">4</span></code>
+.  Note that after the match, <code class="inline"><span class="i">$cnt</span></code>
+ returns to the globally
+introduced value, because the scopes that restrict <code class="inline"><a class="l_k" href="functions/local.html">local</a></code> operators
+are unwound.</p>
+<p>This assertion may be used as a <code class="inline">(?(condition)yes-pattern|no-pattern)</code>
+switch.  If <i>not</i> used in this way, the result of evaluation of
+<code class="inline"><span class="w">code</span></code>
+ is put into the special variable <code class="inline"><span class="i">$^R</span></code>
+.  This happens
+immediately, so <code class="inline"><span class="i">$^R</span></code>
+ can be used from other <code class="inline">(?{ code })</code> assertions
+inside the same regular expression.</p>
+<p>The assignment to <code class="inline"><span class="i">$^R</span></code>
+ above is properly localized, so the old
+value of <code class="inline"><span class="i">$^R</span></code>
+ is restored if the assertion is backtracked; compare
+<a href="#Backtracking">"Backtracking"</a>.</p>
+<p>Due to an unfortunate implementation issue, the Perl code contained in these
+blocks is treated as a compile time closure that can have seemingly bizarre
+consequences when used with lexically scoped variables inside of subroutines
+or loops.  There are various workarounds for this, including simply using
+global variables instead.  If you are using this construct and strange results
+occur then check for the use of lexically scoped variables.</p>
+<p>For reasons of security, this construct is forbidden if the regular
+expression involves run-time interpolation of variables, unless the
+perilous <code class="inline"><a class="l_k" href="functions/use.html">use</a> <span class="w">re</span> <span class="q">&#39;eval&#39;</span></code>
+ pragma has been used (see <a href="re.html">re</a>), or the
+variables contain results of <code class="inline"><a class="l_k" href="functions/qr.html">qr//</a></code> operator (see
+<a href="perlop.html#qr0x2fSTRING0x2fimosx">"qr/STRING/imosx" in perlop</a>).</p>
+<p>This restriction is due to the wide-spread and remarkably convenient
+custom of using run-time determined strings as patterns.  For example:</p>
+<pre class="verbatim">    <span class="i">$re</span> = &lt;&gt;<span class="sc">;</span>
+    <a class="l_k" href="functions/chomp.html">chomp</a> <span class="i">$re</span><span class="sc">;</span>
+    <span class="i">$string</span> =~ <span class="q">/$re/</span><span class="sc">;</span></pre>
+<p>Before Perl knew how to execute interpolated code within a pattern,
+this operation was completely safe from a security point of view,
+although it could raise an exception from an illegal pattern.  If
+you turn on the <code class="inline"><a class="l_k" href="functions/use.html">use</a> <span class="w">re</span> <span class="q">&#39;eval&#39;</span></code>
+, though, it is no longer secure,
+so you should only do so if you are also using taint checking.
+Better yet, use the carefully constrained evaluation within a Safe
+compartment.  See <a href="perlsec.html">perlsec</a> for details about both these mechanisms.</p>
+<p>Because Perl's regex engine is currently not re-entrant, interpolated
+code may not invoke the regex engine either directly with <code class="inline"><a class="l_k" href="functions/m.html">m//</a></code> or <code class="inline"><a class="l_k" href="functions/s.html">s///</a></code>),
+or indirectly with functions such as <code class="inline"><a class="l_k" href="functions/split.html">split</a></code>.</p>
+</li>
+<li><a name="'(0x3f0x3f0x7b-code-0x7d)'"></a><b><code class="inline"><span class="s">(</span><span class="q">??</span><span class="s">{</span> <span class="w">code</span> <span class="s">}</span><span class="s">)</span></code>
+
+
+  </b>
+<p><b>WARNING</b>: This extended regular expression feature is considered
+experimental, and may be changed without notice. Code executed that
+has side effects may not perform identically from version to version
+due to the effect of future optimisations in the regex engine.</p>
+<p>This is a "postponed" regular subexpression.  The <code class="inline"><span class="w">code</span></code>
+ is evaluated
+at run time, at the moment this subexpression may match.  The result
+of evaluation is considered as a regular expression and matched as
+if it were inserted instead of this construct.  Note that this means
+that the contents of capture buffers defined inside an eval'ed pattern
+are not available outside of the pattern, and vice versa, there is no
+way for the inner pattern to refer to a capture buffer defined outside.
+Thus,</p>
+<pre class="verbatim">    <span class="s">(</span><span class="q">'a'</span> x <span class="n">100</span><span class="s">)</span>=~<span class="q">/(??{'(.)' x 100})/</span></pre>
+<p><b>will</b> match, it will <b>not</b> set $1.</p>
+<p>The <code class="inline"><span class="w">code</span></code>
+ is not interpolated.  As before, the rules to determine
+where the <code class="inline"><span class="w">code</span></code>
+ ends are currently somewhat convoluted.</p>
+<p>The following pattern matches a parenthesized group:</p>
+<pre class="verbatim">  <span class="i">$re</span> = <span class="q">qr{</span>
+	     <span class="q">	     \(</span>
+	     <span class="q">	     (?:</span>
+		<span class="q">		(?&gt; [^()]+ )	# Non-parens without backtracking</span>
+	      <span class="q">	      |</span>
+		<span class="q">		(??{ $re })	# Group with matching parens</span>
+	     <span class="q">	     )*</span>
+	     <span class="q">	     \)</span>
+	  <span class="q">	  }x</span><span class="sc">;</span></pre>
+<p>See also <code class="inline">(?PARNO)</code> for a different, more efficient way to accomplish
+the same task.</p>
+<p>Because perl's regex engine is not currently re-entrant, delayed
+code may not invoke the regex engine either directly with <code class="inline"><a class="l_k" href="functions/m.html">m//</a></code> or <code class="inline"><a class="l_k" href="functions/s.html">s///</a></code>),
+or indirectly with functions such as <code class="inline"><a class="l_k" href="functions/split.html">split</a></code>.</p>
+<p>Recursing deeper than 50 times without consuming any input string will
+result in a fatal error.  The maximum depth is compiled into perl, so
+changing it requires a custom build.</p>
+</li>
+<li><a name="'(0x3fPARNO)'-'(0x3f-PARNO)'-'(0x3f0x2bPARNO)'-'(0x3fR)'-'(0x3f0)'"></a><b><code class="inline">(?PARNO)</code> <code class="inline">(?-PARNO)</code> <code class="inline">(?+PARNO)</code> <code class="inline">(?R)</code> <code class="inline">(?0)</code>
+       
+  
+</b>
+<p>Similar to <code class="inline"><span class="s">(</span><span class="q">??</span><span class="s">{</span> <span class="w">code</span> <span class="s">}</span><span class="s">)</span></code>
+ except it does not involve compiling any code,
+instead it treats the contents of a capture buffer as an independent
+pattern that must match at the current position.  Capture buffers
+contained by the pattern will have the value as determined by the
+outermost recursion.</p>
+<p>PARNO is a sequence of digits (not starting with 0) whose value reflects
+the paren-number of the capture buffer to recurse to. <code class="inline">(?R)</code> recurses to
+the beginning of the whole pattern. <code class="inline">(?0)</code> is an alternate syntax for
+<code class="inline">(?R)</code>. If PARNO is preceded by a plus or minus sign then it is assumed
+to be relative, with negative numbers indicating preceding capture buffers
+and positive ones following. Thus <code class="inline">(?-1)</code> refers to the most recently
+declared buffer, and <code class="inline">(?+1)</code> indicates the next buffer to be declared.
+Note that the counting for relative recursion differs from that of
+relative backreferences, in that with recursion unclosed buffers <b>are</b>
+included.</p>
+<p>The following pattern matches a function foo() which may contain
+balanced parentheses as the argument.</p>
+<pre class="verbatim">  <span class="i">$re</span> = <span class="q">qr{ (                    # paren group 1 (full function)</span>
+              <span class="q">              foo</span>
+              <span class="q">              (                  # paren group 2 (parens)</span>
+                <span class="q">                \(</span>
+                  <span class="q">                  (              # paren group 3 (contents of parens)</span>
+                  <span class="q">                  (?:</span>
+                   <span class="q">                   (?&gt; [^()]+ )  # Non-parens without backtracking</span>
+                  <span class="q">                  |</span>
+                   <span class="q">                   (?2)          # Recurse to start of paren group 2</span>
+                  <span class="q">                  )*</span>
+                  <span class="q">                  )</span>
+                <span class="q">                \)</span>
+              <span class="q">              )</span>
+            <span class="q">            )</span>
+          <span class="q">          }x</span><span class="sc">;</span></pre>
+<p>If the pattern was used as follows</p>
+<pre class="verbatim">    <span class="q">'foo(bar(baz)+baz(bop))'</span>=~<span class="q">/$re/</span>
+        and <a class="l_k" href="functions/print.html">print</a> <span class="q">&quot;\$1 = $1\n&quot;</span><span class="cm">,</span>
+                  <span class="q">&quot;\$2 = $2\n&quot;</span><span class="cm">,</span>
+                  <span class="q">&quot;\$3 = $3\n&quot;</span><span class="sc">;</span></pre>
+<p>the output produced should be the following:</p>
+<pre class="verbatim">    $1 = foo(bar(baz)+baz(bop))
+    $2 = (bar(baz)+baz(bop))
+    $3 = bar(baz)+baz(bop)</pre><p>If there is no corresponding capture buffer defined, then it is a
+fatal error.  Recursing deeper than 50 times without consuming any input
+string will also result in a fatal error.  The maximum depth is compiled
+into perl, so changing it requires a custom build.</p>
+<p>The following shows how using negative indexing can make it
+easier to embed recursive patterns inside of a <code class="inline"><a class="l_k" href="functions/qr.html">qr//</a></code> construct
+for later use:</p>
+<pre class="verbatim">    <a class="l_k" href="functions/my.html">my</a> <span class="i">$parens</span> = <span class="q">qr/(\((?:[^()]++|(?-1))*+\))/</span><span class="sc">;</span>
+    if <span class="s">(</span><span class="q">/foo $parens \s+ + \s+ bar $parens/x</span><span class="s">)</span> <span class="s">{</span>
+       <span class="c"># do something here...</span>
+    <span class="s">}</span></pre>
+<p><b>Note</b> that this pattern does not behave the same way as the equivalent
+PCRE or Python construct of the same form. In Perl you can backtrack into
+a recursed group, in PCRE and Python the recursed into group is treated
+as atomic. Also, modifiers are resolved at compile time, so constructs
+like (?i:(?1)) or (?:(?i)(?1)) do not affect how the sub-pattern will
+be processed.</p>
+</li>
+<li><a name="'(0x3f0x26NAME)'"></a><b><code class="inline">(?&amp;NAME)</code>
+</b>
+<p>Recurse to a named subpattern. Identical to <code class="inline">(?PARNO)</code> except that the
+parenthesis to recurse to is determined by name. If multiple parentheses have
+the same name, then it recurses to the leftmost.</p>
+<p>It is an error to refer to a name that is not declared somewhere in the
+pattern.</p>
+<p><b>NOTE:</b> In order to make things easier for programmers with experience
+with the Python or PCRE regex engines the pattern <code class="inline">(?P&gt;NAME)</code>
+may be used instead of <code class="inline">(?&amp;NAME)</code>.</p>
+</li>
+<li><a name="'(0x3f(condition)yes-pattern0x7cno-pattern)'"></a><b><code class="inline">(?(condition)yes-pattern|no-pattern)</code>
+</b>
+</li>
+<li><a name="'(0x3f(condition)yes-pattern)'"></a><b><code class="inline">(?(condition)yes-pattern)</code></b>
+<p>Conditional expression.  <code class="inline"><span class="s">(</span><span class="w">condition</span><span class="s">)</span></code>
+ should be either an integer in
+parentheses (which is valid if the corresponding pair of parentheses
+matched), a look-ahead/look-behind/evaluate zero-width assertion, a
+name in angle brackets or single quotes (which is valid if a buffer
+with the given name matched), or the special symbol (R) (true when
+evaluated inside of recursion or eval). Additionally the R may be
+followed by a number, (which will be true when evaluated when recursing
+inside of the appropriate group), or by <code class="inline"><span class="i">&amp;NAME</span></code>
+, in which case it will
+be true only when evaluated during recursion in the named group.</p>
+<p>Here's a summary of the possible predicates:</p>
+<ul>
+<li><a name="(1)-(2)-..."></a><b>(1) (2) ...</b>
+<p>Checks if the numbered capturing buffer has matched something.</p>
+</li>
+<li><a name="(0x3cNAME0x3e)-('NAME')"></a><b>(&lt;NAME&gt;) ('NAME')</b>
+<p>Checks if a buffer with the given name has matched something.</p>
+</li>
+<li><a name="(0x3f0x7b-CODE-0x7d)"></a><b>(?{ CODE })</b>
+<p>Treats the code block as the condition.</p>
+</li>
+<li><a name="(R)"></a><b>(R)</b>
+<p>Checks if the expression has been evaluated inside of recursion.</p>
+</li>
+<li><a name="(R1)-(R2)-..."></a><b>(R1) (R2) ...</b>
+<p>Checks if the expression has been evaluated while executing directly
+inside of the n-th capture group. This check is the regex equivalent of</p>
+<pre class="verbatim">  if <span class="s">(</span><span class="s">(</span><a class="l_k" href="functions/caller.html">caller</a><span class="s">(</span><span class="n">0</span><span class="s">)</span><span class="s">)</span>[<span class="n">3</span>] eq <span class="q">'subname'</span><span class="s">)</span> <span class="s">{</span> ... <span class="s">}</span></pre>
+<p>In other words, it does not check the full recursion stack.</p>
+</li>
+<li><a name="(R0x26NAME)"></a><b>(R&amp;NAME)</b>
+<p>Similar to <code class="inline"><span class="s">(</span><span class="w">R1</span><span class="s">)</span></code>
+, this predicate checks to see if we're executing
+directly inside of the leftmost group with a given name (this is the same
+logic used by <code class="inline">(?&amp;NAME)</code> to disambiguate). It does not check the full
+stack, but only the name of the innermost active recursion.</p>
+</li>
+<li><a name="(DEFINE)"></a><b>(DEFINE)</b>
+<p>In this case, the yes-pattern is never directly executed, and no
+no-pattern is allowed. Similar in spirit to <code class="inline">(?{0})</code> but more efficient.
+See below for details.</p>
+</li>
+</ul>
+<p>For example:</p>
+<pre class="verbatim">    <span class="q">m{ ( \( )?</span>
+       <span class="q">       [^()]+</span>
+       <span class="q">       (?(1) \) )</span>
+     <span class="q">     }x</span></pre>
+<p>matches a chunk of non-parentheses, possibly included in parentheses
+themselves.</p>
+<p>A special form is the <code class="inline"><span class="s">(</span><span class="w">DEFINE</span><span class="s">)</span></code>
+ predicate, which never executes directly
+its yes-pattern, and does not allow a no-pattern. This allows to define
+subpatterns which will be executed only by using the recursion mechanism.
+This way, you can define a set of regular expression rules that can be
+bundled into any pattern you choose.</p>
+<p>It is recommended that for this usage you put the DEFINE block at the
+end of the pattern, and that you name any subpatterns defined within it.</p>
+<p>Also, it's worth noting that patterns defined this way probably will
+not be as efficient, as the optimiser is not very clever about
+handling them.</p>
+<p>An example of how this might be used is as follows:</p>
+<pre class="verbatim">  <span class="q">/(?&lt;NAME&gt;(?&amp;NAME_PAT))(?&lt;ADDR&gt;(?&amp;ADDRESS_PAT))</span>
+   <span class="q">   (?(DEFINE)</span>
+     <span class="q">     (?&lt;NAME_PAT&gt;....)</span>
+     <span class="q">     (?&lt;ADRESS_PAT&gt;....)</span>
+   <span class="q">   )/x</span></pre>
+<p>Note that capture buffers matched inside of recursion are not accessible
+after the recursion returns, so the extra layer of capturing buffers is
+necessary. Thus <code class="inline"><span class="i">$+</span>{<span class="w">NAME_PAT</span>}</code>
+ would not be defined even though
+<code class="inline"><span class="i">$+</span>{<span class="w">NAME</span>}</code>
+ would be.</p>
+</li>
+<li><a name="'(0x3f0x3epattern)'"></a><b><code class="inline">(?&gt;pattern)</code>
+   </b>
+<p>An "independent" subexpression, one which matches the substring
+that a <i>standalone</i> <code class="inline"><span class="w">pattern</span></code>
+ would match if anchored at the given
+position, and it matches <i>nothing other than this substring</i>.  This
+construct is useful for optimizations of what would otherwise be
+"eternal" matches, because it will not backtrack (see <a href="#Backtracking">"Backtracking"</a>).
+It may also be useful in places where the "grab all you can, and do not
+give anything back" semantic is desirable.</p>
+<p>For example: <code class="inline">^(?&gt;a*)ab</code> will never match, since <code class="inline">(?&gt;a*)</code>
+(anchored at the beginning of string, as above) will match <i>all</i>
+characters <code class="inline"><span class="w">a</span></code>
+ at the beginning of string, leaving no <code class="inline"><span class="w">a</span></code>
+ for
+<code class="inline"><span class="w">ab</span></code>
+ to match.  In contrast, <code class="inline"><span class="w">a</span>*<span class="w">ab</span></code>
+ will match the same as <code class="inline"><span class="w">a</span>+<span class="w">b</span></code>
+,
+since the match of the subgroup <code class="inline"><span class="w">a</span>*</code>
+ is influenced by the following
+group <code class="inline"><span class="w">ab</span></code>
+ (see <a href="#Backtracking">"Backtracking"</a>).  In particular, <code class="inline"><span class="w">a</span>*</code>
+ inside
+<code class="inline"><span class="w">a</span>*<span class="w">ab</span></code>
+ will match fewer characters than a standalone <code class="inline"><span class="w">a</span>*</code>
+, since
+this makes the tail match.</p>
+<p>An effect similar to <code class="inline">(?&gt;pattern)</code> may be achieved by writing
+<code class="inline">(?=(pattern))\1</code>.  This matches the same substring as a standalone
+<code class="inline"><span class="w">a</span>+</code>
+, and the following <code class="inline">\<span class="n">1</span></code>
+ eats the matched string; it therefore
+makes a zero-length assertion into an analogue of <code class="inline">(?&gt;...)</code>.
+(The difference between these two constructs is that the second one
+uses a capturing group, thus shifting ordinals of backreferences
+in the rest of a regular expression.)</p>
+<p>Consider this pattern:</p>
+<pre class="verbatim">    <span class="q">m{ \(</span>
+          <span class="q">          (</span>
+            <span class="q">            [^()]+		# x+</span>
+          <span class="q">          |</span>
+            <span class="q">            \( [^()]* \)</span>
+          <span class="q">          )+</span>
+       <span class="q">       \)</span>
+     <span class="q">     }x</span></pre>
+<p>That will efficiently match a nonempty group with matching parentheses
+two levels deep or less.  However, if there is no such group, it
+will take virtually forever on a long string.  That's because there
+are so many different ways to split a long string into several
+substrings.  This is what <code class="inline">(.+)+</code> is doing, and <code class="inline">(.+)+</code> is similar
+to a subpattern of the above pattern.  Consider how the pattern
+above detects no-match on <code class="inline">((()aaaaaaaaaaaaaaaaaa</code> in several
+seconds, but that each extra letter doubles this time.  This
+exponential performance will make it appear that your program has
+hung.  However, a tiny change to this pattern</p>
+<pre class="verbatim">    <span class="q">m{ \(</span>
+          <span class="q">          (</span>
+            <span class="q">            (?&gt; [^()]+ )	# change x+ above to (?&gt; x+ )</span>
+          <span class="q">          |</span>
+            <span class="q">            \( [^()]* \)</span>
+          <span class="q">          )+</span>
+       <span class="q">       \)</span>
+     <span class="q">     }x</span></pre>
+<p>which uses <code class="inline">(?&gt;...)</code> matches exactly when the one above does (verifying
+this yourself would be a productive exercise), but finishes in a fourth
+the time when used on a similar string with 1000000 <code class="inline"><span class="w">a</span></code>
+s.  Be aware,
+however, that this pattern currently triggers a warning message under
+the <code class="inline"><a class="l_k" href="functions/use.html">use</a> <span class="w">warnings</span></code>
+ pragma or <b>-w</b> switch saying it
+<code class="inline"><span class="q">&quot;matches null string many times in regex&quot;</span></code>
+.</p>
+<p>On simple groups, such as the pattern <code class="inline">(?&gt; [^()]+ )</code>, a comparable
+effect may be achieved by negative look-ahead, as in <code class="inline">[^()]+ (?! [^()] )</code>.
+This was only 4 times slower on a string with 1000000 <code class="inline"><span class="w">a</span></code>
+s.</p>
+<p>The "grab all you can, and do not give anything back" semantic is desirable
+in many situations where on the first sight a simple <code class="inline"><span class="s">(</span><span class="s">)</span>*</code>
+ looks like
+the correct solution.  Suppose we parse text with comments being delimited
+by <code class="inline"><span class="c">#</span></code>
+ followed by some optional (horizontal) whitespace.  Contrary to
+its appearance, <code class="inline"><span class="c">#[ \t]*</span></code>
+ <i>is not</i> the correct subexpression to match
+the comment delimiter, because it may "give up" some whitespace if
+the remainder of the pattern can be made to match that way.  The correct
+answer is either one of these:</p>
+<pre class="verbatim">    <span class="s">(</span><span class="q">?&gt;#[ \t]*)</span>
+    <span class="q">    #[ \t]*(?</span>!<span class="s">[</span> \<span class="w">t</span><span class="s">]</span><span class="s">)</span></pre>
+<p>For example, to grab non-empty comments into $1, one should use either
+one of these:</p>
+<pre class="verbatim">    <span class="q">/ (?&gt; \# [ \t]* ) (        .+ ) /x</span><span class="sc">;</span>
+    <span class="q">/     \# [ \t]*   ( [^ \t] .* ) /x</span><span class="sc">;</span></pre>
+<p>Which one you pick depends on which of these expressions better reflects
+the above specification of comments.</p>
+<p>In some literature this construct is called "atomic matching" or
+"possessive matching".</p>
+<p>Possessive quantifiers are equivalent to putting the item they are applied
+to inside of one of these constructs. The following equivalences apply:</p>
+<pre class="verbatim">    Quantifier Form     Bracketing Form
+    ---------------     ---------------
+    PAT*+               (?&gt;PAT*)
+    PAT++               (?&gt;PAT+)
+    PAT?+               (?&gt;PAT?)
+    PAT{min,max}+       (?&gt;PAT{min,max})</pre></li>
+</ul>
+<a name="Special-Backtracking-Control-Verbs"></a><h2>Special Backtracking Control Verbs</h2>
+<p><b>WARNING:</b> These patterns are experimental and subject to change or
+removal in a future version of Perl. Their usage in production code should
+be noted to avoid problems during upgrades.</p>
+<p>These special patterns are generally of the form <code class="inline">(*VERB:ARG)</code>. Unless
+otherwise stated the ARG argument is optional; in some cases, it is
+forbidden.</p>
+<p>Any pattern containing a special backtracking verb that allows an argument
+has the special behaviour that when executed it sets the current packages'
+<code class="inline"><span class="i">$REGERROR</span></code>
+ and <code class="inline"><span class="i">$REGMARK</span></code>
+ variables. When doing so the following
+rules apply:</p>
+<p>On failure, the <code class="inline"><span class="i">$REGERROR</span></code>
+ variable will be set to the ARG value of the
+verb pattern, if the verb was involved in the failure of the match. If the
+ARG part of the pattern was omitted, then <code class="inline"><span class="i">$REGERROR</span></code>
+ will be set to the
+name of the last <code class="inline">(*MARK:NAME)</code> pattern executed, or to TRUE if there was
+none. Also, the <code class="inline"><span class="i">$REGMARK</span></code>
+ variable will be set to FALSE.</p>
+<p>On a successful match, the <code class="inline"><span class="i">$REGERROR</span></code>
+ variable will be set to FALSE, and
+the <code class="inline"><span class="i">$REGMARK</span></code>
+ variable will be set to the name of the last
+<code class="inline">(*MARK:NAME)</code> pattern executed.  See the explanation for the
+<code class="inline">(*MARK:NAME)</code> verb below for more details.</p>
+<p><b>NOTE:</b> <code class="inline"><span class="i">$REGERROR</span></code>
+ and <code class="inline"><span class="i">$REGMARK</span></code>
+ are not magic variables like <code class="inline"><span class="i">$1</span></code>
+
+and most other regex related variables. They are not local to a scope, nor
+readonly, but instead are volatile package variables similar to <code class="inline"><span class="i">$AUTOLOAD</span></code>
+.
+Use <code class="inline"><a class="l_k" href="functions/local.html">local</a></code> to localize changes to them to a specific scope if necessary.</p>
+<p>If a pattern does not contain a special backtracking verb that allows an
+argument, then <code class="inline"><span class="i">$REGERROR</span></code>
+ and <code class="inline"><span class="i">$REGMARK</span></code>
+ are not touched at all.</p>
+<ul>
+<li><a name="Verbs-that-take-an-argument"></a><b>Verbs that take an argument</b>
+<ul>
+<li><a name="'(*PRUNE)'-'(*PRUNE0x3aNAME)'"></a><b><code class="inline"><span class="s">(</span><span class="i">*PRUNE</span><span class="s">)</span></code>
+ <code class="inline">(*PRUNE:NAME)</code>
+ </b>
+<p>This zero-width pattern prunes the backtracking tree at the current point
+when backtracked into on failure. Consider the pattern <code class="inline">A (*PRUNE) B</code>,
+where A and B are complex patterns. Until the <code class="inline"><span class="s">(</span><span class="i">*PRUNE</span><span class="s">)</span></code>
+ verb is reached,
+A may backtrack as necessary to match. Once it is reached, matching
+continues in B, which may also backtrack as necessary; however, should B
+not match, then no further backtracking will take place, and the pattern
+will fail outright at the current starting position.</p>
+<p>The following example counts all the possible matching strings in a
+pattern (without actually matching any of them).</p>
+<pre class="verbatim">    <span class="q">'aaab'</span> =~ <span class="q">/a+b?(?{print &quot;$&amp;\n&quot;; $count++})(*FAIL)/</span><span class="sc">;</span>
+    <a class="l_k" href="functions/print.html">print</a> <span class="q">&quot;Count=$count\n&quot;</span><span class="sc">;</span></pre>
+<p>which produces:</p>
+<pre class="verbatim">    <span class="w">aaab</span>
+    <span class="w">aaa</span>
+    <span class="w">aa</span>
+    <span class="w">a</span>
+    <span class="w">aab</span>
+    <span class="w">aa</span>
+    <span class="w">a</span>
+    <span class="w">ab</span>
+    <span class="w">a</span>
+    <span class="w">Count</span>=<span class="n">9</span></pre>
+<p>If we add a <code class="inline"><span class="s">(</span><span class="i">*PRUNE</span><span class="s">)</span></code>
+ before the count like the following</p>
+<pre class="verbatim">    <span class="q">'aaab'</span> =~ <span class="q">/a+b?(*PRUNE)(?{print &quot;$&amp;\n&quot;; $count++})(*FAIL)/</span><span class="sc">;</span>
+    <a class="l_k" href="functions/print.html">print</a> <span class="q">&quot;Count=$count\n&quot;</span><span class="sc">;</span></pre>
+<p>we prevent backtracking and find the count of the longest matching
+at each matching starting point like so:</p>
+<pre class="verbatim">    <span class="w">aaab</span>
+    <span class="w">aab</span>
+    <span class="w">ab</span>
+    <span class="w">Count</span>=<span class="n">3</span></pre>
+<p>Any number of <code class="inline"><span class="s">(</span><span class="i">*PRUNE</span><span class="s">)</span></code>
+ assertions may be used in a pattern.</p>
+<p>See also <code class="inline">(?&gt;pattern)</code> and possessive quantifiers for other ways to
+control backtracking. In some cases, the use of <code class="inline"><span class="s">(</span><span class="i">*PRUNE</span><span class="s">)</span></code>
+ can be
+replaced with a <code class="inline">(?&gt;pattern)</code> with no functional difference; however,
+<code class="inline"><span class="s">(</span><span class="i">*PRUNE</span><span class="s">)</span></code>
+ can be used to handle cases that cannot be expressed using a
+<code class="inline">(?&gt;pattern)</code> alone.</p>
+</li>
+<li><a name="'(*SKIP)'-'(*SKIP0x3aNAME)'"></a><b><code class="inline"><span class="s">(</span><span class="i">*SKIP</span><span class="s">)</span></code>
+ <code class="inline">(*SKIP:NAME)</code>
+</b>
+<p>This zero-width pattern is similar to <code class="inline"><span class="s">(</span><span class="i">*PRUNE</span><span class="s">)</span></code>
+, except that on
+failure it also signifies that whatever text that was matched leading up
+to the <code class="inline"><span class="s">(</span><span class="i">*SKIP</span><span class="s">)</span></code>
+ pattern being executed cannot be part of <i>any</i> match
+of this pattern. This effectively means that the regex engine "skips" forward
+to this position on failure and tries to match again, (assuming that
+there is sufficient room to match).</p>
+<p>The name of the <code class="inline">(*SKIP:NAME)</code> pattern has special significance. If a
+<code class="inline">(*MARK:NAME)</code> was encountered while matching, then it is that position
+which is used as the "skip point". If no <code class="inline"><span class="s">(</span><span class="i">*MARK</span><span class="s">)</span></code>
+ of that name was
+encountered, then the <code class="inline"><span class="s">(</span><span class="i">*SKIP</span><span class="s">)</span></code>
+ operator has no effect. When used
+without a name the "skip point" is where the match point was when
+executing the (*SKIP) pattern.</p>
+<p>Compare the following to the examples in <code class="inline"><span class="s">(</span><span class="i">*PRUNE</span><span class="s">)</span></code>
+, note the string
+is twice as long:</p>
+<pre class="verbatim">    <span class="q">'aaabaaab'</span> =~ <span class="q">/a+b?(*SKIP)(?{print &quot;$&amp;\n&quot;; $count++})(*FAIL)/</span><span class="sc">;</span>
+    <a class="l_k" href="functions/print.html">print</a> <span class="q">&quot;Count=$count\n&quot;</span><span class="sc">;</span></pre>
+<p>outputs</p>
+<pre class="verbatim">    <span class="w">aaab</span>
+    <span class="w">aaab</span>
+    <span class="w">Count</span>=<span class="n">2</span></pre>
+<p>Once the 'aaab' at the start of the string has matched, and the <code class="inline"><span class="s">(</span><span class="i">*SKIP</span><span class="s">)</span></code>
+
+executed, the next starting point will be where the cursor was when the
+<code class="inline"><span class="s">(</span><span class="i">*SKIP</span><span class="s">)</span></code>
+ was executed.</p>
+</li>
+<li><a name="'(*MARK0x3aNAME)'-'(*0x3aNAME)'--'(*MARK0x3aNAME)'-'(*0x3aNAME)'"></a><b><code class="inline">(*MARK:NAME)</code> <code class="inline">(*:NAME)</code>
+ <code class="inline">(*MARK:NAME)</code> <code class="inline">(*:NAME)</code></b>
+<p>This zero-width pattern can be used to mark the point reached in a string
+when a certain part of the pattern has been successfully matched. This
+mark may be given a name. A later <code class="inline"><span class="s">(</span><span class="i">*SKIP</span><span class="s">)</span></code>
+ pattern will then skip
+forward to that point if backtracked into on failure. Any number of
+<code class="inline"><span class="s">(</span><span class="i">*MARK</span><span class="s">)</span></code>
+ patterns are allowed, and the NAME portion is optional and may
+be duplicated.</p>
+<p>In addition to interacting with the <code class="inline"><span class="s">(</span><span class="i">*SKIP</span><span class="s">)</span></code>
+ pattern, <code class="inline">(*MARK:NAME)</code>
+can be used to "label" a pattern branch, so that after matching, the
+program can determine which branches of the pattern were involved in the
+match.</p>
+<p>When a match is successful, the <code class="inline"><span class="i">$REGMARK</span></code>
+ variable will be set to the
+name of the most recently executed <code class="inline">(*MARK:NAME)</code> that was involved
+in the match.</p>
+<p>This can be used to determine which branch of a pattern was matched
+without using a separate capture buffer for each branch, which in turn
+can result in a performance improvement, as perl cannot optimize
+<code class="inline"><span class="q">/(?:(x)|(y)|(z))/</span></code>
+ as efficiently as something like
+<code class="inline"><span class="q">/(?:x(*MARK:x)|y(*MARK:y)|z(*MARK:z))/</span></code>
+.</p>
+<p>When a match has failed, and unless another verb has been involved in
+failing the match and has provided its own name to use, the <code class="inline"><span class="i">$REGERROR</span></code>
+
+variable will be set to the name of the most recently executed
+<code class="inline">(*MARK:NAME)</code>.</p>
+<p>See <code class="inline"><span class="s">(</span><span class="i">*SKIP</span><span class="s">)</span></code>
+ for more details.</p>
+<p>As a shortcut <code class="inline">(*MARK:NAME)</code> can be written <code class="inline">(*:NAME)</code>.</p>
+</li>
+<li><a name="'(*THEN)'-'(*THEN0x3aNAME)'"></a><b><code class="inline"><span class="s">(</span><span class="i">*THEN</span><span class="s">)</span></code>
+ <code class="inline">(*THEN:NAME)</code></b>
+<p>This is similar to the "cut group" operator <code class="inline"><span class="w">::</span></code>
+ from Perl 6. Like
+<code class="inline"><span class="s">(</span><span class="i">*PRUNE</span><span class="s">)</span></code>
+, this verb always matches, and when backtracked into on
+failure, it causes the regex engine to try the next alternation in the
+innermost enclosing group (capturing or otherwise).</p>
+<p>Its name comes from the observation that this operation combined with the
+alternation operator (<code class="inline">|</code>) can be used to create what is essentially a
+pattern-based if/then/else block:</p>
+<pre class="verbatim">  ( COND (*THEN) FOO | COND2 (*THEN) BAR | COND3 (*THEN) BAZ )</pre><p>Note that if this operator is used and NOT inside of an alternation then
+it acts exactly like the <code class="inline"><span class="s">(</span><span class="i">*PRUNE</span><span class="s">)</span></code>
+ operator.</p>
+<pre class="verbatim">  <span class="q">/ A (*PRUNE) B /</span></pre>
+<p>is the same as</p>
+<pre class="verbatim">  <span class="q">/ A (*THEN) B /</span></pre>
+<p>but</p>
+<pre class="verbatim">  <span class="q">/ ( A (*THEN) B | C (*THEN) D ) /</span></pre>
+<p>is not the same as</p>
+<pre class="verbatim">  <span class="q">/ ( A (*PRUNE) B | C (*PRUNE) D ) /</span></pre>
+<p>as after matching the A but failing on the B the <code class="inline"><span class="s">(</span><span class="i">*THEN</span><span class="s">)</span></code>
+ verb will
+backtrack and try C; but the <code class="inline"><span class="s">(</span><span class="i">*PRUNE</span><span class="s">)</span></code>
+ verb will simply fail.</p>
+</li>
+<li><a name="'(*COMMIT)'"></a><b><code class="inline"><span class="s">(</span><span class="i">*COMMIT</span><span class="s">)</span></code>
+
+</b>
+<p>This is the Perl 6 "commit pattern" <code class="inline"><span class="q">&lt;commit&gt;</span></code>
+ or <code class="inline">:::</code>. It's a
+zero-width pattern similar to <code class="inline"><span class="s">(</span><span class="i">*SKIP</span><span class="s">)</span></code>
+, except that when backtracked
+into on failure it causes the match to fail outright. No further attempts
+to find a valid match by advancing the start pointer will occur again.
+For example,</p>
+<pre class="verbatim">    <span class="q">'aaabaaab'</span> =~ <span class="q">/a+b?(*COMMIT)(?{print &quot;$&amp;\n&quot;; $count++})(*FAIL)/</span><span class="sc">;</span>
+    <a class="l_k" href="functions/print.html">print</a> <span class="q">&quot;Count=$count\n&quot;</span><span class="sc">;</span></pre>
+<p>outputs</p>
+<pre class="verbatim">    <span class="w">aaab</span>
+    <span class="w">Count</span>=<span class="n">1</span></pre>
+<p>In other words, once the <code class="inline"><span class="s">(</span><span class="i">*COMMIT</span><span class="s">)</span></code>
+ has been entered, and if the pattern
+does not match, the regex engine will not try any further matching on the
+rest of the string.</p>
+</li>
+</ul>
+</li>
+<li><a name="Verbs-without-an-argument"></a><b>Verbs without an argument</b>
+<ul>
+<li><a name="'(*FAIL)'-'(*F)'"></a><b><code class="inline"><span class="s">(</span><span class="i">*FAIL</span><span class="s">)</span></code>
+ <code class="inline"><span class="s">(</span><span class="i">*F</span><span class="s">)</span></code>
+
+ </b>
+<p>This pattern matches nothing and always fails. It can be used to force the
+engine to backtrack. It is equivalent to <code class="inline">(?!)</code>, but easier to read. In
+fact, <code class="inline">(?!)</code> gets optimised into <code class="inline"><span class="s">(</span><span class="i">*FAIL</span><span class="s">)</span></code>
+ internally.</p>
+<p>It is probably useful only when combined with <code class="inline">(?{})</code> or <code class="inline"><span class="s">(</span><span class="q">??</span><span class="s">{</span><span class="s">}</span><span class="s">)</span></code>
+.</p>
+</li>
+<li><a name="'(*ACCEPT)'"></a><b><code class="inline"><span class="s">(</span><span class="i">*ACCEPT</span><span class="s">)</span></code>
+
+</b>
+<p><b>WARNING:</b> This feature is highly experimental. It is not recommended
+for production code.</p>
+<p>This pattern matches nothing and causes the end of successful matching at
+the point at which the <code class="inline"><span class="s">(</span><span class="i">*ACCEPT</span><span class="s">)</span></code>
+ pattern was encountered, regardless of
+whether there is actually more to match in the string. When inside of a
+nested pattern, such as recursion, or in a subpattern dynamically generated
+via <code class="inline"><span class="s">(</span><span class="q">??</span><span class="s">{</span><span class="s">}</span><span class="s">)</span></code>
+, only the innermost pattern is ended immediately.</p>
+<p>If the <code class="inline"><span class="s">(</span><span class="i">*ACCEPT</span><span class="s">)</span></code>
+ is inside of capturing buffers then the buffers are
+marked as ended at the point at which the <code class="inline"><span class="s">(</span><span class="i">*ACCEPT</span><span class="s">)</span></code>
+ was encountered.
+For instance:</p>
+<pre class="verbatim">  <span class="q">'AB'</span> =~ <span class="q">/(A (A|B(*ACCEPT)|C) D)(E)/x</span><span class="sc">;</span></pre>
+<p>will match, and <code class="inline"><span class="i">$1</span></code>
+ will be <code class="inline"><span class="w">AB</span></code>
+ and <code class="inline"><span class="i">$2</span></code>
+ will be <code class="inline"><span class="w">B</span></code>
+, <code class="inline"><span class="i">$3</span></code>
+ will not
+be set. If another branch in the inner parentheses were matched, such as in the
+string 'ACDE', then the <code class="inline"><span class="w">D</span></code>
+ and <code class="inline"><span class="w">E</span></code>
+ would have to be matched as well.</p>
+</li>
+</ul>
+</li>
+</ul>
+<a name="Backtracking"></a><h2>Backtracking
+ </h2>
+<p>NOTE: This section presents an abstract approximation of regular
+expression behavior.  For a more rigorous (and complicated) view of
+the rules involved in selecting a match among possible alternatives,
+see <a href="#Combining-RE-Pieces">"Combining RE Pieces"</a>.</p>
+<p>A fundamental feature of regular expression matching involves the
+notion called <i>backtracking</i>, which is currently used (when needed)
+by all regular non-possessive expression quantifiers, namely <code class="inline"><span class="i">*</span></code>
+, <code class="inline"><span class="i">*?</span></code>
+, <code class="inline">+</code>
+,
+<code class="inline">+?</code>, <code class="inline">{n,m}</code>, and <code class="inline">{n,m}?</code>.  Backtracking is often optimized
+internally, but the general principle outlined here is valid.</p>
+<p>For a regular expression to match, the <i>entire</i> regular expression must
+match, not just part of it.  So if the beginning of a pattern containing a
+quantifier succeeds in a way that causes later parts in the pattern to
+fail, the matching engine backs up and recalculates the beginning
+part--that's why it's called backtracking.</p>
+<p>Here is an example of backtracking:  Let's say you want to find the
+word following "foo" in the string "Food is on the foo table.":</p>
+<pre class="verbatim">    <span class="i">$_</span> = <span class="q">&quot;Food is on the foo table.&quot;</span><span class="sc">;</span>
+    if <span class="s">(</span> <span class="q">/\b(foo)\s+(\w+)/i</span> <span class="s">)</span> <span class="s">{</span>
+	<a class="l_k" href="functions/print.html">print</a> <span class="q">&quot;$2 follows $1.\n&quot;</span><span class="sc">;</span>
+    <span class="s">}</span></pre>
+<p>When the match runs, the first part of the regular expression (<code class="inline">\<span class="i">b</span><span class="s">(</span><span class="w">foo</span><span class="s">)</span></code>
+)
+finds a possible match right at the beginning of the string, and loads up
+$1 with "Foo".  However, as soon as the matching engine sees that there's
+no whitespace following the "Foo" that it had saved in $1, it realizes its
+mistake and starts over again one character after where it had the
+tentative match.  This time it goes all the way until the next occurrence
+of "foo". The complete regular expression matches this time, and you get
+the expected output of "table follows foo."</p>
+<p>Sometimes minimal matching can help a lot.  Imagine you'd like to match
+everything between "foo" and "bar".  Initially, you write something
+like this:</p>
+<pre class="verbatim">    <span class="i">$_</span> =  <span class="q">&quot;The food is under the bar in the barn.&quot;</span><span class="sc">;</span>
+    if <span class="s">(</span> <span class="q">/foo(.*)bar/</span> <span class="s">)</span> <span class="s">{</span>
+	<a class="l_k" href="functions/print.html">print</a> <span class="q">&quot;got &lt;$1&gt;\n&quot;</span><span class="sc">;</span>
+    <span class="s">}</span></pre>
+<p>Which perhaps unexpectedly yields:</p>
+<pre class="verbatim">  <span class="w">got</span> <span class="q">&lt;d is under the bar in the &gt;</span></pre>
+<p>That's because <code class="inline">.*</code> was greedy, so you get everything between the
+<i>first</i> "foo" and the <i>last</i> "bar".  Here it's more effective
+to use minimal matching to make sure you get the text between a "foo"
+and the first "bar" thereafter.</p>
+<pre class="verbatim">    if <span class="s">(</span> <span class="q">/foo(.*?)bar/</span> <span class="s">)</span> <span class="s">{</span> <a class="l_k" href="functions/print.html">print</a> <span class="q">&quot;got &lt;$1&gt;\n&quot;</span> <span class="s">}</span>
+  <span class="w">got</span> <span class="q">&lt;d is under the &gt;</span></pre>
+<p>Here's another example. Let's say you'd like to match a number at the end
+of a string, and you also want to keep the preceding part of the match.
+So you write this:</p>
+<pre class="verbatim">    <span class="i">$_</span> = <span class="q">&quot;I have 2 numbers: 53147&quot;</span><span class="sc">;</span>
+    if <span class="s">(</span> <span class="q">/(.*)(\d*)/</span> <span class="s">)</span> <span class="s">{</span>				<span class="c"># Wrong!</span>
+	<a class="l_k" href="functions/print.html">print</a> <span class="q">&quot;Beginning is &lt;$1&gt;, number is &lt;$2&gt;.\n&quot;</span><span class="sc">;</span>
+    <span class="s">}</span></pre>
+<p>That won't work at all, because <code class="inline">.*</code> was greedy and gobbled up the
+whole string. As <code class="inline">\<span class="w">d</span>*</code>
+ can match on an empty string the complete
+regular expression matched successfully.</p>
+<pre class="verbatim">    <span class="w">Beginning</span> <span class="w">is</span> <span class="q">&lt;I have 2 numbers: 53147&gt;</span><span class="cm">,</span> <span class="w">number</span> <span class="w">is</span> &lt;&gt;.</pre>
+<p>Here are some variants, most of which don't work:</p>
+<pre class="verbatim">    <span class="i">$_</span> = <span class="q">&quot;I have 2 numbers: 53147&quot;</span><span class="sc">;</span>
+    <span class="i">@pats</span> = <span class="q">qw{</span>
+	<span class="q">(.*)(\d*)</span>
+	<span class="q">(.*)(\d+)</span>
+	<span class="q">(.*?)(\d*)</span>
+	<span class="q">(.*?)(\d+)</span>
+	<span class="q">(.*)(\d+)$</span>
+	<span class="q">(.*?)(\d+)$</span>
+	<span class="q">(.*)\b(\d+)$</span>
+	<span class="q">(.*\D)(\d+)$</span>
+    <span class="q">}</span><span class="sc">;</span></pre>
+<pre class="verbatim">    for <span class="i">$pat</span> <span class="s">(</span><span class="i">@pats</span><span class="s">)</span> <span class="s">{</span>
+	<a class="l_k" href="functions/printf.html">printf</a> <span class="q">&quot;%-12s &quot;</span><span class="cm">,</span> <span class="i">$pat</span><span class="sc">;</span>
+	if <span class="s">(</span> <span class="q">/$pat/</span> <span class="s">)</span> <span class="s">{</span>
+	    <a class="l_k" href="functions/print.html">print</a> <span class="q">&quot;&lt;$1&gt; &lt;$2&gt;\n&quot;</span><span class="sc">;</span>
+	<span class="s">}</span> else <span class="s">{</span>
+	    <a class="l_k" href="functions/print.html">print</a> <span class="q">&quot;FAIL\n&quot;</span><span class="sc">;</span>
+	<span class="s">}</span>
+    <span class="s">}</span></pre>
+<p>That will print out:</p>
+<pre class="verbatim">    (.*)(\d*)    &lt;I have 2 numbers: 53147&gt; &lt;&gt;
+    (.*)(\d+)    &lt;I have 2 numbers: 5314&gt; &lt;7&gt;
+    (.*?)(\d*)   &lt;&gt; &lt;&gt;
+    (.*?)(\d+)   &lt;I have &gt; &lt;2&gt;
+    (.*)(\d+)$   &lt;I have 2 numbers: 5314&gt; &lt;7&gt;
+    (.*?)(\d+)$  &lt;I have 2 numbers: &gt; &lt;53147&gt;
+    (.*)\b(\d+)$ &lt;I have 2 numbers: &gt; &lt;53147&gt;
+    (.*\D)(\d+)$ &lt;I have 2 numbers: &gt; &lt;53147&gt;</pre><p>As you see, this can be a bit tricky.  It's important to realize that a
+regular expression is merely a set of assertions that gives a definition
+of success.  There may be 0, 1, or several different ways that the
+definition might succeed against a particular string.  And if there are
+multiple ways it might succeed, you need to understand backtracking to
+know which variety of success you will achieve.</p>
+<p>When using look-ahead assertions and negations, this can all get even
+trickier.  Imagine you'd like to find a sequence of non-digits not
+followed by "123".  You might try to write that as</p>
+<pre class="verbatim">    <span class="i">$_</span> = <span class="q">&quot;ABC123&quot;</span><span class="sc">;</span>
+    if <span class="s">(</span> <span class="q">/^\D*(?!123)/</span> <span class="s">)</span> <span class="s">{</span>		<span class="c"># Wrong!</span>
+	<a class="l_k" href="functions/print.html">print</a> <span class="q">&quot;Yup, no 123 in $_\n&quot;</span><span class="sc">;</span>
+    <span class="s">}</span></pre>
+<p>But that isn't going to match; at least, not the way you're hoping.  It
+claims that there is no 123 in the string.  Here's a clearer picture of
+why that pattern matches, contrary to popular expectations:</p>
+<pre class="verbatim">    <span class="i">$x</span> = <span class="q">&#39;ABC123&#39;</span><span class="sc">;</span>
+    <span class="i">$y</span> = <span class="q">&#39;ABC445&#39;</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <a class="l_k" href="functions/print.html">print</a> <span class="q">&quot;1: got $1\n&quot;</span> if <span class="i">$x</span> =~ <span class="q">/^(ABC)(?!123)/</span><span class="sc">;</span>
+    <a class="l_k" href="functions/print.html">print</a> <span class="q">&quot;2: got $1\n&quot;</span> if <span class="i">$y</span> =~ <span class="q">/^(ABC)(?!123)/</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <a class="l_k" href="functions/print.html">print</a> <span class="q">&quot;3: got $1\n&quot;</span> if <span class="i">$x</span> =~ <span class="q">/^(\D*)(?!123)/</span><span class="sc">;</span>
+    <a class="l_k" href="functions/print.html">print</a> <span class="q">&quot;4: got $1\n&quot;</span> if <span class="i">$y</span> =~ <span class="q">/^(\D*)(?!123)/</span><span class="sc">;</span></pre>
+<p>This prints</p>
+<pre class="verbatim">    2: got ABC
+    3: got AB
+    4: got ABC</pre><p>You might have expected test 3 to fail because it seems to a more
+general purpose version of test 1.  The important difference between
+them is that test 3 contains a quantifier (<code class="inline">\<span class="w">D</span>*</code>
+) and so can use
+backtracking, whereas test 1 will not.  What's happening is
+that you've asked "Is it true that at the start of $x, following 0 or more
+non-digits, you have something that's not 123?"  If the pattern matcher had
+let <code class="inline">\<span class="w">D</span>*</code>
+ expand to "ABC", this would have caused the whole pattern to
+fail.</p>
+<p>The search engine will initially match <code class="inline">\<span class="w">D</span>*</code>
+ with "ABC".  Then it will
+try to match <code class="inline">(?!123</code> with "123", which fails.  But because
+a quantifier (<code class="inline">\<span class="w">D</span>*</code>
+) has been used in the regular expression, the
+search engine can backtrack and retry the match differently
+in the hope of matching the complete regular expression.</p>
+<p>The pattern really, <i>really</i> wants to succeed, so it uses the
+standard pattern back-off-and-retry and lets <code class="inline">\<span class="w">D</span>*</code>
+ expand to just "AB" this
+time.  Now there's indeed something following "AB" that is not
+"123".  It's "C123", which suffices.</p>
+<p>We can deal with this by using both an assertion and a negation.
+We'll say that the first part in $1 must be followed both by a digit
+and by something that's not "123".  Remember that the look-aheads
+are zero-width expressions--they only look, but don't consume any
+of the string in their match.  So rewriting this way produces what
+you'd expect; that is, case 5 will fail, but case 6 succeeds:</p>
+<pre class="verbatim">    <a class="l_k" href="functions/print.html">print</a> <span class="q">&quot;5: got $1\n&quot;</span> if <span class="i">$x</span> =~ <span class="q">/^(\D*)(?=\d)(?!123)/</span><span class="sc">;</span>
+    <a class="l_k" href="functions/print.html">print</a> <span class="q">&quot;6: got $1\n&quot;</span> if <span class="i">$y</span> =~ <span class="q">/^(\D*)(?=\d)(?!123)/</span><span class="sc">;</span></pre>
+<pre class="verbatim">    6: got ABC</pre><p>In other words, the two zero-width assertions next to each other work as though
+they're ANDed together, just as you'd use any built-in assertions:  <code class="inline"><span class="q">/^$/</span></code>
+
+matches only if you're at the beginning of the line AND the end of the
+line simultaneously.  The deeper underlying truth is that juxtaposition in
+regular expressions always means AND, except when you write an explicit OR
+using the vertical bar.  <code class="inline"><span class="q">/ab/</span></code>
+ means match "a" AND (then) match "b",
+although the attempted matches are made at different positions because "a"
+is not a zero-width assertion, but a one-width assertion.</p>
+<p><b>WARNING</b>: Particularly complicated regular expressions can take
+exponential time to solve because of the immense number of possible
+ways they can use backtracking to try for a match.  For example, without
+internal optimizations done by the regular expression engine, this will
+take a painfully long time to run:</p>
+<pre class="verbatim">    <span class="q">&#39;aaaaaaaaaaaa&#39;</span> =~ <span class="q">/((a{0,5}){0,5})*[c]/</span></pre>
+<p>And if you used <code class="inline"><span class="i">*</span></code>
+'s in the internal groups instead of limiting them
+to 0 through 5 matches, then it would take forever--or until you ran
+out of stack space.  Moreover, these internal optimizations are not
+always applicable.  For example, if you put <code class="inline"><span class="s">{</span><span class="n">0</span><span class="cm">,</span><span class="n">5</span><span class="s">}</span></code>
+ instead of <code class="inline"><span class="i">*</span></code>
+
+on the external group, no current optimization is applicable, and the
+match takes a long time to finish.</p>
+<p>A powerful tool for optimizing such beasts is what is known as an
+"independent group",
+which does not backtrack (see <i>"look-behind assertions will not backtrack to make the tail match, since they are in "logical" context: only whether they match is considered relevant. For an example where side-effects of look-ahead &lt;i&gt;might&lt;/i&gt; have influenced the following match, see &lt;i&gt;"code&gt;" in &lt;code class="inline"&gt;(?&gt;pattern)&gt;&gt;&gt;.&lt;&lt;/i&gt;</code>" in <code class="inline">(?&gt;pattern)&gt;&gt;&gt;). Note also that zero-length look-ahead</i></p>
+<a name="Version-8-Regular-Expressions"></a><h2>Version 8 Regular Expressions
+  </h2>
+<p>In case you're not familiar with the "regular" Version 8 regex
+routines, here are the pattern-matching rules not described above.</p>
+<p>Any single character matches itself, unless it is a <i>metacharacter</i>
+with a special meaning described here or above.  You can cause
+characters that normally function as metacharacters to be interpreted
+literally by prefixing them with a "\" (e.g., "\." matches a ".", not any
+character; "\\" matches a "\"). This escape mechanism is also required
+for the character used as the pattern delimiter.</p>
+<p>A series of characters matches that series of characters in the target
+string, so the pattern  <code class="inline"><span class="w">blurfl</span></code>
+ would match "blurfl" in the target
+string.</p>
+<p>You can specify a character class, by enclosing a list of characters
+in <code class="inline"><span class="s">[</span><span class="s">]</span></code>
+, which will match any character from the list.  If the
+first character after the "[" is "^", the class matches any character not
+in the list.  Within a list, the "-" character specifies a
+range, so that <code class="inline"><span class="w">a</span>-z</code>
+ represents all characters between "a" and "z",
+inclusive.  If you want either "-" or "]" itself to be a member of a
+class, put it at the start of the list (possibly after a "^"), or
+escape it with a backslash.  "-" is also taken literally when it is
+at the end of the list, just before the closing "]".  (The
+following all specify the same class of three characters: <code class="inline"><span class="s">[</span>-<span class="w">az</span><span class="s">]</span></code>
+,
+<code class="inline"><span class="s">[</span><span class="w">az</span>-<span class="s">]</span></code>
+, and <code class="inline"><span class="s">[</span><span class="w">a</span>\-z<span class="s">]</span></code>
+.  All are different from <code class="inline"><span class="s">[</span><span class="w">a</span>-z<span class="s">]</span></code>
+, which
+specifies a class containing twenty-six characters, even on EBCDIC-based
+character sets.)  Also, if you try to use the character
+classes <code class="inline">\<span class="w">w</span></code>
+, <code class="inline">\<span class="w">W</span></code>
+, <code class="inline">\s</code>, <code class="inline">\<span class="w">S</span></code>
+, <code class="inline">\<span class="w">d</span></code>
+, or <code class="inline">\<span class="w">D</span></code>
+ as endpoints of
+a range, the "-" is understood literally.</p>
+<p>Note also that the whole range idea is rather unportable between
+character sets--and even within character sets they may cause results
+you probably didn't expect.  A sound principle is to use only ranges
+that begin from and end at either alphabetics of equal case ([a-e],
+[A-E]), or digits ([0-9]).  Anything else is unsafe.  If in doubt,
+spell out the character sets in full.</p>
+<p>Characters may be specified using a metacharacter syntax much like that
+used in C: "\n" matches a newline, "\t" a tab, "\r" a carriage return,
+"\f" a form feed, etc.  More generally, \<i>nnn</i>, where <i>nnn</i> is a string
+of octal digits, matches the character whose coded character set value
+is <i>nnn</i>.  Similarly, \x<i>nn</i>, where <i>nn</i> are hexadecimal digits,
+matches the character whose numeric value is <i>nn</i>. The expression \c<i>x</i>
+matches the character control-<i>x</i>.  Finally, the "." metacharacter
+matches any character except "\n" (unless you use <code class="inline">/s</code>).</p>
+<p>You can specify a series of alternatives for a pattern using "|" to
+separate them, so that <code class="inline"><span class="w">fee</span>|<span class="w">fie</span>|<span class="w">foe</span></code>
+ will match any of "fee", "fie",
+or "foe" in the target string (as would <code class="inline">f(e|i|o)e</code>).  The
+first alternative includes everything from the last pattern delimiter
+("(", "[", or the beginning of the pattern) up to the first "|", and
+the last alternative contains everything from the last "|" to the next
+pattern delimiter.  That's why it's common practice to include
+alternatives in parentheses: to minimize confusion about where they
+start and end.</p>
+<p>Alternatives are tried from left to right, so the first
+alternative found for which the entire expression matches, is the one that
+is chosen. This means that alternatives are not necessarily greedy. For
+example: when matching <code class="inline"><span class="w">foo</span>|<span class="w">foot</span></code>
+ against "barefoot", only the "foo"
+part will match, as that is the first alternative tried, and it successfully
+matches the target string. (This might not seem important, but it is
+important when you are capturing matched text using parentheses.)</p>
+<p>Also remember that "|" is interpreted as a literal within square brackets,
+so if you write <code class="inline"><span class="s">[</span><span class="w">fee</span>|<span class="w">fie</span>|<span class="w">foe</span><span class="s">]</span></code>
+ you're really only matching <code class="inline"><span class="s">[</span><span class="w">feio</span>|<span class="s">]</span></code>
+.</p>
+<p>Within a pattern, you may designate subpatterns for later reference
+by enclosing them in parentheses, and you may refer back to the
+<i>n</i>th subpattern later in the pattern using the metacharacter
+\<i>n</i>.  Subpatterns are numbered based on the left to right order
+of their opening parenthesis.  A backreference matches whatever
+actually matched the subpattern in the string being examined, not
+the rules for that subpattern.  Therefore, <code class="inline">(0|0x)\d*\s\1\d*</code> will
+match "0x1234 0x4321", but not "0x1234 01234", because subpattern
+1 matched "0x", even though the rule <code class="inline"><span class="n">0</span>|<span class="n">0</span>x</code>
+ could potentially match
+the leading 0 in the second number.</p>
+<a name="Warning-on-0x5c1-Instead-of-0x241"></a><h2>Warning on \1 Instead of $1</h2>
+<p>Some people get too used to writing things like:</p>
+<pre class="verbatim">    <span class="i">$pattern</span> =~ <span class="q">s/(\W)/\\\1/g</span><span class="sc">;</span></pre>
+<p>This is grandfathered for the RHS of a substitute to avoid shocking the
+<b>sed</b> addicts, but it's a dirty habit to get into.  That's because in
+PerlThink, the righthand side of an <code class="inline"><a class="l_k" href="functions/s.html">s///</a></code> is a double-quoted string.  <code class="inline">\<span class="n">1</span></code>
+ in
+the usual double-quoted string means a control-A.  The customary Unix
+meaning of <code class="inline">\<span class="n">1</span></code>
+ is kludged in for <code class="inline"><a class="l_k" href="functions/s.html">s///</a></code>.  However, if you get into the habit
+of doing that, you get yourself into trouble if you then add an <code class="inline">/e</code>
+modifier.</p>
+<pre class="verbatim">    <span class="q">s/(\d+)/ \1 + 1 /eg</span><span class="sc">;</span>    	<span class="c"># causes warning under -w</span></pre>
+<p>Or if you try to do</p>
+<pre class="verbatim">    <span class="q">s/(\d+)/\1000/</span><span class="sc">;</span></pre>
+<p>You can't disambiguate that by saying <code class="inline">\<span class="s">{</span><span class="n">1</span><span class="s">}</span><span class="n">000</span></code>
+, whereas you can fix it with
+<code class="inline">${1}000</code>.  The operation of interpolation should not be confused
+with the operation of matching a backreference.  Certainly they mean two
+different things on the <i>left</i> side of the <code class="inline"><a class="l_k" href="functions/s.html">s///</a></code>.</p>
+<a name="Repeated-Patterns-Matching-a-Zero-length-Substring"></a><h2>Repeated Patterns Matching a Zero-length Substring</h2>
+<p><b>WARNING</b>: Difficult material (and prose) ahead.  This section needs a rewrite.</p>
+<p>Regular expressions provide a terse and powerful programming language.  As
+with most other power tools, power comes together with the ability
+to wreak havoc.</p>
+<p>A common abuse of this power stems from the ability to make infinite
+loops using regular expressions, with something as innocuous as:</p>
+<pre class="verbatim">    <span class="q">&#39;foo&#39;</span> =~ <span class="q">m{ ( o? )* }x</span><span class="sc">;</span></pre>
+<p>The <code class="inline">o?</code> matches at the beginning of <code class="inline"><span class="q">&#39;foo&#39;</span></code>
+, and since the position
+in the string is not moved by the match, <code class="inline">o?</code> would match again and again
+because of the <code class="inline"><span class="i">*</span></code>
+ quantifier.  Another common way to create a similar cycle
+is with the looping modifier <code class="inline"><span class="q">//g</span></code>
+:</p>
+<pre class="verbatim">    <span class="i">@matches</span> = <span class="s">(</span> <span class="q">&#39;foo&#39;</span> =~ <span class="q">m{ o? }xg</span> <span class="s">)</span><span class="sc">;</span></pre>
+<p>or</p>
+<pre class="verbatim">    <a class="l_k" href="functions/print.html">print</a> <span class="q">&quot;match: &lt;$&amp;&gt;\n&quot;</span> while <span class="q">&#39;foo&#39;</span> =~ <span class="q">m{ o? }xg</span><span class="sc">;</span></pre>
+<p>or the loop implied by split().</p>
+<p>However, long experience has shown that many programming tasks may
+be significantly simplified by using repeated subexpressions that
+may match zero-length substrings.  Here's a simple example being:</p>
+<pre class="verbatim">    <span class="i">@chars</span> = <a class="l_k" href="functions/split.html">split</a> <span class="q">//</span><span class="cm">,</span> <span class="i">$string</span><span class="sc">;</span>		  <span class="c"># // is not magic in split</span>
+    <span class="s">(</span><span class="i">$whitewashed</span> = <span class="i">$string</span><span class="s">)</span> =~ <span class="q">s/()/ /g</span><span class="sc">;</span> <span class="c"># parens avoid magic s// /</span></pre>
+<p>Thus Perl allows such constructs, by <i>forcefully breaking
+the infinite loop</i>.  The rules for this are different for lower-level
+loops given by the greedy quantifiers <code class="inline"><span class="i">*+</span>{}</code>
+, and for higher-level
+ones like the <code class="inline">/g</code> modifier or split() operator.</p>
+<p>The lower-level loops are <i>interrupted</i> (that is, the loop is
+broken) when Perl detects that a repeated expression matched a
+zero-length substring.   Thus</p>
+<pre class="verbatim">   <span class="q">m{ (?: NON_ZERO_LENGTH | ZERO_LENGTH )* }x</span><span class="sc">;</span></pre>
+<p>is made equivalent to</p>
+<pre class="verbatim">   <span class="q">m{   (?: NON_ZERO_LENGTH )*</span>
+      <span class="q">      |</span>
+        <span class="q">        (?: ZERO_LENGTH )?</span>
+    <span class="q">    }x</span><span class="sc">;</span></pre>
+<p>The higher level-loops preserve an additional state between iterations:
+whether the last match was zero-length.  To break the loop, the following
+match after a zero-length match is prohibited to have a length of zero.
+This prohibition interacts with backtracking (see <a href="#Backtracking">"Backtracking"</a>),
+and so the <i>second best</i> match is chosen if the <i>best</i> match is of
+zero length.</p>
+<p>For example:</p>
+<pre class="verbatim">    <span class="i">$_</span> = <span class="q">&#39;bar&#39;</span><span class="sc">;</span>
+    <span class="q">s/\w??/&lt;$&amp;&gt;/g</span><span class="sc">;</span></pre>
+<p>results in <code class="inline">&lt;&gt;&lt;<span class="w">b</span>&gt;&lt;&gt;&lt;<span class="w">a</span>&gt;&lt;&gt;&lt;<span class="w">r</span>&gt;&lt;&gt;</code>
+.  At each position of the string the best
+match given by non-greedy <code class="inline"><span class="q">??</span></code>
+ is the zero-length match, and the <i>second
+best</i> match is what is matched by <code class="inline">\<span class="w">w</span></code>
+.  Thus zero-length matches
+alternate with one-character-long matches.</p>
+<p>Similarly, for repeated <code class="inline"><a class="l_k" href="functions/m.html">m/()/g</a></code> the second-best match is the match at the
+position one notch further in the string.</p>
+<p>The additional state of being <i>matched with zero-length</i> is associated with
+the matched string, and is reset by each assignment to pos().
+Zero-length matches at the end of the previous match are ignored
+during <code class="inline"><a class="l_k" href="functions/split.html">split</a></code>.</p>
+<a name="Combining-RE-Pieces"></a><h2>Combining RE Pieces</h2>
+<p>Each of the elementary pieces of regular expressions which were described
+before (such as <code class="inline"><span class="w">ab</span></code>
+ or <code class="inline">\<span class="w">Z</span></code>
+) could match at most one substring
+at the given position of the input string.  However, in a typical regular
+expression these elementary pieces are combined into more complicated
+patterns using combining operators <code class="inline"><span class="w">ST</span></code>
+, <code class="inline"><span class="w">S</span>|<span class="w">T</span></code>
+, <code class="inline"><span class="w">S</span>*</code>
+ etc
+(in these examples <code class="inline"><span class="w">S</span></code>
+ and <code class="inline"><span class="w">T</span></code>
+ are regular subexpressions).</p>
+<p>Such combinations can include alternatives, leading to a problem of choice:
+if we match a regular expression <code class="inline"><span class="w">a</span>|<span class="w">ab</span></code>
+ against <code class="inline"><span class="q">&quot;abc&quot;</span></code>
+, will it match
+substring <code class="inline"><span class="q">&quot;a&quot;</span></code>
+ or <code class="inline"><span class="q">&quot;ab&quot;</span></code>
+?  One way to describe which substring is
+actually matched is the concept of backtracking (see <a href="#Backtracking">"Backtracking"</a>).
+However, this description is too low-level and makes you think
+in terms of a particular implementation.</p>
+<p>Another description starts with notions of "better"/"worse".  All the
+substrings which may be matched by the given regular expression can be
+sorted from the "best" match to the "worst" match, and it is the "best"
+match which is chosen.  This substitutes the question of "what is chosen?"
+by the question of "which matches are better, and which are worse?".</p>
+<p>Again, for elementary pieces there is no such question, since at most
+one match at a given position is possible.  This section describes the
+notion of better/worse for combining operators.  In the description
+below <code class="inline"><span class="w">S</span></code>
+ and <code class="inline"><span class="w">T</span></code>
+ are regular subexpressions.</p>
+<ul>
+<li><a name="'ST'"></a><b><code class="inline"><span class="w">ST</span></code>
+</b>
+<p>Consider two possible matches, <code class="inline"><span class="w">AB</span></code>
+ and <code class="inline">A'B'</code>, <code class="inline"><span class="w">A</span></code>
+ and <code class="inline">A'</code> are
+substrings which can be matched by <code class="inline"><span class="w">S</span></code>
+, <code class="inline"><span class="w">B</span></code>
+ and <code class="inline">B'</code> are substrings
+which can be matched by <code class="inline"><span class="w">T</span></code>
+.</p>
+<p>If <code class="inline"><span class="w">A</span></code>
+ is better match for <code class="inline"><span class="w">S</span></code>
+ than <code class="inline">A'</code>, <code class="inline"><span class="w">AB</span></code>
+ is a better
+match than <code class="inline">A'B'</code>.</p>
+<p>If <code class="inline"><span class="w">A</span></code>
+ and <code class="inline">A'</code> coincide: <code class="inline"><span class="w">AB</span></code>
+ is a better match than <code class="inline">AB'</code> if
+<code class="inline"><span class="w">B</span></code>
+ is better match for <code class="inline"><span class="w">T</span></code>
+ than <code class="inline">B'</code>.</p>
+</li>
+<li><a name="'S0x7cT'"></a><b><code class="inline"><span class="w">S</span>|<span class="w">T</span></code>
+</b>
+<p>When <code class="inline"><span class="w">S</span></code>
+ can match, it is a better match than when only <code class="inline"><span class="w">T</span></code>
+ can match.</p>
+<p>Ordering of two matches for <code class="inline"><span class="w">S</span></code>
+ is the same as for <code class="inline"><span class="w">S</span></code>
+.  Similar for
+two matches for <code class="inline"><span class="w">T</span></code>
+.</p>
+</li>
+<li><a name="'S0x7bREPEAT_COUNT0x7d'"></a><b><code class="inline"><span class="i">S</span><span class="s">{</span><span class="w">REPEAT_COUNT</span><span class="s">}</span></code>
+</b>
+<p>Matches as <code class="inline"><span class="w">SSS</span>...<span class="w">S</span></code>
+ (repeated as many times as necessary).</p>
+</li>
+<li><a name="'S0x7bmin0x2cmax0x7d'"></a><b><code class="inline"><span class="w">S</span><span class="s">{</span><span class="w">min</span><span class="cm">,</span><span class="w">max</span><span class="s">}</span></code>
+</b>
+<p>Matches as <code class="inline">S{max}|S{max-1}|...|S{min+1}|S{min}</code>.</p>
+</li>
+<li><a name="'S0x7bmin0x2cmax0x7d0x3f'"></a><b><code class="inline">S{min,max}?</code></b>
+<p>Matches as <code class="inline">S{min}|S{min+1}|...|S{max-1}|S{max}</code>.</p>
+</li>
+<li><a name="'S0x3f'0x2c-'S*'0x2c-'S0x2b'"></a><b><code class="inline">S?</code>, <code class="inline"><span class="w">S</span>*</code>
+, <code class="inline"><span class="w">S</span>+</code>
+</b>
+<p>Same as <code class="inline"><span class="w">S</span><span class="s">{</span><span class="n">0</span><span class="cm">,</span><span class="n">1</span><span class="s">}</span></code>
+, <code class="inline"><span class="w">S</span><span class="s">{</span><span class="n">0</span><span class="cm">,</span><span class="w">BIG_NUMBER</span><span class="s">}</span></code>
+, <code class="inline"><span class="w">S</span><span class="s">{</span><span class="n">1</span><span class="cm">,</span><span class="w">BIG_NUMBER</span><span class="s">}</span></code>
+ respectively.</p>
+</li>
+<li><a name="'S0x3f0x3f'0x2c-'S*0x3f'0x2c-'S0x2b0x3f'"></a><b><code class="inline"><span class="w">S</span><span class="q">??</span></code>
+, <code class="inline">S*?</code>, <code class="inline">S+?</code></b>
+<p>Same as <code class="inline">S{0,1}?</code>, <code class="inline">S{0,BIG_NUMBER}?</code>, <code class="inline">S{1,BIG_NUMBER}?</code> respectively.</p>
+</li>
+<li><a name="'(0x3f0x3eS)'"></a><b><code class="inline">(?&gt;S)</code></b>
+<p>Matches the best match for <code class="inline"><span class="w">S</span></code>
+ and only that.</p>
+</li>
+<li><a name="'(0x3f0x3dS)'0x2c-'(0x3f0x3c0x3dS)'"></a><b><code class="inline">(?=S)</code>, <code class="inline">(?&lt;=S)</code></b>
+<p>Only the best match for <code class="inline"><span class="w">S</span></code>
+ is considered.  (This is important only if
+<code class="inline"><span class="w">S</span></code>
+ has capturing parentheses, and backreferences are used somewhere
+else in the whole regular expression.)</p>
+</li>
+<li><a name="'(0x3f!S)'0x2c-'(0x3f0x3c!S)'"></a><b><code class="inline">(?!S)</code>, <code class="inline">(?&lt;!S)</code></b>
+<p>For this grouping operator there is no need to describe the ordering, since
+only whether or not <code class="inline"><span class="w">S</span></code>
+ can match is important.</p>
+</li>
+<li><a name="'(0x3f0x3f0x7b-EXPR-0x7d)'0x2c-'(0x3fPARNO)'"></a><b><code class="inline"><span class="s">(</span><span class="q">??</span><span class="s">{</span> <span class="w">EXPR</span> <span class="s">}</span><span class="s">)</span></code>
+, <code class="inline">(?PARNO)</code></b>
+<p>The ordering is the same as for the regular expression which is
+the result of EXPR, or the pattern contained by capture buffer PARNO.</p>
+</li>
+<li><a name="'(0x3f(condition)yes-pattern0x7cno-pattern)'"></a><b><code class="inline">(?(condition)yes-pattern|no-pattern)</code></b>
+<p>Recall that which of <code class="inline"><span class="w">yes</span>-<span class="w">pattern</span></code>
+ or <code class="inline"><a class="l_k" href="functions/no.html">no-pattern</a></code> actually matches is
+already determined.  The ordering of the matches is the same as for the
+chosen subexpression.</p>
+</li>
+</ul>
+<p>The above recipes describe the ordering of matches <i>at a given position</i>.
+One more rule is needed to understand how a match is determined for the
+whole regular expression: a match at an earlier position is always better
+than a match at a later position.</p>
+<a name="Creating-Custom-RE-Engines"></a><h2>Creating Custom RE Engines</h2>
+<p>Overloaded constants (see <a href="overload.html">overload</a>) provide a simple way to extend
+the functionality of the RE engine.</p>
+<p>Suppose that we want to enable a new RE escape-sequence <code class="inline">\<span class="w">Y</span>|</code>
+ which
+matches at a boundary between whitespace characters and non-whitespace
+characters.  Note that <code class="inline"><span class="s">(</span><span class="q">?=\S)(?</span>&lt;!\<span class="w">S</span><span class="s">)</span>|<span class="s">(</span><span class="q">?!\S)(?</span>&lt;=\<span class="w">S</span><span class="s">)</span></code>
+ matches exactly
+at these positions, so we want to have each <code class="inline">\<span class="w">Y</span>|</code>
+ in the place of the
+more complicated version.  We can create a module <code class="inline"><span class="w">customre</span></code>
+ to do
+this:</p>
+<pre class="verbatim"><a name="package-customre"></a>    package <span class="i">customre</span><span class="sc">;</span>
+    <a class="l_k" href="functions/use.html">use</a> <span class="w">overload</span><span class="sc">;</span></pre>
+<pre class="verbatim"><a name="import"></a>    sub <span class="m">import</span> <span class="s">{</span>
+      <a class="l_k" href="functions/shift.html">shift</a><span class="sc">;</span>
+      <a class="l_k" href="functions/die.html">die</a> <span class="q">&quot;No argument to customre::import allowed&quot;</span> if <span class="i">@_</span><span class="sc">;</span>
+      <span class="w">overload::constant</span> <span class="q">&#39;qr&#39;</span> <span class="cm">=&gt;</span> \<span class="i">&amp;convert</span><span class="sc">;</span>
+    <span class="s">}</span></pre>
+<pre class="verbatim"><a name="invalid"></a>    sub <span class="m">invalid</span> <span class="s">{</span> <a class="l_k" href="functions/die.html">die</a> <span class="q">&quot;/$_[0]/: invalid escape &#39;\\$_[1]&#39;&quot;</span><span class="s">}</span></pre>
+<pre class="verbatim">    <span class="c"># We must also take care of not escaping the legitimate \\Y|</span>
+    <span class="c"># sequence, hence the presence of '\\' in the conversion rules.</span>
+    <a class="l_k" href="functions/my.html">my</a> <span class="i">%rules</span> = <span class="s">(</span> <span class="q">'\\'</span> <span class="cm">=&gt;</span> <span class="q">'\\\\'</span><span class="cm">,</span>
+		  <span class="q">'Y|'</span> <span class="cm">=&gt;</span> <span class="q">qr/(?=\S)(?&lt;!\S)|(?!\S)(?&lt;=\S)/</span> <span class="s">)</span><span class="sc">;</span>
+<a name="convert"></a>    sub <span class="m">convert</span> <span class="s">{</span>
+      <a class="l_k" href="functions/my.html">my</a> <span class="i">$re</span> = <a class="l_k" href="functions/shift.html">shift</a><span class="sc">;</span>
+      <span class="i">$re</span> =~ <span class="q">s{</span>
+                <span class="q">                \\ ( \\ | Y . )</span>
+              <span class="q">              }</span>
+              <span class="q">              { $rules{$1} or invalid($re,$1) }sgex</span><span class="sc">;</span>
+      <a class="l_k" href="functions/return.html">return</a> <span class="i">$re</span><span class="sc">;</span>
+    <span class="s">}</span></pre>
+<p>Now <code class="inline"><a class="l_k" href="functions/use.html">use</a> <span class="w">customre</span></code>
+ enables the new escape in constant regular
+expressions, i.e., those without any runtime variable interpolations.
+As documented in <a href="overload.html">overload</a>, this conversion will work only over
+literal parts of regular expressions.  For <code class="inline">\<span class="w">Y</span>|<span class="i">$re</span>\<span class="w">Y</span>|</code>
+ the variable
+part of this regular expression needs to be converted explicitly
+(but only if the special meaning of <code class="inline">\<span class="w">Y</span>|</code>
+ should be enabled inside $re):</p>
+<pre class="verbatim">    <a class="l_k" href="functions/use.html">use</a> <span class="w">customre</span><span class="sc">;</span>
+    <span class="i">$re</span> = &lt;&gt;<span class="sc">;</span>
+    <a class="l_k" href="functions/chomp.html">chomp</a> <span class="i">$re</span><span class="sc">;</span>
+    <span class="i">$re</span> = <span class="w">customre::convert</span> <span class="i">$re</span><span class="sc">;</span>
+    <span class="q">/\Y|$re\Y|/</span><span class="sc">;</span></pre>
+<a name="PCRE0x2fPython-Support"></a><h1>PCRE/Python Support</h1>
+<p>As of Perl 5.10.0, Perl supports several Python/PCRE specific extensions
+to the regex syntax. While Perl programmers are encouraged to use the
+Perl specific syntax, the following are also accepted:</p>
+<ul>
+<li><a name="'(0x3fP0x3cNAME0x3epattern)'"></a><b><code class="inline">(?P&lt;NAME&gt;pattern)</code></b>
+<p>Define a named capture buffer. Equivalent to <code class="inline">(?&lt;NAME&gt;pattern)</code>.</p>
+</li>
+<li><a name="'(0x3fP0x3dNAME)'"></a><b><code class="inline">(?P=NAME)</code></b>
+<p>Backreference to a named capture buffer. Equivalent to <code class="inline">\<span class="i">g</span><span class="s">{</span><span class="w">NAME</span><span class="s">}</span></code>
+.</p>
+</li>
+<li><a name="'(0x3fP0x3eNAME)'"></a><b><code class="inline">(?P&gt;NAME)</code></b>
+<p>Subroutine call to a named capture buffer. Equivalent to <code class="inline">(?&amp;NAME)</code>.</p>
+</li>
+</ul>
+<a name="BUGS"></a><h1>BUGS</h1>
+<p>This document varies from difficult to understand to completely
+and utterly opaque.  The wandering prose riddled with jargon is
+hard to fathom in several places.</p>
+<p>This document needs a rewrite that separates the tutorial content
+from the reference content.</p>
+<a name="SEE-ALSO"></a><h1>SEE ALSO</h1>
+<p><a href="perlrequick.html">perlrequick</a>.</p>
+<p><a href="perlretut.html">perlretut</a>.</p>
+<p><a href="perlop.html#Regexp-Quote-Like-Operators">"Regexp Quote-Like Operators" in perlop</a>.</p>
+<p><a href="perlop.html#Gory-details-of-parsing-quoted-constructs">"Gory details of parsing quoted constructs" in perlop</a>.</p>
+<p><a href="perlfaq6.html">perlfaq6</a>.</p>
+<p><a href="functions/pos.html">pos</a>.</p>
+<p><a href="perllocale.html">perllocale</a>.</p>
+<p><a href="perlebcdic.html">perlebcdic</a>.</p>
+<p><i>Mastering Regular Expressions</i> by Jeffrey Friedl, published
+by O'Reilly and Associates.</p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='close_purple.gif';" onmouseout="rightCloseIcon.src='close_blue.gif';"><img src="close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('perlre','perlre.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

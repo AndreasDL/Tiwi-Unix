@@ -1,0 +1,281 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>CPANPLUS::Dist::Build - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 2;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../../close_purple.gif';" onmouseout="leftCloseIcon.src='../../close_blue.gif';"><img src="../../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../../index-overview.html">Overview</a></li>
+        <li><a href="../../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../../index-faq.html">FAQs</a></li>
+        <li><a href="../../index-history.html">History / Changes</a></li>
+        <li><a href="../../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../../index-language.html">Language</a></li>
+        <li><a href="../../index-functions.html">Functions</a></li>
+        <li><a href="../../perlop.html">Operators</a></li>
+        <li><a href="../../perlvar.html">Special variables</a></li>
+        <li><a href="../../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../../index-modules-A.html">Core modules</a></li>
+        <li><a href="../../index-utilities.html">Utilities</a></li>
+        <li><a href="../../index-internals.html">Internals</a></li>
+        <li><a href="../../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../../index.html">Home</a> &gt; <a href="../../index-modules-A.html">Core modules</a> &gt; <a href="../../index-modules-C.html">C</a> &gt; CPANPLUS::Dist::Build</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">CPANPLUS::Dist::Build</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><li><a href="#ACCESSORS">ACCESSORS</a><li><a href="#STATUS-ACCESSORS">STATUS ACCESSORS</a><li><a href="#METHODS">METHODS</a><ul><li><a href="#0x24bool-0x3d-CPANPLUS0x3a0x3aDist0x3a0x3aBuild-0x3eformat_available()0x3b">$bool = CPANPLUS::Dist::Build-&gt;format_available();</a><li><a href="#0x24bool-0x3d-0x24dist-0x3einit()0x3b">$bool = $dist-&gt;init();</a><li><a href="#0x24bool-0x3d-0x24dist-0x3eprepare(0x5bperl-0x3d0x3e-'0x2fpath0x2fto0x2fperl'0x2c-buildflags-0x3d0x3e-'EXTRA0x3dFLAGS'0x2c-force-0x3d0x3e-BOOL0x2c-verbose-0x3d0x3e-BOOL0x5d)">$bool = $dist-&gt;prepare([perl =&gt; '/path/to/perl', buildflags =&gt; 'EXTRA=FLAGS', force =&gt; BOOL, verbose =&gt; BOOL])</a><li><a href="#0x24dist-0x3ecreate(0x5bperl-0x3d0x3e-'0x2fpath0x2fto0x2fperl'0x2c-buildflags-0x3d0x3e-'EXTRA0x3dFLAGS'0x2c-prereq_target-0x3d0x3e-TARGET0x2c-force-0x3d0x3e-BOOL0x2c-verbose-0x3d0x3e-BOOL0x2c-skiptest-0x3d0x3e-BOOL0x5d)">$dist-&gt;create([perl =&gt; '/path/to/perl', buildflags =&gt; 'EXTRA=FLAGS', prereq_target =&gt; TARGET, force =&gt; BOOL, verbose =&gt; BOOL, skiptest =&gt; BOOL])</a><li><a href="#0x24dist-0x3einstall(0x5bverbose-0x3d0x3e-BOOL0x2c-perl-0x3d0x3e-0x2fpath0x2fto0x2fperl0x5d)">$dist-&gt;install([verbose =&gt; BOOL, perl =&gt; /path/to/perl])</a></ul><li><a href="#KNOWN-ISSUES">KNOWN ISSUES</a><li><a href="#AUTHOR">AUTHOR</a><li><a href="#COPYRIGHT">COPYRIGHT</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>CPANPLUS::Dist::Build</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">    <a class="l_k" href="../../functions/my.html">my</a> <span class="i">$build</span> = <span class="w">CPANPLUS::Dist</span><span class="w">-&gt;new</span><span class="s">(</span>
+                                <span class="w">format</span>  <span class="cm">=&gt;</span> <span class="q">'CPANPLUS::Dist::Build'</span><span class="cm">,</span>
+                                <span class="w">module</span>  <span class="cm">=&gt;</span> <span class="i">$modobj</span><span class="cm">,</span>
+                            <span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="i">$build</span><span class="i">-&gt;prepare</span><span class="sc">;</span>    <span class="c"># runs Module::Build-&gt;new_from_context;                            </span>
+    <span class="i">$build</span><span class="i">-&gt;create</span><span class="sc">;</span>     <span class="c"># runs build &amp;&amp; build test</span>
+    <span class="i">$build</span><span class="i">-&gt;install</span><span class="sc">;</span>    <span class="c"># runs build install</span></pre>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p><code class="inline"><span class="w">CPANPLUS::Dist::Build</span></code>
+ is a distribution class for <code class="inline"><span class="w">Module::Build</span></code>
+
+related modules.
+Using this package, you can create, install and uninstall perl
+modules. It inherits from <code class="inline"><span class="w">CPANPLUS::Dist</span></code>
+.</p>
+<p>Normal users won't have to worry about the interface to this module,
+as it functions transparently as a plug-in to <code class="inline"><span class="w">CPANPLUS</span></code>
+ and will 
+just <code class="inline"><span class="w">Do</span> <span class="w">The</span> <span class="w">Right</span> <span class="w">Thing</span></code>
+ when it's loaded.</p>
+<a name="ACCESSORS"></a><h1>ACCESSORS</h1>
+<ul>
+<li><a name="parent()"></a><b>parent()</b>
+<p>Returns the <code class="inline"><span class="w">CPANPLUS::Module</span></code>
+ object that parented this object.</p>
+</li>
+<li><a name="status()"></a><b>status()</b>
+<p>Returns the <code class="inline"><span class="w">Object::Accessor</span></code>
+ object that keeps the status for
+this module.</p>
+</li>
+</ul>
+<a name="STATUS-ACCESSORS"></a><h1>STATUS ACCESSORS</h1>
+<p>All accessors can be accessed as follows:
+    $build-&gt;status-&gt;ACCESSOR</p>
+<ul>
+<li><a name="build_pl-()"></a><b>build_pl ()</b>
+<p>Location of the Build file.
+Set to 0 explicitly if something went wrong.</p>
+</li>
+<li><a name="build-()"></a><b>build ()</b>
+<p>BOOL indicating if the <code class="inline"><span class="w">Build</span></code>
+ command was successful.</p>
+</li>
+<li><a name="test-()"></a><b>test ()</b>
+<p>BOOL indicating if the <code class="inline"><span class="w">Build</span> <span class="w">test</span></code>
+ command was successful.</p>
+</li>
+<li><a name="prepared-()"></a><b>prepared ()</b>
+<p>BOOL indicating if the <code class="inline"><span class="w">prepare</span></code>
+ call exited succesfully
+This gets set after <code class="inline"><span class="w">perl</span> <span class="w">Build</span>.<span class="w">PL</span></code>
+</p>
+</li>
+<li><a name="distdir-()"></a><b>distdir ()</b>
+<p>Full path to the directory in which the <code class="inline"><span class="w">prepare</span></code>
+ call took place,
+set after a call to <code class="inline"><span class="w">prepare</span></code>
+.</p>
+</li>
+<li><a name="created-()"></a><b>created ()</b>
+<p>BOOL indicating if the <code class="inline"><span class="w">create</span></code>
+ call exited succesfully. This gets
+set after <code class="inline"><span class="w">Build</span></code>
+ and <code class="inline"><span class="w">Build</span> <span class="w">test</span></code>
+.</p>
+</li>
+<li><a name="installed-()"></a><b>installed ()</b>
+<p>BOOL indicating if the module was installed. This gets set after
+<code class="inline"><span class="w">Build</span> <span class="w">install</span></code>
+ exits successfully.</p>
+</li>
+<li><a name="uninstalled-()"></a><b>uninstalled ()</b>
+<p>BOOL indicating if the module was uninstalled properly.</p>
+</li>
+<li><a name="_create_args-()"></a><b>_create_args ()</b>
+<p>Storage of the arguments passed to <code class="inline"><span class="w">create</span></code>
+ for this object. Used
+for recursive calls when satisfying prerequisites.</p>
+</li>
+<li><a name="_install_args-()"></a><b>_install_args ()</b>
+<p>Storage of the arguments passed to <code class="inline"><span class="w">install</span></code>
+ for this object. Used
+for recursive calls when satisfying prerequisites.</p>
+</li>
+<li><a name="_mb_object-()"></a><b>_mb_object ()</b>
+<p>Storage of the <code class="inline"><span class="w">Module::Build</span></code>
+ object we used for this installation.</p>
+</li>
+</ul>
+<a name="METHODS"></a><h1>METHODS</h1>
+<a name="0x24bool-0x3d-CPANPLUS0x3a0x3aDist0x3a0x3aBuild-0x3eformat_available()0x3b"></a><h2>$bool = CPANPLUS::Dist::Build-&gt;format_available();</h2>
+<p>Returns a boolean indicating whether or not you can use this package
+to create and install modules in your environment.</p>
+<a name="0x24bool-0x3d-0x24dist-0x3einit()0x3b"></a><h2>$bool = $dist-&gt;init();</h2>
+<p>Sets up the <code class="inline"><span class="w">CPANPLUS::Dist::Build</span></code>
+ object for use.
+Effectively creates all the needed status accessors.</p>
+<p>Called automatically whenever you create a new <code class="inline"><span class="w">CPANPLUS::Dist</span></code>
+ object.</p>
+<a name="0x24bool-0x3d-0x24dist-0x3eprepare(0x5bperl-0x3d0x3e-'0x2fpath0x2fto0x2fperl'0x2c-buildflags-0x3d0x3e-'EXTRA0x3dFLAGS'0x2c-force-0x3d0x3e-BOOL0x2c-verbose-0x3d0x3e-BOOL0x5d)"></a><h2>$bool = $dist-&gt;prepare([perl =&gt; '/path/to/perl', buildflags =&gt; 'EXTRA=FLAGS', force =&gt; BOOL, verbose =&gt; BOOL])</h2>
+<p><code class="inline"><span class="w">prepare</span></code>
+ prepares a distribution, running <code class="inline"><span class="w">Module::Build</span></code>
+'s 
+<code class="inline"><span class="w">new_from_context</span></code>
+ method, and establishing any prerequisites this
+distribution has.</p>
+<p>When running <code class="inline"><span class="w">Module::Build</span><span class="w">-&gt;new_from_context</span></code>
+, the environment 
+variable <code class="inline"><span class="w">PERL5_CPANPLUS_IS_EXECUTING</span></code>
+ will be set to the full path 
+of the <code class="inline"><span class="w">Build</span>.<span class="w">PL</span></code>
+ that is being executed. This enables any code inside
+the <code class="inline"><span class="w">Build</span>.<span class="w">PL</span></code>
+ to know that it is being installed via CPANPLUS.</p>
+<p>After a succcesfull <code class="inline"><span class="w">prepare</span></code>
+ you may call <code class="inline"><span class="w">create</span></code>
+ to create the
+distribution, followed by <code class="inline"><span class="w">install</span></code>
+ to actually install it.</p>
+<p>Returns true on success and false on failure.</p>
+<a name="0x24dist-0x3ecreate(0x5bperl-0x3d0x3e-'0x2fpath0x2fto0x2fperl'0x2c-buildflags-0x3d0x3e-'EXTRA0x3dFLAGS'0x2c-prereq_target-0x3d0x3e-TARGET0x2c-force-0x3d0x3e-BOOL0x2c-verbose-0x3d0x3e-BOOL0x2c-skiptest-0x3d0x3e-BOOL0x5d)"></a><h2>$dist-&gt;create([perl =&gt; '/path/to/perl', buildflags =&gt; 'EXTRA=FLAGS', prereq_target =&gt; TARGET, force =&gt; BOOL, verbose =&gt; BOOL, skiptest =&gt; BOOL])</h2>
+<p><code class="inline"><span class="w">create</span></code>
+ preps a distribution for installation. This means it will
+run <code class="inline"><span class="w">Build</span></code>
+ and <code class="inline"><span class="w">Build</span> <span class="w">test</span></code>
+, via the <code class="inline"><span class="w">Module::Build</span></code>
+ API.
+This will also satisfy any prerequisites the module may have.</p>
+<p>If you set <code class="inline"><span class="w">skiptest</span></code>
+ to true, it will skip the <code class="inline"><span class="w">Build</span> <span class="w">test</span></code>
+ stage.
+If you set <code class="inline"><span class="w">force</span></code>
+ to true, it will go over all the stages of the
+<code class="inline"><span class="w">Build</span></code>
+ process again, ignoring any previously cached results. It
+will also ignore a bad return value from <code class="inline"><span class="w">Build</span> <span class="w">test</span></code>
+ and still allow
+the operation to return true.</p>
+<p>Returns true on success and false on failure.</p>
+<p>You may then call <code class="inline"><span class="i">$dist</span><span class="i">-&gt;install</span></code>
+ on the object to actually
+install it.</p>
+<a name="0x24dist-0x3einstall(0x5bverbose-0x3d0x3e-BOOL0x2c-perl-0x3d0x3e-0x2fpath0x2fto0x2fperl0x5d)"></a><h2>$dist-&gt;install([verbose =&gt; BOOL, perl =&gt; /path/to/perl])</h2>
+<p>Actually installs the created dist.</p>
+<p>Returns true on success and false on failure.</p>
+<a name="KNOWN-ISSUES"></a><h1>KNOWN ISSUES</h1>
+<p>Below are some of the known issues with Module::Build, that we hope 
+the authors will resolve at some point, so we can make full use of
+Module::Build's power. 
+The number listed is the bug number on <code class="inline"><span class="w">rt</span>.<span class="w">cpan</span>.<span class="w">org</span></code>
+.</p>
+<ul>
+<li><a name="*-Module0x3a0x3aBuild-can-not-be-upgraded-using-its-own-API-(0x2313169)"></a><b>Module::Build can not be upgraded using its own API (#13169)</b>
+<p>This is due to the fact that the Build file insists on adding a path
+to <code class="inline"><span class="i">@INC</span></code>
+ which force the loading of the <code class="inline">not <span class="w">yet</span> <span class="w">installed</span></code>
+
+Module::Build when it shells out to run it's own build procedure:</p>
+</li>
+<li><a name="*-Module0x3a0x3aBuild-does-not-provide-access-to-install-history-(0x239793)"></a><b>Module::Build does not provide access to install history (#9793)</b>
+<p><code class="inline"><span class="w">Module::Build</span></code>
+ runs the create, test and install procedures in it's
+own processes, but does not provide access to any diagnostic messages of
+those processes. As an end result, we can not offer these diagnostic 
+messages when, for example, reporting automated build failures to sites
+like <code class="inline"><span class="w">testers</span>.<span class="w">cpan</span>.<span class="w">org</span></code>
+.</p>
+</li>
+</ul>
+<a name="AUTHOR"></a><h1>AUTHOR</h1>
+<p>Originally by Jos Boumans &lt;kane@cpan.org&gt;.  Brought to working
+condition and currently maintained by Ken Williams &lt;kwilliams@cpan.org&gt;.</p>
+<a name="COPYRIGHT"></a><h1>COPYRIGHT</h1>
+<p>The CPAN++ interface (of which this module is a part of) is
+copyright (c) 2001, 2002, 2003, 2004, 2005 Jos Boumans &lt;kane@cpan.org&gt;.
+All rights reserved.</p>
+<p>This library is free software;
+you may redistribute and/or modify it under the same
+terms as Perl itself.</p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../../close_purple.gif';" onmouseout="rightCloseIcon.src='../../close_blue.gif';"><img src="../../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('CPANPLUS::Dist::Build','CPANPLUS/Dist/Build.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

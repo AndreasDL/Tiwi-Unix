@@ -1,0 +1,796 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>B - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 0;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='close_purple.gif';" onmouseout="leftCloseIcon.src='close_blue.gif';"><img src="close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="index-overview.html">Overview</a></li>
+        <li><a href="index-tutorials.html">Tutorials</a></li>
+        <li><a href="index-faq.html">FAQs</a></li>
+        <li><a href="index-history.html">History / Changes</a></li>
+        <li><a href="index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="index-language.html">Language</a></li>
+        <li><a href="index-functions.html">Functions</a></li>
+        <li><a href="perlop.html">Operators</a></li>
+        <li><a href="perlvar.html">Special variables</a></li>
+        <li><a href="index-pragmas.html">Pragmas</a></li>
+        <li><a href="index-modules-A.html">Core modules</a></li>
+        <li><a href="index-utilities.html">Utilities</a></li>
+        <li><a href="index-internals.html">Internals</a></li>
+        <li><a href="index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="index.html">Home</a> &gt; <a href="index-modules-A.html">Core modules</a> &gt; <a href="index-modules-B.html">B</a> &gt; B</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">B</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><li><a href="#OVERVIEW">OVERVIEW</a><li><a href="#Utility-Functions">Utility Functions</a><ul><li><a href="#Functions-Returning-'B0x3a0x3aSV'0x2c-'B0x3a0x3aAV'0x2c-'B0x3a0x3aHV'0x2c-and-'B0x3a0x3aCV'-objects">Functions Returning <code class="inline"><span class="w">B::SV</span></code>
+, <code class="inline"><span class="w">B::AV</span></code>
+, <code class="inline"><span class="w">B::HV</span></code>
+, and <code class="inline"><span class="w">B::CV</span></code>
+ objects</a><li><a href="#Functions-for-Examining-the-Symbol-Table">Functions for Examining the Symbol Table</a><li><a href="#Functions-Returning-'B0x3a0x3aOP'-objects-or-for-walking-op-trees">Functions Returning <code class="inline"><span class="w">B::OP</span></code>
+ objects or for walking op trees</a><li><a href="#Miscellaneous-Utility-Functions">Miscellaneous Utility Functions</a><li><a href="#Exported-utility-variabiles">Exported utility variabiles</a></ul><li><a href="#OVERVIEW-OF-CLASSES">OVERVIEW OF CLASSES</a><ul><li><a href="#SV-RELATED-CLASSES">SV-RELATED CLASSES</a><li><a href="#B0x3a0x3aSV-Methods">B::SV Methods</a><li><a href="#B0x3a0x3aIV-Methods">B::IV Methods</a><li><a href="#B0x3a0x3aNV-Methods">B::NV Methods</a><li><a href="#B0x3a0x3aRV-Methods">B::RV Methods</a><li><a href="#B0x3a0x3aPV-Methods">B::PV Methods</a><li><a href="#B0x3a0x3aPVMG-Methods">B::PVMG Methods</a><li><a href="#B0x3a0x3aMAGIC-Methods">B::MAGIC Methods</a><li><a href="#B0x3a0x3aPVLV-Methods">B::PVLV Methods</a><li><a href="#B0x3a0x3aBM-Methods">B::BM Methods</a><li><a href="#B0x3a0x3aGV-Methods">B::GV Methods</a><li><a href="#B0x3a0x3aIO-Methods">B::IO Methods</a><li><a href="#B0x3a0x3aAV-Methods">B::AV Methods</a><li><a href="#B0x3a0x3aCV-Methods">B::CV Methods</a><li><a href="#B0x3a0x3aHV-Methods">B::HV Methods</a><li><a href="#OP-RELATED-CLASSES">OP-RELATED CLASSES</a><li><a href="#B0x3a0x3aOP-Methods">B::OP Methods</a><li><a href="#B0x3a0x3aUNOP-METHOD">B::UNOP METHOD</a><li><a href="#B0x3a0x3aBINOP-METHOD">B::BINOP METHOD</a><li><a href="#B0x3a0x3aLOGOP-METHOD">B::LOGOP METHOD</a><li><a href="#B0x3a0x3aLISTOP-METHOD">B::LISTOP METHOD</a><li><a href="#B0x3a0x3aPMOP-Methods">B::PMOP Methods</a><li><a href="#B0x3a0x3aSVOP-METHOD">B::SVOP METHOD</a><li><a href="#B0x3a0x3aPADOP-METHOD">B::PADOP METHOD</a><li><a href="#B0x3a0x3aPVOP-METHOD">B::PVOP METHOD</a><li><a href="#B0x3a0x3aLOOP-Methods">B::LOOP Methods</a><li><a href="#B0x3a0x3aCOP-Methods">B::COP Methods</a></ul><li><a href="#AUTHOR">AUTHOR</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>B - The Perl Compiler</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">	<a class="l_k" href="functions/use.html">use</a> <span class="w">B</span><span class="sc">;</span></pre>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p>The <code class="inline"><span class="w">B</span></code>
+ module supplies classes which allow a Perl program to delve
+into its own innards. It is the module used to implement the
+"backends" of the Perl compiler. Usage of the compiler does not
+require knowledge of this module: see the <i>O</i> module for the
+user-visible part. The <code class="inline"><span class="w">B</span></code>
+ module is of use to those who want to
+write new compiler backends. This documentation assumes that the
+reader knows a fair amount about perl's internals including such
+things as SVs, OPs and the internal symbol table and syntax tree
+of a program.</p>
+<a name="OVERVIEW"></a><h1>OVERVIEW</h1>
+<p>The <code class="inline"><span class="w">B</span></code>
+ module contains a set of utility functions for querying the
+current state of the Perl interpreter; typically these functions
+return objects from the B::SV and B::OP classes, or their derived
+classes.  These classes in turn define methods for querying the
+resulting objects about their own internal state.</p>
+<a name="Utility-Functions"></a><h1>Utility Functions</h1>
+<p>The <code class="inline"><span class="w">B</span></code>
+ module exports a variety of functions: some are simple
+utility functions, others provide a Perl program with a way to
+get an initial "handle" on an internal object.</p>
+<a name="Functions-Returning-'B0x3a0x3aSV'0x2c-'B0x3a0x3aAV'0x2c-'B0x3a0x3aHV'0x2c-and-'B0x3a0x3aCV'-objects"></a><h2>Functions Returning <code class="inline"><span class="w">B::SV</span></code>
+, <code class="inline"><span class="w">B::AV</span></code>
+, <code class="inline"><span class="w">B::HV</span></code>
+, and <code class="inline"><span class="w">B::CV</span></code>
+ objects</h2>
+<p>For descriptions of the class hierarchy of these objects and the
+methods that can be called on them, see below, <a href="#OVERVIEW-OF-CLASSES">"OVERVIEW OF CLASSES"</a> and <a href="#SV-RELATED-CLASSES">"SV-RELATED CLASSES"</a>.</p>
+<ul>
+<li><a name="sv_undef"></a><b>sv_undef</b>
+<p>Returns the SV object corresponding to the C variable <code class="inline"><span class="w">sv_undef</span></code>
+.</p>
+</li>
+<li><a name="sv_yes"></a><b>sv_yes</b>
+<p>Returns the SV object corresponding to the C variable <code class="inline"><span class="w">sv_yes</span></code>
+.</p>
+</li>
+<li><a name="sv_no"></a><b>sv_no</b>
+<p>Returns the SV object corresponding to the C variable <code class="inline"><span class="w">sv_no</span></code>
+.</p>
+</li>
+<li><a name="svref_2object(SVREF)"></a><b>svref_2object(SVREF)</b>
+<p>Takes a reference to any Perl value, and turns the referred-to value
+into an object in the appropriate B::OP-derived or B::SV-derived
+class. Apart from functions such as <code class="inline"><span class="w">main_root</span></code>
+, this is the primary
+way to get an initial "handle" on an internal perl data structure
+which can then be followed with the other access methods.</p>
+<p>The returned object will only be valid as long as the underlying OPs
+and SVs continue to exist. Do not attempt to use the object after the
+underlying structures are freed.</p>
+</li>
+<li><a name="amagic_generation"></a><b>amagic_generation</b>
+<p>Returns the SV object corresponding to the C variable <code class="inline"><span class="w">amagic_generation</span></code>
+.</p>
+</li>
+<li><a name="init_av"></a><b>init_av</b>
+<p>Returns the AV object (i.e. in class B::AV) representing INIT blocks.</p>
+</li>
+<li><a name="check_av"></a><b>check_av</b>
+<p>Returns the AV object (i.e. in class B::AV) representing CHECK blocks.</p>
+</li>
+<li><a name="unitcheck_av"></a><b>unitcheck_av</b>
+<p>Returns the AV object (i.e. in class B::AV) representing UNITCHECK blocks.</p>
+</li>
+<li><a name="begin_av"></a><b>begin_av</b>
+<p>Returns the AV object (i.e. in class B::AV) representing BEGIN blocks.</p>
+</li>
+<li><a name="end_av"></a><b>end_av</b>
+<p>Returns the AV object (i.e. in class B::AV) representing END blocks.</p>
+</li>
+<li><a name="comppadlist"></a><b>comppadlist</b>
+<p>Returns the AV object (i.e. in class B::AV) of the global comppadlist.</p>
+</li>
+<li><a name="regex_padav"></a><b>regex_padav</b>
+<p>Only when perl was compiled with ithreads.</p>
+</li>
+<li><a name="main_cv"></a><b>main_cv</b>
+<p>Return the (faked) CV corresponding to the main part of the Perl
+program.</p>
+</li>
+</ul>
+<a name="Functions-for-Examining-the-Symbol-Table"></a><h2>Functions for Examining the Symbol Table</h2>
+<ul>
+<li><a name="walksymtable(SYMREF0x2c-METHOD0x2c-RECURSE0x2c-PREFIX)"></a><b>walksymtable(SYMREF, METHOD, RECURSE, PREFIX)</b>
+<p>Walk the symbol table starting at SYMREF and call METHOD on each
+symbol (a B::GV object) visited.  When the walk reaches package
+symbols (such as "Foo::") it invokes RECURSE, passing in the symbol
+name, and only recurses into the package if that sub returns true.</p>
+<p>PREFIX is the name of the SYMREF you're walking.</p>
+<p>For example:</p>
+<pre class="verbatim">  <span class="c"># Walk CGI&#39;s symbol table calling print_subs on each symbol.</span>
+  <span class="c"># Recurse only into CGI::Util::</span>
+  <span class="i">walksymtable</span><span class="s">(</span>\<span class="i">%CGI::</span><span class="cm">,</span> <span class="q">&#39;print_subs&#39;</span><span class="cm">,</span> <a class="l_k" href="functions/sub.html">sub</a> <span class="s">{</span> <span class="i">$_</span>[<span class="n">0</span>] eq <span class="q">&#39;CGI::Util::&#39;</span> <span class="s">}</span><span class="cm">,</span>
+               <span class="q">&#39;CGI::&#39;</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>print_subs() is a B::GV method you have declared. Also see <a href="#B0x3a0x3aGV-Methods">"B::GV Methods"</a>, below.</p>
+</li>
+</ul>
+<a name="Functions-Returning-'B0x3a0x3aOP'-objects-or-for-walking-op-trees"></a><h2>Functions Returning <code class="inline"><span class="w">B::OP</span></code>
+ objects or for walking op trees</h2>
+<p>For descriptions of the class hierarchy of these objects and the
+methods that can be called on them, see below, <a href="#OVERVIEW-OF-CLASSES">"OVERVIEW OF CLASSES"</a> and <a href="#OP-RELATED-CLASSES">"OP-RELATED CLASSES"</a>.</p>
+<ul>
+<li><a name="main_root"></a><b>main_root</b>
+<p>Returns the root op (i.e. an object in the appropriate B::OP-derived
+class) of the main part of the Perl program.</p>
+</li>
+<li><a name="main_start"></a><b>main_start</b>
+<p>Returns the starting op of the main part of the Perl program.</p>
+</li>
+<li><a name="walkoptree(OP0x2c-METHOD)"></a><b>walkoptree(OP, METHOD)</b>
+<p>Does a tree-walk of the syntax tree based at OP and calls METHOD on
+each op it visits. Each node is visited before its children. If
+<code class="inline"><span class="w">walkoptree_debug</span></code>
+ (see below) has been called to turn debugging on then
+the method <code class="inline"><span class="w">walkoptree_debug</span></code>
+ is called on each op before METHOD is
+called.</p>
+</li>
+<li><a name="walkoptree_debug(DEBUG)"></a><b>walkoptree_debug(DEBUG)</b>
+<p>Returns the current debugging flag for <code class="inline"><span class="w">walkoptree</span></code>
+. If the optional
+DEBUG argument is non-zero, it sets the debugging flag to that. See
+the description of <code class="inline"><span class="w">walkoptree</span></code>
+ above for what the debugging flag
+does.</p>
+</li>
+</ul>
+<a name="Miscellaneous-Utility-Functions"></a><h2>Miscellaneous Utility Functions</h2>
+<ul>
+<li><a name="ppname(OPNUM)"></a><b>ppname(OPNUM)</b>
+<p>Return the PP function name (e.g. "pp_add") of op number OPNUM.</p>
+</li>
+<li><a name="hash(STR)"></a><b>hash(STR)</b>
+<p>Returns a string in the form "0x..." representing the value of the
+internal hash function used by perl on string STR.</p>
+</li>
+<li><a name="cast_I32(I)"></a><b>cast_I32(I)</b>
+<p>Casts I to the internal I32 type used by that perl.</p>
+</li>
+<li><a name="minus_c"></a><b>minus_c</b>
+<p>Does the equivalent of the <code class="inline">-c</code>
+ command-line option. Obviously, this
+is only useful in a BEGIN block or else the flag is set too late.</p>
+</li>
+<li><a name="cstring(STR)"></a><b>cstring(STR)</b>
+<p>Returns a double-quote-surrounded escaped version of STR which can
+be used as a string in C source code.</p>
+</li>
+<li><a name="perlstring(STR)"></a><b>perlstring(STR)</b>
+<p>Returns a double-quote-surrounded escaped version of STR which can
+be used as a string in Perl source code.</p>
+</li>
+<li><a name="class(OBJ)"></a><b>class(OBJ)</b>
+<p>Returns the class of an object without the part of the classname
+preceding the first <code class="inline"><span class="q">&quot;::&quot;</span></code>
+. This is used to turn <code class="inline"><span class="q">&quot;B::UNOP&quot;</span></code>
+ into
+<code class="inline"><span class="q">&quot;UNOP&quot;</span></code>
+ for example.</p>
+</li>
+<li><a name="threadsv_names"></a><b>threadsv_names</b>
+<p>In a perl compiled for threads, this returns a list of the special
+per-thread threadsv variables.</p>
+</li>
+</ul>
+<a name="Exported-utility-variabiles"></a><h2>Exported utility variabiles</h2>
+<ul>
+<li><a name="0x40optype"></a><b>@optype</b>
+<pre class="verbatim">  <a class="l_k" href="functions/my.html">my</a> <span class="i">$op_type</span> = <span class="i">$optype</span>[<span class="i">$op_type_num</span>]<span class="sc">;</span></pre>
+<p>A simple mapping of the op type number to its type (like 'COP' or 'BINOP').</p>
+</li>
+<li><a name="0x40specialsv_name"></a><b>@specialsv_name</b>
+<pre class="verbatim">  <a class="l_k" href="functions/my.html">my</a> <span class="i">$sv_name</span> = <span class="i">$specialsv_name</span>[<span class="i">$sv_index</span>]<span class="sc">;</span></pre>
+<p>Certain SV types are considered 'special'.  They're represented by
+B::SPECIAL and are referred to by a number from the specialsv_list.
+This array maps that number back to the name of the SV (like 'Nullsv'
+or '&amp;PL_sv_undef').</p>
+</li>
+</ul>
+<a name="OVERVIEW-OF-CLASSES"></a><h1>OVERVIEW OF CLASSES</h1>
+<p>The C structures used by Perl's internals to hold SV and OP
+information (PVIV, AV, HV, ..., OP, SVOP, UNOP, ...) are modelled on a
+class hierarchy and the <code class="inline"><span class="w">B</span></code>
+ module gives access to them via a true
+object hierarchy. Structure fields which point to other objects
+(whether types of SV or types of OP) are represented by the <code class="inline"><span class="w">B</span></code>
+
+module as Perl objects of the appropriate class.</p>
+<p>The bulk of the <code class="inline"><span class="w">B</span></code>
+ module is the methods for accessing fields of
+these structures.</p>
+<p>Note that all access is read-only.  You cannot modify the internals by
+using this module. Also, note that the B::OP and B::SV objects created
+by this module are only valid for as long as the underlying objects
+exist; their creation doesn't increase the reference counts of the
+underlying objects. Trying to access the fields of a freed object will
+give incomprehensible results, or worse.</p>
+<a name="SV-RELATED-CLASSES"></a><h2>SV-RELATED CLASSES</h2>
+<p>B::IV, B::NV, B::RV, B::PV, B::PVIV, B::PVNV, B::PVMG, B::BM (5.9.5 and
+earlier), B::PVLV, B::AV, B::HV, B::CV, B::GV, B::FM, B::IO. These classes
+correspond in the obvious way to the underlying C structures of similar names.
+The inheritance hierarchy mimics the underlying C "inheritance". For 5.9.5
+and later this is:</p>
+<pre class="verbatim">                           B::SV
+                             |
+                +------------+------------+------------+
+                |            |            |            |
+              B::PV        B::IV        B::NV        B::RV
+                  \         /           /
+                   \       /           /
+                    B::PVIV           /
+                         \           /
+                          \         /
+                           \       /
+                            B::PVNV
+                               |
+                               |
+                            B::PVMG
+                               |
+                   +-----+-----+-----+-----+
+                   |     |     |     |     |
+                 B::AV B::GV B::HV B::CV B::IO
+                         |           |
+                         |           |
+                      B::PVLV      B::FM</pre><p>For 5.9.0 and earlier, PVLV is a direct subclass of PVMG, and BM is still
+present as a distinct type, so the base of this diagram is</p>
+<pre class="verbatim">                               |
+                               |
+                            B::PVMG
+                               |
+            +------+-----+-----+-----+-----+-----+
+            |      |     |     |     |     |     |
+         B::PVLV B::BM B::AV B::GV B::HV B::CV B::IO
+                                           |
+                                           |
+                                         B::FM</pre><p>Access methods correspond to the underlying C macros for field access,
+usually with the leading "class indication" prefix removed (Sv, Av,
+Hv, ...). The leading prefix is only left in cases where its removal
+would cause a clash in method name. For example, <code class="inline"><span class="w">GvREFCNT</span></code>
+ stays
+as-is since its abbreviation would clash with the "superclass" method
+<code class="inline"><span class="w">REFCNT</span></code>
+ (corresponding to the C function <code class="inline"><span class="w">SvREFCNT</span></code>
+).</p>
+<a name="B0x3a0x3aSV-Methods"></a><h2>B::SV Methods</h2>
+<ul>
+<li><a name="REFCNT"></a><b>REFCNT</b>
+</li>
+<li><a name="FLAGS"></a><b>FLAGS</b>
+</li>
+<li><a name="object_2svref"></a><b>object_2svref</b>
+<p>Returns a reference to the regular scalar corresponding to this
+B::SV object. In other words, this method is the inverse operation
+to the svref_2object() subroutine. This scalar and other data it points
+at should be considered read-only: modifying them is neither safe nor
+guaranteed to have a sensible effect.</p>
+</li>
+</ul>
+<a name="B0x3a0x3aIV-Methods"></a><h2>B::IV Methods</h2>
+<ul>
+<li><a name="IV"></a><b>IV</b>
+<p>Returns the value of the IV, <i>interpreted as
+a signed integer</i>. This will be misleading
+if <code class="inline"><span class="w">FLAGS</span> <span class="i">&amp; SVf_IVisUV</span></code>
+. Perhaps you want the
+<code class="inline"><span class="w">int_value</span></code>
+ method instead?</p>
+</li>
+<li><a name="IVX"></a><b>IVX</b>
+</li>
+<li><a name="UVX"></a><b>UVX</b>
+</li>
+<li><a name="int_value"></a><b>int_value</b>
+<p>This method returns the value of the IV as an integer.
+It differs from <code class="inline"><span class="w">IV</span></code>
+ in that it returns the correct
+value regardless of whether it's stored signed or
+unsigned.</p>
+</li>
+<li><a name="needs64bits"></a><b>needs64bits</b>
+</li>
+<li><a name="packiv"></a><b>packiv</b>
+</li>
+</ul>
+<a name="B0x3a0x3aNV-Methods"></a><h2>B::NV Methods</h2>
+<ul>
+<li><a name="NV"></a><b>NV</b>
+</li>
+<li><a name="NVX"></a><b>NVX</b>
+</li>
+</ul>
+<a name="B0x3a0x3aRV-Methods"></a><h2>B::RV Methods</h2>
+<ul>
+<li><a name="RV"></a><b>RV</b>
+</li>
+</ul>
+<a name="B0x3a0x3aPV-Methods"></a><h2>B::PV Methods</h2>
+<ul>
+<li><a name="PV"></a><b>PV</b>
+<p>This method is the one you usually want. It constructs a
+string using the length and offset information in the struct:
+for ordinary scalars it will return the string that you'd see
+from Perl, even if it contains null characters.</p>
+</li>
+<li><a name="RV"></a><b>RV</b>
+<p>Same as B::RV::RV, except that it will die() if the PV isn't
+a reference.</p>
+</li>
+<li><a name="PVX"></a><b>PVX</b>
+<p>This method is less often useful. It assumes that the string
+stored in the struct is null-terminated, and disregards the
+length information.</p>
+<p>It is the appropriate method to use if you need to get the name
+of a lexical variable from a padname array. Lexical variable names
+are always stored with a null terminator, and the length field
+(SvCUR) is overloaded for other purposes and can't be relied on here.</p>
+</li>
+</ul>
+<a name="B0x3a0x3aPVMG-Methods"></a><h2>B::PVMG Methods</h2>
+<ul>
+<li><a name="MAGIC"></a><b>MAGIC</b>
+</li>
+<li><a name="SvSTASH"></a><b>SvSTASH</b>
+</li>
+</ul>
+<a name="B0x3a0x3aMAGIC-Methods"></a><h2>B::MAGIC Methods</h2>
+<ul>
+<li><a name="MOREMAGIC"></a><b>MOREMAGIC</b>
+</li>
+<li><a name="precomp"></a><b>precomp</b>
+<p>Only valid on r-magic, returns the string that generated the regexp.</p>
+</li>
+<li><a name="PRIVATE"></a><b>PRIVATE</b>
+</li>
+<li><a name="TYPE"></a><b>TYPE</b>
+</li>
+<li><a name="FLAGS"></a><b>FLAGS</b>
+</li>
+<li><a name="OBJ"></a><b>OBJ</b>
+<p>Will die() if called on r-magic.</p>
+</li>
+<li><a name="PTR"></a><b>PTR</b>
+</li>
+<li><a name="REGEX"></a><b>REGEX</b>
+<p>Only valid on r-magic, returns the integer value of the REGEX stored
+in the MAGIC.</p>
+</li>
+</ul>
+<a name="B0x3a0x3aPVLV-Methods"></a><h2>B::PVLV Methods</h2>
+<ul>
+<li><a name="TARGOFF"></a><b>TARGOFF</b>
+</li>
+<li><a name="TARGLEN"></a><b>TARGLEN</b>
+</li>
+<li><a name="TYPE"></a><b>TYPE</b>
+</li>
+<li><a name="TARG"></a><b>TARG</b>
+</li>
+</ul>
+<a name="B0x3a0x3aBM-Methods"></a><h2>B::BM Methods</h2>
+<ul>
+<li><a name="USEFUL"></a><b>USEFUL</b>
+</li>
+<li><a name="PREVIOUS"></a><b>PREVIOUS</b>
+</li>
+<li><a name="RARE"></a><b>RARE</b>
+</li>
+<li><a name="TABLE"></a><b>TABLE</b>
+</li>
+</ul>
+<a name="B0x3a0x3aGV-Methods"></a><h2>B::GV Methods</h2>
+<ul>
+<li><a name="is_empty"></a><b>is_empty</b>
+<p>This method returns TRUE if the GP field of the GV is NULL.</p>
+</li>
+<li><a name="NAME"></a><b>NAME</b>
+</li>
+<li><a name="SAFENAME"></a><b>SAFENAME</b>
+<p>This method returns the name of the glob, but if the first
+character of the name is a control character, then it converts
+it to ^X first, so that *^G would return "^G" rather than "\cG".</p>
+<p>It's useful if you want to print out the name of a variable.
+If you restrict yourself to globs which exist at compile-time
+then the result ought to be unambiguous, because code like
+<code class="inline"><span class="i">$</span>{<span class="q">&quot;^G&quot;</span>} = <span class="n">1</span></code>
+ is compiled as two ops - a constant string and
+a dereference (rv2gv) - so that the glob is created at runtime.</p>
+<p>If you're working with globs at runtime, and need to disambiguate
+*^G from *{"^G"}, then you should use the raw NAME method.</p>
+</li>
+<li><a name="STASH"></a><b>STASH</b>
+</li>
+<li><a name="SV"></a><b>SV</b>
+</li>
+<li><a name="IO"></a><b>IO</b>
+</li>
+<li><a name="FORM"></a><b>FORM</b>
+</li>
+<li><a name="AV"></a><b>AV</b>
+</li>
+<li><a name="HV"></a><b>HV</b>
+</li>
+<li><a name="EGV"></a><b>EGV</b>
+</li>
+<li><a name="CV"></a><b>CV</b>
+</li>
+<li><a name="CVGEN"></a><b>CVGEN</b>
+</li>
+<li><a name="LINE"></a><b>LINE</b>
+</li>
+<li><a name="FILE"></a><b>FILE</b>
+</li>
+<li><a name="FILEGV"></a><b>FILEGV</b>
+</li>
+<li><a name="GvREFCNT"></a><b>GvREFCNT</b>
+</li>
+<li><a name="FLAGS"></a><b>FLAGS</b>
+</li>
+</ul>
+<a name="B0x3a0x3aIO-Methods"></a><h2>B::IO Methods</h2>
+<ul>
+<li><a name="LINES"></a><b>LINES</b>
+</li>
+<li><a name="PAGE"></a><b>PAGE</b>
+</li>
+<li><a name="PAGE_LEN"></a><b>PAGE_LEN</b>
+</li>
+<li><a name="LINES_LEFT"></a><b>LINES_LEFT</b>
+</li>
+<li><a name="TOP_NAME"></a><b>TOP_NAME</b>
+</li>
+<li><a name="TOP_GV"></a><b>TOP_GV</b>
+</li>
+<li><a name="FMT_NAME"></a><b>FMT_NAME</b>
+</li>
+<li><a name="FMT_GV"></a><b>FMT_GV</b>
+</li>
+<li><a name="BOTTOM_NAME"></a><b>BOTTOM_NAME</b>
+</li>
+<li><a name="BOTTOM_GV"></a><b>BOTTOM_GV</b>
+</li>
+<li><a name="SUBPROCESS"></a><b>SUBPROCESS</b>
+</li>
+<li><a name="IoTYPE"></a><b>IoTYPE</b>
+</li>
+<li><a name="IoFLAGS"></a><b>IoFLAGS</b>
+</li>
+<li><a name="IsSTD"></a><b>IsSTD</b>
+<p>Takes one arguments ( 'stdin' | 'stdout' | 'stderr' ) and returns true
+if the IoIFP of the object is equal to the handle whose name was
+passed as argument ( i.e. $io-&gt;IsSTD('stderr') is true if
+IoIFP($io) == PerlIO_stdin() ).</p>
+</li>
+</ul>
+<a name="B0x3a0x3aAV-Methods"></a><h2>B::AV Methods</h2>
+<ul>
+<li><a name="FILL"></a><b>FILL</b>
+</li>
+<li><a name="MAX"></a><b>MAX</b>
+</li>
+<li><a name="ARRAY"></a><b>ARRAY</b>
+</li>
+<li><a name="ARRAYelt"></a><b>ARRAYelt</b>
+<p>Like <code class="inline"><span class="w">ARRAY</span></code>
+, but takes an index as an argument to get only one element,
+rather than a list of all of them.</p>
+</li>
+<li><a name="OFF"></a><b>OFF</b>
+<p>This method is deprecated if running under Perl 5.8, and is no longer present
+if running under Perl 5.9</p>
+</li>
+<li><a name="AvFLAGS"></a><b>AvFLAGS</b>
+<p>This method returns the AV specific flags. In Perl 5.9 these are now stored
+in with the main SV flags, so this method is no longer present.</p>
+</li>
+</ul>
+<a name="B0x3a0x3aCV-Methods"></a><h2>B::CV Methods</h2>
+<ul>
+<li><a name="STASH"></a><b>STASH</b>
+</li>
+<li><a name="START"></a><b>START</b>
+</li>
+<li><a name="ROOT"></a><b>ROOT</b>
+</li>
+<li><a name="GV"></a><b>GV</b>
+</li>
+<li><a name="FILE"></a><b>FILE</b>
+</li>
+<li><a name="DEPTH"></a><b>DEPTH</b>
+</li>
+<li><a name="PADLIST"></a><b>PADLIST</b>
+</li>
+<li><a name="OUTSIDE"></a><b>OUTSIDE</b>
+</li>
+<li><a name="OUTSIDE_SEQ"></a><b>OUTSIDE_SEQ</b>
+</li>
+<li><a name="XSUB"></a><b>XSUB</b>
+</li>
+<li><a name="XSUBANY"></a><b>XSUBANY</b>
+<p>For constant subroutines, returns the constant SV returned by the subroutine.</p>
+</li>
+<li><a name="CvFLAGS"></a><b>CvFLAGS</b>
+</li>
+<li><a name="const_sv"></a><b>const_sv</b>
+</li>
+</ul>
+<a name="B0x3a0x3aHV-Methods"></a><h2>B::HV Methods</h2>
+<ul>
+<li><a name="FILL"></a><b>FILL</b>
+</li>
+<li><a name="MAX"></a><b>MAX</b>
+</li>
+<li><a name="KEYS"></a><b>KEYS</b>
+</li>
+<li><a name="RITER"></a><b>RITER</b>
+</li>
+<li><a name="NAME"></a><b>NAME</b>
+</li>
+<li><a name="ARRAY"></a><b>ARRAY</b>
+</li>
+<li><a name="PMROOT"></a><b>PMROOT</b>
+<p>This method is not present if running under Perl 5.9, as the PMROOT
+information is no longer stored directly in the hash.</p>
+</li>
+</ul>
+<a name="OP-RELATED-CLASSES"></a><h2>OP-RELATED CLASSES</h2>
+<p><code class="inline"><span class="w">B::OP</span></code>
+, <code class="inline"><span class="w">B::UNOP</span></code>
+, <code class="inline"><span class="w">B::BINOP</span></code>
+, <code class="inline"><span class="w">B::LOGOP</span></code>
+, <code class="inline"><span class="w">B::LISTOP</span></code>
+, <code class="inline"><span class="w">B::PMOP</span></code>
+,
+<code class="inline"><span class="w">B::SVOP</span></code>
+, <code class="inline"><span class="w">B::PADOP</span></code>
+, <code class="inline"><span class="w">B::PVOP</span></code>
+, <code class="inline"><span class="w">B::LOOP</span></code>
+, <code class="inline"><span class="w">B::COP</span></code>
+.</p>
+<p>These classes correspond in the obvious way to the underlying C
+structures of similar names. The inheritance hierarchy mimics the
+underlying C "inheritance":</p>
+<pre class="verbatim">                                 B::OP
+                                   |
+                   +---------------+--------+--------+-------+
+                   |               |        |        |       |
+                B::UNOP          B::SVOP B::PADOP  B::COP  B::PVOP
+                 ,'  `-.
+                /       `--.
+           B::BINOP     B::LOGOP
+               |
+               |
+           B::LISTOP
+             ,' `.
+            /     \
+        B::LOOP B::PMOP</pre><p>Access methods correspond to the underlying C structre field names,
+with the leading "class indication" prefix (<code class="inline"><span class="q">&quot;op_&quot;</span></code>
+) removed.</p>
+<a name="B0x3a0x3aOP-Methods"></a><h2>B::OP Methods</h2>
+<p>These methods get the values of similarly named fields within the OP
+data structure.  See top of <code class="inline"><span class="w">op</span>.<span class="w">h</span></code>
+ for more info.</p>
+<ul>
+<li><a name="next"></a><b>next</b>
+</li>
+<li><a name="sibling"></a><b>sibling</b>
+</li>
+<li><a name="name"></a><b>name</b>
+<p>This returns the op name as a string (e.g. "add", "rv2av").</p>
+</li>
+<li><a name="ppaddr"></a><b>ppaddr</b>
+<p>This returns the function name as a string (e.g. "PL_ppaddr[OP_ADD]",
+"PL_ppaddr[OP_RV2AV]").</p>
+</li>
+<li><a name="desc"></a><b>desc</b>
+<p>This returns the op description from the global C PL_op_desc array
+(e.g. "addition" "array deref").</p>
+</li>
+<li><a name="targ"></a><b>targ</b>
+</li>
+<li><a name="type"></a><b>type</b>
+</li>
+<li><a name="opt"></a><b>opt</b>
+</li>
+<li><a name="flags"></a><b>flags</b>
+</li>
+<li><a name="private"></a><b>private</b>
+</li>
+<li><a name="spare"></a><b>spare</b>
+</li>
+</ul>
+<a name="B0x3a0x3aUNOP-METHOD"></a><h2>B::UNOP METHOD</h2>
+<ul>
+<li><a name="first"></a><b>first</b>
+</li>
+</ul>
+<a name="B0x3a0x3aBINOP-METHOD"></a><h2>B::BINOP METHOD</h2>
+<ul>
+<li><a name="last"></a><b>last</b>
+</li>
+</ul>
+<a name="B0x3a0x3aLOGOP-METHOD"></a><h2>B::LOGOP METHOD</h2>
+<ul>
+<li><a name="other"></a><b>other</b>
+</li>
+</ul>
+<a name="B0x3a0x3aLISTOP-METHOD"></a><h2>B::LISTOP METHOD</h2>
+<ul>
+<li><a name="children"></a><b>children</b>
+</li>
+</ul>
+<a name="B0x3a0x3aPMOP-Methods"></a><h2>B::PMOP Methods</h2>
+<ul>
+<li><a name="pmreplroot"></a><b>pmreplroot</b>
+</li>
+<li><a name="pmreplstart"></a><b>pmreplstart</b>
+</li>
+<li><a name="pmnext"></a><b>pmnext</b>
+</li>
+<li><a name="pmregexp"></a><b>pmregexp</b>
+</li>
+<li><a name="pmflags"></a><b>pmflags</b>
+</li>
+<li><a name="extflags"></a><b>extflags</b>
+</li>
+<li><a name="precomp"></a><b>precomp</b>
+</li>
+<li><a name="pmoffset"></a><b>pmoffset</b>
+<p>Only when perl was compiled with ithreads.</p>
+</li>
+</ul>
+<a name="B0x3a0x3aSVOP-METHOD"></a><h2>B::SVOP METHOD</h2>
+<ul>
+<li><a name="sv"></a><b>sv</b>
+</li>
+<li><a name="gv"></a><b>gv</b>
+</li>
+</ul>
+<a name="B0x3a0x3aPADOP-METHOD"></a><h2>B::PADOP METHOD</h2>
+<ul>
+<li><a name="padix"></a><b>padix</b>
+</li>
+</ul>
+<a name="B0x3a0x3aPVOP-METHOD"></a><h2>B::PVOP METHOD</h2>
+<ul>
+<li><a name="pv"></a><b>pv</b>
+</li>
+</ul>
+<a name="B0x3a0x3aLOOP-Methods"></a><h2>B::LOOP Methods</h2>
+<ul>
+<li><a name="redoop"></a><b>redoop</b>
+</li>
+<li><a name="nextop"></a><b>nextop</b>
+</li>
+<li><a name="lastop"></a><b>lastop</b>
+</li>
+</ul>
+<a name="B0x3a0x3aCOP-Methods"></a><h2>B::COP Methods</h2>
+<ul>
+<li><a name="label"></a><b>label</b>
+</li>
+<li><a name="stash"></a><b>stash</b>
+</li>
+<li><a name="stashpv"></a><b>stashpv</b>
+</li>
+<li><a name="file"></a><b>file</b>
+</li>
+<li><a name="cop_seq"></a><b>cop_seq</b>
+</li>
+<li><a name="arybase"></a><b>arybase</b>
+</li>
+<li><a name="line"></a><b>line</b>
+</li>
+<li><a name="warnings"></a><b>warnings</b>
+</li>
+<li><a name="io"></a><b>io</b>
+</li>
+<li><a name="hints"></a><b>hints</b>
+</li>
+<li><a name="hints_hash"></a><b>hints_hash</b>
+</li>
+</ul>
+<a name="AUTHOR"></a><h1>AUTHOR</h1>
+<p>Malcolm Beattie, <code class="inline"><span class="w">mbeattie</span><span class="i">@sable</span>.<span class="w">ox</span>.<span class="w">ac</span>.<span class="w">uk</span></code>
+</p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='close_purple.gif';" onmouseout="rightCloseIcon.src='close_blue.gif';"><img src="close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('B','B.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

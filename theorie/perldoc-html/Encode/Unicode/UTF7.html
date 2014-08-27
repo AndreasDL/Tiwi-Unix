@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>Encode::Unicode::UTF7 - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 2;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../../close_purple.gif';" onmouseout="leftCloseIcon.src='../../close_blue.gif';"><img src="../../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../../index-overview.html">Overview</a></li>
+        <li><a href="../../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../../index-faq.html">FAQs</a></li>
+        <li><a href="../../index-history.html">History / Changes</a></li>
+        <li><a href="../../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../../index-language.html">Language</a></li>
+        <li><a href="../../index-functions.html">Functions</a></li>
+        <li><a href="../../perlop.html">Operators</a></li>
+        <li><a href="../../perlvar.html">Special variables</a></li>
+        <li><a href="../../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../../index-modules-A.html">Core modules</a></li>
+        <li><a href="../../index-utilities.html">Utilities</a></li>
+        <li><a href="../../index-internals.html">Internals</a></li>
+        <li><a href="../../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../../index.html">Home</a> &gt; <a href="../../index-modules-A.html">Core modules</a> &gt; <a href="../../index-modules-E.html">E</a> &gt; Encode::Unicode::UTF7</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">Encode::Unicode::UTF7</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#ABSTRACT">ABSTRACT</a><li><a href="#In-Practice">In Practice</a><li><a href="#SEE-ALSO">SEE ALSO</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>Encode::Unicode::UTF7 -- UTF-7 encoding</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">    <a class="l_k" href="../../functions/use.html">use</a> <span class="w">Encode</span> <span class="q">qw/encode decode/</span><span class="sc">;</span> 
+    <span class="i">$utf7</span> = <span class="i">encode</span><span class="s">(</span><span class="q">&quot;UTF-7&quot;</span><span class="cm">,</span> <span class="i">$utf8</span><span class="s">)</span><span class="sc">;</span>
+    <span class="i">$utf8</span> = <span class="i">decode</span><span class="s">(</span><span class="q">&quot;UTF-7&quot;</span><span class="cm">,</span> <span class="i">$ucs2</span><span class="s">)</span><span class="sc">;</span></pre>
+<a name="ABSTRACT"></a><h1>ABSTRACT</h1>
+<p>This module implements UTF-7 encoding documented in RFC 2152.  UTF-7,
+as its name suggests, is a 7-bit re-encoded version of UTF-16BE.  It
+is designed to be MTA-safe and expected to be a standard way to
+exchange Unicoded mails via mails.  But with the advent of UTF-8 and
+8-bit compliant MTAs, UTF-7 is hardly ever used.</p>
+<p>UTF-7 was not supported by Encode until version 1.95 because of that.
+But Unicode::String, a module by Gisle Aas which adds Unicode supports
+to non-utf8-savvy perl did support UTF-7, the UTF-7 support was added
+so Encode can supersede Unicode::String 100%.</p>
+<a name="In-Practice"></a><h1>In Practice</h1>
+<p>When you want to encode Unicode for mails and web pages, however, do
+not use UTF-7 unless you are sure your recipients and readers can
+handle it.  Very few MUAs and WWW Browsers support these days (only
+Mozilla seems to support one).  For general cases, use UTF-8 for
+message body and MIME-Header for header instead.</p>
+<a name="SEE-ALSO"></a><h1>SEE ALSO</h1>
+<p><a href="../../Encode.html">Encode</a>, <a href="../../Encode/Unicode.html">Encode::Unicode</a>, <a href="http://search.cpan.org/perldoc/Unicode::String">Unicode::String</a></p>
+<p>RFC 2781 <a href="http://www.ietf.org/rfc/rfc2152.txt">http://www.ietf.org/rfc/rfc2152.txt</a></p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../../close_purple.gif';" onmouseout="rightCloseIcon.src='../../close_blue.gif';"><img src="../../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('Encode::Unicode::UTF7','Encode/Unicode/UTF7.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,383 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>Object::Accessor - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 1;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../close_purple.gif';" onmouseout="leftCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../index-overview.html">Overview</a></li>
+        <li><a href="../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../index-faq.html">FAQs</a></li>
+        <li><a href="../index-history.html">History / Changes</a></li>
+        <li><a href="../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../index-language.html">Language</a></li>
+        <li><a href="../index-functions.html">Functions</a></li>
+        <li><a href="../perlop.html">Operators</a></li>
+        <li><a href="../perlvar.html">Special variables</a></li>
+        <li><a href="../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../index-modules-A.html">Core modules</a></li>
+        <li><a href="../index-utilities.html">Utilities</a></li>
+        <li><a href="../index-internals.html">Internals</a></li>
+        <li><a href="../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../index.html">Home</a> &gt; <a href="../index-modules-A.html">Core modules</a> &gt; <a href="../index-modules-O.html">O</a> &gt; Object::Accessor</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">Object::Accessor</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><li><a href="#METHODS">METHODS</a><ul><li><a href="#0x24object-0x3d-Object0x3a0x3aAccessor-0x3enew(-0x5bARGS0x5d-)0x3b">$object = Object::Accessor-&gt;new( [ARGS] );</a><li><a href="#0x24bool-0x3d-0x24object-0x3emk_accessors(-0x40ACCESSORS-0x7c-0x5c0x25ACCESSOR_MAP-)0x3b">$bool = $object-&gt;mk_accessors( @ACCESSORS | \%ACCESSOR_MAP );</a><li><a href="#0x40list-0x3d-0x24self-0x3els_accessors0x3b">@list = $self-&gt;ls_accessors;</a><li><a href="#0x24ref-0x3d-0x24self-0x3els_allow(KEY)">$ref = $self-&gt;ls_allow(KEY)</a><li><a href="#0x24clone-0x3d-0x24self-0x3emk_clone0x3b">$clone = $self-&gt;mk_clone;</a><li><a href="#0x24bool-0x3d-0x24self-0x3emk_flush0x3b">$bool = $self-&gt;mk_flush;</a><li><a href="#0x24bool-0x3d-0x24self-0x3emk_verify0x3b">$bool = $self-&gt;mk_verify;</a><li><a href="#0x24bool-0x3d-0x24self-0x3eregister_callback(-sub-0x7b-...-0x7d-)0x3b">$bool = $self-&gt;register_callback( sub { ... } );</a><li><a href="#0x24bool-0x3d-0x24self-0x3ecan(-METHOD_NAME-)">$bool = $self-&gt;can( METHOD_NAME )</a><li><a href="#0x24val-0x3d-0x24self-0x3e___get(-METHOD_NAME-)0x3b">$val = $self-&gt;___get( METHOD_NAME );</a><li><a href="#0x24bool-0x3d-0x24self-0x3e___set(-METHOD_NAME-0x3d0x3e-VALUE-)0x3b">$bool = $self-&gt;___set( METHOD_NAME =&gt; VALUE );</a></ul><li><a href="#LVALUE-ACCESSORS">LVALUE ACCESSORS</a><ul><li><a href="#CAVEATS">CAVEATS</a></ul><li><a href="#GLOBAL-VARIABLES">GLOBAL VARIABLES</a><ul><li><a href="#0x24Object0x3a0x3aAccessor0x3a0x3aFATAL">$Object::Accessor::FATAL</a><li><a href="#0x24Object0x3a0x3aAccessor0x3a0x3aDEBUG">$Object::Accessor::DEBUG</a></ul><li><a href="#TODO">TODO</a><ul><li><a href="#Create-read-only-accessors">Create read-only accessors</a></ul><li><a href="#CAVEATS">CAVEATS</a><li><a href="#AUTHOR">AUTHOR</a><li><a href="#COPYRIGHT">COPYRIGHT</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>Object::Accessor</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">    <span class="c">### using the object</span>
+    <span class="i">$obj</span> = <span class="w">Object::Accessor</span><span class="w">-&gt;new</span><span class="sc">;</span>        <span class="c"># create object</span>
+    <span class="i">$obj</span> = <span class="w">Object::Accessor</span><span class="w">-&gt;new</span><span class="s">(</span><span class="i">@list</span><span class="s">)</span><span class="sc">;</span> <span class="c"># create object with accessors</span>
+    <span class="i">$obj</span> = <span class="w">Object::Accessor</span><span class="w">-&gt;new</span><span class="s">(</span>\<span class="i">%h</span><span class="s">)</span><span class="sc">;</span>   <span class="c"># create object with accessors</span>
+                                         <span class="c"># and their allow handlers</span></pre>
+<pre class="verbatim">    <span class="i">$bool</span>   = <span class="i">$obj</span><span class="i">-&gt;mk_accessors</span><span class="s">(</span><span class="q">'foo'</span><span class="s">)</span><span class="sc">;</span> <span class="c"># create accessors</span>
+    <span class="i">$bool</span>   = <span class="i">$obj</span><span class="i">-&gt;mk_accessors</span><span class="s">(</span>        <span class="c"># create accessors with input</span>
+               <span class="s">{</span><span class="w">foo</span> <span class="cm">=&gt;</span> <span class="w">ALLOW_HANDLER</span><span class="s">}</span> <span class="s">)</span><span class="sc">;</span> <span class="c"># validation</span></pre>
+<pre class="verbatim">    <span class="i">$clone</span>  = <span class="i">$obj</span><span class="i">-&gt;mk_clone</span><span class="sc">;</span>            <span class="c"># create a clone of original</span>
+                                         <span class="c"># object without data</span>
+    <span class="i">$bool</span>   = <span class="i">$obj</span><span class="i">-&gt;mk_flush</span><span class="sc">;</span>            <span class="c"># clean out all data</span></pre>
+<pre class="verbatim">    <span class="i">@list</span>   = <span class="i">$obj</span><span class="i">-&gt;ls_accessors</span><span class="sc">;</span>        <span class="c"># retrieves a list of all</span>
+                                         <span class="c"># accessors for this object</span></pre>
+<pre class="verbatim">    <span class="i">$bar</span>    = <span class="i">$obj</span><span class="i">-&gt;foo</span><span class="s">(</span><span class="q">'bar'</span><span class="s">)</span><span class="sc">;</span>          <span class="c"># set 'foo' to 'bar'</span>
+    <span class="i">$bar</span>    = <span class="i">$obj</span><span class="i">-&gt;foo</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span>               <span class="c"># retrieve 'bar' again</span></pre>
+<pre class="verbatim">    <span class="i">$sub</span>    = <span class="i">$obj</span><span class="i">-&gt;can</span><span class="s">(</span><span class="q">'foo'</span><span class="s">)</span><span class="sc">;</span>          <span class="c"># retrieve coderef for</span>
+                                         <span class="c"># 'foo' accessor</span>
+    <span class="i">$bar</span>    = <span class="i">$sub</span>-&gt;<span class="s">(</span><span class="q">'bar'</span><span class="s">)</span><span class="sc">;</span>             <span class="c"># set 'foo' via coderef</span>
+    <span class="i">$bar</span>    = <span class="i">$sub</span>-&gt;<span class="s">(</span><span class="s">)</span><span class="sc">;</span>                  <span class="c"># retrieve 'bar' by coderef</span></pre>
+<pre class="verbatim">    <span class="c">### using the object as base class</span>
+<a name="package-My::Class"></a>    package <span class="i">My::Class</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/use.html">use</a> <span class="w">base</span> <span class="q">'Object::Accessor'</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="i">$obj</span>    = <span class="w">My::Class</span><span class="w">-&gt;new</span><span class="sc">;</span>               <span class="c"># create base object</span>
+    <span class="i">$bool</span>   = <span class="i">$obj</span><span class="i">-&gt;mk_accessors</span><span class="s">(</span><span class="q">'foo'</span><span class="s">)</span><span class="sc">;</span>    <span class="c"># create accessors, etc...</span></pre>
+<pre class="verbatim">    <span class="c">### make all attempted access to non-existant accessors fatal</span>
+    <span class="c">### (defaults to false)</span>
+    <span class="i">$Object::Accessor::FATAL</span> = <span class="n">1</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="c">### enable debugging</span>
+    <span class="i">$Object::Accessor::DEBUG</span> = <span class="n">1</span><span class="sc">;</span></pre>
+<pre class="verbatim">    ### advanced usage -- callbacks
+    {   my $obj = Object::Accessor-&gt;new('foo');
+        $obj-&gt;register_callback( sub { ... } );</pre><pre class="verbatim">        $obj-&gt;foo( 1 ); # these calls invoke the callback you registered
+        $obj-&gt;foo()     # which allows you to change the get/set 
+                        # behaviour and what is returned to the caller.
+    }</pre><pre class="verbatim">    <span class="c">### advanced usage -- lvalue attributes</span>
+    <span class="s">{</span>   <a class="l_k" href="../functions/my.html">my</a> <span class="i">$obj</span> = <span class="w">Object::Accessor::Lvalue</span><span class="w">-&gt;new</span><span class="s">(</span><span class="q">'foo'</span><span class="s">)</span><span class="sc">;</span>
+        <a class="l_k" href="../functions/print.html">print</a> <span class="i">$obj</span><span class="i">-&gt;foo</span> = <span class="n">1</span><span class="sc">;</span>            <span class="c"># will print 1</span>
+    <span class="s">}</span></pre>
+<pre class="verbatim">    ### advanced usage -- scoped attribute values
+    {   my $obj = Object::Accessor-&gt;new('foo');</pre><pre class="verbatim">        <span class="i">$obj</span><span class="i">-&gt;foo</span><span class="s">(</span> <span class="n">1</span> <span class="s">)</span><span class="sc">;</span>
+        <a class="l_k" href="../functions/print.html">print</a> <span class="i">$obj</span><span class="i">-&gt;foo</span><span class="sc">;</span>                <span class="c"># will print 1</span></pre>
+<pre class="verbatim">        ### bind the scope of the value of attribute 'foo'
+        ### to the scope of '$x' -- when $x goes out of 
+        ### scope, 'foo's previous value will be restored
+        {   $obj-&gt;foo( 2 =&gt; \my $x );
+            print $obj-&gt;foo, ' ', $x;   # will print '2 2'
+        }
+        print $obj-&gt;foo;                # will print 1
+    }</pre><a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p><code class="inline"><span class="w">Object::Accessor</span></code>
+ provides an interface to create per object
+accessors (as opposed to per <code class="inline"><span class="w">Class</span></code>
+ accessors, as, for example,
+<code class="inline"><span class="w">Class::Accessor</span></code>
+ provides).</p>
+<p>You can choose to either subclass this module, and thus using its
+accessors on your own module, or to store an <code class="inline"><span class="w">Object::Accessor</span></code>
+
+object inside your own object, and access the accessors from there.
+See the <code class="inline"><span class="w">SYNOPSIS</span></code>
+ for examples.</p>
+<a name="METHODS"></a><h1>METHODS</h1>
+<a name="0x24object-0x3d-Object0x3a0x3aAccessor-0x3enew(-0x5bARGS0x5d-)0x3b"></a><h2>$object = Object::Accessor-&gt;new( [ARGS] );</h2>
+<p>Creates a new (and empty) <code class="inline"><span class="w">Object::Accessor</span></code>
+ object. This method is
+inheritable.</p>
+<p>Any arguments given to <code class="inline"><span class="w">new</span></code>
+ are passed straight to <code class="inline"><span class="w">mk_accessors</span></code>
+.</p>
+<p>If you want to be able to assign to your accessors as if they
+were <code class="inline"><span class="w">lvalue</span></code>
+s, you should create your object in the 
+<code class="inline"><span class="w">Object::Acccessor::Lvalue</span></code>
+ namespace instead. See the section
+on <code class="inline"><span class="w">LVALUE</span> <span class="w">ACCESSORS</span></code>
+ below.</p>
+<a name="0x24bool-0x3d-0x24object-0x3emk_accessors(-0x40ACCESSORS-0x7c-0x5c0x25ACCESSOR_MAP-)0x3b"></a><h2>$bool = $object-&gt;mk_accessors( @ACCESSORS | \%ACCESSOR_MAP );</h2>
+<p>Creates a list of accessors for this object (and <code class="inline"><span class="w">NOT</span></code>
+ for other ones
+in the same class!).
+Will not clobber existing data, so if an accessor already exists,
+requesting to create again is effectively a <code class="inline"><a class="l_k" href="../functions/no.html">no-op</a></code>.</p>
+<p>When providing a <code class="inline"><span class="w">hashref</span></code>
+ as argument, rather than a normal list,
+you can specify a list of key/value pairs of accessors and their
+respective input validators. The validators can be anything that
+<code class="inline"><span class="w">Params::Check</span></code>
+'s <code class="inline"><span class="w">allow</span></code>
+ function accepts. Please see its manpage
+for details.</p>
+<p>For example:</p>
+<pre class="verbatim">    <span class="i">$object</span><span class="i">-&gt;mk_accessors</span><span class="s">(</span> <span class="s">{</span>
+        <span class="w">foo</span>     <span class="cm">=&gt;</span> <span class="q">qr/^\d+$/</span><span class="cm">,</span>       <span class="c"># digits only</span>
+        <span class="w">bar</span>     <span class="cm">=&gt;</span> <span class="s">[</span><span class="n">0</span><span class="cm">,</span><span class="n">1</span><span class="s">]</span><span class="cm">,</span>           <span class="c"># booleans</span>
+        <span class="w">zot</span>     <span class="cm">=&gt;</span> \<span class="i">&amp;my_sub</span>         <span class="c"># a custom verification sub</span>
+    <span class="s">}</span> <span class="s">)</span><span class="sc">;</span></pre>
+<p>Returns true on success, false on failure.</p>
+<p>Accessors that are called on an object, that do not exist return
+<code class="inline"><a class="l_k" href="../functions/undef.html">undef</a></code> by default, but you can make this a fatal error by setting the
+global variable <code class="inline"><span class="i">$FATAL</span></code>
+ to true. See the section on <code class="inline"><span class="w">GLOBAL</span>
+<span class="w">VARIABLES</span></code>
+ for details.</p>
+<p>Note that you can bind the values of attributes to a scope. This allows
+you to <code class="inline"><span class="w">temporarily</span></code>
+ change a value of an attribute, and have it's 
+original value restored up on the end of it's bound variable's scope;</p>
+<p>For example, in this snippet of code, the attribute <code class="inline"><span class="w">foo</span></code>
+ will 
+temporarily be set to <code class="inline"><span class="n">2</span></code>
+, until the end of the scope of <code class="inline"><span class="i">$x</span></code>
+, at 
+which point the original value of <code class="inline"><span class="n">1</span></code>
+ will be restored.</p>
+<pre class="verbatim">    <a class="l_k" href="../functions/my.html">my</a> <span class="i">$obj</span> = <span class="w">Object::Accessor</span><span class="w">-&gt;new</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="i">$obj</span><span class="i">-&gt;mk_accessors</span><span class="s">(</span><span class="q">'foo'</span><span class="s">)</span><span class="sc">;</span>
+    <span class="i">$obj</span><span class="i">-&gt;foo</span><span class="s">(</span> <span class="n">1</span> <span class="s">)</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/print.html">print</a> <span class="i">$obj</span><span class="i">-&gt;foo</span><span class="sc">;</span>                <span class="c"># will print 1</span></pre>
+<pre class="verbatim">    <span class="c">### bind the scope of the value of attribute 'foo'</span>
+    <span class="c">### to the scope of '$x' -- when $x goes out of </span>
+    <span class="c">### scope, 'foo' previous value will be restored</span>
+    <span class="s">{</span>   <span class="i">$obj</span><span class="i">-&gt;foo</span><span class="s">(</span> <span class="n">2</span> <span class="cm">=&gt;</span> \<a class="l_k" href="../functions/my.html">my</a> <span class="i">$x</span> <span class="s">)</span><span class="sc">;</span>
+        <a class="l_k" href="../functions/print.html">print</a> <span class="i">$obj</span><span class="i">-&gt;foo</span><span class="cm">,</span> <span class="q">' '</span><span class="cm">,</span> <span class="i">$x</span><span class="sc">;</span>   <span class="c"># will print '2 2'</span>
+    <span class="s">}</span>
+    <a class="l_k" href="../functions/print.html">print</a> <span class="i">$obj</span><span class="i">-&gt;foo</span><span class="sc">;</span>                <span class="c"># will print 1</span></pre>
+<p>Note that all accessors are read/write for everyone. See the <code class="inline"><span class="w">TODO</span></code>
+
+section for details.</p>
+<a name="0x40list-0x3d-0x24self-0x3els_accessors0x3b"></a><h2>@list = $self-&gt;ls_accessors;</h2>
+<p>Returns a list of accessors that are supported by the current object.
+The corresponding coderefs can be retrieved by passing this list one
+by one to the <code class="inline"><span class="w">can</span></code>
+ method.</p>
+<a name="0x24ref-0x3d-0x24self-0x3els_allow(KEY)"></a><h2>$ref = $self-&gt;ls_allow(KEY)</h2>
+<p>Returns the allow handler for the given key, which can be used with
+<code class="inline"><span class="w">Params::Check</span></code>
+'s <code class="inline"><span class="i">allow</span><span class="s">(</span><span class="s">)</span></code>
+ handler. If there was no allow handler
+specified, an allow handler that always returns true will be returned.</p>
+<a name="0x24clone-0x3d-0x24self-0x3emk_clone0x3b"></a><h2>$clone = $self-&gt;mk_clone;</h2>
+<p>Makes a clone of the current object, which will have the exact same
+accessors as the current object, but without the data stored in them.</p>
+<a name="0x24bool-0x3d-0x24self-0x3emk_flush0x3b"></a><h2>$bool = $self-&gt;mk_flush;</h2>
+<p>Flushes all the data from the current object; all accessors will be
+set back to their default state of <code class="inline"><a class="l_k" href="../functions/undef.html">undef</a></code>.</p>
+<p>Returns true on success and false on failure.</p>
+<a name="0x24bool-0x3d-0x24self-0x3emk_verify0x3b"></a><h2>$bool = $self-&gt;mk_verify;</h2>
+<p>Checks if all values in the current object are in accordance with their
+own allow handler. Specifically useful to check if an empty initialised
+object has been filled with values satisfying their own allow criteria.</p>
+<a name="0x24bool-0x3d-0x24self-0x3eregister_callback(-sub-0x7b-...-0x7d-)0x3b"></a><h2>$bool = $self-&gt;register_callback( sub { ... } );</h2>
+<p>This method allows you to register a callback, that is invoked
+every time an accessor is called. This allows you to munge input
+data, access external data stores, etc.</p>
+<p>You are free to return whatever you wish. On a <code class="inline"><span class="w">set</span></code>
+ call, the
+data is even stored in the object.</p>
+<p>Below is an example of the use of a callback.</p>
+<pre class="verbatim">    <span class="i">$object</span><span class="i">-&gt;some_method</span><span class="s">(</span> <span class="q">&quot;some_value&quot;</span> <span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    my $callback = sub {
+        my $self    = shift; # the object
+        my $meth    = shift; # "some_method"
+        my $val     = shift; # ["some_value"]  
+                             # could be undef -- check 'exists';
+                             # if scalar @$val is empty, it was a 'get'</pre><pre class="verbatim">        <span class="c"># your code here</span></pre>
+<pre class="verbatim">        return $new_val;     # the value you want to be set/returned
+    }</pre><p>To access the values stored in the object, circumventing the
+callback structure, you should use the <code class="inline"><span class="w">___get</span></code>
+ and <code class="inline"><span class="w">___set</span></code>
+ methods
+documented further down.</p>
+<a name="0x24bool-0x3d-0x24self-0x3ecan(-METHOD_NAME-)"></a><h2>$bool = $self-&gt;can( METHOD_NAME )</h2>
+<p>This method overrides <code class="inline"><span class="w">UNIVERAL::can</span></code>
+ in order to provide coderefs to
+accessors which are loaded on demand. It will behave just like
+<code class="inline"><span class="w">UNIVERSAL::can</span></code>
+ where it can -- returning a class method if it exists,
+or a closure pointing to a valid accessor of this particular object.</p>
+<p>You can use it as follows:</p>
+<pre class="verbatim">    <span class="i">$sub</span> = <span class="i">$object</span><span class="i">-&gt;can</span><span class="s">(</span><span class="q">'some_accessor'</span><span class="s">)</span><span class="sc">;</span>   <span class="c"># retrieve the coderef</span>
+    <span class="i">$sub</span>-&gt;<span class="s">(</span><span class="q">'foo'</span><span class="s">)</span><span class="sc">;</span>                          <span class="c"># 'some_accessor' now set</span>
+                                            <span class="c"># to 'foo' for $object</span>
+    <span class="i">$foo</span> = <span class="i">$sub</span>-&gt;<span class="s">(</span><span class="s">)</span><span class="sc">;</span>                        <span class="c"># retrieve the contents</span>
+                                            <span class="c"># of 'some_accessor'</span></pre>
+<p>See the <code class="inline"><span class="w">SYNOPSIS</span></code>
+ for more examples.</p>
+<a name="0x24val-0x3d-0x24self-0x3e___get(-METHOD_NAME-)0x3b"></a><h2>$val = $self-&gt;___get( METHOD_NAME );</h2>
+<p>Method to directly access the value of the given accessor in the
+object. It circumvents all calls to allow checks, callbakcs, etc.</p>
+<p>Use only if you <code class="inline"><span class="w">Know</span> <span class="w">What</span> <span class="w">You</span> <span class="w">Are</span> <span class="w">Doing</span></code>
+! General usage for 
+this functionality would be in your own custom callbacks.</p>
+<a name="0x24bool-0x3d-0x24self-0x3e___set(-METHOD_NAME-0x3d0x3e-VALUE-)0x3b"></a><h2>$bool = $self-&gt;___set( METHOD_NAME =&gt; VALUE );</h2>
+<p>Method to directly set the value of the given accessor in the
+object. It circumvents all calls to allow checks, callbakcs, etc.</p>
+<p>Use only if you <code class="inline"><span class="w">Know</span> <span class="w">What</span> <span class="w">You</span> <span class="w">Are</span> <span class="w">Doing</span></code>
+! General usage for 
+this functionality would be in your own custom callbacks.</p>
+<a name="LVALUE-ACCESSORS"></a><h1>LVALUE ACCESSORS</h1>
+<p><code class="inline"><span class="w">Object::Accessor</span></code>
+ supports <code class="inline"><span class="w">lvalue</span></code>
+ attributes as well. To enable
+these, you should create your objects in the designated namespace,
+<code class="inline"><span class="w">Object::Accessor::Lvalue</span></code>
+. For example:</p>
+<pre class="verbatim">    <a class="l_k" href="../functions/my.html">my</a> <span class="i">$obj</span> = <span class="w">Object::Accessor::Lvalue</span><span class="w">-&gt;new</span><span class="s">(</span><span class="q">'foo'</span><span class="s">)</span><span class="sc">;</span>
+    <span class="i">$obj</span><span class="i">-&gt;foo</span> += <span class="n">1</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/print.html">print</a> <span class="i">$obj</span><span class="i">-&gt;foo</span><span class="sc">;</span></pre>
+<p>will actually print <code class="inline"><span class="n">1</span></code>
+ and work as expected. Since this is an
+optional feature, that's not desirable in all cases, we require
+you to explicitly use the <code class="inline"><span class="w">Object::Accessor::Lvalue</span></code>
+ class.</p>
+<p>Doing the same on the standard <code class="inline"><span class="w">Object</span></code>
+&gt;Accessor&gt; class would
+generate the following code &amp; errors:</p>
+<pre class="verbatim">    <a class="l_k" href="../functions/my.html">my</a> <span class="i">$obj</span> = <span class="w">Object::Accessor</span><span class="w">-&gt;new</span><span class="s">(</span><span class="q">'foo'</span><span class="s">)</span><span class="sc">;</span>
+    <span class="i">$obj</span><span class="i">-&gt;foo</span> += <span class="n">1</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="w">Can't</span> <span class="w">modify</span> <span class="w">non</span>-<span class="w">lvalue</span> <span class="w">subroutine</span> <span class="w">call</span></pre>
+<p>Note that <code class="inline"><span class="w">lvalue</span></code>
+ support on <code class="inline">AUTOLOAD</code>
+ routines is a
+<code class="inline"><span class="w">perl</span> <span class="n">5.8</span>.<span class="w">x</span></code>
+ feature. See perldoc <a href="../perl58delta.html">perl58delta</a> for details.</p>
+<a name="CAVEATS"></a><h2>CAVEATS</h2>
+<ul>
+<li><a name="*-Allow-handlers"></a><b>Allow handlers</b>
+<p>Due to the nature of <code class="inline"><span class="w">lvalue</span> <span class="w">subs</span></code>
+, we never get access to the
+value you are assigning, so we can not check it againt your allow
+handler. Allow handlers are therefor unsupported under <code class="inline"><span class="w">lvalue</span></code>
+
+conditions.</p>
+<p>See <code class="inline"><span class="w">perldoc</span> <span class="w">perlsub</span></code>
+ for details.</p>
+</li>
+<li><a name="*-Callbacks"></a><b>Callbacks</b>
+<p>Due to the nature of <code class="inline"><span class="w">lvalue</span> <span class="w">subs</span></code>
+, we never get access to the
+value you are assigning, so we can not check provide this value
+to your callback. Furthermore, we can not distinguish between
+a <code class="inline"><span class="w">get</span></code>
+ and a <code class="inline"><span class="w">set</span></code>
+ call. Callbacks are therefor unsupported 
+under <code class="inline"><span class="w">lvalue</span></code>
+ conditions.</p>
+<p>See <code class="inline"><span class="w">perldoc</span> <span class="w">perlsub</span></code>
+ for details.</p>
+</li>
+</ul>
+<a name="GLOBAL-VARIABLES"></a><h1>GLOBAL VARIABLES</h1>
+<a name="0x24Object0x3a0x3aAccessor0x3a0x3aFATAL"></a><h2>$Object::Accessor::FATAL</h2>
+<p>Set this variable to true to make all attempted access to non-existant
+accessors be fatal.
+This defaults to <code class="inline"><span class="w">false</span></code>
+.</p>
+<a name="0x24Object0x3a0x3aAccessor0x3a0x3aDEBUG"></a><h2>$Object::Accessor::DEBUG</h2>
+<p>Set this variable to enable debugging output.
+This defaults to <code class="inline"><span class="w">false</span></code>
+.</p>
+<a name="TODO"></a><h1>TODO</h1>
+<a name="Create-read-only-accessors"></a><h2>Create read-only accessors</h2>
+<p>Currently all accessors are read/write for everyone. Perhaps a future
+release should make it possible to have read-only accessors as well.</p>
+<a name="CAVEATS"></a><h1>CAVEATS</h1>
+<p>If you use codereferences for your allow handlers, you will not be able
+to freeze the data structures using <code class="inline"><span class="w">Storable</span></code>
+.</p>
+<p>Due to a bug in storable (until at least version 2.15), <code class="inline"><a class="l_k" href="../functions/qr.html">qr//</a></code> compiled 
+regexes also don't de-serialize properly. Although this bug has been 
+reported, you should be aware of this issue when serializing your objects.</p>
+<p>You can track the bug here:</p>
+<pre class="verbatim">    http://rt.cpan.org/Ticket/Display.html?id=1827</pre><a name="AUTHOR"></a><h1>AUTHOR</h1>
+<p>This module by
+Jos Boumans &lt;kane@cpan.org&gt;.</p>
+<a name="COPYRIGHT"></a><h1>COPYRIGHT</h1>
+<p>This module is
+copyright (c) 2004-2005 Jos Boumans &lt;kane@cpan.org&gt;.
+All rights reserved.</p>
+<p>This library is free software;
+you may redistribute and/or modify it under the same
+terms as Perl itself.</p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../close_purple.gif';" onmouseout="rightCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('Object::Accessor','Object/Accessor.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

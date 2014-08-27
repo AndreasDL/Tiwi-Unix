@@ -1,0 +1,267 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>Term::Cap - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 1;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../close_purple.gif';" onmouseout="leftCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../index-overview.html">Overview</a></li>
+        <li><a href="../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../index-faq.html">FAQs</a></li>
+        <li><a href="../index-history.html">History / Changes</a></li>
+        <li><a href="../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../index-language.html">Language</a></li>
+        <li><a href="../index-functions.html">Functions</a></li>
+        <li><a href="../perlop.html">Operators</a></li>
+        <li><a href="../perlvar.html">Special variables</a></li>
+        <li><a href="../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../index-modules-A.html">Core modules</a></li>
+        <li><a href="../index-utilities.html">Utilities</a></li>
+        <li><a href="../index-internals.html">Internals</a></li>
+        <li><a href="../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../index.html">Home</a> &gt; <a href="../index-modules-A.html">Core modules</a> &gt; <a href="../index-modules-T.html">T</a> &gt; Term::Cap</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">Term::Cap</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><ul><li><a href="#METHODS">METHODS</a></ul><li><a href="#EXAMPLES">EXAMPLES</a><li><a href="#COPYRIGHT-AND-LICENSE">COPYRIGHT AND LICENSE</a><li><a href="#AUTHOR">AUTHOR</a><li><a href="#SEE-ALSO">SEE ALSO</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>Term::Cap - Perl termcap interface</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">    <a class="l_k" href="../functions/require.html">require</a> <span class="w">Term::Cap</span><span class="sc">;</span>
+    <span class="i">$terminal</span> = <span class="w">Tgetent</span> <span class="w">Term::Cap</span> <span class="s">{</span> <span class="w">TERM</span> <span class="cm">=&gt;</span> <a class="l_k" href="../functions/undef.html">undef</a><span class="cm">,</span> <span class="w">OSPEED</span> <span class="cm">=&gt;</span> <span class="i">$ospeed</span> <span class="s">}</span><span class="sc">;</span>
+    <span class="i">$terminal</span><span class="i">-&gt;Trequire</span><span class="s">(</span><span class="q">qw/ce ku kd/</span><span class="s">)</span><span class="sc">;</span>
+    <span class="i">$terminal</span><span class="i">-&gt;Tgoto</span><span class="s">(</span><span class="q">&#39;cm&#39;</span><span class="cm">,</span> <span class="i">$col</span><span class="cm">,</span> <span class="i">$row</span><span class="cm">,</span> <span class="i">$FH</span><span class="s">)</span><span class="sc">;</span>
+    <span class="i">$terminal</span><span class="i">-&gt;Tputs</span><span class="s">(</span><span class="q">&#39;dl&#39;</span><span class="cm">,</span> <span class="i">$count</span><span class="cm">,</span> <span class="i">$FH</span><span class="s">)</span><span class="sc">;</span>
+    <span class="i">$terminal</span><span class="i">-&gt;Tpad</span><span class="s">(</span><span class="i">$string</span><span class="cm">,</span> <span class="i">$count</span><span class="cm">,</span> <span class="i">$FH</span><span class="s">)</span><span class="sc">;</span></pre>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p>These are low-level functions to extract and use capabilities from
+a terminal capability (termcap) database.</p>
+<p>More information on the terminal capabilities will be found in the
+termcap manpage on most Unix-like systems.</p>
+<a name="METHODS"></a><h2>METHODS</h2>
+<ul>
+<p>The output strings for <b>Tputs</b> are cached for counts of 1 for performance.
+<b>Tgoto</b> and <b>Tpad</b> do not cache.  <code class="inline"><span class="i">$self</span>-&gt;{<span class="w">_xx</span>}</code>
+ is the raw termcap
+data and <code class="inline"><span class="i">$self</span>-&gt;{<span class="w">xx</span>}</code>
+ is the cached version.</p>
+<pre class="verbatim">    <a class="l_k" href="../functions/print.html">print</a> <span class="i">$terminal</span><span class="i">-&gt;Tpad</span><span class="s">(</span><span class="i">$self</span>-&gt;{<span class="w">_xx</span>}<span class="cm">,</span> <span class="n">1</span><span class="s">)</span><span class="sc">;</span></pre>
+<p><b>Tgoto</b>, <b>Tputs</b>, and <b>Tpad</b> return the string and will also
+output the string to $FH if specified.</p>
+<li><a name="*Tgetent*"></a><b><b>Tgetent</b></b>
+<p>Returns a blessed object reference which the user can
+then use to send the control strings to the terminal using <b>Tputs</b>
+and <b>Tgoto</b>.</p>
+<p>The function extracts the entry of the specified terminal
+type <i>TERM</i> (defaults to the environment variable <i>TERM</i>) from the
+database.</p>
+<p>It will look in the environment for a <i>TERMCAP</i> variable.  If
+found, and the value does not begin with a slash, and the terminal
+type name is the same as the environment string <i>TERM</i>, the
+<i>TERMCAP</i> string is used instead of reading a termcap file.  If
+it does begin with a slash, the string is used as a path name of
+the termcap file to search.  If <i>TERMCAP</i> does not begin with a
+slash and name is different from <i>TERM</i>, <b>Tgetent</b> searches the
+files <i>$HOME/.termcap</i>, <i>/etc/termcap</i>, and <i>/usr/share/misc/termcap</i>,
+in that order, unless the environment variable <i>TERMPATH</i> exists,
+in which case it specifies a list of file pathnames (separated by
+spaces or colons) to be searched <b>instead</b>.  Whenever multiple
+files are searched and a tc field occurs in the requested entry,
+the entry it names must be found in the same file or one of the
+succeeding files.  If there is a <code class="inline">:tc=...:</code> in the <i>TERMCAP</i>
+environment variable string it will continue the search in the
+files as above.</p>
+<p>The extracted termcap entry is available in the object
+as <code class="inline"><span class="i">$self</span>-&gt;{<span class="w">TERMCAP</span>}</code>
+.</p>
+<p>It takes a hash reference as an argument with two optional keys:</p>
+<ul>
+<li><a name="OSPEED"></a><b>OSPEED</b>
+<p>The terminal output bit rate (often mistakenly called the baud rate)
+for this terminal - if not set a warning will be generated
+and it will be defaulted to 9600.  <i>OSPEED</i> can be be specified as
+either a POSIX termios/SYSV termio speeds (where 9600 equals 9600) or
+an old DSD-style speed ( where 13 equals 9600).</p>
+</li>
+<li><a name="TERM"></a><b>TERM</b>
+<p>The terminal type whose termcap entry will be used - if not supplied it will
+default to $ENV{TERM}: if that is not set then <b>Tgetent</b> will croak.</p>
+</li>
+</ul>
+<p>It calls <code class="inline"><span class="w">croak</span></code>
+ on failure.</p>
+</li>
+<li><a name="*Tpad*"></a><b><b>Tpad</b></b>
+<p>Outputs a literal string with appropriate padding for the current terminal.</p>
+<p>It takes three arguments:</p>
+<ul>
+<li><a name="*0x24string*"></a><b><b>$string</b></b>
+<p>The literal string to be output.  If it starts with a number and an optional
+'*' then the padding will be increased by an amount relative to this number,
+if the '*' is present then this amount will me multiplied by $cnt.  This part
+of $string is removed before output/</p>
+</li>
+<li><a name="*0x24cnt*"></a><b><b>$cnt</b></b>
+<p>Will be used to modify the padding applied to string as described above.</p>
+</li>
+<li><a name="*0x24FH*"></a><b><b>$FH</b></b>
+<p>An optional filehandle (or IO::Handle ) that output will be printed to.</p>
+</li>
+</ul>
+<p>The padded $string is returned.</p>
+</li>
+<li><a name="*Tputs*"></a><b><b>Tputs</b></b>
+<p>Output the string for the given capability padded as appropriate without
+any parameter substitution.</p>
+<p>It takes three arguments:</p>
+<ul>
+<li><a name="*0x24cap*"></a><b><b>$cap</b></b>
+<p>The capability whose string is to be output.</p>
+</li>
+<li><a name="*0x24cnt*"></a><b><b>$cnt</b></b>
+<p>A count passed to Tpad to modify the padding applied to the output string.
+If $cnt is zero or one then the resulting string will be cached.</p>
+</li>
+<li><a name="*0x24FH*"></a><b><b>$FH</b></b>
+<p>An optional filehandle (or IO::Handle ) that output will be printed to.</p>
+</li>
+</ul>
+<p>The appropriate string for the capability will be returned.</p>
+</li>
+<li><a name="*Tgoto*"></a><b><b>Tgoto</b></b>
+<p><b>Tgoto</b> decodes a cursor addressing string with the given parameters.</p>
+<p>There are four arguments:</p>
+<ul>
+<li><a name="*0x24cap*"></a><b><b>$cap</b></b>
+<p>The name of the capability to be output.</p>
+</li>
+<li><a name="*0x24col*"></a><b><b>$col</b></b>
+<p>The first value to be substituted in the output string ( usually the column
+in a cursor addressing capability )</p>
+</li>
+<li><a name="*0x24row*"></a><b><b>$row</b></b>
+<p>The second value to be substituted in the output string (usually the row
+in cursor addressing capabilities)</p>
+</li>
+<li><a name="*0x24FH*"></a><b><b>$FH</b></b>
+<p>An optional filehandle (or IO::Handle ) to which the output string will be
+printed.</p>
+</li>
+</ul>
+<p>Substitutions are made with $col and $row in the output string with the
+following sprintf() line formats:</p>
+<pre class="verbatim"> %%   output `%'
+ %d   output value as in printf %d
+ %2   output value as in printf %2d
+ %3   output value as in printf %3d
+ %.   output value as in printf %c
+ %+x  add x to value, then do %.</pre><pre class="verbatim"> %&gt;xy if value &gt; x then add y, no output
+ %r   reverse order of two parameters, no output
+ %i   increment by one, no output
+ %B   BCD (16*(value/10)) + (value%10), no output</pre><pre class="verbatim"> %n   exclusive-or all parameters with 0140 (Datamedia 2500)
+ %D   Reverse coding (value - 2*(value%16)), no output (Delta Data)</pre><p>The output string will be returned.</p>
+</li>
+<li><a name="*Trequire*"></a><b><b>Trequire</b></b>
+<p>Takes a list of capabilities as an argument and will croak if one is not
+found.</p>
+</li>
+</ul>
+<a name="EXAMPLES"></a><h1>EXAMPLES</h1>
+<pre class="verbatim">    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Term::Cap</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="c"># Get terminal output speed</span>
+    <a class="l_k" href="../functions/require.html">require</a> <span class="w">POSIX</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/my.html">my</a> <span class="i">$termios</span> = <span class="w">new</span> <span class="w">POSIX::Termios</span><span class="sc">;</span>
+    <span class="i">$termios</span><span class="i">-&gt;getattr</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/my.html">my</a> <span class="i">$ospeed</span> = <span class="i">$termios</span><span class="i">-&gt;getospeed</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="c"># Old-style ioctl code to get ospeed:</span>
+    <span class="c">#     require &#39;ioctl.pl&#39;;</span>
+    <span class="c">#     ioctl(TTY,$TIOCGETP,$sgtty);</span>
+    <span class="c">#     ($ispeed,$ospeed) = unpack(&#39;cc&#39;,$sgtty);</span></pre>
+<pre class="verbatim">    <span class="c"># allocate and initialize a terminal structure</span>
+    <span class="i">$terminal</span> = <span class="w">Tgetent</span> <span class="w">Term::Cap</span> <span class="s">{</span> <span class="w">TERM</span> <span class="cm">=&gt;</span> <a class="l_k" href="../functions/undef.html">undef</a><span class="cm">,</span> <span class="w">OSPEED</span> <span class="cm">=&gt;</span> <span class="i">$ospeed</span> <span class="s">}</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="c"># require certain capabilities to be available</span>
+    <span class="i">$terminal</span><span class="i">-&gt;Trequire</span><span class="s">(</span><span class="q">qw/ce ku kd/</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="c"># Output Routines, if $FH is undefined these just return the string</span></pre>
+<pre class="verbatim">    <span class="c"># Tgoto does the % expansion stuff with the given args</span>
+    <span class="i">$terminal</span><span class="i">-&gt;Tgoto</span><span class="s">(</span><span class="q">&#39;cm&#39;</span><span class="cm">,</span> <span class="i">$col</span><span class="cm">,</span> <span class="i">$row</span><span class="cm">,</span> <span class="i">$FH</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="c"># Tputs doesn&#39;t do any % expansion.</span>
+    <span class="i">$terminal</span><span class="i">-&gt;Tputs</span><span class="s">(</span><span class="q">&#39;dl&#39;</span><span class="cm">,</span> <span class="i">$count</span> = <span class="n">1</span><span class="cm">,</span> <span class="i">$FH</span><span class="s">)</span><span class="sc">;</span></pre>
+<a name="COPYRIGHT-AND-LICENSE"></a><h1>COPYRIGHT AND LICENSE</h1>
+<p>Please see the README file in distribution.</p>
+<a name="AUTHOR"></a><h1>AUTHOR</h1>
+<p>This module is part of the core Perl distribution and is also maintained
+for CPAN by Jonathan Stowe &lt;jns@gellyfish.com&gt;.</p>
+<a name="SEE-ALSO"></a><h1>SEE ALSO</h1>
+<p>termcap(5)</p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../close_purple.gif';" onmouseout="rightCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('Term::Cap','Term/Cap.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

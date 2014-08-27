@@ -1,0 +1,47 @@
+use LWP::UserAgent;
+use HTTP::Cookies;
+use LWP::Simple;
+
+my $email = "andreasdelille@hotmail.com"; #stores our mail
+my $password = "sedfes92090235924"; #stores our password
+my $user_agent = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.0.6) Gecko/20060728 Firefox/1.5.0.6';
+
+$email = <>; #read the login e-mail
+$password=<>; #read the password
+
+chomp($email); #remove last line
+chomp($password);
+
+my %postLoginData; #necessary post data for login
+$postLoginData{'email'}=$email;
+$postLoginData{'pass'}=$password;
+$postLoginData{'persistent'}=1;
+$postLoginData{'login'}='Login';
+
+our $response; #holds the response the HTTP requests
+#set the headers, let's make this a Firefox browser!
+our @header = ('Referer'=>'http://www.facebook.com', 'User-Agent'=>$user_agent);
+
+our $cookie_jar = HTTP::Cookies->new(file=>'fbkCookies.dat',autosave=>1, ignore_discard=>1);
+
+our $browser = LWP::UserAgent->new; #init browser
+$browser->cookie_jar($cookie_jar);
+
+$browser->get('http://www.facebook.com/login.php',@header);
+
+#here we actually login!
+$browser->post('https://login.facebook.com/login.php',\%postLoginData,@header);
+
+$response = $browser->get('http://www.facebook.com/home.php',@header);
+
+#was login successful?
+if($response->content =~ /Incorrect Email/)
+{
+print "Login Failed...Quitting..\n";
+}
+else {
+print "..and we are in!";
+#let's go to the homepage
+$response = $browser->get('http://www.facebook.com/home.php',@header);
+print $response->content;
+}

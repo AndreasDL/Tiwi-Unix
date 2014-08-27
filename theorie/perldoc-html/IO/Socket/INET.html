@@ -1,0 +1,224 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>IO::Socket::INET - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 2;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../../close_purple.gif';" onmouseout="leftCloseIcon.src='../../close_blue.gif';"><img src="../../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../../index-overview.html">Overview</a></li>
+        <li><a href="../../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../../index-faq.html">FAQs</a></li>
+        <li><a href="../../index-history.html">History / Changes</a></li>
+        <li><a href="../../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../../index-language.html">Language</a></li>
+        <li><a href="../../index-functions.html">Functions</a></li>
+        <li><a href="../../perlop.html">Operators</a></li>
+        <li><a href="../../perlvar.html">Special variables</a></li>
+        <li><a href="../../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../../index-modules-A.html">Core modules</a></li>
+        <li><a href="../../index-utilities.html">Utilities</a></li>
+        <li><a href="../../index-internals.html">Internals</a></li>
+        <li><a href="../../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../../index.html">Home</a> &gt; <a href="../../index-modules-A.html">Core modules</a> &gt; <a href="../../index-modules-I.html">I</a> &gt; IO::Socket::INET</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">IO::Socket::INET</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><li><a href="#CONSTRUCTOR">CONSTRUCTOR</a><ul><li><a href="#METHODS">METHODS</a></ul><li><a href="#SEE-ALSO">SEE ALSO</a><li><a href="#AUTHOR">AUTHOR</a><li><a href="#COPYRIGHT">COPYRIGHT</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>IO::Socket::INET - Object interface for AF_INET domain sockets</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">    <a class="l_k" href="../../functions/use.html">use</a> <span class="w">IO::Socket::INET</span><span class="sc">;</span></pre>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p><code class="inline"><span class="w">IO::Socket::INET</span></code>
+ provides an object interface to creating and using sockets
+in the AF_INET domain. It is built upon the <a href="../../IO/Socket.html">IO::Socket</a> interface and
+inherits all the methods defined by <a href="../../IO/Socket.html">IO::Socket</a>.</p>
+<a name="CONSTRUCTOR"></a><h1>CONSTRUCTOR</h1>
+<ul>
+<li><a name="new-(-0x5bARGS0x5d-)"></a><b>new ( [ARGS] )</b>
+<p>Creates an <code class="inline"><span class="w">IO::Socket::INET</span></code>
+ object, which is a reference to a
+newly created symbol (see the <code class="inline"><span class="w">Symbol</span></code>
+ package). <code class="inline"><span class="w">new</span></code>
+
+optionally takes arguments, these arguments are in key-value pairs.</p>
+<p>In addition to the key-value pairs accepted by <a href="../../IO/Socket.html">IO::Socket</a>,
+<code class="inline"><span class="w">IO::Socket::INET</span></code>
+ provides.</p>
+<pre class="verbatim">    PeerAddr	Remote host address          &lt;hostname&gt;[:&lt;port&gt;]
+    PeerHost	Synonym for PeerAddr
+    PeerPort	Remote port or service       &lt;service&gt;[(&lt;no&gt;)] | &lt;no&gt;
+    LocalAddr	Local host bind	address      hostname[:port]
+    LocalHost	Synonym for LocalAddr
+    LocalPort	Local host bind	port         &lt;service&gt;[(&lt;no&gt;)] | &lt;no&gt;
+    Proto	Protocol name (or number)    "tcp" | "udp" | ...
+    Type	Socket type                  SOCK_STREAM | SOCK_DGRAM | ...
+    Listen	Queue size for listen
+    ReuseAddr	Set SO_REUSEADDR before binding
+    Reuse	Set SO_REUSEADDR before binding (deprecated, prefer ReuseAddr)
+    ReusePort	Set SO_REUSEPORT before binding
+    Broadcast	Set SO_BROADCAST before binding
+    Timeout	Timeout	value for various operations
+    MultiHomed  Try all addresses for multi-homed hosts
+    Blocking    Determine if connection will be blocking mode</pre><p>If <code class="inline"><span class="w">Listen</span></code>
+ is defined then a listen socket is created, else if the
+socket type, which is derived from the protocol, is SOCK_STREAM then
+connect() is called.</p>
+<p>Although it is not illegal, the use of <code class="inline"><span class="w">MultiHomed</span></code>
+ on a socket
+which is in non-blocking mode is of little use. This is because the
+first connect will never fail with a timeout as the connect call
+will not block.</p>
+<p>The <code class="inline"><span class="w">PeerAddr</span></code>
+ can be a hostname or the IP-address on the
+"xx.xx.xx.xx" form.  The <code class="inline"><span class="w">PeerPort</span></code>
+ can be a number or a symbolic
+service name.  The service name might be followed by a number in
+parenthesis which is used if the service is not known by the system.
+The <code class="inline"><span class="w">PeerPort</span></code>
+ specification can also be embedded in the <code class="inline"><span class="w">PeerAddr</span></code>
+
+by preceding it with a ":".</p>
+<p>If <code class="inline"><span class="w">Proto</span></code>
+ is not given and you specify a symbolic <code class="inline"><span class="w">PeerPort</span></code>
+ port,
+then the constructor will try to derive <code class="inline"><span class="w">Proto</span></code>
+ from the service
+name.  As a last resort <code class="inline"><span class="w">Proto</span></code>
+ "tcp" is assumed.  The <code class="inline"><span class="w">Type</span></code>
+
+parameter will be deduced from <code class="inline"><span class="w">Proto</span></code>
+ if not specified.</p>
+<p>If the constructor is only passed a single argument, it is assumed to
+be a <code class="inline"><span class="w">PeerAddr</span></code>
+ specification.</p>
+<p>If <code class="inline"><span class="w">Blocking</span></code>
+ is set to 0, the connection will be in nonblocking mode.
+If not specified it defaults to 1 (blocking mode).</p>
+<p>Examples:</p>
+<pre class="verbatim">   <span class="i">$sock</span> = <span class="w">IO::Socket::INET</span><span class="w">-&gt;new</span><span class="s">(</span><span class="w">PeerAddr</span> <span class="cm">=&gt;</span> <span class="q">&#39;www.perl.org&#39;</span><span class="cm">,</span>
+                                 <span class="w">PeerPort</span> <span class="cm">=&gt;</span> <span class="q">&#39;http(80)&#39;</span><span class="cm">,</span>
+                                 <span class="w">Proto</span>    <span class="cm">=&gt;</span> <span class="q">&#39;tcp&#39;</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">   <span class="i">$sock</span> = <span class="w">IO::Socket::INET</span><span class="w">-&gt;new</span><span class="s">(</span><span class="w">PeerAddr</span> <span class="cm">=&gt;</span> <span class="q">&#39;localhost:smtp(25)&#39;</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">   <span class="i">$sock</span> = <span class="w">IO::Socket::INET</span><span class="w">-&gt;new</span><span class="s">(</span><span class="w">Listen</span>    <span class="cm">=&gt;</span> <span class="n">5</span><span class="cm">,</span>
+                                 <span class="w">LocalAddr</span> <span class="cm">=&gt;</span> <span class="q">&#39;localhost&#39;</span><span class="cm">,</span>
+                                 <span class="w">LocalPort</span> <span class="cm">=&gt;</span> <span class="n">9000</span><span class="cm">,</span>
+                                 <span class="w">Proto</span>     <span class="cm">=&gt;</span> <span class="q">&#39;tcp&#39;</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">   <span class="i">$sock</span> = <span class="w">IO::Socket::INET</span><span class="w">-&gt;new</span><span class="s">(</span><span class="q">&#39;127.0.0.1:25&#39;</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">   <span class="i">$sock</span> = <span class="w">IO::Socket::INET</span><span class="w">-&gt;new</span><span class="s">(</span><span class="w">PeerPort</span>  <span class="cm">=&gt;</span> <span class="n">9999</span><span class="cm">,</span>
+                                 <span class="w">PeerAddr</span>  <span class="cm">=&gt;</span> <span class="i">inet_ntoa</span><span class="s">(</span><span class="w">INADDR_BROADCAST</span><span class="s">)</span><span class="cm">,</span>
+                                 <span class="w">Proto</span>     <span class="cm">=&gt;</span> <span class="w">udp</span><span class="cm">,</span>    
+                                 <span class="w">LocalAddr</span> <span class="cm">=&gt;</span> <span class="q">&#39;localhost&#39;</span><span class="cm">,</span>
+                                 <span class="w">Broadcast</span> <span class="cm">=&gt;</span> <span class="n">1</span> <span class="s">)</span> 
+                             or <a class="l_k" href="../../functions/die.html">die</a> <span class="q">&quot;Can&#39;t bind : $@\n&quot;</span><span class="sc">;</span></pre>
+<pre class="verbatim"> <span class="w">NOTE</span> <span class="w">NOTE</span> <span class="w">NOTE</span> <span class="w">NOTE</span> <span class="w">NOTE</span> <span class="w">NOTE</span> <span class="w">NOTE</span> <span class="w">NOTE</span> <span class="w">NOTE</span> <span class="w">NOTE</span> <span class="w">NOTE</span> <span class="w">NOTE</span></pre>
+<p>As of VERSION 1.18 all IO::Socket objects have autoflush turned on
+by default. This was not the case with earlier releases.</p>
+<pre class="verbatim"> <span class="w">NOTE</span> <span class="w">NOTE</span> <span class="w">NOTE</span> <span class="w">NOTE</span> <span class="w">NOTE</span> <span class="w">NOTE</span> <span class="w">NOTE</span> <span class="w">NOTE</span> <span class="w">NOTE</span> <span class="w">NOTE</span> <span class="w">NOTE</span> <span class="w">NOTE</span></pre>
+</li>
+</ul>
+<a name="METHODS"></a><h2>METHODS</h2>
+<ul>
+<li><a name="sockaddr-()"></a><b>sockaddr ()</b>
+<p>Return the address part of the sockaddr structure for the socket</p>
+</li>
+<li><a name="sockport-()"></a><b>sockport ()</b>
+<p>Return the port number that the socket is using on the local host</p>
+</li>
+<li><a name="sockhost-()"></a><b>sockhost ()</b>
+<p>Return the address part of the sockaddr structure for the socket in a
+text form xx.xx.xx.xx</p>
+</li>
+<li><a name="peeraddr-()"></a><b>peeraddr ()</b>
+<p>Return the address part of the sockaddr structure for the socket on
+the peer host</p>
+</li>
+<li><a name="peerport-()"></a><b>peerport ()</b>
+<p>Return the port number for the socket on the peer host.</p>
+</li>
+<li><a name="peerhost-()"></a><b>peerhost ()</b>
+<p>Return the address part of the sockaddr structure for the socket on the
+peer host in a text form xx.xx.xx.xx</p>
+</li>
+</ul>
+<a name="SEE-ALSO"></a><h1>SEE ALSO</h1>
+<p><a href="../../Socket.html">Socket</a>, <a href="../../IO/Socket.html">IO::Socket</a></p>
+<a name="AUTHOR"></a><h1>AUTHOR</h1>
+<p>Graham Barr. Currently maintained by the Perl Porters.  Please report all
+bugs to &lt;perl5-porters@perl.org&gt;.</p>
+<a name="COPYRIGHT"></a><h1>COPYRIGHT</h1>
+<p>Copyright (c) 1996-8 Graham Barr &lt;gbarr@pobox.com&gt;. All rights reserved.
+This program is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.</p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../../close_purple.gif';" onmouseout="rightCloseIcon.src='../../close_blue.gif';"><img src="../../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('IO::Socket::INET','IO/Socket/INET.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>Test::Simple - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 1;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../close_purple.gif';" onmouseout="leftCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../index-overview.html">Overview</a></li>
+        <li><a href="../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../index-faq.html">FAQs</a></li>
+        <li><a href="../index-history.html">History / Changes</a></li>
+        <li><a href="../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../index-language.html">Language</a></li>
+        <li><a href="../index-functions.html">Functions</a></li>
+        <li><a href="../perlop.html">Operators</a></li>
+        <li><a href="../perlvar.html">Special variables</a></li>
+        <li><a href="../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../index-modules-A.html">Core modules</a></li>
+        <li><a href="../index-utilities.html">Utilities</a></li>
+        <li><a href="../index-internals.html">Internals</a></li>
+        <li><a href="../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../index.html">Home</a> &gt; <a href="../index-modules-A.html">Core modules</a> &gt; <a href="../index-modules-T.html">T</a> &gt; Test::Simple</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">Test::Simple</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><li><a href="#EXAMPLE">EXAMPLE</a><li><a href="#CAVEATS">CAVEATS</a><li><a href="#NOTES">NOTES</a><li><a href="#HISTORY">HISTORY</a><li><a href="#SEE-ALSO">SEE ALSO</a><li><a href="#AUTHORS">AUTHORS</a><li><a href="#COPYRIGHT">COPYRIGHT</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>Test::Simple - Basic utilities for writing tests.</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">  <a class="l_k" href="../functions/use.html">use</a> <span class="w">Test::Simple</span> <span class="w">tests</span> <span class="cm">=&gt;</span> <span class="n">1</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <span class="i">ok</span><span class="s">(</span> <span class="i">$foo</span> eq <span class="i">$bar</span><span class="cm">,</span> <span class="q">&#39;foo is bar&#39;</span> <span class="s">)</span><span class="sc">;</span></pre>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p>** If you are unfamiliar with testing <b>read Test::Tutorial</b> first! **</p>
+<p>This is an extremely simple, extremely basic module for writing tests
+suitable for CPAN modules and other pursuits.  If you wish to do more
+complicated testing, use the Test::More module (a drop-in replacement
+for this one).</p>
+<p>The basic unit of Perl testing is the ok.  For each thing you want to
+test your program will print out an "ok" or "not ok" to indicate pass
+or fail.  You do this with the ok() function (see below).</p>
+<p>The only other constraint is you must pre-declare how many tests you
+plan to run.  This is in case something goes horribly wrong during the
+test and your test program aborts, or skips a test or whatever.  You
+do this like so:</p>
+<pre class="verbatim">    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Test::Simple</span> <span class="w">tests</span> <span class="cm">=&gt;</span> <span class="n">23</span><span class="sc">;</span></pre>
+<p>You must have a plan.</p>
+<ul>
+<li><a name="*ok*"></a><b><b>ok</b></b>
+<pre class="verbatim">  <span class="i">ok</span><span class="s">(</span> <span class="i">$foo</span> eq <span class="i">$bar</span><span class="cm">,</span> <span class="i">$name</span> <span class="s">)</span><span class="sc">;</span>
+  <span class="i">ok</span><span class="s">(</span> <span class="i">$foo</span> eq <span class="i">$bar</span> <span class="s">)</span><span class="sc">;</span></pre>
+<p>ok() is given an expression (in this case <code class="inline"><span class="i">$foo</span> eq <span class="i">$bar</span></code>
+).  If it's
+true, the test passed.  If it's false, it didn't.  That's about it.</p>
+<p>ok() prints out either "ok" or "not ok" along with a test number (it
+keeps track of that for you).</p>
+<pre class="verbatim">  <span class="c"># This produces &quot;ok 1 - Hell not yet frozen over&quot; (or not ok)</span>
+  <span class="i">ok</span><span class="s">(</span> <span class="i">get_temperature</span><span class="s">(</span><span class="i">$hell</span><span class="s">)</span> &gt; <span class="n">0</span><span class="cm">,</span> <span class="q">&#39;Hell not yet frozen over&#39;</span> <span class="s">)</span><span class="sc">;</span></pre>
+<p>If you provide a $name, that will be printed along with the "ok/not
+ok" to make it easier to find your test when if fails (just search for
+the name).  It also makes it easier for the next guy to understand
+what your test is for.  It's highly recommended you use test names.</p>
+<p>All tests are run in scalar context.  So this:</p>
+<pre class="verbatim">    <span class="i">ok</span><span class="s">(</span> <span class="i">@stuff</span><span class="cm">,</span> <span class="q">&#39;I have some stuff&#39;</span> <span class="s">)</span><span class="sc">;</span></pre>
+<p>will do what you mean (fail if stuff is empty)</p>
+</li>
+</ul>
+<p>Test::Simple will start by printing number of tests run in the form
+"1..M" (so "1..5" means you're going to run 5 tests).  This strange
+format lets Test::Harness know how many tests you plan on running in
+case something goes horribly wrong.</p>
+<p>If all your tests passed, Test::Simple will exit with zero (which is
+normal).  If anything failed it will exit with how many failed.  If
+you run less (or more) tests than you planned, the missing (or extras)
+will be considered failures.  If no tests were ever run Test::Simple
+will throw a warning and exit with 255.  If the test died, even after
+having successfully completed all its tests, it will still be
+considered a failure and will exit with 255.</p>
+<p>So the exit codes are...</p>
+<pre class="verbatim">    0                   all tests successful
+    255                 test died or all passed but wrong # of tests run
+    any other number    how many failed (including missing or extras)</pre><p>If you fail more than 254 tests, it will be reported as 254.</p>
+<p>This module is by no means trying to be a complete testing system.
+It's just to get you started.  Once you're off the ground its
+recommended you look at <a href="../Test/More.html">Test::More</a>.</p>
+<a name="EXAMPLE"></a><h1>EXAMPLE</h1>
+<p>Here's an example of a simple .t file for the fictional Film module.</p>
+<pre class="verbatim">    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Test::Simple</span> <span class="w">tests</span> <span class="cm">=&gt;</span> <span class="n">5</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <a class="l_k" href="../functions/use.html">use</a> <span class="w">Film</span><span class="sc">;</span>  <span class="c"># What you&#39;re testing.</span></pre>
+<pre class="verbatim">    my $btaste = Film-&gt;new({ Title    =&gt; 'Bad Taste',
+                             Director =&gt; 'Peter Jackson',
+                             Rating   =&gt; 'R',
+                             NumExplodingSheep =&gt; 1
+                           });
+    ok( defined($btaste) &amp;&amp; ref $btaste eq 'Film,     'new() works' );</pre><pre class="verbatim">    <span class="i">ok</span><span class="s">(</span> <span class="i">$btaste</span><span class="i">-&gt;Title</span>      eq <span class="q">&#39;Bad Taste&#39;</span><span class="cm">,</span>     <span class="q">&#39;Title() get&#39;</span>    <span class="s">)</span><span class="sc">;</span>
+    <span class="i">ok</span><span class="s">(</span> <span class="i">$btaste</span><span class="i">-&gt;Director</span>   eq <span class="q">&#39;Peter Jackson&#39;</span><span class="cm">,</span> <span class="q">&#39;Director() get&#39;</span> <span class="s">)</span><span class="sc">;</span>
+    <span class="i">ok</span><span class="s">(</span> <span class="i">$btaste</span><span class="i">-&gt;Rating</span>     eq <span class="q">&#39;R&#39;</span><span class="cm">,</span>             <span class="q">&#39;Rating() get&#39;</span>   <span class="s">)</span><span class="sc">;</span>
+    <span class="i">ok</span><span class="s">(</span> <span class="i">$btaste</span><span class="i">-&gt;NumExplodingSheep</span> == <span class="n">1</span><span class="cm">,</span>        <span class="q">&#39;NumExplodingSheep() get&#39;</span> <span class="s">)</span><span class="sc">;</span></pre>
+<p>It will produce output like this:</p>
+<pre class="verbatim">    1..5
+    ok 1 - new() works
+    ok 2 - Title() get
+    ok 3 - Director() get
+    not ok 4 - Rating() get
+    #   Failed test 'Rating() get'
+    #   in t/film.t at line 14.
+    ok 5 - NumExplodingSheep() get
+    # Looks like you failed 1 tests of 5</pre><p>Indicating the Film::Rating() method is broken.</p>
+<a name="CAVEATS"></a><h1>CAVEATS</h1>
+<p>Test::Simple will only report a maximum of 254 failures in its exit
+code.  If this is a problem, you probably have a huge test script.
+Split it into multiple files.  (Otherwise blame the Unix folks for
+using an unsigned short integer as the exit status).</p>
+<p>Because VMS's exit codes are much, much different than the rest of the
+universe, and perl does horrible mangling to them that gets in my way,
+it works like this on VMS.</p>
+<pre class="verbatim">    0     SS$_NORMAL        all tests successful
+    4     SS$_ABORT         something went wrong</pre><p>Unfortunately, I can't differentiate any further.</p>
+<a name="NOTES"></a><h1>NOTES</h1>
+<p>Test::Simple is <b>explicitly</b> tested all the way back to perl 5.004.</p>
+<p>Test::Simple is thread-safe in perl 5.8.0 and up.</p>
+<a name="HISTORY"></a><h1>HISTORY</h1>
+<p>This module was conceived while talking with Tony Bowden in his
+kitchen one night about the problems I was having writing some really
+complicated feature into the new Testing module.  He observed that the
+main problem is not dealing with these edge cases but that people hate
+to write tests <b>at all</b>.  What was needed was a dead simple module
+that took all the hard work out of testing and was really, really easy
+to learn.  Paul Johnson simultaneously had this idea (unfortunately,
+he wasn't in Tony's kitchen).  This is it.</p>
+<a name="SEE-ALSO"></a><h1>SEE ALSO</h1>
+<ul>
+<li><a name="the-Test0x3a0x3aMore-manpage"></a><b><a href="../Test/More.html">Test::More</a></b>
+<p>More testing functions!  Once you outgrow Test::Simple, look at
+Test::More.  Test::Simple is 100% forward compatible with Test::More
+(i.e. you can just use Test::More instead of Test::Simple in your
+programs and things will still work).</p>
+</li>
+<li><a name="the-Test-manpage"></a><b><a href="../Test.html">Test</a></b>
+<p>The original Perl testing module.</p>
+</li>
+<li><a name="the-Test0x3a0x3aUnit-manpage"></a><b><a href="http://search.cpan.org/perldoc/Test::Unit">Test::Unit</a></b>
+<p>Elaborate unit testing.</p>
+</li>
+<li><a name="the-Test0x3a0x3aInline-manpage0x2c-the-SelfTest-manpage"></a><b><a href="http://search.cpan.org/perldoc/Test::Inline">Test::Inline</a>, <a href="http://search.cpan.org/perldoc/SelfTest">SelfTest</a></b>
+<p>Embed tests in your code!</p>
+</li>
+<li><a name="the-Test0x3a0x3aHarness-manpage"></a><b><a href="../Test/Harness.html">Test::Harness</a></b>
+<p>Interprets the output of your test program.</p>
+</li>
+</ul>
+<a name="AUTHORS"></a><h1>AUTHORS</h1>
+<p>Idea by Tony Bowden and Paul Johnson, code by Michael G Schwern
+&lt;schwern@pobox.com&gt;, wardrobe by Calvin Klein.</p>
+<a name="COPYRIGHT"></a><h1>COPYRIGHT</h1>
+<p>Copyright 2001, 2002, 2004 by Michael G Schwern &lt;schwern@pobox.com&gt;.</p>
+<p>This program is free software; you can redistribute it and/or 
+modify it under the same terms as Perl itself.</p>
+<p>See <i><a href="http://www.perl.com/perl/misc/Artistic.html">http://www.perl.com/perl/misc/Artistic.html</a></i></p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../close_purple.gif';" onmouseout="rightCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('Test::Simple','Test/Simple.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

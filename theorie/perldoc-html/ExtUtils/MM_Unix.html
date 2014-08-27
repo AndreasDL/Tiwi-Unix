@@ -1,0 +1,552 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>ExtUtils::MM_Unix - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 1;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../close_purple.gif';" onmouseout="leftCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../index-overview.html">Overview</a></li>
+        <li><a href="../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../index-faq.html">FAQs</a></li>
+        <li><a href="../index-history.html">History / Changes</a></li>
+        <li><a href="../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../index-language.html">Language</a></li>
+        <li><a href="../index-functions.html">Functions</a></li>
+        <li><a href="../perlop.html">Operators</a></li>
+        <li><a href="../perlvar.html">Special variables</a></li>
+        <li><a href="../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../index-modules-A.html">Core modules</a></li>
+        <li><a href="../index-utilities.html">Utilities</a></li>
+        <li><a href="../index-internals.html">Internals</a></li>
+        <li><a href="../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../index.html">Home</a> &gt; <a href="../index-modules-A.html">Core modules</a> &gt; <a href="../index-modules-E.html">E</a> &gt; ExtUtils::MM_Unix</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">ExtUtils::MM_Unix</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><li><a href="#METHODS">METHODS</a><ul><li><a href="#Methods">Methods</a></ul><li><a href="#SEE-ALSO">SEE ALSO</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>ExtUtils::MM_Unix - methods used by ExtUtils::MakeMaker</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<p><code class="inline"><a class="l_k" href="../functions/require.html">require</a> <span class="w">ExtUtils::MM_Unix</span><span class="sc">;</span></code>
+</p>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p>The methods provided by this package are designed to be used in
+conjunction with ExtUtils::MakeMaker. When MakeMaker writes a
+Makefile, it creates one or more objects that inherit their methods
+from a package <code class="inline"><span class="w">MM</span></code>
+. MM itself doesn't provide any methods, but it
+ISA ExtUtils::MM_Unix class. The inheritance tree of MM lets operating
+specific packages take the responsibility for all the methods provided
+by MM_Unix. We are trying to reduce the number of the necessary
+overrides by defining rather primitive operations within
+ExtUtils::MM_Unix.</p>
+<p>If you are going to write a platform specific MM package, please try
+to limit the necessary overrides to primitive methods, and if it is not
+possible to do so, let's work out how to achieve that gain.</p>
+<p>If you are overriding any of these methods in your Makefile.PL (in the
+MY class), please report that to the makemaker mailing list. We are
+trying to minimize the necessary method overrides and switch to data
+driven Makefile.PLs wherever possible. In the long run less methods
+will be overridable via the MY class.</p>
+<a name="METHODS"></a><h1>METHODS</h1>
+<p>The following description of methods is still under
+development. Please refer to the code for not suitably documented
+sections and complain loudly to the makemaker@perl.org mailing list.
+Better yet, provide a patch.</p>
+<p>Not all of the methods below are overridable in a
+Makefile.PL. Overridable methods are marked as (o). All methods are
+overridable by a platform specific MM_*.pm file.</p>
+<p>Cross-platform methods are being moved into MM_Any.  If you can't find
+something that used to be in here, look in MM_Any.</p>
+<a name="Methods"></a><h2>Methods</h2>
+<ul>
+<li><a name="os_flavor"></a><b>os_flavor</b>
+<p>Simply says that we're Unix.</p>
+</li>
+<li><a name="c_o-(o)"></a><b>c_o (o)</b>
+<p>Defines the suffix rules to compile different flavors of C files to
+object files.</p>
+</li>
+<li><a name="cflags-(o)"></a><b>cflags (o)</b>
+<p>Does very much the same as the cflags script in the perl
+distribution. It doesn't return the whole compiler command line, but
+initializes all of its parts. The const_cccmd method then actually
+returns the definition of the CCCMD macro which uses these parts.</p>
+</li>
+<li><a name="const_cccmd-(o)"></a><b>const_cccmd (o)</b>
+<p>Returns the full compiler call for C programs and stores the
+definition in CONST_CCCMD.</p>
+</li>
+<li><a name="const_config-(o)"></a><b>const_config (o)</b>
+<p>Defines a couple of constants in the Makefile that are imported from
+%Config.</p>
+</li>
+<li><a name="const_loadlibs-(o)"></a><b>const_loadlibs (o)</b>
+<p>Defines EXTRALIBS, LDLOADLIBS, BSLOADLIBS, LD_RUN_PATH. See
+<a href="../ExtUtils/Liblist.html">ExtUtils::Liblist</a> for details.</p>
+</li>
+<li><a name="constants-(o)"></a><b>constants (o)</b>
+<pre class="verbatim">  <a class="l_k" href="../functions/my.html">my</a> <span class="i">$make_frag</span> = <span class="i">$mm</span><span class="i">-&gt;constants</span><span class="sc">;</span></pre>
+<p>Prints out macros for lots of constants.</p>
+</li>
+<li><a name="depend-(o)"></a><b>depend (o)</b>
+<p>Same as macro for the depend attribute.</p>
+</li>
+<li><a name="init_DEST"></a><b>init_DEST</b>
+<pre class="verbatim">  <span class="i">$mm</span><span class="i">-&gt;init_DEST</span></pre>
+<p>Defines the DESTDIR and DEST* variables paralleling the INSTALL*.</p>
+</li>
+<li><a name="init_dist"></a><b>init_dist</b>
+<pre class="verbatim">  <span class="i">$mm</span><span class="i">-&gt;init_dist</span><span class="sc">;</span></pre>
+<p>Defines a lot of macros for distribution support.</p>
+<pre class="verbatim">  <span class="w">macro</span>         <span class="w">description</span>                     <span class="w">default</span></pre>
+<pre class="verbatim">  <span class="w">TAR</span>           <span class="w">tar</span> <span class="w">command</span> <span class="w">to</span> <a class="l_k" href="../functions/use.html">use</a>              <span class="w">tar</span>
+  <span class="w">TARFLAGS</span>      <span class="w">flags</span> <span class="w">to</span> <span class="w">pass</span> <span class="w">to</span> <span class="w">TAR</span>            <span class="w">cvf</span></pre>
+<pre class="verbatim">  <span class="w">ZIP</span>           <span class="w">zip</span> <span class="w">command</span> <span class="w">to</span> <a class="l_k" href="../functions/use.html">use</a>              <span class="w">zip</span>
+  <span class="w">ZIPFLAGS</span>      <span class="w">flags</span> <span class="w">to</span> <span class="w">pass</span> <span class="w">to</span> <span class="w">ZIP</span>            -r</pre>
+<pre class="verbatim">  COMPRESS      compression command to          gzip --best
+                use for tarfiles
+  SUFFIX        suffix to put on                .gz 
+                compressed files</pre><pre class="verbatim">  <span class="w">SHAR</span>          <span class="w">shar</span> <span class="w">command</span> <span class="w">to</span> <a class="l_k" href="../functions/use.html">use</a>             <span class="w">shar</span></pre>
+<pre class="verbatim">  <span class="w">PREOP</span>         <span class="w">extra</span> <span class="w">commands</span> <span class="w">to</span> <span class="w">run</span> <span class="w">before</span>
+                <span class="w">making</span> <span class="w">the</span> <span class="w">archive</span> 
+  <span class="w">POSTOP</span>        <span class="w">extra</span> <span class="w">commands</span> <span class="w">to</span> <span class="w">run</span> <span class="w">after</span>
+                <span class="w">making</span> <span class="w">the</span> <span class="w">archive</span></pre>
+<pre class="verbatim">  <span class="w">TO_UNIX</span>       <span class="w">a</span> <span class="w">command</span> <span class="w">to</span> <span class="w">convert</span> <span class="w">linefeeds</span>
+                <span class="w">to</span> <span class="w">Unix</span> <span class="w">style</span> <span class="w">in</span> <span class="w">your</span> <span class="w">archive</span></pre>
+<pre class="verbatim">  CI            command to checkin your         ci -u
+                sources to version control
+  RCS_LABEL     command to label your sources   rcs -Nv$(VERSION_SYM): -q
+                just after CI is run</pre><pre class="verbatim">  DIST_CP       $how argument to manicopy()     best
+                when the distdir is created</pre><pre class="verbatim">  <span class="w">DIST_DEFAULT</span>  <span class="w">default</span> <span class="w">target</span> <span class="w">to</span> <a class="l_k" href="../functions/use.html">use</a> <span class="w">to</span>        <span class="w">tardist</span>
+                <span class="w">create</span> <span class="w">a</span> <span class="w">distribution</span></pre>
+<pre class="verbatim">  DISTVNAME     name of the resulting archive   $(DISTNAME)-$(VERSION)
+                (minus suffixes)</pre></li>
+<li><a name="dist-(o)"></a><b>dist (o)</b>
+<pre class="verbatim">  <a class="l_k" href="../functions/my.html">my</a> <span class="i">$dist_macros</span> = <span class="i">$mm</span><span class="i">-&gt;dist</span><span class="s">(</span><span class="i">%overrides</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Generates a make fragment defining all the macros initialized in
+init_dist.</p>
+<p>%overrides can be used to override any of the above.</p>
+</li>
+<li><a name="dist_basics-(o)"></a><b>dist_basics (o)</b>
+<p>Defines the targets distclean, distcheck, skipcheck, manifest, veryclean.</p>
+</li>
+<li><a name="dist_ci-(o)"></a><b>dist_ci (o)</b>
+<p>Defines a check in target for RCS.</p>
+</li>
+<li><a name="dist_core-(o)"></a><b>dist_core (o)</b>
+<pre class="verbatim">  <a class="l_k" href="../functions/my.html">my</a> <span class="i">$dist_make_fragment</span> = <span class="i">$MM</span><span class="i">-&gt;dist_core</span><span class="sc">;</span></pre>
+<p>Puts the targets necessary for 'make dist' together into one make
+fragment.</p>
+</li>
+<li><a name="*dist_target*"></a><b><b>dist_target</b></b>
+<pre class="verbatim">  <a class="l_k" href="../functions/my.html">my</a> <span class="i">$make_frag</span> = <span class="i">$MM</span><span class="i">-&gt;dist_target</span><span class="sc">;</span></pre>
+<p>Returns the 'dist' target to make an archive for distribution.  This
+target simply checks to make sure the Makefile is up-to-date and
+depends on $(DIST_DEFAULT).</p>
+</li>
+<li><a name="*tardist_target*"></a><b><b>tardist_target</b></b>
+<pre class="verbatim">  <a class="l_k" href="../functions/my.html">my</a> <span class="i">$make_frag</span> = <span class="i">$MM</span><span class="i">-&gt;tardist_target</span><span class="sc">;</span></pre>
+<p>Returns the 'tardist' target which is simply so 'make tardist' works.
+The real work is done by the dynamically named tardistfile_target()
+method, tardist should have that as a dependency.</p>
+</li>
+<li><a name="*zipdist_target*"></a><b><b>zipdist_target</b></b>
+<pre class="verbatim">  <a class="l_k" href="../functions/my.html">my</a> <span class="i">$make_frag</span> = <span class="i">$MM</span><span class="i">-&gt;zipdist_target</span><span class="sc">;</span></pre>
+<p>Returns the 'zipdist' target which is simply so 'make zipdist' works.
+The real work is done by the dynamically named zipdistfile_target()
+method, zipdist should have that as a dependency.</p>
+</li>
+<li><a name="*tarfile_target*"></a><b><b>tarfile_target</b></b>
+<pre class="verbatim">  <a class="l_k" href="../functions/my.html">my</a> <span class="i">$make_frag</span> = <span class="i">$MM</span><span class="i">-&gt;tarfile_target</span><span class="sc">;</span></pre>
+<p>The name of this target is the name of the tarball generated by
+tardist.  This target does the actual work of turning the distdir into
+a tarball.</p>
+</li>
+<li><a name="zipfile_target"></a><b>zipfile_target</b>
+<pre class="verbatim">  <a class="l_k" href="../functions/my.html">my</a> <span class="i">$make_frag</span> = <span class="i">$MM</span><span class="i">-&gt;zipfile_target</span><span class="sc">;</span></pre>
+<p>The name of this target is the name of the zip file generated by
+zipdist.  This target does the actual work of turning the distdir into
+a zip file.</p>
+</li>
+<li><a name="uutardist_target"></a><b>uutardist_target</b>
+<pre class="verbatim">  <a class="l_k" href="../functions/my.html">my</a> <span class="i">$make_frag</span> = <span class="i">$MM</span><span class="i">-&gt;uutardist_target</span><span class="sc">;</span></pre>
+<p>Converts the tarfile into a uuencoded file</p>
+</li>
+<li><a name="shdist_target"></a><b>shdist_target</b>
+<pre class="verbatim">  <a class="l_k" href="../functions/my.html">my</a> <span class="i">$make_frag</span> = <span class="i">$MM</span><span class="i">-&gt;shdist_target</span><span class="sc">;</span></pre>
+<p>Converts the distdir into a shell archive.</p>
+</li>
+<li><a name="dlsyms-(o)"></a><b>dlsyms (o)</b>
+<p>Used by some OS' to define DL_FUNCS and DL_VARS and write the *.exp files.</p>
+<p>Normally just returns an empty string.</p>
+</li>
+<li><a name="dynamic_bs-(o)"></a><b>dynamic_bs (o)</b>
+<p>Defines targets for bootstrap files.</p>
+</li>
+<li><a name="dynamic_lib-(o)"></a><b>dynamic_lib (o)</b>
+<p>Defines how to produce the *.so (or equivalent) files.</p>
+</li>
+<li><a name="exescan"></a><b>exescan</b>
+<p>Deprecated method. Use libscan instead.</p>
+</li>
+<li><a name="extliblist"></a><b>extliblist</b>
+<p>Called by init_others, and calls ext ExtUtils::Liblist. See
+<a href="../ExtUtils/Liblist.html">ExtUtils::Liblist</a> for details.</p>
+</li>
+<li><a name="find_perl"></a><b>find_perl</b>
+<p>Finds the executables PERL and FULLPERL</p>
+</li>
+<li><a name="fixin"></a><b>fixin</b>
+<pre class="verbatim">  <span class="i">$mm</span><span class="i">-&gt;fixin</span><span class="s">(</span><span class="i">@files</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Inserts the sharpbang or equivalent magic number to a set of @files.</p>
+</li>
+<li><a name="force-(o)"></a><b>force (o)</b>
+<p>Writes an empty FORCE: target.</p>
+</li>
+<li><a name="guess_name"></a><b>guess_name</b>
+<p>Guess the name of this package by examining the working directory's
+name. MakeMaker calls this only if the developer has not supplied a
+NAME attribute.</p>
+</li>
+<li><a name="has_link_code"></a><b>has_link_code</b>
+<p>Returns true if C, XS, MYEXTLIB or similar objects exist within this
+object that need a compiler. Does not descend into subdirectories as
+needs_linking() does.</p>
+</li>
+<li><a name="init_dirscan"></a><b>init_dirscan</b>
+<p>Scans the directory structure and initializes DIR, XS, XS_FILES,
+C, C_FILES, O_FILES, H, H_FILES, PL_FILES, EXE_FILES.</p>
+<p>Called by init_main.</p>
+</li>
+<li><a name="init_MANPODS"></a><b>init_MANPODS</b>
+<p>Determines if man pages should be generated and initializes MAN1PODS
+and MAN3PODS as appropriate.</p>
+</li>
+<li><a name="init_MAN1PODS"></a><b>init_MAN1PODS</b>
+<p>Initializes MAN1PODS from the list of EXE_FILES.</p>
+</li>
+<li><a name="init_MAN3PODS"></a><b>init_MAN3PODS</b>
+<p>Initializes MAN3PODS from the list of PM files.</p>
+</li>
+<li><a name="init_PM"></a><b>init_PM</b>
+<p>Initializes PMLIBDIRS and PM from PMLIBDIRS.</p>
+</li>
+<li><a name="init_DIRFILESEP"></a><b>init_DIRFILESEP</b>
+<p>Using / for Unix.  Called by init_main.</p>
+</li>
+<li><a name="init_main"></a><b>init_main</b>
+<p>Initializes AR, AR_STATIC_ARGS, BASEEXT, CONFIG, DISTNAME, DLBASE,
+EXE_EXT, FULLEXT, FULLPERL, FULLPERLRUN, FULLPERLRUNINST, INST_*,
+INSTALL*, INSTALLDIRS, LIB_EXT, LIBPERL_A, MAP_TARGET, NAME,
+OBJ_EXT, PARENT_NAME, PERL, PERL_ARCHLIB, PERL_INC, PERL_LIB,
+PERL_SRC, PERLRUN, PERLRUNINST, PREFIX, VERSION,
+VERSION_SYM, XS_VERSION.</p>
+</li>
+<li><a name="init_others"></a><b>init_others</b>
+<p>Initializes EXTRALIBS, BSLOADLIBS, LDLOADLIBS, LIBS, LD_RUN_PATH, LD,
+OBJECT, BOOTDEP, PERLMAINCC, LDFROM, LINKTYPE, SHELL, NOOP,
+FIRST_MAKEFILE, MAKEFILE_OLD, NOECHO, RM_F, RM_RF, TEST_F,
+TOUCH, CP, MV, CHMOD, UMASK_NULL, ECHO, ECHO_N</p>
+</li>
+<li><a name="init_linker"></a><b>init_linker</b>
+<p>Unix has no need of special linker flags.</p>
+</li>
+<li><a name="init_PERL"></a><b>init_PERL</b>
+<pre class="verbatim">    <span class="i">$mm</span><span class="i">-&gt;init_PERL</span><span class="sc">;</span></pre>
+<p>Called by init_main.  Sets up ABSPERL, PERL, FULLPERL and all the
+*PERLRUN* permutations.</p>
+<pre class="verbatim">    <span class="w">PERL</span> <span class="w">is</span> <span class="w">allowed</span> <span class="w">to</span> <span class="w">be</span> <span class="w">miniperl</span>
+    <span class="w">FULLPERL</span> <span class="w">must</span> <span class="w">be</span> <span class="w">a</span> <span class="w">complete</span> <span class="w">perl</span></pre>
+<pre class="verbatim">    <span class="w">ABSPERL</span> <span class="w">is</span> <span class="w">PERL</span> <span class="w">converted</span> <span class="w">to</span> <span class="w">an</span> <span class="w">absolute</span> <span class="w">path</span></pre>
+<pre class="verbatim">    *PERLRUN contains everything necessary to run perl, find it's
+         libraries, etc...</pre><pre class="verbatim">    *PERLRUNINST is *PERLRUN + everything necessary to find the
+         modules being built.</pre></li>
+<li><a name="init_platform"></a><b>init_platform</b>
+</li>
+<li><a name="platform_constants"></a><b>platform_constants</b>
+<p>Add MM_Unix_VERSION.</p>
+</li>
+<li><a name="init_PERM"></a><b>init_PERM</b>
+<pre class="verbatim">  <span class="i">$mm</span><span class="i">-&gt;init_PERM</span></pre>
+<p>Called by init_main.  Initializes PERL_*</p>
+</li>
+<li><a name="init_xs"></a><b>init_xs</b>
+<pre class="verbatim">    <span class="i">$mm</span><span class="i">-&gt;init_xs</span></pre>
+<p>Sets up macros having to do with XS code.  Currently just INST_STATIC,
+INST_DYNAMIC and INST_BOOT.</p>
+</li>
+<li><a name="install-(o)"></a><b>install (o)</b>
+<p>Defines the install target.</p>
+</li>
+<li><a name="installbin-(o)"></a><b>installbin (o)</b>
+<p>Defines targets to make and to install EXE_FILES.</p>
+</li>
+<li><a name="linkext-(o)"></a><b>linkext (o)</b>
+<p>Defines the linkext target which in turn defines the LINKTYPE.</p>
+</li>
+<li><a name="lsdir"></a><b>lsdir</b>
+<p>Takes as arguments a directory name and a regular expression. Returns
+all entries in the directory that match the regular expression.</p>
+</li>
+<li><a name="macro-(o)"></a><b>macro (o)</b>
+<p>Simple subroutine to insert the macros defined by the macro attribute
+into the Makefile.</p>
+</li>
+<li><a name="makeaperl-(o)"></a><b>makeaperl (o)</b>
+<p>Called by staticmake. Defines how to write the Makefile to produce a
+static new perl.</p>
+<p>By default the Makefile produced includes all the static extensions in
+the perl library. (Purified versions of library files, e.g.,
+DynaLoader_pure_p1_c0_032.a are automatically ignored to avoid link errors.)</p>
+</li>
+<li><a name="makefile-(o)"></a><b>makefile (o)</b>
+<p>Defines how to rewrite the Makefile.</p>
+</li>
+<li><a name="maybe_command"></a><b>maybe_command</b>
+<p>Returns true, if the argument is likely to be a command.</p>
+</li>
+<li><a name="needs_linking-(o)"></a><b>needs_linking (o)</b>
+<p>Does this module need linking? Looks into subdirectory objects (see
+also has_link_code())</p>
+</li>
+<li><a name="parse_abstract"></a><b>parse_abstract</b>
+<p>parse a file and return what you think is the ABSTRACT</p>
+</li>
+<li><a name="parse_version"></a><b>parse_version</b>
+<pre class="verbatim">    <a class="l_k" href="../functions/my.html">my</a> <span class="i">$version</span> = <span class="w">MM</span><span class="w">-&gt;parse_version</span><span class="s">(</span><span class="i">$file</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Parse a $file and return what $VERSION is set to by the first assignment.
+It will return the string "undef" if it can't figure out what $VERSION
+is. $VERSION should be for all to see, so <code class="inline"><a class="l_k" href="../functions/our.html">our</a> <span class="i">$VERSION</span></code>
+ or plain $VERSION
+are okay, but <code class="inline"><a class="l_k" href="../functions/my.html">my</a> <span class="i">$VERSION</span></code>
+ is not.</p>
+<p>parse_version() will try to <code class="inline"><a class="l_k" href="../functions/use.html">use</a> <span class="w">version</span></code>
+ before checking for <code class="inline"><span class="i">$VERSION</span></code>
+ so the following will work.</p>
+<pre class="verbatim">    <span class="i">$VERSION</span> = <span class="i">qv</span><span class="s">(</span><span class="v">1.2.3</span><span class="s">)</span><span class="sc">;</span></pre>
+</li>
+<li><a name="pasthru-(o)"></a><b>pasthru (o)</b>
+<p>Defines the string that is passed to recursive make calls in
+subdirectories.</p>
+</li>
+<li><a name="perl_script"></a><b>perl_script</b>
+<p>Takes one argument, a file name, and returns the file name, if the
+argument is likely to be a perl script. On MM_Unix this is true for
+any ordinary, readable file.</p>
+</li>
+<li><a name="perldepend-(o)"></a><b>perldepend (o)</b>
+<p>Defines the dependency from all *.h files that come with the perl
+distribution.</p>
+</li>
+<li><a name="perm_rw-(o)"></a><b>perm_rw (o)</b>
+<p>Returns the attribute <code class="inline"><span class="w">PERM_RW</span></code>
+ or the string <code class="inline"><span class="n">644</span></code>
+.
+Used as the string that is passed
+to the <code class="inline"><a class="l_k" href="../functions/chmod.html">chmod</a></code> command to set the permissions for read/writeable files.
+MakeMaker chooses <code class="inline"><span class="n">644</span></code>
+ because it has turned out in the past that
+relying on the umask provokes hard-to-track bug reports.
+When the return value is used by the perl function <code class="inline"><a class="l_k" href="../functions/chmod.html">chmod</a></code>, it is
+interpreted as an octal value.</p>
+</li>
+<li><a name="perm_rwx-(o)"></a><b>perm_rwx (o)</b>
+<p>Returns the attribute <code class="inline"><span class="w">PERM_RWX</span></code>
+ or the string <code class="inline"><span class="n">755</span></code>
+,
+i.e. the string that is passed
+to the <code class="inline"><a class="l_k" href="../functions/chmod.html">chmod</a></code> command to set the permissions for executable files.
+See also perl_rw.</p>
+</li>
+<li><a name="pm_to_blib"></a><b>pm_to_blib</b>
+<p>Defines target that copies all files in the hash PM to their
+destination and autosplits them. See <a href="../ExtUtils/Install.html#DESCRIPTION">"DESCRIPTION" in ExtUtils::Install</a></p>
+</li>
+<li><a name="post_constants-(o)"></a><b>post_constants (o)</b>
+<p>Returns an empty string per default. Dedicated to overrides from
+within Makefile.PL after all constants have been defined.</p>
+</li>
+<li><a name="post_initialize-(o)"></a><b>post_initialize (o)</b>
+<p>Returns an empty string per default. Used in Makefile.PLs to add some
+chunk of text to the Makefile after the object is initialized.</p>
+</li>
+<li><a name="postamble-(o)"></a><b>postamble (o)</b>
+<p>Returns an empty string. Can be used in Makefile.PLs to write some
+text to the Makefile at the end.</p>
+</li>
+<li><a name="ppd"></a><b>ppd</b>
+<p>Defines target that creates a PPD (Perl Package Description) file
+for a binary distribution.</p>
+</li>
+<li><a name="prefixify"></a><b>prefixify</b>
+<pre class="verbatim">  <span class="i">$MM</span><span class="i">-&gt;prefixify</span><span class="s">(</span><span class="i">$var</span><span class="cm">,</span> <span class="i">$prefix</span><span class="cm">,</span> <span class="i">$new_prefix</span><span class="cm">,</span> <span class="i">$default</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Using either $MM-&gt;{uc $var} || $Config{lc $var}, it will attempt to
+replace it's $prefix with a $new_prefix.</p>
+<p>Should the $prefix fail to match <i>AND</i> a PREFIX was given as an
+argument to WriteMakefile() it will set it to the $new_prefix +
+$default.  This is for systems whose file layouts don't neatly fit into
+our ideas of prefixes.</p>
+<p>This is for heuristics which attempt to create directory structures
+that mirror those of the installed perl.</p>
+<p>For example:</p>
+<pre class="verbatim">    <span class="i">$MM</span><span class="i">-&gt;prefixify</span><span class="s">(</span><span class="q">&#39;installman1dir&#39;</span><span class="cm">,</span> <span class="q">&#39;/usr&#39;</span><span class="cm">,</span> <span class="q">&#39;/home/foo&#39;</span><span class="cm">,</span> <span class="q">&#39;man/man1&#39;</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>this will attempt to remove '/usr' from the front of the
+$MM-&gt;{INSTALLMAN1DIR} path (initializing it to $Config{installman1dir}
+if necessary) and replace it with '/home/foo'.  If this fails it will
+simply use '/home/foo/man/man1'.</p>
+</li>
+<li><a name="processPL-(o)"></a><b>processPL (o)</b>
+<p>Defines targets to run *.PL files.</p>
+</li>
+<li><a name="quote_paren"></a><b>quote_paren</b>
+<p>Backslashes parentheses <code class="inline"><span class="s">(</span><span class="s">)</span></code>
+ in command line arguments.
+Doesn't handle recursive Makefile <code class="inline">$(...)</code> constructs,
+but handles simple ones.</p>
+</li>
+<li><a name="replace_manpage_separator"></a><b>replace_manpage_separator</b>
+<pre class="verbatim">  <a class="l_k" href="../functions/my.html">my</a> <span class="i">$man_name</span> = <span class="i">$MM</span><span class="i">-&gt;replace_manpage_separator</span><span class="s">(</span><span class="i">$file_path</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Takes the name of a package, which may be a nested package, in the
+form 'Foo/Bar.pm' and replaces the slash with <code class="inline"><span class="w">::</span></code>
+ or something else
+safe for a man page file name.  Returns the replacement.</p>
+</li>
+<li><a name="cd"></a><b>cd</b>
+</li>
+<li><a name="oneliner"></a><b>oneliner</b>
+</li>
+<li><a name="quote_literal"></a><b>quote_literal</b>
+</li>
+<li><a name="escape_newlines"></a><b>escape_newlines</b>
+</li>
+<li><a name="max_exec_len"></a><b>max_exec_len</b>
+<p>Using POSIX::ARG_MAX.  Otherwise falling back to 4096.</p>
+</li>
+<li><a name="static-(o)"></a><b>static (o)</b>
+<p>Defines the static target.</p>
+</li>
+<li><a name="static_lib-(o)"></a><b>static_lib (o)</b>
+<p>Defines how to produce the *.a (or equivalent) files.</p>
+</li>
+<li><a name="staticmake-(o)"></a><b>staticmake (o)</b>
+<p>Calls makeaperl.</p>
+</li>
+<li><a name="subdir_x-(o)"></a><b>subdir_x (o)</b>
+<p>Helper subroutine for subdirs</p>
+</li>
+<li><a name="subdirs-(o)"></a><b>subdirs (o)</b>
+<p>Defines targets to process subdirectories.</p>
+</li>
+<li><a name="test-(o)"></a><b>test (o)</b>
+<p>Defines the test targets.</p>
+</li>
+<li><a name="test_via_harness-(override)"></a><b>test_via_harness (override)</b>
+<p>For some reason which I forget, Unix machines like to have
+PERL_DL_NONLAZY set for tests.</p>
+</li>
+<li><a name="test_via_script-(override)"></a><b>test_via_script (override)</b>
+<p>Again, the PERL_DL_NONLAZY thing.</p>
+</li>
+<li><a name="tools_other-(o)"></a><b>tools_other (o)</b>
+<pre class="verbatim">    <a class="l_k" href="../functions/my.html">my</a> <span class="i">$make_frag</span> = <span class="i">$MM</span><span class="i">-&gt;tools_other</span><span class="sc">;</span></pre>
+<p>Returns a make fragment containing definitions for the macros init_others() 
+initializes.</p>
+</li>
+<li><a name="tool_xsubpp-(o)"></a><b>tool_xsubpp (o)</b>
+<p>Determines typemaps, xsubpp version, prototype behaviour.</p>
+</li>
+<li><a name="all_target"></a><b>all_target</b>
+<p>Build man pages, too</p>
+</li>
+<li><a name="top_targets-(o)"></a><b>top_targets (o)</b>
+<p>Defines the targets all, subdirs, config, and O_FILES</p>
+</li>
+<li><a name="writedoc"></a><b>writedoc</b>
+<p>Obsolete, deprecated method. Not used since Version 5.21.</p>
+</li>
+<li><a name="xs_c-(o)"></a><b>xs_c (o)</b>
+<p>Defines the suffix rules to compile XS files to C.</p>
+</li>
+<li><a name="xs_cpp-(o)"></a><b>xs_cpp (o)</b>
+<p>Defines the suffix rules to compile XS files to C++.</p>
+</li>
+<li><a name="xs_o-(o)"></a><b>xs_o (o)</b>
+<p>Defines suffix rules to go from XS to object files directly. This is
+only intended for broken make implementations.</p>
+</li>
+</ul>
+<a name="SEE-ALSO"></a><h1>SEE ALSO</h1>
+<p><a href="../ExtUtils/MakeMaker.html">ExtUtils::MakeMaker</a></p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../close_purple.gif';" onmouseout="rightCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('ExtUtils::MM_Unix','ExtUtils/MM_Unix.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

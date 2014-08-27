@@ -1,0 +1,207 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>CGI::Fast - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 1;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../close_purple.gif';" onmouseout="leftCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../index-overview.html">Overview</a></li>
+        <li><a href="../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../index-faq.html">FAQs</a></li>
+        <li><a href="../index-history.html">History / Changes</a></li>
+        <li><a href="../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../index-language.html">Language</a></li>
+        <li><a href="../index-functions.html">Functions</a></li>
+        <li><a href="../perlop.html">Operators</a></li>
+        <li><a href="../perlvar.html">Special variables</a></li>
+        <li><a href="../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../index-modules-A.html">Core modules</a></li>
+        <li><a href="../index-utilities.html">Utilities</a></li>
+        <li><a href="../index-internals.html">Internals</a></li>
+        <li><a href="../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../index.html">Home</a> &gt; <a href="../index-modules-A.html">Core modules</a> &gt; <a href="../index-modules-C.html">C</a> &gt; CGI::Fast</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">CGI::Fast</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><li><a href="#OTHER-PIECES-OF-THE-PUZZLE">OTHER PIECES OF THE PUZZLE</a><li><a href="#WRITING-FASTCGI-PERL-SCRIPTS">WRITING FASTCGI PERL SCRIPTS</a><li><a href="#INSTALLING-FASTCGI-SCRIPTS">INSTALLING FASTCGI SCRIPTS</a><li><a href="#USING-FASTCGI-SCRIPTS-AS-CGI-SCRIPTS">USING FASTCGI SCRIPTS AS CGI SCRIPTS</a><li><a href="#EXTERNAL-FASTCGI-SERVER-INVOCATION">EXTERNAL FASTCGI SERVER INVOCATION</a><li><a href="#CAVEATS">CAVEATS</a><li><a href="#AUTHOR-INFORMATION">AUTHOR INFORMATION</a><li><a href="#BUGS">BUGS</a><li><a href="#SEE-ALSO">SEE ALSO</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>CGI::Fast - CGI Interface for Fast CGI</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">    <a class="l_k" href="../functions/use.html">use</a> <span class="w">CGI::Fast</span> <span class="q">qw(:standard)</span><span class="sc">;</span>
+    <span class="i">$COUNTER</span> = <span class="n">0</span><span class="sc">;</span>
+    while <span class="s">(</span><span class="w">new</span> <span class="w">CGI::Fast</span><span class="s">)</span> <span class="s">{</span>
+	<a class="l_k" href="../functions/print.html">print</a> <span class="i">header</span><span class="sc">;</span>
+	<a class="l_k" href="../functions/print.html">print</a> <span class="i">start_html</span><span class="s">(</span><span class="q">&quot;Fast CGI Rocks&quot;</span><span class="s">)</span><span class="sc">;</span>
+	<a class="l_k" href="../functions/print.html">print</a>
+	    <span class="i">h1</span><span class="s">(</span><span class="q">&quot;Fast CGI Rocks&quot;</span><span class="s">)</span><span class="cm">,</span>
+	    <span class="q">&quot;Invocation number &quot;</span><span class="cm">,</span><span class="i">b</span><span class="s">(</span><span class="i">$COUNTER</span>++<span class="s">)</span><span class="cm">,</span>
+            <span class="q">&quot; PID &quot;</span><span class="cm">,</span><span class="i">b</span><span class="s">(</span><span class="i">$$</span><span class="s">)</span><span class="cm">,</span><span class="q">&quot;.&quot;</span><span class="cm">,</span>
+	    <span class="w">hr</span><span class="sc">;</span>
+        <a class="l_k" href="../functions/print.html">print</a> <span class="i">end_html</span><span class="sc">;</span>
+    <span class="s">}</span></pre>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p>CGI::Fast is a subclass of the CGI object created by
+CGI.pm.  It is specialized to work well with the Open Market
+FastCGI standard, which greatly speeds up CGI scripts by
+turning them into persistently running server processes.  Scripts
+that perform time-consuming initialization processes, such as
+loading large modules or opening persistent database connections,
+will see large performance improvements.</p>
+<a name="OTHER-PIECES-OF-THE-PUZZLE"></a><h1>OTHER PIECES OF THE PUZZLE</h1>
+<p>In order to use CGI::Fast you'll need a FastCGI-enabled Web
+server. See <a href="http://www.fastcgi.com/">http://www.fastcgi.com/</a> for details.</p>
+<a name="WRITING-FASTCGI-PERL-SCRIPTS"></a><h1>WRITING FASTCGI PERL SCRIPTS</h1>
+<p>FastCGI scripts are persistent: one or more copies of the script 
+are started up when the server initializes, and stay around until
+the server exits or they die a natural death.  After performing
+whatever one-time initialization it needs, the script enters a 
+loop waiting for incoming connections, processing the request, and
+waiting some more.</p>
+<p>A typical FastCGI script will look like this:</p>
+<pre class="verbatim">    <span class="c">#!/usr/local/bin/perl    # must be a FastCGI version of perl!</span>
+    <a class="l_k" href="../functions/use.html">use</a> <span class="w">CGI::Fast</span><span class="sc">;</span>
+    <span class="i">&amp;do_some_initialization</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span>
+    while <span class="s">(</span><span class="i">$q</span> = <span class="w">new</span> <span class="w">CGI::Fast</span><span class="s">)</span> <span class="s">{</span>
+	<span class="i">&amp;process_request</span><span class="s">(</span><span class="i">$q</span><span class="s">)</span><span class="sc">;</span>
+    <span class="s">}</span></pre>
+<p>Each time there's a new request, CGI::Fast returns a
+CGI object to your loop.  The rest of the time your script
+waits in the call to new().  When the server requests that
+your script be terminated, new() will return undef.  You can
+of course exit earlier if you choose.  A new version of the
+script will be respawned to take its place (this may be
+necessary in order to avoid Perl memory leaks in long-running
+scripts).</p>
+<p>CGI.pm's default CGI object mode also works.  Just modify the loop
+this way:</p>
+<pre class="verbatim">    while <span class="s">(</span><span class="w">new</span> <span class="w">CGI::Fast</span><span class="s">)</span> <span class="s">{</span>
+	<span class="i">&amp;process_request</span><span class="sc">;</span>
+    <span class="s">}</span></pre>
+<p>Calls to header(), start_form(), etc. will all operate on the
+current request.</p>
+<a name="INSTALLING-FASTCGI-SCRIPTS"></a><h1>INSTALLING FASTCGI SCRIPTS</h1>
+<p>See the FastCGI developer's kit documentation for full details.  On
+the Apache server, the following line must be added to srm.conf:</p>
+<pre class="verbatim">    <span class="w">AddType</span> <span class="w">application</span>/<span class="w">x</span>-<span class="w">httpd</span>-<span class="w">fcgi</span> .<span class="w">fcgi</span></pre>
+<p>FastCGI scripts must end in the extension .fcgi.  For each script you
+install, you must add something like the following to srm.conf:</p>
+<pre class="verbatim">    <span class="w">FastCgiServer</span> /<span class="w">usr</span>/<span class="w">etc</span>/<span class="w">httpd</span>/<span class="w">fcgi</span>-<span class="w">bin</span>/<span class="w">file_upload</span>.<span class="w">fcgi</span> -<span class="w">processes</span> <span class="n">2</span></pre>
+<p>This instructs Apache to launch two copies of file_upload.fcgi at 
+startup time.</p>
+<a name="USING-FASTCGI-SCRIPTS-AS-CGI-SCRIPTS"></a><h1>USING FASTCGI SCRIPTS AS CGI SCRIPTS</h1>
+<p>Any script that works correctly as a FastCGI script will also work
+correctly when installed as a vanilla CGI script.  However it will
+not see any performance benefit.</p>
+<a name="EXTERNAL-FASTCGI-SERVER-INVOCATION"></a><h1>EXTERNAL FASTCGI SERVER INVOCATION</h1>
+<p>FastCGI supports a TCP/IP transport mechanism which allows FastCGI scripts to run
+external to the webserver, perhaps on a remote machine.  To configure the
+webserver to connect to an external FastCGI server, you would add the following
+to your srm.conf:</p>
+<pre class="verbatim">    FastCgiExternalServer /usr/etc/httpd/fcgi-bin/file_upload.fcgi -host sputnik:8888</pre><p>Two environment variables affect how the <code class="inline"><span class="w">CGI::Fast</span></code>
+ object is created,
+allowing <code class="inline"><span class="w">CGI::Fast</span></code>
+ to be used as an external FastCGI server.  (See <code class="inline"><span class="w">FCGI</span></code>
+
+documentation for <code class="inline"><span class="w">FCGI::OpenSocket</span></code>
+ for more information.)</p>
+<ul>
+<li><a name="FCGI_SOCKET_PATH"></a><b>FCGI_SOCKET_PATH</b>
+<p>The address (TCP/IP) or path (UNIX Domain) of the socket the external FastCGI
+script to which bind an listen for incoming connections from the web server.</p>
+</li>
+<li><a name="FCGI_LISTEN_QUEUE"></a><b>FCGI_LISTEN_QUEUE</b>
+<p>Maximum length of the queue of pending connections.</p>
+</li>
+</ul>
+<p>For example:</p>
+<pre class="verbatim">    <span class="c">#!/usr/local/bin/perl    # must be a FastCGI version of perl!</span>
+    <a class="l_k" href="../functions/use.html">use</a> <span class="w">CGI::Fast</span><span class="sc">;</span>
+    <span class="i">&amp;do_some_initialization</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span>
+    <span class="i">$ENV</span>{<span class="w">FCGI_SOCKET_PATH</span>} = <span class="q">&quot;sputnik:8888&quot;</span><span class="sc">;</span>
+    <span class="i">$ENV</span>{<span class="w">FCGI_LISTEN_QUEUE</span>} = <span class="n">100</span><span class="sc">;</span>
+    while <span class="s">(</span><span class="i">$q</span> = <span class="w">new</span> <span class="w">CGI::Fast</span><span class="s">)</span> <span class="s">{</span>
+	<span class="i">&amp;process_request</span><span class="s">(</span><span class="i">$q</span><span class="s">)</span><span class="sc">;</span>
+    <span class="s">}</span></pre>
+<a name="CAVEATS"></a><h1>CAVEATS</h1>
+<p>I haven't tested this very much.</p>
+<a name="AUTHOR-INFORMATION"></a><h1>AUTHOR INFORMATION</h1>
+<p>Copyright 1996-1998, Lincoln D. Stein.  All rights reserved.</p>
+<p>This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.</p>
+<p>Address bug reports and comments to: lstein@cshl.org</p>
+<a name="BUGS"></a><h1>BUGS</h1>
+<p>This section intentionally left blank.</p>
+<a name="SEE-ALSO"></a><h1>SEE ALSO</h1>
+<p><a href="../CGI/Carp.html">CGI::Carp</a>, <a href="../CGI.html">CGI</a></p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../close_purple.gif';" onmouseout="rightCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('CGI::Fast','CGI/Fast.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

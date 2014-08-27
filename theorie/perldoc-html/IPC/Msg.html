@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>IPC::Msg - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 1;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../close_purple.gif';" onmouseout="leftCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../index-overview.html">Overview</a></li>
+        <li><a href="../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../index-faq.html">FAQs</a></li>
+        <li><a href="../index-history.html">History / Changes</a></li>
+        <li><a href="../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../index-language.html">Language</a></li>
+        <li><a href="../index-functions.html">Functions</a></li>
+        <li><a href="../perlop.html">Operators</a></li>
+        <li><a href="../perlvar.html">Special variables</a></li>
+        <li><a href="../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../index-modules-A.html">Core modules</a></li>
+        <li><a href="../index-utilities.html">Utilities</a></li>
+        <li><a href="../index-internals.html">Internals</a></li>
+        <li><a href="../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../index.html">Home</a> &gt; <a href="../index-modules-A.html">Core modules</a> &gt; <a href="../index-modules-I.html">I</a> &gt; IPC::Msg</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">IPC::Msg</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><li><a href="#METHODS">METHODS</a><li><a href="#SEE-ALSO">SEE ALSO</a><li><a href="#AUTHOR">AUTHOR</a><li><a href="#COPYRIGHT">COPYRIGHT</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>IPC::Msg - SysV Msg IPC object class</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">    <a class="l_k" href="../functions/use.html">use</a> <span class="w">IPC::SysV</span> <span class="q">qw(IPC_PRIVATE S_IRUSR S_IWUSR)</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/use.html">use</a> <span class="w">IPC::Msg</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="i">$msg</span> = <span class="w">new</span> <span class="i">IPC::Msg</span><span class="s">(</span><span class="w">IPC_PRIVATE</span><span class="cm">,</span> <span class="w">S_IRUSR</span> | <span class="w">S_IWUSR</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="i">$msg</span><span class="i">-&gt;snd</span><span class="s">(</span><a class="l_k" href="../functions/pack.html">pack</a><span class="s">(</span><span class="q">&quot;l! a*&quot;</span><span class="cm">,</span><span class="i">$msgtype</span><span class="cm">,</span><span class="i">$msg</span><span class="s">)</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="i">$msg</span><span class="i">-&gt;rcv</span><span class="s">(</span><span class="i">$buf</span><span class="cm">,</span><span class="n">256</span><span class="s">)</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="i">$ds</span> = <span class="i">$msg</span><span class="i">-&gt;stat</span><span class="sc">;</span></pre>
+<pre class="verbatim">    <span class="i">$msg</span><span class="i">-&gt;remove</span><span class="sc">;</span></pre>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p>A class providing an object based interface to SysV IPC message queues.</p>
+<a name="METHODS"></a><h1>METHODS</h1>
+<ul>
+<li><a name="new-(-KEY-0x2c-FLAGS-)"></a><b>new ( KEY , FLAGS )</b>
+<p>Creates a new message queue associated with <code class="inline"><span class="w">KEY</span></code>
+. A new queue is
+created if</p>
+<ul>
+<li>
+<p><code class="inline"><span class="w">KEY</span></code>
+ is equal to <code class="inline"><span class="w">IPC_PRIVATE</span></code>
+</p>
+</li>
+<li>
+<p><code class="inline"><span class="w">KEY</span></code>
+ does not already  have  a  message queue
+associated with it, and <code class="inline">&lt;i&gt;FLAGS&lt;/i&gt; &amp; IPC_CREAT</code> is true.</p>
+</li>
+</ul>
+<p>On creation of a new message queue <code class="inline"><span class="w">FLAGS</span></code>
+ is used to set the
+permissions.  Be careful not to set any flags that the Sys V
+IPC implementation does not allow: in some systems setting
+execute bits makes the operations fail.</p>
+</li>
+<li><a name="id"></a><b>id</b>
+<p>Returns the system message queue identifier.</p>
+</li>
+<li><a name="rcv-(-BUF0x2c-LEN-0x5b0x2c-TYPE-0x5b0x2c-FLAGS-0x5d0x5d-)"></a><b>rcv ( BUF, LEN [, TYPE [, FLAGS ]] )</b>
+<p>Read a message from the queue. Returns the type of the message read.
+See <a href="../functions/msgrcv.html">msgrcv</a>.  The  BUF becomes tainted.</p>
+</li>
+<li><a name="remove"></a><b>remove</b>
+<p>Remove and destroy the message queue from the system.</p>
+</li>
+<li><a name="set-(-STAT-)"></a><b>set ( STAT )</b>
+</li>
+<li><a name="set-(-NAME-0x3d0x3e-VALUE-0x5b0x2c-NAME-0x3d0x3e-VALUE-...0x5d-)"></a><b>set ( NAME =&gt; VALUE [, NAME =&gt; VALUE ...] )</b>
+<p><code class="inline"><span class="w">set</span></code>
+ will set the following values of the <code class="inline"><a class="l_k" href="../functions/stat.html">stat</a></code> structure associated
+with the message queue.</p>
+<pre class="verbatim">    uid
+    gid
+    mode (oly the permission bits)
+    qbytes</pre><p><code class="inline"><span class="w">set</span></code>
+ accepts either a stat object, as returned by the <code class="inline"><a class="l_k" href="../functions/stat.html">stat</a></code> method,
+or a list of <i>name</i>-<i>value</i> pairs.</p>
+</li>
+<li><a name="snd-(-TYPE0x2c-MSG-0x5b0x2c-FLAGS-0x5d-)"></a><b>snd ( TYPE, MSG [, FLAGS ] )</b>
+<p>Place a message on the queue with the data from <code class="inline"><span class="w">MSG</span></code>
+ and with type <code class="inline"><span class="w">TYPE</span></code>
+.
+See <a href="../functions/msgsnd.html">msgsnd</a>.</p>
+</li>
+<li><a name="stat"></a><b>stat</b>
+<p>Returns an object of type <code class="inline"><span class="w">IPC::Msg::stat</span></code>
+ which is a sub-class of
+<code class="inline"><span class="w">Class::Struct</span></code>
+. It provides the following fields. For a description
+of these fields see you system documentation.</p>
+<pre class="verbatim">    <span class="w">uid</span>
+    <span class="w">gid</span>
+    <span class="w">cuid</span>
+    <span class="w">cgid</span>
+    <span class="w">mode</span>
+    <span class="w">qnum</span>
+    <span class="w">qbytes</span>
+    <span class="w">lspid</span>
+    <span class="w">lrpid</span>
+    <span class="w">stime</span>
+    <span class="w">rtime</span>
+    <span class="w">ctime</span></pre>
+</li>
+</ul>
+<a name="SEE-ALSO"></a><h1>SEE ALSO</h1>
+<p><a href="../IPC/SysV.html">IPC::SysV</a> <a href="../Class/Struct.html">Class::Struct</a></p>
+<a name="AUTHOR"></a><h1>AUTHOR</h1>
+<p>Graham Barr &lt;gbarr@pobox.com&gt;</p>
+<a name="COPYRIGHT"></a><h1>COPYRIGHT</h1>
+<p>Copyright (c) 1997 Graham Barr. All rights reserved.
+This program is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.</p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../close_purple.gif';" onmouseout="rightCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('IPC::Msg','IPC/Msg.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>

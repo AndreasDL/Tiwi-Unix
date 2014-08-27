@@ -1,0 +1,461 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>ExtUtils::MM_Any - perldoc.perl.org</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Language" content="en-gb" />
+  <link href="../css.css" rel="stylesheet" rev="stylesheet" type="text/css" media="screen" />
+  <link rel="search" type="application/opensearchdescription+xml" title="Perldoc" href="../opensearch.html">
+</head>
+
+<script language="JavaScript" type="text/javascript" src="../label.js"></script>
+
+<script language="JavaScript">
+  pageDepth = 1;
+  setPath();
+</script>
+
+<body onLoad="showToolbars();loadLabels()">
+
+<div id="pageHeader">
+  <div id="pageHeaderLogo">
+    <img src="../onion.gif">
+  </div>
+  <div id="pageHeaderText">
+    <a href="http://perldoc.perl.org">perldoc.perl.org</a>
+  </div>
+</div>
+
+<div id="pageBody">
+  <div id="left">
+    <div id="leftContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeLeft()" title="Hide navigation" onmouseover="leftCloseIcon.src='../close_purple.gif';" onmouseout="leftCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="leftCloseIcon" id="leftCloseIcon" border=0></a>
+      </div>
+      <h1>Manual:</h1>
+      <ul>
+        <li><a href="../index-overview.html">Overview</a></li>
+        <li><a href="../index-tutorials.html">Tutorials</a></li>
+        <li><a href="../index-faq.html">FAQs</a></li>
+        <li><a href="../index-history.html">History / Changes</a></li>
+        <li><a href="../index-licence.html">Licence</a></li>
+      </ul>
+      <h2>Reference:</h2>
+      <ul>
+        <li><a href="../index-language.html">Language</a></li>
+        <li><a href="../index-functions.html">Functions</a></li>
+        <li><a href="../perlop.html">Operators</a></li>
+        <li><a href="../perlvar.html">Special variables</a></li>
+        <li><a href="../index-pragmas.html">Pragmas</a></li>
+        <li><a href="../index-modules-A.html">Core modules</a></li>
+        <li><a href="../index-utilities.html">Utilities</a></li>
+        <li><a href="../index-internals.html">Internals</a></li>
+        <li><a href="../index-platforms.html">Platform specific</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="center">  
+    <div id="centerContent">
+      <div id="contentHeader">
+        <div id="contentHeaderLeft"><a href="#" onClick="showLeft()">Show navigation</a></div>
+        <div id="contentHeaderCentre">-- Perl 5.10.0 documentation --</div>
+        <div id="contentHeaderRight"><a href="#" onClick="showRight()">Show toolbar</a></div>
+      </div>
+      <div id="breadCrumbs"><a href="../index.html">Home</a> &gt; <a href="../index-modules-A.html">Core modules</a> &gt; <a href="../index-modules-E.html">E</a> &gt; ExtUtils::MM_Any</div>
+      <script language="JavaScript">fromSearch();</script>
+      <div id="contentBody"><div class="title_container"><div class="page_title">ExtUtils::MM_Any</div><ul><li><a href="#NAME">NAME</a><li><a href="#SYNOPSIS">SYNOPSIS</a><li><a href="#DESCRIPTION">DESCRIPTION</a><li><a href="#METHODS">METHODS</a><ul><li><a href="#Cross-platform-helper-methods">Cross-platform helper methods</a><li><a href="#Targets">Targets</a><li><a href="#Init-methods">Init methods</a><li><a href="#Tools">Tools</a><li><a href="#File0x3a0x3aSpec-wrappers">File::Spec wrappers</a><li><a href="#Misc">Misc</a></ul><li><a href="#AUTHOR">AUTHOR</a></ul><a name="NAME"></a><h1>NAME</h1>
+<p>ExtUtils::MM_Any - Platform-agnostic MM methods</p>
+<a name="SYNOPSIS"></a><h1>SYNOPSIS</h1>
+<pre class="verbatim">  <span class="w">FOR</span> <span class="w">INTERNAL</span> <span class="w">USE</span> <span class="w">ONLY</span>!</pre>
+<pre class="verbatim"><a name="package-ExtUtils::MM_SomeOS"></a>  package <span class="i">ExtUtils::MM_SomeOS</span><span class="sc">;</span></pre>
+<pre class="verbatim">  <span class="c"># Temporarily, you have to subclass both.  Put MM_Any first.</span>
+  <a class="l_k" href="../functions/require.html">require</a> <span class="w">ExtUtils::MM_Any</span><span class="sc">;</span>
+  <a class="l_k" href="../functions/require.html">require</a> <span class="w">ExtUtils::MM_Unix</span><span class="sc">;</span>
+  <span class="i">@ISA</span> = <span class="q">qw(ExtUtils::MM_Any ExtUtils::Unix)</span><span class="sc">;</span></pre>
+<a name="DESCRIPTION"></a><h1>DESCRIPTION</h1>
+<p><b>FOR INTERNAL USE ONLY!</b></p>
+<p>ExtUtils::MM_Any is a superclass for the ExtUtils::MM_* set of
+modules.  It contains methods which are either inherently
+cross-platform or are written in a cross-platform manner.</p>
+<p>Subclass off of ExtUtils::MM_Any <i>and</i> ExtUtils::MM_Unix.  This is a
+temporary solution.</p>
+<p><b>THIS MAY BE TEMPORARY!</b></p>
+<a name="METHODS"></a><h1>METHODS</h1>
+<p>Any methods marked <i>Abstract</i> must be implemented by subclasses.</p>
+<a name="Cross-platform-helper-methods"></a><h2>Cross-platform helper methods</h2>
+<p>These are methods which help writing cross-platform code.</p>
+<h3>os_flavor  <i>Abstract</i></h3>
+<pre class="verbatim">    <a class="l_k" href="../functions/my.html">my</a> <span class="i">@os_flavor</span> = <span class="i">$mm</span><span class="i">-&gt;os_flavor</span><span class="sc">;</span></pre>
+<p>@os_flavor is the style of operating system this is, usually
+corresponding to the MM_*.pm file we're using.</p>
+<p>The first element of @os_flavor is the major family (ie. Unix,
+Windows, VMS, OS/2, etc...) and the rest are sub families.</p>
+<p>Some examples:</p>
+<pre class="verbatim">    Cygwin98       ('Unix',  'Cygwin', 'Cygwin9x')
+    Windows NT     ('Win32', 'WinNT')
+    Win98          ('Win32', 'Win9x')
+    Linux          ('Unix',  'Linux')
+    MacOS X        ('Unix',  'Darwin', 'MacOS', 'MacOS X')
+    OS/2           ('OS/2')</pre><p>This is used to write code for styles of operating system.  
+See os_flavor_is() for use.</p>
+<h3>os_flavor_is</h3>
+<pre class="verbatim">    <a class="l_k" href="../functions/my.html">my</a> <span class="i">$is_this_flavor</span> = <span class="i">$mm</span><span class="i">-&gt;os_flavor_is</span><span class="s">(</span><span class="i">$this_flavor</span><span class="s">)</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/my.html">my</a> <span class="i">$is_this_flavor</span> = <span class="i">$mm</span><span class="i">-&gt;os_flavor_is</span><span class="s">(</span><span class="i">@one_of_these_flavors</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Checks to see if the current operating system is one of the given flavors.</p>
+<p>This is useful for code like:</p>
+<pre class="verbatim">    if<span class="s">(</span> <span class="i">$mm</span><span class="i">-&gt;os_flavor_is</span><span class="s">(</span><span class="q">&#39;Unix&#39;</span><span class="s">)</span> <span class="s">)</span> <span class="s">{</span>
+        <span class="i">$out</span> = <span class="q">`foo 2&gt;&amp;1`</span><span class="sc">;</span>
+    <span class="s">}</span>
+    else <span class="s">{</span>
+        <span class="i">$out</span> = <span class="q">`foo`</span><span class="sc">;</span>
+    <span class="s">}</span></pre>
+<h3>split_command</h3>
+<pre class="verbatim">    <a class="l_k" href="../functions/my.html">my</a> <span class="i">@cmds</span> = <span class="i">$MM</span><span class="i">-&gt;split_command</span><span class="s">(</span><span class="i">$cmd</span><span class="cm">,</span> <span class="i">@args</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Most OS have a maximum command length they can execute at once.  Large
+modules can easily generate commands well past that limit.  Its
+necessary to split long commands up into a series of shorter commands.</p>
+<p><code class="inline"><span class="w">split_command</span></code>
+ will return a series of @cmds each processing part of
+the args.  Collectively they will process all the arguments.  Each
+individual line in @cmds will not be longer than the
+$self-&gt;max_exec_len being careful to take into account macro expansion.</p>
+<p>$cmd should include any switches and repeated initial arguments.</p>
+<p>If no @args are given, no @cmds will be returned.</p>
+<p>Pairs of arguments will always be preserved in a single command, this
+is a heuristic for things like pm_to_blib and pod2man which work on
+pairs of arguments.  This makes things like this safe:</p>
+<pre class="verbatim">    <span class="i">$self</span><span class="i">-&gt;split_command</span><span class="s">(</span><span class="i">$cmd</span><span class="cm">,</span> <span class="i">%pod2man</span><span class="s">)</span><span class="sc">;</span></pre>
+<h3>echo</h3>
+<pre class="verbatim">    <a class="l_k" href="../functions/my.html">my</a> <span class="i">@commands</span> = <span class="i">$MM</span><span class="i">-&gt;echo</span><span class="s">(</span><span class="i">$text</span><span class="s">)</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/my.html">my</a> <span class="i">@commands</span> = <span class="i">$MM</span><span class="i">-&gt;echo</span><span class="s">(</span><span class="i">$text</span><span class="cm">,</span> <span class="i">$file</span><span class="s">)</span><span class="sc">;</span>
+    <a class="l_k" href="../functions/my.html">my</a> <span class="i">@commands</span> = <span class="i">$MM</span><span class="i">-&gt;echo</span><span class="s">(</span><span class="i">$text</span><span class="cm">,</span> <span class="i">$file</span><span class="cm">,</span> <span class="i">$appending</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Generates a set of @commands which print the $text to a $file.</p>
+<p>If $file is not given, output goes to STDOUT.</p>
+<p>If $appending is true the $file will be appended to rather than
+overwritten.</p>
+<h3>wraplist</h3>
+<pre class="verbatim">  <a class="l_k" href="../functions/my.html">my</a> <span class="i">$args</span> = <span class="i">$mm</span><span class="i">-&gt;wraplist</span><span class="s">(</span><span class="i">@list</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Takes an array of items and turns them into a well-formatted list of
+arguments.  In most cases this is simply something like:</p>
+<pre class="verbatim">    <span class="w">FOO</span> \
+    <span class="w">BAR</span> \
+    <span class="w">BAZ</span></pre>
+<h3>maketext_filter</h3>
+<pre class="verbatim">    <a class="l_k" href="../functions/my.html">my</a> <span class="i">$filter_make_text</span> = <span class="i">$mm</span><span class="i">-&gt;maketext_filter</span><span class="s">(</span><span class="i">$make_text</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>The text of the Makefile is run through this method before writing to
+disk.  It allows systems a chance to make portability fixes to the
+Makefile.</p>
+<p>By default it does nothing.</p>
+<p>This method is protected and not intended to be called outside of
+MakeMaker.</p>
+<h3>cd  <i>Abstract</i></h3>
+<pre class="verbatim">  <a class="l_k" href="../functions/my.html">my</a> <span class="i">$subdir_cmd</span> = <span class="i">$MM</span><span class="i">-&gt;cd</span><span class="s">(</span><span class="i">$subdir</span><span class="cm">,</span> <span class="i">@cmds</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>This will generate a make fragment which runs the @cmds in the given
+$dir.  The rough equivalent to this, except cross platform.</p>
+<pre class="verbatim">  <span class="w">cd</span> <span class="i">$subdir</span> &amp;&amp; <span class="i">$cmd</span></pre>
+<p>Currently $dir can only go down one level.  "foo" is fine.  "foo/bar" is
+not.  "../foo" is right out.</p>
+<p>The resulting $subdir_cmd has no leading tab nor trailing newline.  This
+makes it easier to embed in a make string.  For example.</p>
+<pre class="verbatim">      my $make = sprintf &lt;&lt;'CODE', $subdir_cmd;
+  foo :
+      $(ECHO) what
+      %s
+      $(ECHO) mouche
+  CODE</pre><h3>oneliner  <i>Abstract</i></h3>
+<pre class="verbatim">  <a class="l_k" href="../functions/my.html">my</a> <span class="i">$oneliner</span> = <span class="i">$MM</span><span class="i">-&gt;oneliner</span><span class="s">(</span><span class="i">$perl_code</span><span class="s">)</span><span class="sc">;</span>
+  <a class="l_k" href="../functions/my.html">my</a> <span class="i">$oneliner</span> = <span class="i">$MM</span><span class="i">-&gt;oneliner</span><span class="s">(</span><span class="i">$perl_code</span><span class="cm">,</span> \<span class="i">@switches</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>This will generate a perl one-liner safe for the particular platform
+you're on based on the given $perl_code and @switches (a -e is
+assumed) suitable for using in a make target.  It will use the proper
+shell quoting and escapes.</p>
+<p>$(PERLRUN) will be used as perl.</p>
+<p>Any newlines in $perl_code will be escaped.  Leading and trailing
+newlines will be stripped.  Makes this idiom much easier:</p>
+<pre class="verbatim">    <a class="l_k" href="../functions/my.html">my</a> <span class="i">$code</span> = <span class="i">$MM</span><span class="i">-&gt;oneliner</span><span class="s">(</span><span class="h">&lt;&lt;&#39;CODE&#39;</span><span class="cm">,</span> <span class="s">[</span>...<span class="w">switches</span>...<span class="s">]</span><span class="s">)</span><span class="sc">;</span>
+<span class="hh">some code here</span>
+<span class="hh">another line here</span>
+<span class="h">CODE</span></pre>
+<p>Usage might be something like:</p>
+<pre class="verbatim">    <span class="c"># an echo emulation</span>
+    <span class="i">$oneliner</span> = <span class="i">$MM</span><span class="i">-&gt;oneliner</span><span class="s">(</span><span class="q">&#39;print &quot;Foo\n&quot;&#39;</span><span class="s">)</span><span class="sc">;</span>
+    <span class="i">$make</span> = <span class="q">&#39;$oneliner &gt; somefile&#39;</span><span class="sc">;</span></pre>
+<p>All dollar signs must be doubled in the $perl_code if you expect them
+to be interpreted normally, otherwise it will be considered a make
+macro.  Also remember to quote make macros else it might be used as a
+bareword.  For example:</p>
+<pre class="verbatim">    <span class="c"># Assign the value of the $(VERSION_FROM) make macro to $vf.</span>
+    <span class="i">$oneliner</span> = <span class="i">$MM</span><span class="i">-&gt;oneliner</span><span class="s">(</span><span class="q">&#39;$$vf = &quot;$(VERSION_FROM)&quot;&#39;</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Its currently very simple and may be expanded sometime in the figure
+to include more flexible code and switches.</p>
+<h3>quote_literal  <i>Abstract</i></h3>
+<pre class="verbatim">    <a class="l_k" href="../functions/my.html">my</a> <span class="i">$safe_text</span> = <span class="i">$MM</span><span class="i">-&gt;quote_literal</span><span class="s">(</span><span class="i">$text</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>This will quote $text so it is interpreted literally in the shell.</p>
+<p>For example, on Unix this would escape any single-quotes in $text and
+put single-quotes around the whole thing.</p>
+<h3>escape_newlines  <i>Abstract</i></h3>
+<pre class="verbatim">    <a class="l_k" href="../functions/my.html">my</a> <span class="i">$escaped_text</span> = <span class="i">$MM</span><span class="i">-&gt;escape_newlines</span><span class="s">(</span><span class="i">$text</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Shell escapes newlines in $text.</p>
+<h3>max_exec_len  <i>Abstract</i></h3>
+<pre class="verbatim">    <a class="l_k" href="../functions/my.html">my</a> <span class="i">$max_exec_len</span> = <span class="i">$MM</span><span class="i">-&gt;max_exec_len</span><span class="sc">;</span></pre>
+<p>Calculates the maximum command size the OS can exec.  Effectively,
+this is the max size of a shell command line.</p>
+<h3>make</h3>
+<pre class="verbatim">    <a class="l_k" href="../functions/my.html">my</a> <span class="i">$make</span> = <span class="i">$MM</span><span class="i">-&gt;make</span><span class="sc">;</span></pre>
+<p>Returns the make variant we're generating the Makefile for.  This attempts
+to do some normalization on the information from %Config or the user.</p>
+<a name="Targets"></a><h2>Targets</h2>
+<p>These are methods which produce make targets.</p>
+<h3>all_target</h3>
+<p>Generate the default target 'all'.</p>
+<h3>blibdirs_target</h3>
+<pre class="verbatim">    <a class="l_k" href="../functions/my.html">my</a> <span class="i">$make_frag</span> = <span class="i">$mm</span><span class="i">-&gt;blibdirs_target</span><span class="sc">;</span></pre>
+<p>Creates the blibdirs target which creates all the directories we use
+in blib/.</p>
+<p>The blibdirs.ts target is deprecated.  Depend on blibdirs instead.</p>
+<h3>clean (o)</h3>
+<p>Defines the clean target.</p>
+<h3>clean_subdirs_target</h3>
+<pre class="verbatim">  <a class="l_k" href="../functions/my.html">my</a> <span class="i">$make_frag</span> = <span class="i">$MM</span><span class="i">-&gt;clean_subdirs_target</span><span class="sc">;</span></pre>
+<p>Returns the clean_subdirs target.  This is used by the clean target to
+call clean on any subdirectories which contain Makefiles.</p>
+<h3>dir_target</h3>
+<pre class="verbatim">    <a class="l_k" href="../functions/my.html">my</a> <span class="i">$make_frag</span> = <span class="i">$mm</span><span class="i">-&gt;dir_target</span><span class="s">(</span><span class="i">@directories</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Generates targets to create the specified directories and set its
+permission to 0755.</p>
+<p>Because depending on a directory to just ensure it exists doesn't work
+too well (the modified time changes too often) dir_target() creates a
+.exists file in the created directory.  It is this you should depend on.
+For portability purposes you should use the $(DIRFILESEP) macro rather
+than a '/' to seperate the directory from the file.</p>
+<pre class="verbatim">    yourdirectory$(DIRFILESEP).exists</pre><h3>distdir</h3>
+<p>Defines the scratch directory target that will hold the distribution
+before tar-ing (or shar-ing).</p>
+<h3>dist_test</h3>
+<p>Defines a target that produces the distribution in the
+scratchdirectory, and runs 'perl Makefile.PL; make ;make test' in that
+subdirectory.</p>
+<h3>dynamic (o)</h3>
+<p>Defines the dynamic target.</p>
+<h3>makemakerdflt_target</h3>
+<pre class="verbatim">  <a class="l_k" href="../functions/my.html">my</a> <span class="i">$make_frag</span> = <span class="i">$mm</span><span class="i">-&gt;makemakerdflt_target</span></pre>
+<p>Returns a make fragment with the makemakerdeflt_target specified.
+This target is the first target in the Makefile, is the default target
+and simply points off to 'all' just in case any make variant gets
+confused or something gets snuck in before the real 'all' target.</p>
+<h3>manifypods_target</h3>
+<pre class="verbatim">  <a class="l_k" href="../functions/my.html">my</a> <span class="i">$manifypods_target</span> = <span class="i">$self</span><span class="i">-&gt;manifypods_target</span><span class="sc">;</span></pre>
+<p>Generates the manifypods target.  This target generates man pages from
+all POD files in MAN1PODS and MAN3PODS.</p>
+<h3>metafile_target</h3>
+<pre class="verbatim">    <a class="l_k" href="../functions/my.html">my</a> <span class="i">$target</span> = <span class="i">$mm</span><span class="i">-&gt;metafile_target</span><span class="sc">;</span></pre>
+<p>Generate the metafile target.</p>
+<p>Writes the file META.yml YAML encoded meta-data about the module in
+the distdir.  The format follows Module::Build's as closely as
+possible.</p>
+<h3>distmeta_target</h3>
+<pre class="verbatim">    <a class="l_k" href="../functions/my.html">my</a> <span class="i">$make_frag</span> = <span class="i">$mm</span><span class="i">-&gt;distmeta_target</span><span class="sc">;</span></pre>
+<p>Generates the distmeta target to add META.yml to the MANIFEST in the
+distdir.</p>
+<h3>realclean (o)</h3>
+<p>Defines the realclean target.</p>
+<h3>realclean_subdirs_target</h3>
+<pre class="verbatim">  <a class="l_k" href="../functions/my.html">my</a> <span class="i">$make_frag</span> = <span class="i">$MM</span><span class="i">-&gt;realclean_subdirs_target</span><span class="sc">;</span></pre>
+<p>Returns the realclean_subdirs target.  This is used by the realclean
+target to call realclean on any subdirectories which contain Makefiles.</p>
+<h3>signature_target</h3>
+<pre class="verbatim">    <a class="l_k" href="../functions/my.html">my</a> <span class="i">$target</span> = <span class="i">$mm</span><span class="i">-&gt;signature_target</span><span class="sc">;</span></pre>
+<p>Generate the signature target.</p>
+<p>Writes the file SIGNATURE with "cpansign -s".</p>
+<h3>distsignature_target</h3>
+<pre class="verbatim">    <a class="l_k" href="../functions/my.html">my</a> <span class="i">$make_frag</span> = <span class="i">$mm</span><span class="i">-&gt;distsignature_target</span><span class="sc">;</span></pre>
+<p>Generates the distsignature target to add SIGNATURE to the MANIFEST in the
+distdir.</p>
+<h3>special_targets</h3>
+<pre class="verbatim">  <a class="l_k" href="../functions/my.html">my</a> <span class="i">$make_frag</span> = <span class="i">$mm</span><span class="i">-&gt;special_targets</span></pre>
+<p>Returns a make fragment containing any targets which have special
+meaning to make.  For example, .SUFFIXES and .PHONY.</p>
+<a name="Init-methods"></a><h2>Init methods</h2>
+<p>Methods which help initialize the MakeMaker object and macros.</p>
+<h3>init_ABSTRACT</h3>
+<pre class="verbatim">    <span class="i">$mm</span><span class="i">-&gt;init_ABSTRACT</span></pre>
+<h3>init_INST</h3>
+<pre class="verbatim">    <span class="i">$mm</span><span class="i">-&gt;init_INST</span><span class="sc">;</span></pre>
+<p>Called by init_main.  Sets up all INST_* variables except those related
+to XS code.  Those are handled in init_xs.</p>
+<h3>init_INSTALL</h3>
+<pre class="verbatim">    <span class="i">$mm</span><span class="i">-&gt;init_INSTALL</span><span class="sc">;</span></pre>
+<p>Called by init_main.  Sets up all INSTALL_* variables (except
+INSTALLDIRS) and *PREFIX.</p>
+<h3>init_INSTALL_from_PREFIX</h3>
+<pre class="verbatim">  <span class="i">$mm</span><span class="i">-&gt;init_INSTALL_from_PREFIX</span><span class="sc">;</span></pre>
+<h3>init_from_INSTALL_BASE</h3>
+<pre class="verbatim">    <span class="i">$mm</span><span class="i">-&gt;init_from_INSTALL_BASE</span></pre>
+<h3>init_VERSION  <i>Abstract</i></h3>
+<pre class="verbatim">    <span class="i">$mm</span><span class="i">-&gt;init_VERSION</span></pre>
+<p>Initialize macros representing versions of MakeMaker and other tools</p>
+<p>MAKEMAKER: path to the MakeMaker module.</p>
+<p>MM_VERSION: ExtUtils::MakeMaker Version</p>
+<p>MM_REVISION: ExtUtils::MakeMaker version control revision (for backwards 
+             compat)</p>
+<p>VERSION: version of your module</p>
+<p>VERSION_MACRO: which macro represents the version (usually 'VERSION')</p>
+<p>VERSION_SYM: like version but safe for use as an RCS revision number</p>
+<p>DEFINE_VERSION: -D line to set the module version when compiling</p>
+<p>XS_VERSION: version in your .xs file.  Defaults to $(VERSION)</p>
+<p>XS_VERSION_MACRO: which macro represents the XS version.</p>
+<p>XS_DEFINE_VERSION: -D line to set the xs version when compiling.</p>
+<p>Called by init_main.</p>
+<h3>init_others  <i>Abstract</i></h3>
+<pre class="verbatim">    <span class="i">$MM</span><span class="i">-&gt;init_others</span><span class="s">(</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Initializes the macro definitions used by tools_other() and places them
+in the $MM object.</p>
+<p>If there is no description, its the same as the parameter to
+WriteMakefile() documented in ExtUtils::MakeMaker.</p>
+<p>Defines at least these macros.</p>
+<pre class="verbatim">  <span class="w">Macro</span>             <span class="w">Description</span></pre>
+<pre class="verbatim">  <span class="w">NOOP</span>              <span class="w">Do</span> <span class="w">nothing</span>
+  <span class="w">NOECHO</span>            <span class="w">Tell</span> <span class="w">make</span> not <span class="w">to</span> <span class="w">display</span> <span class="w">the</span> <span class="w">command</span> <span class="w">itself</span></pre>
+<pre class="verbatim">  <span class="w">MAKEFILE</span>
+  <span class="w">FIRST_MAKEFILE</span>
+  <span class="w">MAKEFILE_OLD</span>
+  <span class="w">MAKE_APERL_FILE</span>   <span class="w">File</span> <span class="w">used</span> <span class="w">by</span> <span class="w">MAKE_APERL</span></pre>
+<pre class="verbatim">  <span class="w">SHELL</span>             <span class="w">Program</span> <span class="w">used</span> <span class="w">to</span> <span class="w">run</span> <span class="w">shell</span> <span class="w">commands</span></pre>
+<pre class="verbatim">  <span class="w">ECHO</span>              <span class="w">Print</span> <span class="w">text</span> <span class="w">adding</span> <span class="w">a</span> <span class="w">newline</span> <span class="w">on</span> <span class="w">the</span> <span class="w">end</span>
+  <span class="w">RM_F</span>              <span class="w">Remove</span> <span class="w">a</span> <span class="w">file</span> 
+  <span class="w">RM_RF</span>             <span class="w">Remove</span> <span class="w">a</span> <span class="w">directory</span>          
+  <span class="w">TOUCH</span>             <span class="w">Update</span> <span class="w">a</span> <span class="w">file&#39;s</span> <span class="w">timestamp</span>   
+  <span class="w">TEST_F</span>            <span class="w">Test</span> for <span class="w">a</span> <span class="w">file&#39;s</span> <span class="w">existence</span> 
+  <span class="w">CP</span>                <span class="w">Copy</span> <span class="w">a</span> <span class="w">file</span>                 
+  <span class="w">MV</span>                <span class="w">Move</span> <span class="w">a</span> <span class="w">file</span>                 
+  <span class="w">CHMOD</span>             <span class="w">Change</span> <span class="w">permissions</span> <span class="w">on</span> <span class="w">a</span>     
+                    <span class="w">file</span></pre>
+<pre class="verbatim">  <span class="w">UMASK_NULL</span>        <span class="w">Nullify</span> <a class="l_k" href="../functions/umask.html">umask</a>
+  <span class="w">DEV_NULL</span>          <span class="w">Suppress</span> <span class="w">all</span> <span class="w">command</span> <span class="w">output</span></pre>
+<h3>init_DIRFILESEP  <i>Abstract</i></h3>
+<pre class="verbatim">  <span class="i">$MM</span><span class="i">-&gt;init_DIRFILESEP</span><span class="sc">;</span>
+  <a class="l_k" href="../functions/my.html">my</a> <span class="i">$dirfilesep</span> = <span class="i">$MM</span>-&gt;{<span class="w">DIRFILESEP</span>}<span class="sc">;</span></pre>
+<p>Initializes the DIRFILESEP macro which is the seperator between the
+directory and filename in a filepath.  ie. / on Unix, \ on Win32 and
+nothing on VMS.</p>
+<p>For example:</p>
+<pre class="verbatim">    # instead of $(INST_ARCHAUTODIR)/extralibs.ld
+    $(INST_ARCHAUTODIR)$(DIRFILESEP)extralibs.ld</pre><p>Something of a hack but it prevents a lot of code duplication between
+MM_* variants.</p>
+<p>Do not use this as a seperator between directories.  Some operating
+systems use different seperators between subdirectories as between
+directories and filenames (for example:  VOLUME:[dir1.dir2]file on VMS).</p>
+<h3>init_linker  <i>Abstract</i></h3>
+<pre class="verbatim">    <span class="i">$mm</span><span class="i">-&gt;init_linker</span><span class="sc">;</span></pre>
+<p>Initialize macros which have to do with linking.</p>
+<p>PERL_ARCHIVE: path to libperl.a equivalent to be linked to dynamic
+extensions.</p>
+<p>PERL_ARCHIVE_AFTER: path to a library which should be put on the
+linker command line <i>after</i> the external libraries to be linked to
+dynamic extensions.  This may be needed if the linker is one-pass, and
+Perl includes some overrides for C RTL functions, such as malloc().</p>
+<p>EXPORT_LIST: name of a file that is passed to linker to define symbols
+to be exported.</p>
+<p>Some OSes do not need these in which case leave it blank.</p>
+<h3>init_platform</h3>
+<pre class="verbatim">    <span class="i">$mm</span><span class="i">-&gt;init_platform</span></pre>
+<p>Initialize any macros which are for platform specific use only.</p>
+<p>A typical one is the version number of your OS specific mocule.
+(ie. MM_Unix_VERSION or MM_VMS_VERSION).</p>
+<h3>init_MAKE</h3>
+<pre class="verbatim">    <span class="i">$mm</span><span class="i">-&gt;init_MAKE</span></pre>
+<p>Initialize MAKE from either a MAKE environment variable or $Config{make}.</p>
+<a name="Tools"></a><h2>Tools</h2>
+<p>A grab bag of methods to generate specific macros and commands.</p>
+<h3>manifypods</h3>
+<p>Defines targets and routines to translate the pods into manpages and
+put them into the INST_* directories.</p>
+<h3>POD2MAN_macro</h3>
+<pre class="verbatim">  <a class="l_k" href="../functions/my.html">my</a> <span class="i">$pod2man_macro</span> = <span class="i">$self</span><span class="i">-&gt;POD2MAN_macro</span></pre>
+<p>Returns a definition for the POD2MAN macro.  This is a program
+which emulates the pod2man utility.  You can add more switches to the
+command by simply appending them on the macro.</p>
+<p>Typical usage:</p>
+<pre class="verbatim">    $(POD2MAN) --section=3 --perm_rw=$(PERM_RW) podfile1 man_page1 ...</pre><h3>test_via_harness</h3>
+<pre class="verbatim">  <a class="l_k" href="../functions/my.html">my</a> <span class="i">$command</span> = <span class="i">$mm</span><span class="i">-&gt;test_via_harness</span><span class="s">(</span><span class="i">$perl</span><span class="cm">,</span> <span class="i">$tests</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Returns a $command line which runs the given set of $tests with
+Test::Harness and the given $perl.</p>
+<p>Used on the t/*.t files.</p>
+<h3>test_via_script</h3>
+<pre class="verbatim">  <a class="l_k" href="../functions/my.html">my</a> <span class="i">$command</span> = <span class="i">$mm</span><span class="i">-&gt;test_via_script</span><span class="s">(</span><span class="i">$perl</span><span class="cm">,</span> <span class="i">$script</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Returns a $command line which just runs a single test without
+Test::Harness.  No checks are done on the results, they're just
+printed.</p>
+<p>Used for test.pl, since they don't always follow Test::Harness
+formatting.</p>
+<h3>tool_autosplit</h3>
+<p>Defines a simple perl call that runs autosplit. May be deprecated by
+pm_to_blib soon.</p>
+<a name="File0x3a0x3aSpec-wrappers"></a><h2>File::Spec wrappers</h2>
+<p>ExtUtils::MM_Any is a subclass of File::Spec.  The methods noted here
+override File::Spec.</p>
+<h3>catfile</h3>
+<p>File::Spec &lt;= 0.83 has a bug where the file part of catfile is not
+canonicalized.  This override fixes that bug.</p>
+<a name="Misc"></a><h2>Misc</h2>
+<p>Methods I can't really figure out where they should go yet.</p>
+<h3>find_tests</h3>
+<pre class="verbatim">  <a class="l_k" href="../functions/my.html">my</a> <span class="i">$test</span> = <span class="i">$mm</span><span class="i">-&gt;find_tests</span><span class="sc">;</span></pre>
+<p>Returns a string suitable for feeding to the shell to return all
+tests in t/*.t.</p>
+<h3>extra_clean_files</h3>
+<pre class="verbatim">    <a class="l_k" href="../functions/my.html">my</a> <span class="i">@files_to_clean</span> = <span class="i">$MM</span><span class="i">-&gt;extra_clean_files</span><span class="sc">;</span></pre>
+<p>Returns a list of OS specific files to be removed in the clean target in
+addition to the usual set.</p>
+<h3>installvars</h3>
+<pre class="verbatim">    <a class="l_k" href="../functions/my.html">my</a> <span class="i">@installvars</span> = <span class="i">$mm</span><span class="i">-&gt;installvars</span><span class="sc">;</span></pre>
+<p>A list of all the INSTALL* variables without the INSTALL prefix.  Useful
+for iteration or building related variable sets.</p>
+<h3>libscan</h3>
+<pre class="verbatim">  <a class="l_k" href="../functions/my.html">my</a> <span class="i">$wanted</span> = <span class="i">$self</span><span class="i">-&gt;libscan</span><span class="s">(</span><span class="i">$path</span><span class="s">)</span><span class="sc">;</span></pre>
+<p>Takes a path to a file or dir and returns an empty string if we don't
+want to include this file in the library.  Otherwise it returns the
+the $path unchanged.</p>
+<p>Mainly used to exclude version control administrative directories from
+installation.</p>
+<h3>platform_constants</h3>
+<pre class="verbatim">    <a class="l_k" href="../functions/my.html">my</a> <span class="i">$make_frag</span> = <span class="i">$mm</span><span class="i">-&gt;platform_constants</span></pre>
+<p>Returns a make fragment defining all the macros initialized in
+init_platform() rather than put them in constants().</p>
+<a name="AUTHOR"></a><h1>AUTHOR</h1>
+<p>Michael G Schwern &lt;schwern@pobox.com&gt; and the denizens of
+makemaker@perl.org with code from ExtUtils::MM_Unix and
+ExtUtils::MM_Win32.</p>
+</div>
+      <div id="contentFooter"><a href="http://www.perl.org"><img src="../perlpowered.png" border=0></a></div>
+    </div>
+  </div>
+
+  <div id="right">
+    <div id="rightContent">
+      <div id="leftClose">
+        <a href="#" onClick="closeRight()" title="Hide toolbar" onmouseover="rightCloseIcon.src='../close_purple.gif';" onmouseout="rightCloseIcon.src='../close_blue.gif';"><img src="../close_blue.gif" name="rightCloseIcon" id="rightCloseIcon" border=0></a>
+      </div>
+      <h1>Search:</h1>
+      <p>
+        <form action="../search.html" name="perldoc_search">
+	  <input type="text" name="q" size="10" class="grey"><br>
+	  <!--<select name="r"><option value="1" selected>Go to top result<option value="0">Show results list</select>-->
+	</form>
+      </p>
+      <script language="JavaScript" type="text/javascript" src="/perl-version.js"></script>
+      <h2>Labels:</h2>
+      <p>
+        <a href="#" onClick="addLabel('ExtUtils::MM_Any','ExtUtils/MM_Any.html')">Add this page</a>
+      </p>
+      <div class="labels" id="labels">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+</body>
+</html>
